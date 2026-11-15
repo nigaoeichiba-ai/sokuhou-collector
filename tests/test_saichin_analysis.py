@@ -290,7 +290,7 @@ class FaqGuideTest(SiteFixture):
         page = self.read("guide/faq/index.html")
         self.assertIn("内容の確認日: 2026年10月19日", page)
         for _, url in content.GUIDE_BY_SLUG["faq"]["sources"]:
-            self.assertIn(url, page)
+            self.assertNotIn(url, page)   # 出典のリンクは画面に出さない(2026-11-15)
         self.assertIn('href="/guide/faq/"', self.read("guide/index.html"))
         self.assertIn('href="/guide/faq/"', self.read("tokyo/index.html"))
 
@@ -339,13 +339,13 @@ class ContextSectionsTest(SiteFixture):
             self.assertGreaterEqual(len(self.section(s, "あなたにどう関わるか")), 300, s)
             self.assertGreaterEqual(len(self.page_text(s)), 2400, s)
 
-    def test_the_background_cites_the_primary_sources_with_the_date_they_were_read(self):
+    def test_the_background_shows_the_date_it_was_checked_and_no_source_links(self):
         for s in analysis_pages.ORDER:
             page = self.read(f"analysis/{s}/index.html")
-            self.assertIn("https://laws.e-gov.go.jp/law/334AC0000000137", page, s)
-            self.assertIn("https://www.mhlw.go.jp/stf/newpage_74920.html", page, s)
-            self.assertIn("https://www.mhlw.go.jp/stf/newpage_75950.html", page, s)
-            self.assertIn("2026年10月20日に開いて確かめました", page, s)
+            self.assertNotIn("https://laws.e-gov.go.jp/law/334AC0000000137", page, s)   # 出典のリンクは画面に出さない(2026-11-15)
+            self.assertNotIn("https://www.mhlw.go.jp/stf/newpage_74920.html", page, s)
+            self.assertNotIn("https://www.mhlw.go.jp/stf/newpage_75950.html", page, s)
+            self.assertIn("この節の内容の確認日: 2026年10月20日", page, s)
 
     def test_the_examples_are_recomputed(self):
         raw = _raw()

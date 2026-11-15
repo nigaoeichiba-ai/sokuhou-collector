@@ -230,7 +230,7 @@ def special_story(d: dict, r: dict, k) -> list[str]:
         out.append("昭和54年度から平成元年度までは、南部と北部で額が分かれていました。この期間の表は、2つの額を並べています。")
     frac = [e for e in r["long"] if e["amount"] is not None and e["amount"] != int(e["amount"])]
     if frac:
-        out.append(f"{k.esc(frac[0]['label'])}などの額に小数があるのは、出典の表のとおりです。")
+        out.append(f"{k.esc(frac[0]['label'])}などの額に小数があるのは、公表された表のとおりです。")
     return out
 
 

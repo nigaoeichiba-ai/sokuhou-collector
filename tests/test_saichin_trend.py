@@ -230,10 +230,11 @@ class PrefectureTrendTest(SiteFixture):
 
     def test_the_old_figures_are_credited_to_the_2003_document_and_decimals_are_explained(self):
         page = self.read("aichi/index.html")
-        self.assertIn("https://www.mhlw.go.jp/shingi/2003/12/s1202-3h.html", page)
+        self.assertNotIn("https://www.mhlw.go.jp/shingi/2003/12/s1202-3h.html", page)   # 出典のリンクは画面に出さない(2026-11-15)
+        self.assertIn("厚生労働省の審議会資料(2003年)", page)
         self.assertIn("平成14年度と平成15年度の額は、上の「全国一覧」と47都道府県すべてで一致することを", self.read("cite/index.html"))
         self.assertIn("<td>昭和53年度</td><td>320.88円</td>", page)
-        self.assertIn("昭和53年度などの額に小数があるのは、出典の表のとおりです。", page)
+        self.assertIn("昭和53年度などの額に小数があるのは、公表された表のとおりです。", page)
         self.assertNotIn("に小数があるのは", self.read("hokkaido/index.html"))
 
 

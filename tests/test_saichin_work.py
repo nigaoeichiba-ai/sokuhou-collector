@@ -50,7 +50,7 @@ class WallGuideTest(SiteFixture):
         g = content.GUIDE_BY_SLUG["wall"]
         self.assertEqual(g["verified"], "2026-10-20")
         for _, url in g["sources"]:
-            self.assertIn(url, page)
+            self.assertNotIn(url, page)   # 出典のリンクは画面に出さない(2026-11-15)
         self.assertEqual(g["sources"][0][1], "https://www.nenkin.go.jp/oshirase/taisetu/jigyosho/2026/202610/100104.html")
 
     def test_the_arithmetic_of_the_ministrys_1016_yen(self):
@@ -102,7 +102,7 @@ class RaiseGuideTest(SiteFixture):
             self.assertIn(needle, page)
         g = content.GUIDE_BY_SLUG["raise"]
         for _, url in g["sources"]:
-            self.assertIn(url, page)
+            self.assertNotIn(url, page)   # 出典のリンクは画面に出さない(2026-11-15)
 
 
 # The codes exactly as A8's link-creation screen gave them for media 004 (2026-10-20), written out here separately from content.py.

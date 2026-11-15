@@ -67,7 +67,7 @@ class CheckPageTest(SiteFixture):
     def test_the_page_has_sources_and_a_verification_date_and_names_no_individual_advice(self):
         page = self.read("check/index.html")
         for name, url in content.CHECK_SOURCES:
-            self.assertIn(url, page)
+            self.assertNotIn(url, page)   # 出典のリンクは画面に出さない(2026-11-15)
         self.assertIn(content.CHECK_VERIFIED_AT.replace("-0", "-").split("-")[0] + "年", page)
         self.assertIn("個別の相談には対応していません", page)
 

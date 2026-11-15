@@ -14,9 +14,7 @@ VERIFIED = "2026年10月20日"
 
 
 def _sources(k) -> str:
-    items = [content.LAW, content.S_HOW, content.S_MEYASU, content.S_TOSHIN, content.S_FAQ_USER]
-    links = "、".join(f'<a href="{u}" rel="noopener" target="_blank">{k.esc(t)}</a>' for t, u in items)
-    return f'<p class="notice">この節の出典: {links}。いずれも{VERIFIED}に開いて確かめました。</p>'
+    return f'<p class="notice">この節の内容の確認日: {VERIFIED}。</p>'
 
 
 def _r8(d: dict) -> bool:
@@ -115,7 +113,7 @@ def dates(d: dict, k) -> str:
     last = ds[-1]
     law = ("発効日は、法律の手続で決まります。審議会の意見の要旨が公示されると、その地域の労働者や使用者は、公示の日から15日以内に異議を申し出られます。15日が過ぎるまでは、決定できません(最低賃金法第11条)。"
            "決定が公示されると、公示の日から30日を過ぎた日に効力が生じます。決定で、それより後の日を定めることもできます(第14条第2項)。"
-           "答申や公示の日は都道府県ごとに違うため、発効日も都道府県ごとに違います。"
+           "答申や公示の日は都道府県ごとに違うため、発効日も都道府県ごとに違います。年度によっては、年をまたいで発効する県もあります。発効日の前は、その県では前の年度の額が適用されます。"
            + ("令和8年度は、10月1日から12月2日までの間に、都道府県ごとに順次発効します(厚生労働省、9月3日)。" if _r8(d) else ""))
     work = (f"<h3>働く人</h3>\n<p>発効日の前の分は、改定前の額と比べます。発効日以降の分は、賃金の計算期間の途中でも、新しい額以上でなければなりません(厚生労働省「よくあるご質問」)。"
             f"{k.esc(d['label'])}で最も遅いのは{k.esc(names(last['last_rows']))}の{k.jp_date(last['last'].isoformat())}で、それより前の勤務分は、改定前の額で比べます。"

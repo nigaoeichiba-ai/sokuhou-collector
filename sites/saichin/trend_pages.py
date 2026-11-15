@@ -84,7 +84,7 @@ def pref_table(r: dict, k) -> str:
         rows.append(
             f"<tr><td>{k.esc(e['label'])}</td><td>{amount}</td><td>{_signed(e['raise'])}</td><td>{_pct(e['raise_pct'])}</td>"
             f"<td>{avg}</td><td>{_signed(e['avg_gap'])}</td><td>{rank}</td><td>{date}</td></tr>")
-    foot = ('<tfoot><tr><td colspan="8">昭和52〜平成13年度は<a href="https://www.mhlw.go.jp/shingi/2003/12/s1202-3h.html" rel="noopener" target="_blank">厚生労働省の審議会資料(2003年)</a>、'
+    foot = ('<tfoot><tr><td colspan="8">昭和52〜平成13年度は厚生労働省の審議会資料(2003年)、'
             '平成14年度以降は「地域別最低賃金の全国一覧」の値です。発効日は平成14年度以降だけです。'
             '※2 昭和54〜平成元年度の順位は、南部と北部で額が分かれていた京都府を除く、46都道府県の中の順位です。</td></tr></tfoot>')
     return ('<div class="tablewrap"><table><thead><tr><th>年度</th><th>最低賃金</th><th>前年度から</th><th>上がり率</th><th>全国加重平均</th><th>全国との差</th>'
@@ -156,6 +156,6 @@ def national_trend(d: dict, k) -> str:
 <div class="rank-box"><h3>引上げ額が大きい年度</h3><div class="tablewrap"><table><thead><tr><th>順位</th><th>年度</th><th>引上げ額</th><th>上がり率</th></tr></thead><tbody>{"".join(rank_rows)}</tbody></table></div></div>
 <div class="rank-box"><h3>上がり率が大きい年度</h3><div class="tablewrap"><table><thead><tr><th>順位</th><th>年度</th><th>上がり率</th><th>引上げ額</th></tr></thead><tbody>{"".join(pct_rows)}</tbody></table></div></div>
 </div>
-<p class="notice">昭和52年度から平成13年度までの額は、厚生労働省の審議会資料(2003年)「<a href="https://www.mhlw.go.jp/shingi/2003/12/s1202-3h.html" rel="noopener" target="_blank">地域別最低賃金に関するデータ(時間額)</a>」の表の値、平成14年度以降は「地域別最低賃金の全国一覧」の値です。全国加重平均は、昭和53年度から載っています(昭和52年度の値は、この資料にありません)。
+<p class="notice">昭和52年度から平成13年度までの額は、厚生労働省の審議会資料(2003年)「地域別最低賃金に関するデータ(時間額)」の表の値、平成14年度以降は「地域別最低賃金の全国一覧」の値です。全国加重平均は、昭和53年度から載っています(昭和52年度の値は、この資料にありません)。
 平成14年度の全国加重平均は、2つの資料で1円違います(この資料は664円、全国一覧は663円)。このサイトでは、平成14年度以降を全国一覧の値にしています。</p>
 """

@@ -359,7 +359,8 @@ def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str,
 {body}
 </main>
 <footer class="site"><div class="wrap">
-<p class="src">出典: <a href="{{source}}" rel="noopener" target="_blank">{SOURCE_LABEL}</a>を加工して作成。厚生労働省が作成したものではありません。このサイトは「地域別最低賃金」を扱い、業種ごとの最低賃金(特定最低賃金など)は含みません。</p>
+<p class="src">出典: {SOURCE_LABEL}を加工して作成。厚生労働省が作成したものではありません。このサイトは「地域別最低賃金」を扱い、業種ごとの最低賃金(特定最低賃金など)は含みません。</p>
+<p class="src">公式の発表をはじめとする複数の情報をもとにしています。</p>
 <p class="legal"><a href="/about/">運営者情報</a><a href="/privacy/">プライバシーポリシー</a><a href="/contact/">お問い合わせ</a><span>&copy; {name}</span></p>
 </div></footer>
 {script}</body>
@@ -538,8 +539,8 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <p><a href="/area/{r['region_slug']}/">{esc(r['region'])}のまとめを見る</a></p>
 <h3>給料の確認・通知・解説</h3>
 <ul class="link-list"><li><a href="/check/?pref={quote(r['name'])}">{esc(r['name'])}の最低賃金を下回っていないか、差額をチェックする</a></li><li><a href="/calendar/{r['slug']}.ics">{esc(r['name'])}の発効日をカレンダーに入れる</a>(前日の朝9時に通知)</li><li><a href="/guide/excluded/">最低賃金に含まれない賃金は?</a></li><li><a href="/guide/below/">最低賃金を下回っていたら?</a></li><li><a href="/guide/faq/">最低賃金のよくある質問</a></li><li><a href="/guide/raise/">時給を上げたいときの考え方</a></li><li><a href="/guide/wall/">週何時間で社会保険・扶養の壁に届くか</a></li><li><a href="/calendar/">発効日カレンダー</a></li></ul>
-<h3>データと出典</h3>
-<ul class="link-list"><li><a href="/cite/">出典と引用のしかた</a></li><li><a href="/data/">全年度のデータ(CSV・JSON)</a></li></ul>
+<h3>データと引用</h3>
+<ul class="link-list"><li><a href="/cite/">データの使い方と引用のしかた</a></li><li><a href="/data/">全年度のデータ(CSV・JSON)</a></li></ul>
 <h3>ほかの都道府県</h3>
 <ul class="pref-nav">{nav}</ul>
 </nav>"""
@@ -649,7 +650,7 @@ def wage_notes(d: dict) -> str:
 <li><strong>最低賃金との比較:</strong> 賃金の調査時点(調査年の6月)に有効だった最低賃金({esc(w['min_then_label'])}の額)と比べています。最新の{esc(d['label'])}の額とは比べていません。比べる相手は、賃金の<strong>平均</strong>です。平均は高い賃金の影響を受けやすいため、中央値と比べた場合とは、比率が違います。</li>
 <li><strong>誤差:</strong> 調査は標本調査で、集計の区分によっては標本誤差が大きくなることがあります。都道府県どうしの小さな差は、順位を比べるときに注意してください。</li>
 </ul>
-<p class="notice">出典: <a href="{esc(w['source_page'])}" rel="noopener" target="_blank">{esc(wagelib.SOURCE_LABEL)}</a>、<a href="{wagelib.SURVEY_PAGE}" rel="noopener" target="_blank">賃金構造基本統計調査の概要</a>を加工して作成。厚生労働省が作成したものではありません。最低賃金は、<a href="{{source}}" rel="noopener" target="_blank">{SOURCE_LABEL}</a>です。</p>"""
+<p class="notice">出典: {esc(wagelib.SOURCE_LABEL)}、賃金構造基本統計調査の概要を加工して作成。厚生労働省が作成したものではありません。最低賃金は、{SOURCE_LABEL}です。</p>"""
 
 
 def wage_ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
@@ -815,8 +816,6 @@ def check_page(d: dict, cfg: dict, preview: bool) -> str:
 <p>1か月平均所定労働時間は、「1日の所定労働時間 × 年間の所定労働日数 ÷ 12」で求めます。判定は、厚生労働省の「あなたの賃金を比較チェック」の方法にもとづきます。くわしい説明は、<a href="/guide/calculate/">月給・日給を時給に換算する方法</a>と、<a href="/guide/below/">下回っていたときの扱い</a>をご覧ください。</p>
 
 {content.CHECK_NOTES}
-<h2>出典</h2>
-<ul class="link-list">{"".join(f'<li><a href="{esc(u)}" rel="noopener" target="_blank">{esc(n)}</a></li>' for n, u in content.CHECK_SOURCES)}</ul>
 <p class="notice">内容の確認日: {jp_date(content.CHECK_VERIFIED_AT)}。この計算は目安です。実際に最低賃金を下回っているかどうかは、個別の事情によって変わります。気になる場合は、お近くの都道府県労働局や労働基準監督署に、ご相談ください。このサイトは、個別の相談には対応していません。</p>
 <script type="application/json" id="data">{data}</script>"""
     return finish(layout(
@@ -852,7 +851,7 @@ def history_page(d: dict, cfg: dict, preview: bool) -> str:
 {pref_section}<h2>もっと詳しく</h2>
 <p>地域差、節目を超えた年度、順位の動き、引上げ額、発効日を、<a href="/analysis/">最低賃金の分析</a>にまとめています。</p>
 <p class="notice">この表のデータは、<a href="/data/">CSV・JSONでダウンロード</a>できます(平成14年度以降)。引用するときは、<a href="/cite/">引用のしかた</a>をご覧ください。</p>
-<p class="notice">データの取得日: {jp_date(d['fetched_date'])}。出典の表にある各年度の額を、このサイトで並べ替えました。グラフの縦軸は、折れ線では0から始まっていません。</p>"""
+<p class="notice">データの取得日: {jp_date(d['fetched_date'])}。公表された各年度の額を、このサイトで並べ替えました。グラフの縦軸は、折れ線では0から始まっていません。</p>"""
     return finish(layout(cfg, preview, path="/history/", title=f"最低賃金の推移 全国加重平均の歴代一覧とグラフ({ys[0]['label']}〜{last['label']})",
                          description=f"{first['label']}から{last['label']}までの全国加重平均の最低賃金の歴代の推移を、グラフと年度別の表でまとめます。最高額・最低額、引上げ額のランキングも掲載。", body=body), d)
 
@@ -868,9 +867,9 @@ def data_page(d: dict, cfg: dict, preview: bool) -> str:
         ("年度(和暦)", f"{first['label']}から{last['label']}まで"),
         ("最低賃金(円)", "地域別最低賃金の時間額"),
         ("前年度からの引上げ(円)", "その年度の額から前の年度の額を引いた値。最初の年度は空欄"),
-        ("発効日", "その額が適用される最初の日(出典の表の日付。補正したときは次の列に元の日付)"),
+        ("発効日", "その額が適用される最初の日(元の表の日付。補正したときは次の列に元の日付)"),
         ("全国順位", "その年度の47都道府県の中での順位。同額は同じ順位"),
-        ("発効日の補正(元の日付)", "出典の表の日付が年度の範囲に入らないときだけ、元の日付を書きます(通常は空欄)"),
+        ("発効日の補正(元の日付)", "元の表の日付が年度の範囲に入らないときだけ、元の日付を書きます(通常は空欄)"),
     ))
     ver_items = "".join(f"<li>{esc(jp_date(v['date']))}: {esc(v['what'])}。結果: {esc(v['result'])}。</li>\n" for v in dataset.VERIFICATIONS)
     body = f"""{crumbs([("全国", "/"), ("データ", None)])}
@@ -890,7 +889,7 @@ def data_page(d: dict, cfg: dict, preview: bool) -> str:
 {ver_items}<li>{esc(dataset.BUILD_CHECKS)}</li>
 </ul>
 <h2>出典と使うときの決まり</h2>
-<p>出典は、{esc(SOURCE_LABEL)}(<a href="{esc(d['source_page'])}" rel="noopener" target="_blank">厚生労働省のページ</a>)です。厚生労働省のページの内容は、特に断りがなければ、<a href="{dataset.PDL_URL}" rel="noopener" target="_blank">公共データ利用規約(第1.0版・PDL1.0)</a>のもとで使えます。使うときは、次の3つを守ってください。</p>
+<p>出典は、{esc(SOURCE_LABEL)}です。厚生労働省のページの内容は、特に断りがなければ、<a href="{dataset.PDL_URL}" rel="noopener" target="_blank">公共データ利用規約(第1.0版・PDL1.0)</a>のもとで使えます。使うときは、次の3つを守ってください。</p>
 <ol>
 <li>出典を書く(サイトの名前とページのURL)。</li>
 <li>編集・加工したことと、加工した人(このサイトの運営者)を、出典とは別に書く。</li>
@@ -908,7 +907,7 @@ def data_page(d: dict, cfg: dict, preview: bool) -> str:
 def cite_page(d: dict, cfg: dict, preview: bool) -> str:
     base = cfg["site_url"].rstrip("/")
     name = esc(cfg["site_name"])
-    example_full = (f"出典:「地域別最低賃金の全国一覧」(厚生労働省){d['source_page']} をもとに、{cfg['site_name']}({base}/)が加工して作成"
+    example_full = (f"出典:「地域別最低賃金の全国一覧」(厚生労働省)をもとに、{cfg['site_name']}({base}/)が加工して作成"
                     f"(公共データ利用規約 第1.0版 PDL1.0 {dataset.PDL_URL} )。データの取得日:{jp_date(d['fetched_date'])}。")
     example_short = f"出典:{cfg['site_name']}({base}/)。厚生労働省の公表資料を加工して作成。"
     body = f"""{crumbs([("全国", "/"), ("引用のしかた", None)])}
@@ -916,10 +915,10 @@ def cite_page(d: dict, cfg: dict, preview: bool) -> str:
 <p class="lead">{name}の数字は、すべて厚生労働省の公表資料にもとづいています。出どころ、このサイトで計算している数字、記事やブログなどで使うときの書き方は、下に書きました。</p>
 <h2>数字の出どころ</h2>
 <ul>
-<li>各都道府県の最低賃金と発効日、全国加重平均: <a href="{esc(d['source_page'])}" rel="noopener" target="_blank">厚生労働省「地域別最低賃金の全国一覧」</a>の、「平成14年度から令和8年度までの地域別最低賃金改定状況」(Excel)。</li>
-<li>昭和52〜平成13年度の各都道府県の額と、昭和53年度からの全国加重平均(各都道府県のページと推移のページに載せています): 同省の審議会資料(2003年)<a href="https://www.mhlw.go.jp/shingi/2003/12/s1202-3h.html" rel="noopener" target="_blank">「地域別最低賃金に関するデータ(時間額)」</a>。平成14年度と平成15年度の額は、上の「全国一覧」と47都道府県すべてで一致することを、ページを作るたびに確かめています。</li>
+<li>各都道府県の最低賃金と発効日、全国加重平均: 厚生労働省「地域別最低賃金の全国一覧」の、「平成14年度から令和8年度までの地域別最低賃金改定状況」(Excel)。</li>
+<li>昭和52〜平成13年度の各都道府県の額と、昭和53年度からの全国加重平均(各都道府県のページと推移のページに載せています): 同省の審議会資料(2003年)「地域別最低賃金に関するデータ(時間額)」。平成14年度と平成15年度の額は、上の「全国一覧」と47都道府県すべてで一致することを、ページを作るたびに確かめています。</li>
 <li>平均賃金との比べ方(賃金の実態のページ): 厚生労働省「賃金構造基本統計調査」(政府統計の総合窓口 e-Stat)。</li>
-<li>最低賃金の対象になる賃金の決まり: 最低賃金法と、厚生労働省の最低賃金制度の説明(各解説ページに出典を載せています)。</li>
+<li>最低賃金の対象になる賃金の決まり: 最低賃金法と、厚生労働省の最低賃金制度の説明。</li>
 </ul>
 <h2>このサイトで計算している数字</h2>
 <ul>
@@ -968,7 +967,6 @@ BODIES = {**work_pages.BODIES, **articles.BODIES}
 
 
 def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
-    sources = "".join(f'<li><a href="{esc(u)}" rel="noopener" target="_blank">{esc(n)}</a></li>' for n, u in g["sources"])
     others = "".join(f'<li><a href="/guide/{x["slug"]}/">{esc(x["title"])}</a></li>' for x in content.GUIDES if x is not g)
     extra = ""
     if g["slug"] == "calculate":
@@ -982,9 +980,7 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
 {work_pages.PR_TOP if g.get('pr') else ''}<p class="lead">{esc(g['lead'])}</p>
 <img class="page-banner guide" src="/assets/img/guide-{g.get('image', g['slug'])}.webp" alt="" width="800" height="450">
 <article class="prose">{BODIES[g['slug']](d, sys.modules[__name__]) if g.get('dynamic') else g['body']}</article>
-<h2>出典</h2>
-<ul class="link-list">{sources}</ul>
-<p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、出典でご確認ください。</p>
+<p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、公式の発表でご確認ください。</p>
 <h2>ほかの解説</h2>
 <ul class="link-list">{others}</ul>
 {extra}"""
@@ -1023,7 +1019,7 @@ def about_page(d: dict, cfg: dict, preview: bool) -> str:
 <dt>運営者</dt><dd>{op}</dd>
 <dt>連絡先</dt><dd>{contact_summary(cfg)}</dd>
 <dt>目的</dt><dd>最低賃金の改定内容を、働く方・雇う方が確認しやすい形で整理してお伝えすること。</dd>
-<dt>情報の出典</dt><dd>{esc(SOURCE_LABEL)}(<a href="{{source}}" rel="noopener" target="_blank">公表ページ</a>)、2003年の審議会資料「地域別最低賃金に関するデータ(時間額)」、最低賃金制度の特設サイト、最低賃金法</dd>
+<dt>情報のもと</dt><dd>公式の発表をはじめとする複数の情報をもとにしています。</dd>
 <dt>更新</dt><dd>厚生労働省の公表データをもとに作成し、内容を更新したときは、各ページに表示するデータの取得日も更新します。</dd>
 </dl>
 <h2>編集方針</h2>
@@ -1031,8 +1027,8 @@ def about_page(d: dict, cfg: dict, preview: bool) -> str:
 <li>数字は、厚生労働省の公表資料にあるものだけを使います。他のサイトや報道の数字は載せません。</li>
 <li>順位、引上げ額、全国との差、<a href="/analysis/">分析</a>の数字は、元のデータから計算します。更新のたびに計算し直し、手で書き写した数字はありません。</li>
 <li>データに抜けがあるときや、前の年度より額が下がっているときは、ページを更新せず、公開を止めます。確認の記録は<a href="/data/">データのページ</a>に載せています。</li>
-<li>額が動いた理由は、断定しません。出典にあることだけを書きます。</li>
-<li>法律や制度の説明には、確認した日と出典を付けます。個別の事案が違法かどうかの判断は、書きません。</li>
+<li>額が動いた理由は、断定しません。公表された資料にあることだけを書きます。</li>
+<li>法律や制度の説明には、確認した日を付けます。個別の事案が違法かどうかの判断は、書きません。</li>
 </ul>
 <h2>誤りを見つけたら</h2>
 <p><a href="/contact/">お問い合わせフォーム</a>の「データの誤りのご指摘」からお知らせください。誤りと確認できたときは直し、下の更新の履歴に残します。</p>
@@ -1043,7 +1039,7 @@ def about_page(d: dict, cfg: dict, preview: bool) -> str:
 <p>掲載内容は、正確を期して作成していますが、その正確性・完全性・最新性を保証するものではありません。実際に適用される最低賃金は、都道府県労働局・厚生労働省の発表をご確認ください。当サイトの情報を利用して生じた損害について、運営者は責任を負いません。</p>
 <p>このサイトは、厚生労働省が公表している情報を加工して作成したもので、厚生労働省が作成したものではありません。</p>"""
     return finish(layout(cfg, preview, path="/about/", title=f"運営者情報 | {cfg['site_name']}",
-                         description="最低賃金速報の運営者情報、編集方針、更新の履歴、情報の出典、免責事項です。", body=body, scripts=False), d)
+                         description="最低賃金速報の運営者情報、編集方針、更新の履歴、免責事項です。", body=body, scripts=False), d)
 
 
 def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -1060,7 +1056,7 @@ def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
 <p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>
 <p>当サイトの一部のページには、アフィリエイト広告(広告であることを「PR」などで示しています)を含みます。アフィリエイトサービス「A8.net」を利用しており、広告のリンクを通じて、ブラウザに Cookie が保存され、広告主のサイトでの申し込みなどが、A8.net を通じて当サイトの成果として記録されることがあります。成果の記録に、お名前などの個人を特定する情報は使われません。</p>
 <h2>免責事項・著作権</h2>
-<p>免責事項と情報の出典は、<a href="/about/">運営者情報</a>に記載しています。</p>
+<p>免責事項は、<a href="/about/">運営者情報</a>に記載しています。</p>
 <h2>お問い合わせ</h2>
 <p>このポリシーに関するお問い合わせは、{contact_summary(cfg)}からお願いします。</p>
 <h2>改定</h2>

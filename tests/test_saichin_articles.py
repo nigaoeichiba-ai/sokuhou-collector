@@ -66,7 +66,7 @@ class R8ArticleTest(SiteFixture):
             self.assertIn(needle, page, needle)
         g = content.GUIDE_BY_SLUG["r8"]
         for _, url in g["sources"]:
-            self.assertIn(url, page)
+            self.assertNotIn(url, page)   # 出典のリンクは画面に出さない(2026-11-15)
         self.assertIn("https://www.mhlw.go.jp/stf/newpage_74920.html", [u for _, u in g["sources"]])
         self.assertIn("https://www.mhlw.go.jp/stf/newpage_75950.html", [u for _, u in g["sources"]])
 
@@ -222,8 +222,8 @@ class ExpandedGuidesTest(SiteFixture):
         for slug in self.SLUGS:
             page = self.read(f"guide/{slug}/index.html")
             for _, url in content.GUIDE_BY_SLUG[slug]["sources"]:
-                self.assertIn(url, page)
-        self.assertIn("https://www.check-roudou.mhlw.go.jp/qa/roudousya/chingin/q9.html", self.read("guide/below/index.html"))
+                self.assertNotIn(url, page)   # 出典のリンクは画面に出さない(2026-11-15)
+        self.assertNotIn("https://www.check-roudou.mhlw.go.jp/qa/roudousya/chingin/q9.html", self.read("guide/below/index.html"))
 
 
 class TermsCityRankingTest(SiteFixture):
@@ -249,7 +249,7 @@ class TermsCityRankingTest(SiteFixture):
         for slug in ("how-decided", "excluded", "calculate", "monthly", "what-is"):
             self.assertIn(f'href="/guide/{slug}/"', page)
         for _, url in content.GUIDE_BY_SLUG["terms"]["sources"]:
-            self.assertIn(url, page)
+            self.assertNotIn(url, page)   # 出典のリンクは画面に出さない(2026-11-15)
         self.assertIn("/guide/terms/", self.read("sitemap.xml"))
 
     def test_city_page_lists_three_cities_of_every_prefecture_with_its_amount(self):
