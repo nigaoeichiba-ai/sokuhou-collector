@@ -51,6 +51,6 @@ export function mountExam(id,params,c){
  root.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.detailPhase)setPhase(b.dataset.detailPhase);if(b.dataset.detailSection)document.getElementById(key(b.dataset.detailSection))?.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});},{signal});
  root.addEventListener('change',e=>{if(e.target.matches('[data-check]'))progress();},{signal});
  if(selectedEvent)$('.ed-date-tools').open=true;
- document.title=exam.name+'｜'+exam.edition+'の日程・受験準備｜資格・試験への道';
- document.querySelector('meta[name="description"]').content=exam.name+'（'+exam.edition+'）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。';
+ document.title=meta.seoTitle||exam.name+'｜'+exam.edition+'の日程・受験準備｜資格・試験への道';
+ document.querySelector('meta[name="description"]').content=meta.seoDesc||(exam.name+'（'+exam.edition+'）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。');
 }
