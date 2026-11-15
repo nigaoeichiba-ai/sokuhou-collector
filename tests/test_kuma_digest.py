@@ -196,3 +196,78 @@ class SnapshotTest(unittest.TestCase):
             self.assertFalse(digest_snapshot.update(data))
             saved = __import__("json").loads((data / "kuma_digest_snapshot.json").read_text(encoding="utf-8"))
             self.assertEqual(saved["weeks"]["2026-W39"]["miyagi"]["count"], 3)
+
+
+class MonthlyTest(unittest.TestCase):
+    """Calendar months: only finished months whose rows add up to the prefecture's own figure; every number checked by hand."""
+
+    def test_month_helpers(self):
+        self.assertEqual(digest.month_end("2026-02"), date(2026, 2, 28))
+        self.assertEqual(digest.month_end("2026-12"), date(2026, 12, 31))
+        self.assertEqual(digest.prev_month_key("2026-01"), "2025-12")
+
+    def test_finished_month_is_counted_by_hand(self):
+        dig = digest.build_monthly([digest.pref_source("miyagi", "宮城県", GOOD)], first_day=date(2026, 9, 1))
+        self.assertEqual(dig["months"], ["2026-09"])                       # October is not over at as_of 2026-10-04
+        self.assertEqual(dig["by_month"]["2026-09"], {"miyagi": 5})        # 9/14, 9/22 x2, 9/27, 9/30
+
+    def test_truncated_month_is_left_out(self):
+        dig = digest.build_monthly([digest.pref_source("akita", "秋田県", TRUNC)], first_day=date(2026, 9, 1))
+        self.assertEqual(dig["months"], [])
+
+    def test_month_comparison_uses_common_sources(self):
+        dig = {"by_month": {"2026-08": {"a": 2}, "2026-09": {"a": 5, "b": 9}}, "months": [], "sources": {}}
+        self.assertEqual(digest.common_total_month(dig, "2026-09"), (5, 2, ["a"]))
+
+    def test_top_city_of_a_month(self):
+        rows = [dict(row("2026-09-02"), city="B市"), dict(row("2026-09-20"), city="B市"), dict(row("2026-09-21"), city="C町")]
+        src = digest.pref_source("miyagi", "宮城県", pref(rows, {"9": 3}, "2026-10-04"))
+        self.assertEqual(digest.top_cities_month(src, "2026-09"), (["B市"], 2, 3))
+
+
+class MonthlyPagesTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        from tests.test_kuma_build import CFG, HAVE_PYPDF, raw_data
+        if not HAVE_PYPDF:
+            raise unittest.SkipTest("pypdf is not installed")
+        raw = raw_data()
+        raw["notices"] = []
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.out = Path(cls.tmp.name)
+        full = {**GOOD, "source": "miyagi", "source_page": "https://example.jp/m", "credit": "出典:テスト", "update_note": "更新します"}
+        build.render_site(raw, CFG, cls.out, release=True, prefs={"miyagi": full})
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def read(self, rel):
+        return (self.out / rel).read_text(encoding="utf-8")
+
+    def test_month_page_states_the_count_and_links_back(self):
+        t = self.read("monthly/2026-09/index.html")
+        self.assertIn("2026年9月に", t)
+        self.assertIn("合計5件", t)
+        self.assertIn('href="/monthly/"', t)
+        self.assertIn('href="/digest/"', t)
+
+    def test_hub_is_linked_from_the_week_hub_and_listed_in_the_sitemap(self):
+        self.assertIn('href="/monthly/2026-09/"', self.read("monthly/index.html"))
+        self.assertIn('href="/monthly/"', self.read("digest/index.html"))
+        sitemap = self.read("sitemap.xml")
+        self.assertIn("/monthly/</loc>", sitemap)
+        self.assertNotIn("/monthly/2026-09/", sitemap)
+        self.assertIn('content="noindex', self.read("monthly/2026-09/index.html"))
+
+    def test_no_monthly_without_a_finished_month(self):
+        from tests.test_kuma_build import CFG, raw_data
+        raw = raw_data()
+        raw["notices"] = []
+        short = {**GOOD, "monthly": {"R08": {"9": 5, "10": 0}}, "sightings": [row("2026-10-02")], "as_of": "2026-10-04",
+                 "source": "miyagi", "source_page": "https://example.jp/m", "credit": "出典:テスト", "update_note": "更新します"}
+        short["monthly"] = {"R08": {"10": 1}}
+        with tempfile.TemporaryDirectory() as tmp:
+            files = build.render_site(raw, CFG, Path(tmp), release=True, prefs={"miyagi": short})
+        self.assertFalse([f for f in files if f.startswith("monthly/")])
+        self.assertNotIn('href="/monthly/"', (Path(tmp) / "digest/index.html").read_text(encoding="utf-8") if (Path(tmp) / "digest/index.html").exists() else "")

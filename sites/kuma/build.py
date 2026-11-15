@@ -911,7 +911,7 @@ DIGEST_NOTE = ("各自治体が公表している目撃情報の一覧を、月�
                "一覧の件数が、その自治体の月の合計と合わない月は、対象から外しています。")
 
 
-def digest_hub(dig: dict, cfg: dict, preview: bool) -> str:
+def digest_hub(dig: dict, cfg: dict, preview: bool, has_monthly: bool = False) -> str:
     rows = []
     for k in dig["weeks"]:
         tot, prev, both = digest.common_total(dig, k)
@@ -922,7 +922,8 @@ def digest_hub(dig: dict, cfg: dict, preview: bool) -> str:
 <h1>クマの目撃情報 週ごとのまとめ</h1>
 <p class="lead">自治体が公式に公表しているクマの目撃情報を、週ごとに数えて、前の週と比べています。いまは、{esc(names)}の公表分です。</p>
 {table(["週", "件数(取得できた自治体の合計)", "対象", "前の週との比較"], rows)}
-<p class="notice">{DIGEST_NOTE}「前の週との比較」は、両方の週で数えられた自治体だけの合計どうしです。</p>"""
+<p class="notice">{DIGEST_NOTE}「前の週との比較」は、両方の週で数えられた自治体だけの合計どうしです。</p>
+{'<p><a href="/monthly/">月ごとのまとめ</a>もあります。</p>' if has_monthly else ''}"""
     return page(cfg, preview, path="/digest/", title="クマの目撃情報 週ごとのまとめ(自治体の公式)",
                 description="自治体が公表しているクマの目撃情報を、週ごとに数えて、前の週と比べています。", body=body)
 
@@ -973,6 +974,60 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 <p class="notice">{DIGEST_NOTE}</p>
 {notes}<p class="notice credit">出典: 各自治体が公開している目撃情報を加工して作成。各自治体が作成したものではありません。取得日: {jp_date(dig['fetched_date'])}。</p>"""
     return page(cfg, preview, path=f"/digest/{key}/", title=f"{week_range(key)}のクマの目撃情報(週ごとのまとめ)",
+                description=head, body=body)
+
+
+def month_label(key: str) -> str:
+    a = digest.month_start(key)
+    return f"{a.year}年{a.month}月"
+
+
+def monthly_hub(dig: dict, cfg: dict, preview: bool) -> str:
+    rows = []
+    for k in dig["months"]:
+        tot, prev, both = digest.common_total_month(dig, k)
+        rows.append([f'<a href="/monthly/{k}/">{month_label(k)}</a>', n(sum(dig["by_month"][k].values())),
+                     f"{len(dig['by_month'][k])}か所", ratio_text(tot, prev) if prev is not None else "-"])
+    names = "・".join(s["name"] for s in dig["sources"].values())
+    body = f"""{crumbs([("全国", "/"), ("週ごとのまとめ", "/digest/"), ("月ごとのまとめ", None)])}
+<h1>クマの目撃情報 月ごとのまとめ</h1>
+<p class="lead">自治体が公式に公表しているクマの目撃情報を、暦の月ごとに数えて、前の月と比べています。月が終わって、一覧の件数が自治体の月の合計と合った月だけを載せます。いまは、{esc(names)}の公表分です。</p>
+{table(["月", "件数(取得できた自治体の合計)", "対象", "前の月との比較"], rows)}
+<p class="notice">{DIGEST_NOTE}「前の月との比較」は、両方の月で数えられた自治体だけの合計どうしです。</p>
+<p><a href="/digest/">週ごとのまとめ</a> ・ <a href="/live/">自治体の目撃情報の一覧</a></p>"""
+    return page(cfg, preview, path="/monthly/", title="クマの目撃情報 月ごとのまとめ(自治体の公表分)",
+                description=f"自治体が公表したクマの目撃情報を月ごとに数え、前の月と比べています。最新は{month_label(dig['months'][0])}。", body=body)
+
+
+def monthly_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
+    cur, prev = dig["by_month"][key], dig["by_month"].get(digest.prev_month_key(key), {})
+    tot, ptot, both = digest.common_total_month(dig, key)
+    rows, places = [], ""
+    for sk, c in cur.items():
+        src = dig["sources"][sk]
+        rows.append([esc(src["name"]), n(c), n(prev[sk]) if sk in prev else "-", ratio_text(c, prev[sk]) if sk in prev else "-"])
+        tops, top, named = digest.top_cities_month(src, key)
+        most = (f"。市町村別で最も多かったのは、{'・'.join(esc(x) for x in tops)}の{n(top)}件" + ("ずつ" if len(tops) > 1 else "")) if tops and named == c else ""
+        places += f"<li>{esc(src['name'])}: {n(c)}件{most}</li>"
+    if both:
+        rows.append(["<strong>合計(両月で数えた自治体)</strong>", n(tot), n(ptot), ratio_text(tot, ptot)])
+    ks = dig["months"]
+    i = ks.index(key)
+    links = ([f'<a href="/monthly/{ks[i + 1]}/">前の月</a>'] if i + 1 < len(ks) else []) + ([f'<a href="/monthly/{ks[i - 1]}/">次の月</a>'] if i > 0 else [])
+    head = f"{month_label(key)}に、自治体が公表したクマの目撃は、取得できた{len(cur)}か所で、合計{n(sum(cur.values()))}件です。"
+    if both:
+        head += (f"前の月と同じ{len(both)}か所で比べると、{n(tot)}件で、前の月({n(ptot)}件)と同じです。" if tot == ptot
+                 else f"前の月と同じ{len(both)}か所で比べると、{n(tot)}件で、前の月({n(ptot)}件)の{ratio_text(tot, ptot)}です。")
+    body = f"""{crumbs([("全国", "/"), ("週ごとのまとめ", "/digest/"), ("月ごとのまとめ", "/monthly/"), (month_label(key), None)])}
+<h1>{month_label(key)}の、クマの目撃情報</h1>
+<p class="lead">{head}</p>
+{table(["自治体", "この月の件数", "前の月", "前の月との比較"], rows)}
+<h2>多かった市町村</h2>
+<ul>{places}</ul>
+<p>{" ・ ".join(links)} ・ <a href="/monthly/">月ごとのまとめの一覧</a> ・ <a href="/digest/">週ごとのまとめ</a></p>
+<p class="notice">{DIGEST_NOTE}</p>
+<p class="notice credit">出典: 各自治体が公開している目撃情報を加工して作成。各自治体が作成したものではありません。取得日: {jp_date(dig['fetched_date'])}。</p>"""
+    return page(cfg, preview, path=f"/monthly/{key}/", title=f"{month_label(key)}のクマの目撃情報(月ごとのまとめ)",
                 description=head, body=body)
 
 
@@ -1062,12 +1117,19 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["notify/index.html"] = notify_page(d, cfg, preview)
     if cfg.get("rakuten_affiliate_id"):
         pages["goods/index.html"] = goods_page(d, cfg, preview)
+    mdig = digest.build_monthly(digest_sources(prefs))
     if dig["weeks"]:
         dig["fetched_date"] = d["fetched_date"]
-        pages["digest/index.html"] = digest_hub(dig, cfg, preview)
+        pages["digest/index.html"] = digest_hub(dig, cfg, preview, bool(mdig["months"]))
         for k in dig["weeks"]:
             pages[f"digest/{k}/index.html"] = digest_page(dig, k, cfg, preview)
         thin_pages.update(f"digest/{k}/index.html" for k in indexing_mod.thin_weeks(dig["weeks"]))
+    if mdig["months"]:
+        mdig["fetched_date"] = d["fetched_date"]
+        pages["monthly/index.html"] = monthly_hub(mdig, cfg, preview)
+        for k in mdig["months"]:
+            pages[f"monthly/{k}/index.html"] = monthly_page(mdig, k, cfg, preview)
+            thin_pages.add(f"monthly/{k}/index.html")          # same shape as the week pages: noindex, the hub is the page that is indexed
     pages["feed.xml"] = feed_xml(d, cfg)
     lv_ = d.get("lv")
     detail_names = [i["name"] for i in lv_["infos"].values()] if lv_ else []

@@ -143,3 +143,65 @@ def updated_snapshot(snap: dict | None, dig: dict) -> dict:
             if (key, sk) not in dig.get("frozen", {}):
                 weeks.setdefault(key, {})[sk] = entry_from_source(dig["sources"][sk], key)
     return {"version": 1, "weeks": {k: weeks[k] for k in sorted(weeks)}}
+
+
+# ---------------------------------------------------------------- monthly digest (calendar months)
+# A month goes in only when it is over (its last day is not after the source's as-of date) and the rows of the list add up to the
+# prefecture's own figure for that month; the same rule as for a week, so a truncated list is never counted.
+
+def month_key(d: date) -> str:
+    return f"{d.year}-{d.month:02d}"
+
+
+def month_start(key: str) -> date:
+    y, m = key.split("-")
+    return date(int(y), int(m), 1)
+
+
+def month_end(key: str) -> date:
+    s = month_start(key)
+    return (date(s.year + (s.month == 12), s.month % 12 + 1, 1)) - timedelta(days=1)
+
+
+def prev_month_key(key: str) -> str:
+    return month_key(month_start(key) - timedelta(days=1))
+
+
+def covers_month(src: dict, key: str) -> bool:
+    s, e = month_start(key), month_end(key)
+    return e <= src["as_of"] and src["monthly"].get(fy_key(s), {}).get(str(s.month)) == src["per_month"].get((s.year, s.month), 0)
+
+
+def build_monthly(sources: list[dict], first_day: date | None = None) -> dict:
+    """{months: [key newest first], by_month: {key: {source key: count}}, sources: {key: source}}."""
+    sources = [s for s in sources if s]
+    if not sources:
+        return {"months": [], "by_month": {}, "sources": {}}
+    latest = max(s["as_of"] for s in sources)
+    first_day = first_day or fy_first_day(latest)
+    ms = date(first_day.year, first_day.month, 1)
+    if ms < first_day:
+        ms = month_end(month_key(ms)) + timedelta(days=1)
+    by_month: dict[str, dict[str, int]] = {}
+    while month_end(month_key(ms)) <= latest:
+        k = month_key(ms)
+        row = {s["key"]: sum(1 for d in s["days"] if month_key(d) == k) for s in sources if covers_month(s, k)}
+        if row:
+            by_month[k] = row
+        ms = month_end(k) + timedelta(days=1)
+    return {"months": sorted(by_month, reverse=True), "by_month": by_month, "sources": {s["key"]: s for s in sources}}
+
+
+def common_total_month(dig: dict, key: str) -> tuple[int, int | None, list[str]]:
+    cur = dig["by_month"][key]
+    prev = dig["by_month"].get(prev_month_key(key), {})
+    both = [k for k in cur if k in prev]
+    return sum(cur[k] for k in both), (sum(prev[k] for k in both) if both else None), both
+
+
+def top_cities_month(src: dict, key: str) -> tuple[list[str], int, int]:
+    cnt = Counter(c for d, c in src.get("cities", []) if month_key(d) == key)
+    if not cnt:
+        return [], 0, 0
+    top = max(cnt.values())
+    return sorted(c for c, v in cnt.items() if v == top), top, sum(cnt.values())

@@ -107,6 +107,8 @@ def compute(pages: dict, d: dict, lv: dict | None, today: date, stored: dict | N
             out[url] = live_all or mins
         elif head in ("official", "cite"):
             out[url] = max(live_all, mins)
+        elif head == "monthly":
+            out[url] = digest.month_end(parts[1]).isoformat() if len(parts) > 1 else (live_all or mins)
         elif head == "digest":
             out[url] = (digest.week_start(parts[1]) + timedelta(days=6)).isoformat() if len(parts) > 1 else (live_all or mins)
         elif head == "ranking" and len(parts) > 1 and parts[1] in ("injuries", "deaths"):
