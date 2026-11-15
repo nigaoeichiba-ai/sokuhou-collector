@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-13T21:16:07.725770+00:00",
+ "fetched_at": "2026-11-15T21:17:04.251285+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -1647,18 +1647,6 @@
    "title": "休廃止鉱山鉱害防止等工事費補助金（令和８年度当初）【中部監督部】"
   },
   {
-   "acceptance_end_datetime": "2026-11-15T14:59:00.000Z",
-   "acceptance_start_datetime": "2026-09-14T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDeUgMAL",
-   "id": "a0WJ200000CDeUgMAL",
-   "institution_name": "東京都臨床調査個人票電子化等推進事業補助金",
-   "name": "S-00009792",
-   "subsidy_max_limit": 50000,
-   "target_area_search": "東京都",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和8年度東京都臨床調査個人票電子化等推進事業補助金"
-  },
-  {
    "acceptance_end_datetime": "2026-12-15T08:00:00.000Z",
    "acceptance_start_datetime": "2026-11-02T08:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000003iibVUAQ",
@@ -1767,5 +1755,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 147
+ "total": 146
 }

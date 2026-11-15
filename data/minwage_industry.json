@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-01T06:16:00+09:00",
+ "fetched_at": "2026-11-16T06:16:55+09:00",
  "rows": [
   {
    "daily": null,
@@ -903,7 +903,7 @@
    "hourly": 1136,
    "industry": "電子部品・デバイス・電子回路、電気機械器具、情報通信機械器具製造業",
    "pref": "京都",
-   "regional_applies": false
+   "regional_applies": true
   },
   {
    "daily": null,
