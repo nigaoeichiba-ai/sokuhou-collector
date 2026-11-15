@@ -7409,6 +7409,195 @@
   "unchanged": 61,
   "units": 91
  },
+ "gift/white-day-friend-female/index.html": {
+  "accepted": [
+   {
+    "from": "相手が好きな色や香りを思い出し、ハンドクリームは強すぎない香りから選ぶ。",
+    "kind": "item",
+    "to": "ハンドクリームは相手の好きな色や香りを思い出し、香りが強すぎないものを選びます。",
+    "why": "文末と語順を整える"
+   },
+   {
+    "from": "紅茶はミルク向き、果物の香り、ノンカフェインなど、友達の飲む時間に合わせて選ぶ。",
+    "kind": "item",
+    "to": "紅茶はミルク向き、果物の香り、ノンカフェインから、友達が飲む時間に合うものを選びます。",
+    "why": "選ぶ基準を先に出す"
+   },
+   {
+    "from": "薄く巻いた焼き菓子の詰め合わせです。個包装で家族や職場でも分けられます。",
+    "kind": "para",
+    "to": "薄く巻いた焼き菓子の詰め合わせです。個包装なので家族や職場で分けられます。",
+    "why": "理由を自然につなぐ"
+   },
+   {
+    "from": "大げさすぎる品は相手に返礼以上の意味を感じさせることがあります",
+    "kind": "item",
+    "to": "大げさすぎる品は返礼以上の意味に受け取られることがあります。",
+    "why": "自然な言い回しにする"
+   },
+   {
+    "from": "美容や年齢を評価しているように見える品は避けます。",
+    "kind": "item",
+    "to": "美容や年齢を評価しているように見える品は選びません。",
+    "why": "判断を簡潔に言い切る"
+   }
+  ],
+  "date": "2026-11-15",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 「喜ばれやすい理由」と「こんな贈り方」で同じ品と場面を繰り返しており、読み手が選ぶまでに時間がかかります。",
+   "具体: 「相手らしさ」「この場面」「どんなタイプ」など、品や判断基準がすぐに分からない表現があります。",
+   "リズム: 箇条書きが同じ構文で続き、一文に選び方と持ち帰り方を詰め込んだ箇所があります。"
+  ],
+  "failed": "",
+  "hash": "3cf460b61486",
+  "needs_check": [
+   {
+    "question": "「人気の4点」とする根拠が、売上やランキングなどで確認できるか確かめてください。",
+    "text": "女友達へのホワイトデーギフト、種類の違う人気の4点"
+   },
+   {
+    "question": "「掲載されている情報は、よろこぶプレゼントの作成者により運営されています」の意図と、変更できる法的な案内文かを確認してください。",
+    "text": "価格・在庫は2026年11月15日 7:31時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者により運営されています。価格、販売可能情"
+   }
+  ],
+  "page": "gift/white-day-friend-female/index.html",
+  "rejected": [
+   {
+    "after": "女友達へのホワイトデーには、恋人向けの印象が強すぎない、明るいお礼の品が合います。焼き菓子や紅茶はおしゃべりの時間に開けやすく、ハンドクリームは相手が好きな香り",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['印象']"
+    ],
+    "text": "女友達へのホワイトデーは、恋人向けに見えすぎない、明るいお礼の品が合います。焼き菓子や紅茶はおしゃべりの時間に開けやすく"
+   },
+   {
+    "after": "焼き菓子はカフェ帰りや駅前でも渡しやすく、週末に家で少しずつ食べてもらえます。友達への気軽なお礼の品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['品']"
+    ],
+    "text": "焼き菓子はカフェ帰りや駅前で手渡しやすく、友達が週末に家で少しずつ食べられる気軽な返礼です。"
+   },
+   {
+    "after": "紅茶はティーバッグの詰め合わせなら、甘いものを控えている友達にも渡しやすい品です。おしゃべりの時間にも合います。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['時間']"
+    ],
+    "text": "紅茶はティーバッグの詰め合わせにすると、甘いものを控えている友達にも渡しやすく、会話の種になります。"
+   },
+   {
+    "after": "焼き菓子は賞味期限と箱の大きさを確認します。帰りのバッグに入る薄い箱なら、持ち帰りやすくなります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['確認']"
+    ],
+    "text": "焼き菓子は賞味期限と箱の大きさを見て、帰りのバッグに入る薄さのものにする。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "焼き菓子・ハンドクリーム・紅茶・ポーチから選ぶ",
+    "problems": [
+     "names / quoted words lost: ['ホワイトデー']"
+    ],
+    "text": "女友達へのホワイトデー、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "焼き菓子は駅前やカフェ帰りでも手渡しやすく、週末のおやつとして楽しんでもらえます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['菓子']"
+    ],
+    "text": "駅前やカフェ帰りに手渡しやすく、週末のおやつとして気軽に楽しんでもらえます。"
+   },
+   {
+    "after": "ポーチに入るサイズなら外出先でも使いやすく、相手の好きな香りを選べます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手', '好']"
+    ],
+    "text": "ポーチに入るサイズなら外出先で使いやすく、香りで友達らしさを選べます。"
+   },
+   {
+    "after": "コスメや小物をまとめられるポーチは友達への明るいお礼の品になります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ポーチ', '友達', '品']"
+    ],
+    "text": "コスメや小物をまとめられ、恋人向けに見えすぎない明るいお礼になります。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、女友達へのホワイトデーに合う品を選びました。価格や在庫は変わるため、購入前にAmazonの商品ページで確認してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['女友達', 'ホワイトデー', '商品']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "女友達について一言教えてください。好きなもの趣味、年齢などを入力すると、その内容に近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['女友達', '入力', '内容']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "相手別のホワイトデーギフト",
+    "problems": [
+     "names / quoted words lost: ['ホワイトデー']"
+    ],
+    "text": "ホワイトデーに贈るほかの相手"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「喜ばれやすい理由…」〜「紅茶はミルク向き、果物の香り…」と「女友達へのホワイトデー、こん…」〜「楽天市場で「レディース ポー…」は品名と理由が重なるため、一つの節に統合し、各品の「向く場面」と「選ぶ基準」を続けて読める形にする。",
+   "導入のあとに「選び方のポイント…」〜「紅茶はミルク向き、果物の香り…」、「気をつけたいこと…」〜「美容や年齢を評価しているよう…」を置き、選ぶ基準と避けたい品を確認してから商品一覧へ進む順にする。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は商品を比べたあとの行動を示す節として、楽天市場とAmazonの商品紹介より後ろに置く。"
+  ],
+  "unchanged": 65,
+  "units": 92
+ },
  "gift/white-day-girlfriend/index.html": {
   "accepted": [
    {
@@ -12033,6 +12222,200 @@
   "structure_suggestions": [],
   "unchanged": 50,
   "units": 67
+ },
+ "oiwai/choju/index.html": {
+  "accepted": [
+   {
+    "from": "還暦は数え年(満60歳)で祝います。還暦以外は数え年でも満年齢でも構いません。古希以降は、1年早く迎えられる数え年で祝う人も少なくありません(三越伊勢丹)。",
+    "kind": "item",
+    "to": "還暦は数え年(満60歳)で祝います。還暦以外は数え年でも満年齢でも構いません。古希以降は1年早い数え年で祝う人も少なくありません(三越伊勢丹)。",
+    "why": "回りくどい表現を整理"
+   },
+   {
+    "from": "のしと表書き",
+    "kind": "heading",
+    "to": "水引と表書き",
+    "why": "節の中身に合わせる"
+   },
+   {
+    "from": "三越伊勢丹は年齢ごとのテーマカラーを手がかりに身につける物(セーター、マフラー)、飾る物(生花)、実用品(湯飲み、杖、傘)を勧めています。食事券や旅行券、日本酒、紅白ワインも例に挙げています。",
+    "kind": "item",
+    "to": "三越伊勢丹は、年齢ごとのテーマカラーを贈り物選びの手がかりにするよう勧めています。例は身につける物(セーター、マフラー)、飾る物(生花)、実用品(湯飲み、杖、傘)です。食事券や旅行券、日本酒、紅白ワインも挙げています。",
+    "why": "長文を一文一論点に"
+   },
+   {
+    "from": "若々しい人が多い現代では、明らかに年配向けの品は避けて、本人の好みに合わせたものを贈ります(松坂屋名古屋店)。",
+    "kind": "item",
+    "to": "若々しい人が多い現代では、いかにも年配向けの品は避け、本人の好みに合うものを選びます(松坂屋名古屋店)。",
+    "why": "ふつうの言い方に直す"
+   },
+   {
+    "from": "お祝いの席で赤飯や祝い菓子を配ることが、お返しになります(松坂屋名古屋店)。",
+    "kind": "para",
+    "to": "お祝いの席で赤飯や祝い菓子を配れば、お返しになります(松坂屋名古屋店)。",
+    "why": "動作と結論を直結"
+   }
+  ],
+  "date": "2026-11-15",
+  "deleted": [
+   "還暦、古希、喜寿、米寿などの年齢、色、金額、表書きを、三越伊勢丹と松坂屋名古屋店の案内からまとめました。",
+   "確認日 2026年10月15日"
+  ],
+  "diagnosis": [
+   "リズム: 出典を含む長い文に複数の論点が入り、必要な情報を拾いにくくなっています。",
+   "語: 「〜と書いています」「〜そうです」が重なり、案内文として回りくどい箇所があります。",
+   "構成: 導入文がu2とu4で重複しています。"
+  ],
+  "failed": "",
+  "hash": "1af2da947ff7",
+  "needs_check": [],
+  "page": "oiwai/choju/index.html",
+  "rejected": [
+   {
+    "after": "色は、松坂屋名古屋店が日本百貨店協会の提案するイメージカラーとして紹介しているものです。三越伊勢丹も、年齢ごとのテーマカラーを贈り物選びの手がかりにするよう勧め",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['紹介']"
+    ],
+    "text": "色は、松坂屋名古屋店が日本百貨店協会の提案するイメージカラーとして示しているものです。三越伊勢丹も、年齢ごとのテーマカラ"
+   },
+   {
+    "after": "お正月、誕生日、敬老の日に祝うのが一般的です(三越伊勢丹)。松坂屋名古屋店は誕生日に限らず、敬老の日や家族がそろうお正月・お盆でもよいとしています。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['一般的']"
+    ],
+    "text": "祝う時期はお正月、誕生日、敬老の日が多いようです(三越伊勢丹)。松坂屋名古屋店は誕生日にこだわる必要はなく、敬老の日や、"
+   },
+   {
+    "after": "かつては数え年61歳の還暦を盛大に祝いました。いまは還暦を過ぎても現役の人が多く、70歳の古希から本格的に祝う人も増えています(松坂屋名古屋店)。",
+    "problems": [
+     "hedge removed: 「増えているそうです」が「増えています」となり、伝聞表現が消えた"
+    ],
+    "text": "かつては数え年61歳の還暦を盛大に祝いました。いまは還暦を過ぎても現役の人が多く、70歳の古希から本格的に祝う人も増えて"
+   },
+   {
+    "after": "三越伊勢丹によると相場は店頭での相談をもとにした目安です。付き合いの深さや地域によって変わるため、迷うときは少し多めにするとよいとしています。ここでは各社が示し",
+    "problems": [
+     "added claim: 相場が変わることを、多めにする理由として新たに結び付けた"
+    ],
+    "text": "三越伊勢丹は相場は店頭の相談から出した目安で、付き合いの深さや地域で変わると書いています。迷うときは少し多めにするとよい"
+   },
+   {
+    "after": "どのお祝いにも「御祝」「寿」「賀寿」「敬寿」「寿福」が使えます。敬老の日の贈り物には「敬老の日御祝」を使います(三越伊勢丹)。",
+    "problems": [
+     "hedge removed: 三越伊勢丹の「〜とします」が「使います」という言い切りになった"
+    ],
+    "text": "どのお祝いにも「御祝」「寿」「賀寿」「敬寿」「寿福」が使えます。敬老の日の贈り物は「敬老の日御祝」とします(三越伊勢丹)"
+   }
+  ],
+  "structure_suggestions": [],
+  "unchanged": 21,
+  "units": 33
+ },
+ "oiwai/gakko/index.html": {
+  "accepted": [
+   {
+    "from": "どれを贈るか、いつ贈るか",
+    "kind": "heading",
+    "to": "重なったときに優先するお祝い",
+    "why": "節の中身を明確にする"
+   },
+   {
+    "from": "卒業と入学・就職は時期が近いのでどちらか一方に贈るのが一般的です。通常は卒業祝いを省いて新しい門出のお祝いを贈ります(三越伊勢丹)。",
+    "kind": "item",
+    "to": "卒業祝いと入学・就職祝いの時期が近いときは、どちらか一方を贈るのが一般的です。通常は卒業祝いを省き、新しい門出を祝います(三越伊勢丹)。",
+    "why": "比較する対象を明示"
+   },
+   {
+    "from": "義務教育の途中やそのまま上の学校に進む場合は、入学のお祝いを重く見ることが多いようです。卒業して社会人になるなら、就職祝いとして、励ましを込めた品を贈ります(三越伊勢丹)。",
+    "kind": "item",
+    "to": "義務教育の途中やそのまま上の学校に進む場合は、卒業より入学を重く見ることが多いようです。卒業後に社会人になる場合は、励ましを込めた品を就職祝いとして贈ります(三越伊勢丹)。",
+    "why": "二つの条件を整理"
+   },
+   {
+    "from": "卒業と就職のお祝いは、就職の前にあたる3月末までに贈ります(三越伊勢丹)。",
+    "kind": "item",
+    "to": "卒業祝いと就職祝いは就職前の3月末までに贈ります(三越伊勢丹)。",
+    "why": "時期を短く示す"
+   },
+   {
+    "from": "水引はどれも紅白の蝶結びです。現金を包むときの祝儀袋も紅白の蝶結びです。",
+    "kind": "para",
+    "to": "のし紙と現金を包む祝儀袋はどちらも紅白の蝶結びです。",
+    "why": "重複を一文にまとめる"
+   },
+   {
+    "from": "仕事関係の人の子どもに贈るか",
+    "kind": "heading",
+    "to": "仕事関係の人の子どもに入学祝いを贈るか",
+    "why": "祝いの種類を明示"
+   }
+  ],
+  "date": "2026-11-15",
+  "deleted": [
+   "確認日 2026年10月15日"
+  ],
+  "diagnosis": [
+   "構成: 冒頭に結論がなく、贈る時期の説明が優先するお祝いの節に混在しています。",
+   "構成: 品物の例より先に、仕事関係の人の子どもへ贈るかを判断できる並びが適しています。",
+   "リズム: 一文に条件と判断が重なる箇所があり、主語や対象も一部曖昧です。"
+  ],
+  "failed": "",
+  "hash": "127fa9bdba5b",
+  "needs_check": [],
+  "page": "oiwai/gakko/index.html",
+  "rejected": [
+   {
+    "after": "卒業祝いと入学・就職祝いが重なるときは、入学・就職祝いを優先するのが一般的です。",
+    "problems": [
+     "numbers differ: ['三'] -> []",
+     "words added that the original does not have (information must not grow): ['優先', '一般的']"
+    ],
+    "text": "入学・卒業・就職のお祝いの時期、金額、のし、贈る品の例を、三越伊勢丹と松坂屋名古屋店の案内からまとめました。"
+   },
+   {
+    "after": "三越伊勢丹の金額は店頭での相談をもとにした相場の目安です。付き合いの深さや地域で変わり、迷うときは少し多めにするとよいと案内しています。表の金額は各社が示した目",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['案内']",
+     "attribution removed (1 -> 0)"
+    ],
+    "text": "三越伊勢丹は相場は店頭の相談から出した目安で、付き合いの深さや地域で変わると書いています。迷うときは少し多めにするとよい"
+   },
+   {
+    "after": "大学の入学: 腕時計、筆記具、財布、パソコン、図書カードなど。ひとり暮らしを始める場合は、冷蔵庫や電子レンジなどの家電、食器、寝具も候補です(三越伊勢丹)。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場合', '候補']"
+    ],
+    "text": "大学の入学: 腕時計、筆記具、財布、パソコン、図書カードなど。ひとり暮らしを始めるなら、冷蔵庫や電子レンジなどの家電、食"
+   },
+   {
+    "after": "入学祝いは内輪のお祝いです。仕事関係の人の子どもには、家族ぐるみの付き合いがなければ、贈らなくてもよいとされています。受け取る側がお返しを気にすることもあるため",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "入学祝いは内輪のお祝いです。仕事関係の人の子どもには、家族ぐるみで付き合っていなければ、お祝いは特に要らないとされていま"
+   },
+   {
+    "after": "お返しは基本的に要りません。お礼は子ども本人からも伝えます。相手の家にも同じようなお祝いごとがあれば、同じくらいのお祝いを贈ります(松坂屋名古屋店)。",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "基本的にお返しは要りません。お礼は子ども本人からも伝えます。相手の家にも同じようなお祝いごとがあったときは、同じくらいの"
+   },
+   {
+    "after": "この記事は出典先を要約・比較し、当サイトの考え方を足したものです。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときはそれに合わせてください",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['記事', '出典先', 'サイト', '考']"
+    ],
+    "text": "この早見表は、複数の案内を要約・比較したものです。しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるとき"
+   }
+  ],
+  "structure_suggestions": [
+   "「卒業と就職のお祝いは、就職の…」を「どれを贈るか、いつ贈るか…」の節から分け、「金額の目安…」の前に「贈る時期」の見出しを設ける。",
+   "「仕事関係の人の子どもに贈るか…」と「入学祝いは内輪のお祝いです。…」を「贈る品の例…」の前へ移し、贈るかを決めてから品物を選ぶ順にする。",
+   "内容が重なる「学用品や家電は本人や保護者に…」と「贈り物が重ならないよう、本人…」は、必要な物を本人や保護者に聞くこと、学校によって不要な品があること、大きな品の重複を確かめることを一つの項目にまとめる。"
+  ],
+  "unchanged": 21,
+  "units": 34
  },
  "oiwai/kekkon/index.html": {
   "accepted": [
