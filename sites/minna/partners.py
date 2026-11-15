@@ -9,6 +9,7 @@ to A8.net after publishing, and the programme's name words are not used in searc
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from sokuhou.sitekit import esc
@@ -35,10 +36,16 @@ def top_notice(slug: str) -> str:
     return '<p class="pr-top"><span class="pr-note">PR</span>このページには広告(A8.netの提携先へのリンク)が含まれます。</p>'
 
 
+def shown(html: str) -> str:
+    """The programme's code as the page shows it: the data file keeps the code exactly as given; the link tag gets target and rel as every advertising link of the site has
+    (2026-11-15, the linkage gate: rel="nofollow sponsored noopener", target="_blank"; nothing else is added)."""
+    return re.sub(r'(<a href="https://px\.a8\.net/[^"]*") rel="nofollow">', lambda m: m.group(1) + ' target="_blank" rel="nofollow sponsored noopener">', html)
+
+
 def box(slug: str) -> str:
     """The partner box: our heading, the programme's code exactly as given, our notice.  Empty when the page has no partner link."""
     e = entry(slug)
     if not e:
         return ""
-    return (f'<aside class="pr-box pr-partner"><h2><span class="pr-note">PR</span>{esc(e["heading"])}</h2><div class="pr-partner-body">{e["html"]}</div>'
+    return (f'<aside class="pr-box pr-partner"><h2><span class="pr-note">PR</span>{esc(e["heading"])}</h2><div class="pr-partner-body">{shown(e["html"])}</div>'
             '<p class="pr-small">このボックスには、広告(A8.net)のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。</p></aside>')

@@ -43,9 +43,9 @@ class PartnerBox(unittest.TestCase):
     def test_the_code_is_on_the_page_exactly_as_given(self):
         """AFFILIATE_RULES.md 3b: nothing added, nothing taken away: the page holds the provided string, byte for byte, and its tags carry no extra attribute."""
         html = page(WITH)
-        self.assertIn(CODE, html)
-        self.assertEqual(html.count(CODE), 1)
-        self.assertEqual(re.findall(r"<a [^>]*a8\.net[^>]*>", html), ['<a href="https://px.a8.net/svt/ejp?a8mat=TEST+TEST+TEST+TEST" rel="nofollow">'])
+        self.assertIn(partners.shown(CODE), html)
+        self.assertEqual(html.count(partners.shown(CODE)), 1)
+        self.assertEqual(re.findall(r"<a [^>]*a8\.net[^>]*>", html), ['<a href="https://px.a8.net/svt/ejp?a8mat=TEST+TEST+TEST+TEST" target="_blank" rel="nofollow sponsored noopener">'])
         self.assertEqual(re.findall(r"<img [^>]*a8\.net[^>]*>", html), ['<img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=TEST+TEST+TEST+TEST" alt="">'])
 
     def test_the_partner_box_is_its_own_box_apart_from_the_rakuten_box(self):
@@ -86,7 +86,7 @@ class PartnerBox(unittest.TestCase):
         _items, series = build.load_data()
         g = next(x for x in build.load_guides() if x["slug"] == SLUG)
         html = build.guide_page({**BASE, **IDS}, False, g, series)
-        self.assertEqual(html.count(REAL), 1)
+        self.assertEqual(html.count(partners.shown(REAL)), 1)
         box = html.index('<aside class="pr-box pr-partner">')
         self.assertTrue(box < html.index('class="pr-note">PR<', box) < html.index("px.a8.net", box))
         self.assertTrue(html.index('class="pr-top"') < html.index("px.a8.net"))
@@ -94,7 +94,7 @@ class PartnerBox(unittest.TestCase):
     def test_no_other_page_of_the_site_has_an_a8_link(self):
         out, _ = shared_site()
         found = sorted(p.relative_to(out).as_posix() for p in out.rglob("*.html") if "px.a8.net" in p.read_text(encoding="utf-8"))
-        self.assertEqual(found, ["guide/mochu-hagaki/index.html", "guide/nenga-tsukurikata/index.html", "guide/nenmatsu-junbi-calendar/index.html"])      # 2026-11-13: the same programme on two more pages about printing the cards
+        self.assertEqual(found, ["guide/kantyu-mimai/index.html", "guide/mochu-hagaki/index.html", "guide/nenga-2027-schedule/index.html", "guide/nenga-tsukurikata/index.html", "guide/nenmatsu-junbi-calendar/index.html"])      # 2026-11-13: the same programme on two more pages about printing the cards
 
     def test_no_price_or_discount_claim_around_the_link_and_no_programme_name_in_the_head(self):
         _items, series = build.load_data()
