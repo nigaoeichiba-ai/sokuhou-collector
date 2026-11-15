@@ -151,7 +151,7 @@ def verify(site: str, base: str, pages: list[str], fetch=None) -> list[dict]:
             add(path, "affiliate", None, "no affiliate link on this page: write why none could be placed (the owner's rule: look for a natural place yourself)")
         urls = [t for h, t in pg.anchor_text if t and linkage.URL_TEXT.match(t.strip())]
         add(path, "link-text", not urls, "no link is worded as a URL" if not urls else "links worded as a URL: " + ", ".join(urls[:3]))
-        for ad in ads:
+        for ad in (ads if art and path not in linkage.LEGAL else []):       # the content pages only (the gate's own scope: a category names a mall in passing)
             if any(n in text_plain for n in ad["names"]):
                 ok = any(any(n in t for n in ad["names"]) or any(tok in h for tok in ad.get("href_has", [])) for h, t in pg.anchor_text if linkage._is_affiliate(h))
                 add(path, "advertiser", ok, f"{ad['names'][0]} is named: " + ("its affiliate link is there" if ok else "NO affiliate link for it"))

@@ -73,6 +73,11 @@ class Post(unittest.TestCase):
         a = html("<p>アクメのセール</p>" + rel("/b/"), [crumb("/cat/", "/a/"), {"@type": "Article", "datePublished": "2026-11-15"}])
         self.assertIn(("/a/", "advertiser"), self.bad(site(**{"/a/": a})))
 
+    def test_hub_page_naming_an_advertiser_in_passing_is_not_a_failure(self):
+        hub = html("<p>アクメのセールの一覧</p>", [crumb("/", "/cat/")])
+        rows = postcheck.verify("s", BASE, ["/cat/"], site(**{"/cat/": hub}))
+        self.assertFalse([r for r in rows if r["check"] == "advertiser"])
+
     def test_draft_says_fix_needed(self):
         rows = postcheck.verify("s", BASE, ["/a/"], site(**{"/cat/": html("<p>none</p>")}))
         text, ok = postcheck.render("s", BASE, rows, "t", "", "abc", datetime(2026, 11, 15, 12, 0))
