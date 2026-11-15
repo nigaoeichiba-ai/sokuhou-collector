@@ -237,7 +237,10 @@ class HomeTest(unittest.TestCase):
         self.assertTrue(home_problems(h.replace(REVERIFIED.replace("-", "/"), "2026/11/03"), self.TODAY))      # the old check day (the report of the owner)
         self.assertTrue(home_problems(h.replace('href="/calendar/yahoo/"', 'href="/x/"'), self.TODAY))         # a missing entry to a mall calendar
         self.assertTrue(home_problems(h.replace("data-fortnight", "data-x"), self.TODAY))
-        self.assertTrue(home_problems(h.replace('data-id="n-abf-2026"', 'data-id="n-abf-2026" hidden'), self.TODAY))      # the two weeks differ from the data
+        shown = re.search(r'<li class="cal-item[^>]*?data-id="([^"]+)">', h)      # the first entry that is shown (the entries of the two weeks change as dates are added)
+        self.assertTrue(shown)
+        sid = shown.group(1)
+        self.assertTrue(home_problems(h.replace(f'data-id="{sid}"', f'data-id="{sid}" hidden', 1), self.TODAY))      # the two weeks differ from the data
 
 
 if __name__ == "__main__":
