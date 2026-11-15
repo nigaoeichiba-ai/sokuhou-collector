@@ -42,6 +42,11 @@ def aff(program: str) -> str:
     return f'<div class="aff">{item["html"]}</div>\n' if item else ""
 
 
+def jobs_block(lead: str) -> str:
+    """A short, labelled block of job-search links (the two approved programs that fit a page about hourly pay), after the article."""
+    return f'{PR_BLOCK}<p><strong>求人を探す</strong>: {lead}</p>\n{aff("workstaff")}{aff("mamaworks")}'
+
+
 def wall_rows(d: dict) -> list[dict]:
     out = []
     for r in sorted(d["rows"], key=lambda r: (-r["amount"], r["name"])):

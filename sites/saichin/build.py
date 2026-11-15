@@ -774,7 +774,7 @@ def check_page(d: dict, cfg: dict, preview: bool) -> str:
     )
     body = f"""{crumbs([("全国", "/"), ("差額チェッカー", None)])}
 <h1>最低賃金の差額チェッカー</h1>
-<p class="lead">時給・日給・月給から、最低賃金を下回っていないかを確かめます。下回っているときは、1か月・1年でいくら足りないかを計算します。手当の除外も、新しい額への改定(発効日)も反映します。</p>
+{work_pages.PR_TOP}<p class="lead">時給・日給・月給から、最低賃金を下回っていないかを確かめます。下回っているときは、1か月・1年でいくら足りないかを計算します。手当の除外も、新しい額への改定(発効日)も反映します。</p>
 <form id="chk-form" class="box js-only" hidden onsubmit="return false">
 <div class="form-grid"><label>勤務地の都道府県<select id="chk-pref" aria-label="勤務地の都道府県"></select></label></div>
 <fieldset><legend>賃金の形</legend>
@@ -816,7 +816,7 @@ def check_page(d: dict, cfg: dict, preview: bool) -> str:
 <p>1か月平均所定労働時間は、「1日の所定労働時間 × 年間の所定労働日数 ÷ 12」で求めます。判定は、厚生労働省の「あなたの賃金を比較チェック」の方法にもとづきます。くわしい説明は、<a href="/guide/calculate/">月給・日給を時給に換算する方法</a>と、<a href="/guide/below/">下回っていたときの扱い</a>をご覧ください。</p>
 
 {content.CHECK_NOTES}
-<p class="notice">内容の確認日: {jp_date(content.CHECK_VERIFIED_AT)}。この計算は目安です。実際に最低賃金を下回っているかどうかは、個別の事情によって変わります。気になる場合は、お近くの都道府県労働局や労働基準監督署に、ご相談ください。このサイトは、個別の相談には対応していません。</p>
+{work_pages.jobs_block("差額を確かめたあと、時給が最低賃金より高い仕事を探すときの例です。求人の時給は、勤務地の最低賃金と比べます。")}<p class="notice">内容の確認日: {jp_date(content.CHECK_VERIFIED_AT)}。この計算は目安です。実際に最低賃金を下回っているかどうかは、個別の事情によって変わります。気になる場合は、お近くの都道府県労働局や労働基準監督署に、ご相談ください。このサイトは、個別の相談には対応していません。</p>
 <script type="application/json" id="data">{data}</script>"""
     return finish(layout(
         cfg, preview, path="/check/", title=f"最低賃金の差額チェッカー 時給・日給・月給から不足額を計算 | {cfg['site_name']}",
@@ -980,7 +980,7 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
 {work_pages.PR_TOP if g.get('pr') else ''}<p class="lead">{esc(g['lead'])}</p>
 <img class="page-banner guide" src="/assets/img/guide-{g.get('image', g['slug'])}.webp" alt="" width="800" height="450">
 <article class="prose">{BODIES[g['slug']](d, sys.modules[__name__]) if g.get('dynamic') else g['body']}</article>
-<p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、公式の発表でご確認ください。</p>
+{work_pages.jobs_block(esc(g['jobs'])) if g.get('jobs') else ''}<p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、公式の発表でご確認ください。</p>
 <h2>ほかの解説</h2>
 <ul class="link-list">{others}</ul>
 {extra}"""
@@ -1052,7 +1052,7 @@ def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
 <p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>
 <h2>広告について</h2>
 <p>当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
-<p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用については、<a href="https://www.aboutads.info/" rel="noopener" target="_blank">aboutads.info</a> でも無効にできます。詳しくは、<a href="https://policies.google.com/technologies/partner-sites" rel="noopener" target="_blank">Google のポリシーと規約</a>をご覧ください。</p>
+<p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用については、<a href="https://www.aboutads.info/" rel="noopener" target="_blank">広告業界団体のオプトアウトのページ</a> でも無効にできます。詳しくは、<a href="https://policies.google.com/technologies/partner-sites" rel="noopener" target="_blank">Google のポリシーと規約</a>をご覧ください。</p>
 <p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>
 <p>当サイトの一部のページには、アフィリエイト広告(広告であることを「PR」などで示しています)を含みます。アフィリエイトサービス「A8.net」を利用しており、広告のリンクを通じて、ブラウザに Cookie が保存され、広告主のサイトでの申し込みなどが、A8.net を通じて当サイトの成果として記録されることがあります。成果の記録に、お名前などの個人を特定する情報は使われません。</p>
 <h2>免責事項・著作権</h2>

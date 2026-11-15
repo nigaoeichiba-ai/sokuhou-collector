@@ -268,6 +268,8 @@ GUIDES = [
 <noscript><p class="notice">計算ツールには、JavaScript が必要です。上の式で計算してください。</p></noscript>
 <p class="notice">1か月平均所定労働時間は、「1日の所定労働時間 × 1年の所定労働日数 ÷ 12」で求めています。月給には、除外される手当を含めないでください。実際の判断は、お住まいの都道府県労働局へご確認ください。</p>
 """,
+        "pr": True,
+        "jobs": "月給の求人を時間額に直して最低賃金と比べたあとに、求人を探すときの例です。",
         "sources": [S_CHECK, S_TARGET],
     },
     {
@@ -431,6 +433,8 @@ GUIDES = [
         "description": "最低賃金は市区町村ごとではなく、都道府県ごとに決まっています。大阪市、札幌市、福岡市など主な市に適用される額と、勤務地・派遣のときにどの都道府県の額を使うかを説明します。",
         "lead": "最低賃金は、市区町村ではなく、都道府県ごとに決まっています。主な市に適用される額を、都道府県の額で示します。",
         "body": "",
+        "pr": True,
+        "jobs": "勤務地の都道府県の最低賃金を確かめたあとに、求人を探すときの例です。市区町村ごとの違いはなく、時給は勤務先の都道府県の額と比べます。",
         "sources": [S_WHAT, S_HAKEN, S_FAQ_WORKER, LAW],
     },
     {
@@ -492,7 +496,7 @@ UPDATES = [
 AFFILIATE = {
     "mamaworks": {
         "program": "ママワークス", "a8_program": "s00000015629001", "asset": "素材002",
-        "html": '主婦のための求人応援サイト<br>\n<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" rel="nofollow">「ママワークス」<b>mamaworks.jp</b></a>\n'
+        "html": '主婦のための求人応援サイト<br>\n<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" target="_blank" rel="nofollow sponsored noopener">「ママワークス」<b>mamaworks.jp</b></a>\n'
                 '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AAX4YY+3CLE+5YRHE" alt="">',
     },
     # 2026-11-13: approved.  The text link of media 004 as A8 gave it, with the rel and target the site's rules require (sponsored, noopener, new tab); no person image is used (the programme forbids it).
@@ -503,7 +507,7 @@ AFFILIATE = {
     },
     "coconala": {
         "program": "ココナラ", "a8_program": "s00000012624001", "asset": "素材001",
-        "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" rel="nofollow">ココナラ</a>\n'
+        "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" target="_blank" rel="nofollow sponsored noopener">ココナラ</a>\n'
                 '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" alt="">',
     },
 }

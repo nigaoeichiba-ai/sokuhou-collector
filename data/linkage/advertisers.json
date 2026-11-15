@@ -11,7 +11,8 @@
    ],
    "sites": [
     "trend",
-    "kaidoki"
+    "kaidoki",
+    "atomou"
    ],
    "href_has": [
     "hb.afl.rakuten.co.jp"
@@ -24,7 +25,8 @@
    ],
    "sites": [
     "trend",
-    "kaidoki"
+    "kaidoki",
+    "atomou"
    ],
    "href_has": [
     "amazonmacs-22"
@@ -228,6 +230,66 @@
    ],
    "sites": [
     "kaidoki"
+   ]
+  },
+  {
+   "id": "mamaworks",
+   "names": [
+    "ママワークス"
+   ],
+   "sites": [
+    "saichin"
+   ],
+   "href_has": [
+    "4BEL1J+AAX4YY"
+   ]
+  },
+  {
+   "id": "workstaff",
+   "names": [
+    "ワークスタッフナビ"
+   ],
+   "sites": [
+    "saichin"
+   ],
+   "href_has": [
+    "4BEL1J+AFOLT6"
+   ]
+  },
+  {
+   "id": "coconala",
+   "names": [
+    "ココナラ"
+   ],
+   "sites": [
+    "saichin"
+   ],
+   "href_has": [
+    "4BEL1J+AJ97FU"
+   ]
+  },
+  {
+   "id": "akamaru-bousai",
+   "names": [
+    "あかまる防災"
+   ],
+   "sites": [
+    "kuma"
+   ],
+   "href_has": [
+    "4BEL1J+AMTTUA"
+   ]
+  },
+  {
+   "id": "sture",
+   "names": [
+    "スツーレ"
+   ],
+   "sites": [
+    "kuma"
+   ],
+   "href_has": [
+    "4BEL1J+ATDLHU"
    ]
   }
  ]
