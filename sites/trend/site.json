@@ -1,4 +1,6 @@
 {
+  "max_tables": 7,
+  "max_tables_why": "news explainers carry several small tables (schedule, numbers, conditions, to-do); each table is its own content, and the depth check still needs each article to be 2,000+ readable characters",
   "glyph": "<img src=\"/assets/img/logo.png\" alt=\"今日の話題 速報×深掘り\" width=\"145\" height=\"60\">",
   "updated": "2026-11-08",
   "home_label": "トップ",

@@ -88,8 +88,9 @@ def check_spec(spec: dict, pages: list[dict]) -> None:
             if not p.get(k):
                 errors.append(f"{f}: no {k}")
         tables = sum(1 for s in p.get("sections", []) if s.get("table"))
-        if tables > MAX_TABLES:
-            errors.append(f"{f}: {tables} tables (at most {MAX_TABLES} on a page: split a long table into pages)")
+        limit = int(spec.get("max_tables", MAX_TABLES))     # a site may raise the cap in site.json (say why there: trend's news articles carry several small tables)
+        if tables > limit:
+            errors.append(f"{f}: {tables} tables (at most {limit} on a page: split a long table into pages)")
     if "/" not in paths:
         errors.append("no page with path '/' (the home page)")
     sources = spec.get("sources", {})
