@@ -1,0 +1,2 @@
+{"_about": "Affiliated advertisers whose name on a page needs an affiliate link for it (sokuhou/linkage.py rule affiliate-missing). names: how the page writes it; href_has: a code inside the affiliate URL that proves the link is this advertiser's (optional). Public facts only: no reward, no terms.",
+ "advertisers": []}

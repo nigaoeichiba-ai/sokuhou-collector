@@ -336,6 +336,8 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
     hooks = site_hooks(site_dir)
     if hooks and hasattr(hooks, "prepare"):
         content = hooks.prepare(cfg, spec, content, site_dir)
+    from sokuhou import linkage
+    content = linkage.complete(content, spec)       # related links from `tags`, and every related link two-way (sokuhou/linkage.py)
     missing = sitekit.missing_config(cfg)
     if release and missing:
         raise BuildError(f"release build refused: set {', '.join(missing)} in config.json")

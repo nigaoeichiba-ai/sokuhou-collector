@@ -1,0 +1,4 @@
+{
+  "_about": "Per-site settings of the linkage gate (sokuhou/linkage.py). home_newest: this many newest articles (JSON-LD datePublished) must be linked from the home page. Public facts only.",
+  "trend": {"home_newest": 3}
+}
