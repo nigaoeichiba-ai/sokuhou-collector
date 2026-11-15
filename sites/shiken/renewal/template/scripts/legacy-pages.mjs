@@ -37,6 +37,7 @@ export const config={
  'goukaku-ritsu':{parent:'/yomimono/',art:'decided',related:['ids:takken,gyosei,sharoshi,kaigo,nurse'],pr:'takken'},
  'kokkoritsu':{parent:'/nyushi/',art:'family',related:['cat:university'],live:{scope:'cat:university',types:['deadline','exam','result'],limit:14,heading:'これから先の日程'},pr:'daigaku'},
  'koko':{parent:'/nyushi/',art:'family',related:[],list:'pre:koko-',pr:'koko'},
+ 'kangoshi-ganshu':{parent:'/yomimono/',art:'decided',related:['ids:nurse'],live:{scope:'ids:nurse',types:['deadline','exam','result'],limit:6,heading:'第116回の日程'},pr:'nurse'},
  'komuin':{parent:'/schedule/',art:'decided',related:['fam:komuin'],live:{scope:'fam:komuin',types:['deadline','exam','result'],limit:10},pr:'komuin'},
  'method':{parent:'/yomimono/',art:'decided',related:[FEATURED]},
  'minkan':{parent:'/schedule/',art:'decided',related:['fam:toeic','fam:kanken','ids:itpassport-cbt,fe-cbt'],live:{scope:['ids:toeic,toeic-20261206,toeic-20261219,toeic-20270124,toeic-20270214,toeic-20270306,toeic-20270314','fam:kanken'],types:['deadline','exam'],limit:16},pr:'toeic'},
