@@ -255,6 +255,22 @@ def add_nengajo_sim(pages: dict) -> None:
     pages[NENGAJO_SIM_PAGE] = t
 
 
+# 年賀状スクエア(A8 提携済み)の名前が、カテゴリの一覧表の「3行まとめ」の列に文字だけで出る(記事の3行まとめがそのまま入る)。名前の最初の1回に、提携のリンクを付ける(2026-11-15、窓口の依頼。記事の本文は変えない)
+NENGAJO_A8 = ("https://px.a8.net/svt/ejp?a8mat=4BGH3G+CRMT6Y+33J0+15OK2A", "https://www11.a8.net/0.gif?a8mat=4BGH3G+CRMT6Y+33J0+15OK2A")
+
+
+def link_nengajo_in_cells(t: str) -> str:
+    """The name in a table cell or in the one-line summary of a card gets the link once."""
+    def cell(m):
+        open_tag, inner, close_tag = m.group(1), m.group(2), m.group(3)
+        if "年賀状スクエア" not in inner or "<a " in inner.split("年賀状スクエア")[0][-40:]:
+            return m.group(0)
+        link = (f'<a href="{NENGAJO_A8[0]}" rel="nofollow sponsored noopener" target="_blank">年賀状スクエア</a>'
+                f'<img border="0" width="1" height="1" src="{NENGAJO_A8[1]}" alt="">（PR）')
+        return open_tag + inner.replace("年賀状スクエア", link, 1) + close_tag
+    return re.sub(r'(<td>|<p class="card-sum">)((?:(?!</td>|</p>).)*?)(</td>|</p>)', cell, t, flags=re.S)
+
+
 def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path) -> dict:
     problems = deep_problems(pages, content)
     if problems:
@@ -284,6 +300,8 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
             t = t.replace(f"<title>{esc(exact)} | {esc(name)}</title>", f"<title>{esc(exact)}</title>", 1)
             t = t.replace(f'<meta property="og:title" content="{esc(exact)} | {esc(name)}">', f'<meta property="og:title" content="{esc(exact)}">', 1)
         t = _swap_icons(t)
+        if rel.startswith("cat/"):
+            t = link_nengajo_in_cells(t)
         # ヘッダー・フッター(オーナー指示 2026-11-10。ロゴ画像に名前の文字が入っているため、テキストの名前は並べない=二重表示にしない)
         t = t.replace('<a class="brand" href="/"><span class="logo" aria-hidden="true">', '<a class="brand" href="/" aria-label="今日の話題 速報×深掘り"><span class="logo">', 1)
         t = t.replace("</span>今日の話題</a>\n<nav", "</span></a>\n<nav", 1)
