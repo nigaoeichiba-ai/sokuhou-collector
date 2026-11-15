@@ -101,9 +101,13 @@ class RedesignTest(unittest.TestCase):
         cfg = json.loads((SITE / "config.json").read_text(encoding="utf-8"))
         h = self.html(self.live)
         boxes = {rel: AFF_BOX.findall(t) for rel, t in h.items() if AFF_BOX.search(t)}
-        self.assertEqual(sorted(boxes), sorted(list(hooks.AFF_LINKS) + list(hooks.AFF_LINKS_MULTI)))
+        self.assertTrue(set(hooks.AFF_LINKS) | set(hooks.AFF_LINKS_MULTI) <= set(boxes))          # the pages with their own place for it keep it; other pages that name a mall get the fallback box (add_missing_mall_links)
         for rel, bx in boxes.items():
-            self.assertEqual(len(bx), 1, rel)
+            own = rel in hooks.AFF_LINKS or rel in hooks.AFF_LINKS_MULTI
+            self.assertLessEqual(len(bx), 2 if own else 1, rel)          # the page's own box first; a second one only for another mall the page names (add_missing_mall_links)
+            if not own:
+                self.assertRegex(bx[0], r"nofollow sponsored noopener", rel)          # a fallback box: PR, sponsored, one line per mall
+                continue
             if rel in hooks.AFF_LINKS_MULTI:
                 self.assertEqual(bx[0], hooks.affiliate_multi_block(hooks.AFF_LINKS_MULTI[rel], dict(cfg, site_name="SALEカレンダー")).strip(), rel)
                 continue
@@ -299,6 +303,30 @@ class RedesignTest(unittest.TestCase):
     def test_negative_a_stylesheet_without_the_new_table_rules_is_caught(self):
         old = ".doc caption{background:#fff0c9}.doc thead th{background:#fff0c9}"
         self.assertNotRegex(old, r"\.tablewrap caption[^{}]*\{[^}]*linear-gradient")
+
+    # ---- 2026-11-15: a page that names a mall carries that mall's affiliate link (the linkage gate's affiliate-missing, baseline now empty) ----
+    def test_every_page_that_names_a_mall_carries_its_affiliate_link(self):
+        from sites.kaidoki import hooks
+        n = 0
+        for rel, h in self.html(self.live).items():
+            if rel in hooks.NO_MALL_BOX or "<main" not in h or "noindex" in h.split("</head>", 1)[0]:
+                continue
+            text = re.sub(r"<[^>]+>", " ", h.split("<main", 1)[1])
+            for mall, names in hooks.MALL_NAMES.items():
+                if any(x in text for x in names):
+                    n += 1
+                    self.assertTrue(hooks._has_mall_link(h, mall), f"{rel}: names {names[0]} without its link")
+        self.assertGreater(n, 20)
+
+    def test_negative_a_page_naming_a_mall_without_its_link_is_caught(self):
+        from sites.kaidoki import hooks
+        self.assertFalse(hooks._has_mall_link("<main><p>楽天市場のセール</p><a href=\"https://example.com/\">楽天市場</a></main>", "rakuten"))
+        self.assertTrue(hooks._has_mall_link('<a href="https://hb.afl.rakuten.co.jp/hgc/x/?pc=y" target="_blank" rel="nofollow sponsored noopener">楽天市場のページを見る</a>', "rakuten"))
+
+    def test_the_privacy_optout_link_is_worded_not_an_address(self):
+        h = self.live["privacy/index.html"]
+        self.assertNotIn(">aboutads.info</a>", h)
+        self.assertIn("オプトアウトのページ</a>", h)
 
     # ---- Muse's prototype of 2026-11-14 (shop pages / product pages) ----
     SOURCE_SHOWN = re.compile(r"公式サイトを開く|ほかの公式ページ|class=\"src\"|出典")

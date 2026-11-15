@@ -105,9 +105,14 @@ class KaidokiTest(unittest.TestCase):
         from sites.kaidoki import hooks
         cfg = self._cfg()
         boxes = {rel: AFF_BOX.findall(html) for rel, html in self.html.items() if AFF_BOX.search(html)}
-        self.assertEqual(sorted(boxes), sorted(list(hooks.AFF_LINKS) + list(hooks.AFF_LINKS_MULTI)))
+        own = set(hooks.AFF_LINKS) | set(hooks.AFF_LINKS_MULTI)
+        self.assertTrue(own <= set(boxes))          # the pages with their own place for it keep it; other pages that name a mall get one fallback box (hooks.add_missing_mall_links, 2026-11-15)
         for rel, bx in boxes.items():
-            self.assertEqual(len(bx), 1, rel)
+            if rel not in own:
+                self.assertEqual(len(bx), 1, rel)
+                self.assertIn("nofollow sponsored noopener", bx[0], rel)
+                continue
+            self.assertLessEqual(len(bx), 2, rel)          # the page's own box first, a second one only for another mall the page names
             hrefs = re.findall(r'href="([^"]+)"', bx[0])
             if rel in hooks.AFF_LINKS_MULTI:      # the pages of several malls: one line per mall, a mall's link never on another's line
                 lines = re.findall(r'<p class="aff-btn">(.*?)</p>', bx[0])
