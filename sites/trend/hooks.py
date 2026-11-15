@@ -14,7 +14,7 @@ import re
 import sys
 from pathlib import Path
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import homepage  # noqa: E402
@@ -167,6 +167,16 @@ def _jpeg_free_card(src: Path) -> bytes:
     im = Image.open(src).convert("RGB")
     r = CARD_W / CARD_H
     w, h = im.size
+    if w / h > r * 1.05:
+        # wider than the card (the 16:9 pictures): show the whole picture, so the title and the 「イメージです。」 of the picture are not cut off (2026-11-15);
+        # the bands above and below are the same picture, blurred
+        bg_w = round(h * r)
+        bg = im.crop(((w - bg_w) // 2, 0, (w - bg_w) // 2 + bg_w, h)).resize((CARD_W, CARD_H)).filter(ImageFilter.GaussianBlur(14))
+        fh = round(CARD_W * h / w)
+        bg.paste(im.resize((CARD_W, fh)), (0, (CARD_H - fh) // 2))
+        out = io.BytesIO()
+        bg.save(out, "WEBP", quality=80)
+        return out.getvalue()
     if w / h > r:
         nw = round(h * r)
         im = im.crop(((w - nw) // 2, 0, (w - nw) // 2 + nw, h))
