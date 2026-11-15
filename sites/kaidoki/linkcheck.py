@@ -25,7 +25,7 @@ def check(root: Path, base: str, pages: dict) -> list[str]:
     n = 0
     for r in rows:
         cells = [_text(c).strip() for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", r, re.S)]
-        if len(cells) < 3 or cells[0] == "モール":
+        if len(cells) < 3 or cells[0].startswith("モール"):
             continue
         n += 1
         name, period = cells[1].replace("【発表予定日】", "").strip(), cells[2]
