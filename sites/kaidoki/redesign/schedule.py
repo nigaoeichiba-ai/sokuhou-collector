@@ -32,7 +32,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "yamada": ("ヤマダウェブコム", "ヤ", "ec"), "nitori": ("ニトリ", "ニ", "brand"), "dyson": ("ダイソン", "ダ", "brand"), "playstation": ("PlayStation公式", "P", "brand"),
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
-       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "yokado": ("イトーヨーカドー", "ヨ", "ec"), "aeon": ("イオン", "イ", "ec"), "nikon": ("ニコン", "コ", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
+       "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "gu": ("GU", "U", "brand"), "yokado": ("イトーヨーカドー", "ヨ", "ec"), "aeon": ("イオン", "イ", "ec"), "nikon": ("ニコン", "コ", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
        "stardomain": ("スタードメイン", "ス", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
@@ -157,6 +157,8 @@ EXTRA_CONFIRMED += [
     C("c-yokado-bf", "yokado", "イトーヨーカドー ブラックフライデー", "2026-11-18", "2026-11-29", _span("2026-11-18", "2026-11-29"), "", src=PRESS2, note="全国のイトーヨーカドーとヨークの店舗です。日ごとに企画の内容が変わります。"),
     C("c-aeon-net", "aeon", "イオン ブラックフライデー ネット先行セール", "2026-10-31", "2026-11-16", _span("2026-10-31", "2026-11-16", "10:00", "09:59"), "", src=PRESS2, note="イオンスタイルオンラインのセールです。"),
     C("c-aeon-store", "aeon", "イオン 超!ブラックフライデーフェス(店頭)", "2026-11-20", "2026-11-30", _span("2026-11-20", "2026-11-30"), "", src=PRESS2, note="店頭の期間と内容は、地域や運営会社によって異なります。"),
+    C("c-gu-thanks", "gu", "GU感謝祭", "2026-11-20", "2026-11-26", _span("2026-11-20", "2026-11-26"), "", src=PRESS2, note="開始は、GUの公式サイトのカウントダウンでも確かめました。終了日は、報道の日付です。"),
+    C("c-gu-app", "gu", "GU アプリ会員特別価格(終了日)", "2026-11-19", "2026-11-19", f"{jpd('2026-11-19')}まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-zozo-2", "zozo", "ZOZOWEEK 第2弾(終了日)", "2026-11-15", "2026-11-15", f"{jpd('2026-11-15')}まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-nec", "nec", "NEC 新製品発売記念セール(終了日)", "2026-11-12", "2026-11-12", f"{jpd('2026-11-12')}の15時まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-uniqlo-winter", "uniqlo", "ユニクロ 冬本番突入号 期間限定価格", "2026-11-13", "2026-11-19", _span("2026-11-13", "2026-11-19"), "", src=SRC_PAGE),
