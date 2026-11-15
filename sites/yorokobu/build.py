@@ -48,7 +48,7 @@ from sokuhou import rakuten  # noqa: E402
 from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages,  # noqa: E402
                              missing_config, standard_files, write_pages)
 
-SOURCE_HTML = ('商品の情報は楽天ウェブサービスを利用して取得しています。 '
+SOURCE_HTML = ('公式の発表をはじめとする複数の情報をもとにしています。商品の情報は楽天ウェブサービスを利用して取得しています。 '
                '<a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a>')  # the credit HTML is prescribed: use as is
 NAV = [("イベントから", "/occasion/", "/occasion/"), ("相手から", "/for/", "/for/"), ("季節の贈り物", "/#season", "/season-none/")]
 # the logo mark: a gift box in the site's pink (the bird mascots were taken out on 2026-10-09: "as long as the mascot is there, the childishness stays")
@@ -799,13 +799,12 @@ def quick_section(c: dict, slug: str) -> str:
     else:
         noshi = '<p>のしは付けなくてもかまいません。</p>' + (f'<p>{esc(n["note"])}</p>' if n.get("note") else "")
     back = f'<div class="qcard"><h3>お返しの目安</h3><p>{esc(e["return_gift"])}</p></div>' if e.get("return_gift") else ""
-    src = "、".join(f'<a href="{esc(s["url"])}" rel="nofollow noopener" target="_blank">{esc(s["name"])}</a>' + (f'({s["year"]}年)' if s.get("year") else "") for s in e["sources"])
     return (f'<section class="quick" id="quick"><h2><span class="scribble">{esc(name)}の贈る前の早見表</span></h2>'
             f'<div class="quick-grid"><div class="qcard wide"><h3>金額の目安</h3>{money}</div>'
             f'<div class="qcard"><h3>贈る時期</h3><p>{esc(e["timing"])}</p></div>'
             f'<div class="qcard"><h3>のし(表書き・水引)</h3>{noshi}</div>'
             f'<div class="qcard"><h3>気をつけたいこと</h3>{ul(e["cautions"], "warn")}</div>{back}</div>'
-            f'<p class="quick-src">金額や習慣は目安です。地域や家庭、相手との関係で変わります。参考にした出典: {src}</p></section>')
+            f'<p class="quick-src">金額や習慣は目安です。地域や家庭、相手との関係で変わります。</p></section>')
 
 
 def quick_pair_note(c: dict, p: dict) -> str:
@@ -1974,10 +1973,10 @@ def policy_page(d: dict, cfg: dict, preview: bool) -> str:
          "公開前に数字や言い回しを別の目でも確かめています。</p>"),
         ("価格と画像", "<p>楽天市場の商品の価格・在庫・画像・評価は、楽天ウェブサービスから毎日、取得し直しています。"
          "Amazonの商品は、規約により、価格・評価・商品の写真を載せていません。写真の代わりに贈る場面を表したイメージ画像を使い、その旨を明記しています。</p>"),
-        ("数字と統計", '<p><a href="/data/">データ室</a>の数字は出典を明記しています。「当サイトの商品」と書いてあるものは、当サイトで取り上げた商品の集計で、市場全体ではありません。</p>'),
+        ("数字と統計", '<p><a href="/data/">データ室</a>の数字は、調査の時期と回答数を明記しています。「当サイトの商品」と書いてあるものは、当サイトで取り上げた商品の集計で、市場全体ではありません。</p>'),
         ("広告について", "<p>当サイトは、楽天アフィリエイトとAmazonアソシエイトに参加しています。リンク先で購入されると、運営者に報酬が支払われることがあります。広告のあるページには、「PR」と表示しています。</p>"),
         ("訂正", '<p>誤りが分かったときは速やかに直し、<a href="/about/#history">運営者情報の更新の履歴</a>に「訂正」として日付と内容を残します。お気づきの点は<a href="/contact/">お問い合わせ</a>からお知らせください。</p>'),
-        ("アイコン", '<p>アイコンには、<a href="https://phosphoricons.com/" rel="noopener" target="_blank">Phosphor Icons</a>(MITライセンス)を使っています。</p>'),
+        ("アイコン", '<p>アイコンには、Phosphor Icons(MITライセンス)を使っています。</p>'),
     ]
     if not PICKS_ON:
         secs = [x for x in secs if x[0] != "毎日のおすすめ"]
@@ -2191,12 +2190,13 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages.update(legal_pages(
         SITE, cfg, preview,
         purpose="イベントと贈る相手からプレゼントの選び方と商品の例を探しやすく整理して、贈り物選びに役立てていただくこと。",
-        sources_html='商品の価格・画像・レビュー・販売ページのリンクは、<a href="https://webservice.rakuten.co.jp/" rel="noopener" target="_blank">楽天ウェブサービス</a>(楽天市場)の情報を使っています。選び方などの文章は当サイトの編集方針にもとづいて作成しています。',
+        sources_html='商品の価格・画像・レビュー・販売ページのリンクは、楽天ウェブサービス(楽天市場)の情報を使っています。公式の発表をはじめとする複数の情報をもとにしています。選び方などの文章は当サイトの編集方針にもとづいて作成しています。',
         update_text="商品の価格・在庫は毎日、楽天市場の情報にあわせて更新します。各ページに取得した日付を表示します。",
         disclaimer_html=("<p>商品の価格・在庫・送料・レビューは、取得した時点の情報で、販売ページと異なる場合があります。購入前に必ず、販売ページでご確認ください。"
                          "当サイトは商品の品質や、贈った相手が喜ぶことを保証するものではありません。</p>"
                          "<p>当サイトの運営者は楽天市場で似顔絵のショップも運営しています。そのショップの商品を紹介するときはそのことをページ上に明示します。</p>"
                          "<p>当サイトは楽天グループ株式会社が運営するものではありません。</p>"),
+        sources_label="情報について",
         contact_notice="商品の購入・配送・返品などのお問い合わせは、各販売店へお願いします。当サイトでは商品の販売を行っていません。",
         input_note=(askpages.ASK_PRIVACY if c.get("ask") else "") + minepage.COUNT_PRIVACY + ccbot.PRIVACY, finish=aboutextra.inject))
     pages["manifest.webmanifest"] = json.dumps(MANIFEST, ensure_ascii=False, indent=1)

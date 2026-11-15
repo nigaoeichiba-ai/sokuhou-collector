@@ -9,6 +9,7 @@ from pathlib import Path
 
 from sites.yorokobu import build, content, dataroom, ranking
 from sokuhou import sitecheck
+from tests import yorokobu_d26 as d26
 from sokuhou.sitekit import BuildError
 
 FIX = Path(__file__).parent / "fixtures" / "yorokobu"
@@ -86,10 +87,10 @@ class DataRoomTest(unittest.TestCase):
             figures = re.findall(r"<figure class=\"chart\"[^>]*>(.*?)</figure>", html, re.S)
             self.assertGreaterEqual(len(figures), 1, rel)
             for f in figures:
-                self.assertIn("出典:", f.split("<figcaption>")[1], rel)
+                self.assertNotIn("出典", f.split("<figcaption>")[1], rel)           # D26: no source on the screen
+                self.assertEqual(d26.problems(f), [], rel)
                 self.assertIn("<table", f, rel)
-        self.assertIn("日比谷花壇", self.read("data/mothers-day-budget/index.html"))
-        self.assertIn("総務省統計局", self.read("data/births-marriages/index.html"))
+        self.assertNotIn("総務省統計局", self.read("data/births-marriages/index.html"))
 
     def test_the_mothers_day_page_puts_the_survey_next_to_the_products_and_says_what_differs(self):
         html = self.read("data/mothers-day-budget/index.html")

@@ -9,6 +9,7 @@ from pathlib import Path
 
 from sites.yorokobu import seasonal_overlap
 from sites.yorokobu import build, content, quality, seasonal
+from tests import yorokobu_d26 as d26
 from tests.test_yorokobu_compare import CFG, FIX
 from tests.yorokobu_data import with_musts
 
@@ -54,9 +55,8 @@ class ContentTest(unittest.TestCase):
         srcs = {"a": {"name": "三越伊勢丹 A", "short": "三越伊勢丹", "url": "https://www.mistore.jp/a", "date": ""},
                 "b": {"name": "三越伊勢丹 B", "short": "三越伊勢丹", "url": "https://www.mistore.jp/b", "date": ""},
                 "c": {"name": "高島屋 C", "short": "高島屋", "url": "https://www.takashimaya.co.jp/c", "date": ""}}
-        html = seasonal.source_items(["a", "b", "c"], srcs)
+        html = seasonal.source_items(["a", "b", "c"], srcs)       # internal only (D26): it tells the block that sources were used, it is not shown
         self.assertEqual(html.count("<li>"), 2)
-        self.assertIn("三越伊勢丹 A</a>ほか", html)
         self.assertNotIn("https://www.mistore.jp/b", html)
         self.assertEqual(seasonal.source_items([], srcs), "")
         self.assertNotIn("<ul", seasonal.sources_block("", "2026-10-17"))                      # no source used: only the short sentence
@@ -185,7 +185,8 @@ class OiwaiPagesTest(unittest.TestCase):
             html = self.read(rel)
             self.assertNotIn("seas-from", html, rel)                                      # the per-section reference lines are gone
             self.assertNotIn("seas-lead-note", html, rel)
-            self.assertEqual(html.count("出典先を要約・比較したものです"), 1, rel)             # the same notice, once
+            self.assertEqual(html.count("複数の案内を要約・比較したものです"), 1, rel)             # the same notice, once
+            self.assertEqual(d26.problems(html), [], rel)                                   # D26: no source on the screen
             self.assertIn("しきたりには諸説があり、地域や家で違います", html, rel)
 
     def test_every_sheet_names_both_stores_and_the_date_and_can_be_printed(self):
@@ -194,8 +195,8 @@ class OiwaiPagesTest(unittest.TestCase):
             self.assertIn("三越伊勢丹", html, rel)
             self.assertIn("松坂屋名古屋店", html, rel)
             self.assertIn("data-print hidden", html, rel)
-            self.assertIn("出典(確認日 2026年10月15日)", html, rel)
-            self.assertRegex(html, r'href="https://www\.(mistore\.jp|matsuzakaya\.co\.jp)/[^"]+" rel="noopener nofollow"')
+            self.assertIn("確認日 2026年10月15日", html, rel)
+            self.assertEqual(d26.problems(html), [], rel)
         self.assertNotIn("data-print", self.read("oiwai/index.html"))
 
     def test_the_amount_tables_are_condensed_say_whose_relation_each_amount_is_and_keep_each_store_apart(self):
@@ -311,8 +312,8 @@ class PagesTest(unittest.TestCase):
     def test_every_page_names_its_store_pages_with_the_date_they_were_read(self):
         for rel in PATHS:
             html = self.read(rel)
-            self.assertIn("出典(確認日 2026年10月15日)", html)
-            self.assertRegex(html, r'href="https://www\.(mistore\.jp|takashimaya\.co\.jp|daimaru-matsuzakaya\.jp)/[^"]+" rel="noopener nofollow"')
+            self.assertIn("確認日 2026年10月15日", html)
+            self.assertEqual(d26.problems(html), [])
             self.assertIn("しきたりには諸説があり", html)
 
     def test_every_table_sits_in_the_scroll_wrapper_the_site_checker_asks_for(self):

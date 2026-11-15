@@ -8,6 +8,7 @@ from datetime import date
 from pathlib import Path
 
 from sites.yorokobu import build, content, shogatsu
+from tests import yorokobu_d26 as d26
 from tests.test_yorokobu_compare import CFG, FIX
 from tests.yorokobu_data import with_musts
 
@@ -135,13 +136,13 @@ class PagesTest(unittest.TestCase):
     def test_each_page_names_its_sources_with_links_and_says_it_did_not_try_the_products(self):
         for p in self.paths():
             html = self.read(p)
-            self.assertIn("出典(確認日 2026年10月17日)", html, p)
+            self.assertIn("確認日 2026年10月17日", html, p)
+            self.assertEqual(d26.problems(html), [], p)                                  # D26: no source on the screen
             own = p.split("/")[1].startswith("otoshidama")
-            first = "この記事は、当サイトの考え方をまとめたものです。制度や検索の動きは、出典を示したものだけを載せています。" if own else "この記事は、出典先を要約・比較し、当サイトの考え方を足したものです。"
+            first = "この記事は、当サイトの考え方をまとめたものです。制度や検索の動きは、確かめられたものだけを載せています。" if own else "この記事は、複数の案内を要約・比較し、当サイトの考え方を足したものです。"
             self.assertEqual(html.count(first + "しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。"), 1, p)   # the one notice
             self.assertNotIn("seas-from", html, p)
             self.assertNotIn("上のページを開いて読みました", html, p)
-            self.assertRegex(html, r'<a href="https://(www\.(mistore|takashimaya|daimaru-matsuzakaya|nta)|trends\.google)[^"]*" rel="noopener nofollow" target="_blank">', p)
 
     def test_the_pictures_exist_have_their_size_and_only_the_first_is_loaded_with_priority(self):
         for p in self.paths():

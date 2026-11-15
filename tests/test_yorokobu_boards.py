@@ -101,9 +101,10 @@ class BoardsTest(unittest.TestCase):
     # ------------------------------------------------------------ the pages
     def test_a_board_shows_the_numbers_the_sentences_the_sources_and_the_way_to_the_products(self):
         html = self.read("data/birthday-survey/index.html")
-        for text in ("3秒でわかる", "17,643円", "恋人への平均予算", "わかったこと", "調べた調査", "株式会社アイディエーション", "見かたの注意", "この予算で探す"):
+        for text in ("3秒でわかる", "17,643円", "恋人への平均予算", "わかったこと", "調べた調査", "見かたの注意", "この予算で探す"):
             self.assertIn(text, html, text)
-        self.assertIn("https://prtimes.jp/main/html/rd/p/000000031.000030222.html", html)           # the source link
+        self.assertNotIn("株式会社アイディエーション", html)                                              # D26: no source name
+        self.assertNotIn("prtimes.jp", html)                                                        # D26: no source link
         self.assertIn("880人", html)
         self.assertEqual(len(re.findall(r'<figure class="chart" id="birthday-survey--', html)), 3)  # three charts, each with its own anchor
         self.assertGreaterEqual(html.count('<li class="item"'), 2)                                  # products of the price range

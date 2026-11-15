@@ -46,10 +46,10 @@ def ranking_turnover(d: dict) -> tuple | None:
         v = _share(sg[key], len(sg["items"]))
         return sg["label"], v, f"{v:.0f}%"
     c1 = dr.figure(d, "ジャンルごとの、はじめてランクインした商品の割合(多い10ジャンル)", dr.hbars([row(sg, "n_entered") for sg in by_new[:10]], top=100, series_class="s2"),
-                   f"前日の上位になかった商品の割合(贈り物向きの商品だけ)。出典: 楽天市場のランキング({day})の記録から当サイトが集計。",
+                   f"前日の上位になかった商品の割合(贈り物向きの商品だけ)。楽天市場のランキング({day})の記録から当サイトが集計。",
                    dr.table(["ジャンル", "商品の数", "新しく入った商品", "割合"], [[sg["label"], str(len(sg["items"])), str(sg["n_entered"]), row(sg, "n_entered")[2]] for sg in by_new]))
     c2 = dr.figure(d, "ジャンルごとの、3日以上ランクインし続けている商品の割合(多い10ジャンル)", dr.hbars([row(sg, "n_stay") for sg in by_stay[:10]], top=100),
-                   f"ジャンルごとに、毎日の上位に3日以上続けて入っている商品の割合。出典: 楽天市場のランキング({day})の記録から当サイトが集計。",
+                   f"ジャンルごとに、毎日の上位に3日以上続けて入っている商品の割合。楽天市場のランキング({day})の記録から当サイトが集計。",
                    dr.table(["ジャンル", "商品の数", "3日以上続けて入っている商品", "割合"], [[sg["label"], str(len(sg["items"])), str(sg["n_stay"]), row(sg, "n_stay")[2]] for sg in by_stay]))
     most, least, steady, moving = by_new[0], by_new[-1], by_stay[0], by_stay[-1]
     notes = [f"前日の上位になかった商品の割合は、「{most['label']}」が{row(most, 'n_entered')[2]}でいちばん高く、「{least['label']}」が{row(least, 'n_entered')[2]}でいちばん低くなっています。",

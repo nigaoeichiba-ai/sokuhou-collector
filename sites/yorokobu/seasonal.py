@@ -127,7 +127,7 @@ def _section(s: dict, sources: dict) -> str:
 SOURCE_NOTE = "しきたりには諸説があり、地域や家で違います。贈る相手の習慣が分かるときは、それに合わせてください。"
 
 
-OWN_BASIS = "この記事は、当サイトの考え方をまとめたものです。制度や検索の動きは、出典を示したものだけを載せています。"
+OWN_BASIS = "この記事は、当サイトの考え方をまとめたものです。制度や検索の動きは、確かめられたものだけを載せています。"
 
 
 def sources_note(subject: str = "記事", own_view: bool = True, own_basis: bool = False) -> str:
@@ -135,7 +135,7 @@ def sources_note(subject: str = "記事", own_view: bool = True, own_basis: bool
     own_basis: an article that is the site's own view and cites a source only for a figure or a rule (the otoshidama articles)."""
     if own_basis:
         return OWN_BASIS + SOURCE_NOTE
-    core = f"この{subject}は、出典先を要約・比較し、当サイトの考え方を足したものです。" if own_view else f"この{subject}は、出典先を要約・比較したものです。"
+    core = f"この{subject}は、複数の案内を要約・比較し、当サイトの考え方を足したものです。" if own_view else f"この{subject}は、複数の案内を要約・比較したものです。"
     return core + SOURCE_NOTE
 
 
@@ -154,11 +154,11 @@ def source_items(used: list[str], sources: dict) -> str:
 
 
 def sources_block(items_html: str, checked: str, subject: str = "記事", own_view: bool = True, own_basis: bool = False) -> str:
-    """The notice at the foot of a page.  A page that uses a source gets the list and the notice; a page that uses none gets only the one short sentence that customs differ."""
+    """The notice at the foot of a page.  A page that uses a source gets the check date and the notice (D26, 2026-11-15: no source names and no links on the screen; items_html is only the signal that sources were used); a page that uses none gets only the one short sentence that customs differ."""
     if not items_html:
         return f'<section class="g-sec seas-srcs"><p class="seas-note">{esc(SOURCE_NOTE)}</p></section>'
     y, m, d = checked.split("-")
-    return (f'<section class="g-sec seas-srcs"><h2><span class="scribble">出典(確認日 {int(y)}年{int(m)}月{int(d)}日)</span></h2><ul class="seas-list">{items_html}</ul>'
+    return (f'<section class="g-sec seas-srcs"><p class="seas-checked">確認日 {int(y)}年{int(m)}月{int(d)}日</p>'
             f'<p class="seas-note">{esc(sources_note(subject, own_view, own_basis))}</p></section>')
 
 

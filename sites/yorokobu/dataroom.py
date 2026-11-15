@@ -173,15 +173,15 @@ def send_row(d: dict, cid: str, title: str, finding: str) -> str:
 
 
 def own_source(d: dict, n: int) -> str:
-    return f'出典: 当サイトが楽天ウェブサービスから取得した商品データ({n:,}点、{d["fetched_label"]}時点)。当サイトで取り上げた商品の数字で楽天市場の全体ではありません。'
+    return f'集計: 当サイトが取得した商品データ({n:,}点、{d["fetched_label"]}時点)。当サイトで取り上げた商品の数字で楽天市場の全体ではありません。'
 
 
 def own_plain(d: dict, n: int) -> str:
-    return f'出典: 当サイトが楽天ウェブサービスから取得した商品データ({n:,}点、{d["fetched_label"]}時点)。楽天市場の全体ではありません。'
+    return f'集計: 当サイトが取得した商品データ({n:,}点、{d["fetched_label"]}時点)。楽天市場の全体ではありません。'
 
 
 def stat_source(s: dict) -> str:
-    return f'出典: <a href="{esc(s["url"])}" rel="noopener nofollow" target="_blank">{esc(s["source"])}</a>'
+    return "発表されている数字"
 
 
 # ---------------------------------------------------------------- pages
@@ -296,7 +296,7 @@ def mothers_day_budget(d: dict) -> tuple | None:
                 stat_source(s) + f'。{esc(s["method"])}。',
                 table(["予算"] + [f"{y}年" for y in years], [[b] + [f'{s["years"][y][i]:.1f}%' for y in years] for i, b in enumerate(s["bands"])]),
                 card=dict(id="mothers-day-budget--survey", finding=f"{latest}年の調査でいちばん多い予算は{s['bands'][top_i]}({now[top_i]:.1f}%)です。",
-                          rows=tuple((b, now[i], f"{now[i]:.0f}%") for i, b in enumerate(s["bands"])), source=f'出典: {s["source"]}({latest}年)'))
+                          rows=tuple((b, now[i], f"{now[i]:.0f}%") for i, b in enumerate(s["bands"])), source=f'{latest}年の調査'))
     notes = [f"{latest}年の調査でいちばん多い予算は{s['bands'][top_i]}({now[top_i]:.1f}%)です。",
              f"5,000円未満は{now[0] + now[1]:.1f}%、10,000円以上は{now[-1]:.1f}%でした。"]
     if len(years) >= 2 and s["years"][years[0]][-1] < now[-1]:
@@ -360,15 +360,15 @@ def ranking_prices(d: dict) -> tuple | None:
     day = _b().rk.date_label(rv["date"])
     top = max(f["median"] for _, f, _ in segs)
     c1 = figure(d, "世代・性別ごとの売れ筋の価格(中央値)", hbars([(lab, f["median"], yen(f["median"])) for lab, f, _ in segs], top=top),
-                f'出典: 楽天市場のランキング({day})から贈り物向きの商品だけを集めた当サイトの集計。', table(["世代・性別", "商品の数", "価格の中央値", "3,000円以下", "10,000円以上"],
+                f'楽天市場のランキング({day})から贈り物向きの商品だけを集めた当サイトの集計。', table(["世代・性別", "商品の数", "価格の中央値", "3,000円以下", "10,000円以上"],
                 [[lab, str(f["n"]), yen(f["median"]), str(f["le3000"]), str(f["ge10000"])] for lab, f, _ in segs]),
                 card=dict(id="ranking-prices--median", finding=f"売れ筋の価格の中央値がいちばん高いのは「{segs[-1][0]}」の{yen(segs[-1][1]['median'])}です。",
-                          rows=tuple((lab, f["median"], yen(f["median"])) for lab, f, _ in segs), source=f"出典: 楽天市場のランキング({day})から贈り物向きの商品を集めた当サイトの集計。"))
+                          rows=tuple((lab, f["median"], yen(f["median"])) for lab, f, _ in segs), source=f"楽天市場のランキング({day})から贈り物向きの商品を集めた当サイトの集計。"))
     share = [(lab, f["le3000"] / f["n"] * 100, f"{f['le3000'] / f['n'] * 100:.0f}%") for lab, f, _ in segs]
-    c2 = figure(d, "3,000円以下の商品の割合", hbars(share, top=100, series_class="s2"), f'売れ筋の商品のうち3,000円以下のものの割合。出典: 楽天市場のランキング({day})から当サイトが集計。',
+    c2 = figure(d, "3,000円以下の商品の割合", hbars(share, top=100, series_class="s2"), f'売れ筋の商品のうち3,000円以下のものの割合。楽天市場のランキング({day})から当サイトが集計。',
                 table(["世代・性別", "3,000円以下の割合"], [[lab, t] for lab, _, t in share]),
                 card=dict(id="ranking-prices--cheap", finding=f"売れ筋のうち3,000円以下の割合がいちばん高いのは「{max(share, key=lambda r: r[1])[0]}」です。", series="s2",
-                          rows=tuple(share), source=f"出典: 楽天市場のランキング({day})から当サイトが集計。"))
+                          rows=tuple(share), source=f"楽天市場のランキング({day})から当サイトが集計。"))
     hi, lo = segs[-1], segs[0]
     notes = [f"売れ筋の価格の中央値がいちばん高いのは「{hi[0]}」の{yen(hi[1]['median'])}、いちばん低いのは「{lo[0]}」の{yen(lo[1]['median'])}です。"]
     body = (f'<section class="data-notes"><h2>わかったこと</h2><ul>{"".join(f"<li>{esc(n)}</li>" for n in notes)}</ul></section>{c1}{c2}'
@@ -392,18 +392,18 @@ def _study_n(s: dict) -> str:
 
 
 def _short_source(s: dict) -> str:
-    return f'出典: {s["org"]}「{s["name"]}」({s["period"].split("日")[0].split("月")[0]}月、{_study_n(s)})'
+    return f'{s["period"].split("日")[0].split("月")[0]}月の調査({_study_n(s)})'
 
 
 def _studies_section(studies: list[dict]) -> str:
-    li = "".join(f'<li><a href="{esc(s["url"])}" rel="noopener nofollow" target="_blank"><b>{esc(s["org"])}</b>{esc(s["name"])}</a>'
-                 f'<dl><dt>時期</dt><dd>{esc(s["period"])}</dd><dt>回答数</dt><dd>{esc(_study_n(s))}</dd><dt>対象・方法</dt><dd>{esc(s["target"])}({esc(s["method"])})</dd></dl></li>' for s in studies)
+    li = "".join(f'<li><b>{esc(s["period"])}の調査</b>'
+                 f'<dl><dt>回答数</dt><dd>{esc(_study_n(s))}</dd><dt>対象・方法</dt><dd>{esc(s["target"])}({esc(s["method"])})</dd></dl></li>' for s in studies)
     return (f'<section class="data-notes"><h2>調べた調査</h2><ul class="studies">{li}</ul>'
             '<p class="chart-note">数字は各調査の発表のとおりです。調査によって、対象も質問も違うため、数字どうしを直接は比べられないことがあります。</p></section>')
 
 
 def _tiles(head: list[dict], studies: dict[str, dict]) -> str:
-    li = "".join(f'<li><b>{esc(h["value"])}</b><span>{esc(h["label"])}</span><small>{esc(studies[h["study"]]["org"])}</small></li>' for h in head)
+    li = "".join(f'<li><b>{esc(h["value"])}</b><span>{esc(h["label"])}</span></li>' for h in head)
     return f'<ul class="stat-tiles">{li}</ul>'
 
 
@@ -481,7 +481,7 @@ def board_page(d: dict, b: dict) -> tuple | None:
         series = SERIES[i % 3]
         st = studies[ch["study"]]
         shown = tuple((l, v, _fmt(v, ch["unit"])) for l, v in rows)
-        cap = f'出典: <a href="{esc(st["url"])}" rel="noopener nofollow" target="_blank">{esc(st["org"])}「{esc(st["name"])}」</a>({esc(st["period"])}、{esc(_study_n(st))})。{esc(ch.get("note", ""))}'
+        cap = f'調査時期: {esc(st["period"])}、回答 {esc(_study_n(st))}。{esc(ch.get("note", ""))}'
         figs += figure(d, ch["title"], hbars([(l, v, t) for l, v, t in shown], top=top, series_class=series), cap,
                        table(["項目", "数字"], [[l, t] for l, _, t in shown]),
                        card=dict(id=f'{b["slug"]}--{ch["id"]}', finding=ch["finding"], rows=shown, series=series, source=_short_source(st)))
@@ -590,7 +590,7 @@ def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:
         body += (f'<section class="block" style="margin-top:{34 if i == 0 else 26}px"><div class="sec-head">{"<span class=eyebrow>Data</span>" if i == 0 else ""}<h2>{esc(title)}</h2><p>{esc(note)}</p></div>'
                  f'<ul class="tiles wide">{tiles}</ul></section>')
     body += ('<section class="data-notes" style="margin-top:34px"><h2>このデータ室の数字について</h2>'
-             '<p>「調査から」の数字は、調査会社などが発表したものを、出典つきで図にしています。「いま売られている商品から」は、当サイトが取り上げた楽天市場の商品の価格や順位の記録を、'
+             '<p>「調査から」の数字は、調査会社などが発表したものを、図にしています。「いま売られている商品から」は、当サイトが取り上げた楽天市場の商品の価格や順位の記録を、'
              '集計したものです。市場全体の数字ではありません。どちらも、集計の方法と見かたの注意を、それぞれのページに書いています。商品の名前や画像は、集計のページには載せていません。</p>'
              '<p>数字は毎日取り直しています。誤りに気づいたときは、<a href="/about/#history">運営者情報の更新の履歴</a>に「訂正」として残します。'
              'お気づきの点は<a href="/contact/">お問い合わせ</a>からお知らせください。</p></section>')

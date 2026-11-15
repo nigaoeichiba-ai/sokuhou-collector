@@ -54,8 +54,8 @@ class QuickSheetTest(unittest.TestCase):
         self.assertIn("母の日/感謝", html)                                   # the noshi wording
         self.assertIn("5月の第2日曜日に届くよう", html)                        # the timing, in place of the generic one
         self.assertNotIn("贈る時期の目安", html)
-        self.assertIn('href="https://example.com/c"', html)
-        self.assertIn('rel="nofollow noopener"', html)
+        self.assertNotIn("example.com/c", html)                              # D26: the sources of the sheet are not shown
+        self.assertNotIn("参考にした出典", html)
         self.assertIn("金額や習慣は目安です", html)
         self.assertLess(html.index('id="quick"'), html.index("選ぶポイント"))
 
