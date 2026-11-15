@@ -112,7 +112,7 @@ class Pages(unittest.TestCase):
         self.assertIn("<b>17</b><span>日の休み", h)
         self.assertIn("4月30日(金)を休むと、4月29日(木)〜5月5日(水)の<b>7連休</b>", h)
         self.assertIn("5月1日(土)〜5月5日(水)</b> 5連休", h)
-        self.assertIn("www8.cao.go.jp/chosei/shukujitsu", h)
+        self.assertNotIn("www8.cao.go.jp", h)      # no link to the source (owner, 2026-11-15)
         self.assertIn("数え直し", h)
         self.assertIn('data-cd="2027-01-01"', h)
         self.assertEqual(len(re.findall(r"<tr><th scope=\"row\">\d+年</th>", h)), 8)    # 2020-2027
@@ -120,7 +120,7 @@ class Pages(unittest.TestCase):
     def test_season_page(self):
         s = self.rel["kyou/season/index.html"]
         self.assertIn('data-d="2026-10-23"', s)
-        self.assertIn("rekiyou272", s)
+        self.assertNotIn("rekiyou272", s)      # no link to the source (owner, 2026-11-15)
         self.assertIn("説明の文は、当サイトで書いたもの", s)
         self.assertNotIn('data-d="2026-07-', s)          # a term more than 60 days behind the build day is not listed
         self.assertIn('id="season-now"', s)

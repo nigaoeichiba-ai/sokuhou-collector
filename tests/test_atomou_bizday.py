@@ -201,7 +201,7 @@ class Pages(unittest.TestCase):
         flat = text.replace(" ", "")
         self.assertIn("15日は日曜日のため、前の平日", flat)        # 2026-02 and 2027-08
         self.assertIn("15日は土曜日のため、前の平日", flat)        # 2026-08
-        self.assertIn("nenkin.go.jp", p)
+        self.assertNotIn("nenkin.go.jp", p)      # no link to the source (owner, 2026-11-15)
         self.assertIn("かならず確かめてください", text)
         self.assertIn('href="/kyou/pension/"', self.pages["kyou/index.html"])
         self.assertIn("/kyou/pension/", self.pages["sitemap.xml"])

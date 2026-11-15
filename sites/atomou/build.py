@@ -60,7 +60,7 @@ SITE = {
     "nav": [("さがす", "/search/", "/search/"), ("カレンダー", "/calendar/", "/calendar/"), ("記録する", "/add/", "/add/"), ("マイページ", "/my/", "/my/")],
     "glyph": "",
     "assets": HERE / "assets",
-    "source_html": 'カードの日付は間違っていることがあります。<a href="/manual/">説明書</a> | <a href="/manual/#guide">使い方</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
+    "source_html": '公式の発表をはじめとする複数の情報をもとにしています。カードの日付は間違っていることがあります。<a href="/manual/">説明書</a> | <a href="/manual/#guide">使い方</a> | <a href="/use/">こんな時に</a> | <a href="/skins/">きせかえ</a>',
     "structured_data": False,    # the pages carry their own markup (a @graph); sitekit's breadcrumb / WebSite data is not added
 }
 WD = "月火水木金土日"
@@ -488,7 +488,7 @@ def home_page(c: Ctx) -> str:
 </section>
 <section id="live" data-block="live" data-title="速報(公式の発表)" hidden>
 <div class="head-row"><h2>速報</h2><div class="grow"><a class="btn small ghost" href="/topics/">もっと見る</a></div></div>
-<p class="hint">公式の発表を数分おきに集めています。日付や内容は、リンク先の公式ページで確かめてください。</p>
+<p class="hint">公式の発表を数分おきに集めています。日付や内容は、公式の情報で確かめてください。</p>
 <ul class="live-list" id="live-list"><li class="muted">読み込み中…</li></ul>
 </section>
 <section id="mine" data-block="mine" data-title="記録した日" hidden>
@@ -967,7 +967,7 @@ def event_page(c: Ctx, e: dict, indexable: bool, live: list[dict], pool: tuple[l
                        f'<p class="small muted">{esc(fmt_date(res["written_on"]))}にまとめました。主催者の発表と報道をもとにしています。間違いに気づいたときは、<a href="/contact/?kind=date">お問い合わせ</a>からお知らせください。</p></section>')
     vkey, vtext = verify_badge(e)
     vrow = (f'<p class="vrow"><span class="vbadge vb-{vkey}" data-vbadge>{VERIFY_LABELS[vkey]}</span> <span class="small muted" data-vtext>{esc(vtext)}</span> '
-            + (f' <a class="small" href="{esc(official_link(e))}" rel="noopener nofollow" target="_blank">公式ページ</a>' if official_link(e) else "") + "</p>")
+            + "</p>")
     gcal_btn = (' <a class="btn small ghost" href="' + esc(google_calendar_url(e, str(c.cfg['site_url']).rstrip('/') + '/e/' + e['id'] + '/')) + '" target="_blank" rel="noopener">Googleカレンダーに追加</a>') if e["precision"] == "day" and not est else ""
     copy_link = f'<a class="btn small ghost" href="/add/?title={quote(e["title"])}&amp;date={e["date"]}">自分のカードにコピー</a>'
     page_url = f"{str(c.cfg['site_url']).rstrip('/')}/e/{e['id']}/"
@@ -1061,7 +1061,7 @@ def topics_page(c: Ctx, live: list[dict]) -> str:
     body = f"""{crumbs([("トップ", "/"), ("最新・トピックス", None)])}
 <h1>最新・トピックス</h1>
 <p class="lead muted">いま近い日と新しく加わった日です。載せるのは、日付を確かめられた日です。カードの日付は間違っていることがあります。</p>
-<section id="live-t" hidden><h2>速報(公式の発表)</h2><p class="hint">公式のフィードから、数分おきに集めた見出しです。あなたの言葉に合うものが先に並びます。日付や内容は、リンク先の公式ページで確かめてください。</p><ul class="live-list" id="live-list-t"><li class="muted">読み込み中…</li></ul></section>
+<section id="live-t" hidden><h2>速報(公式の発表)</h2><p class="hint">公式のフィードから、数分おきに集めた見出しです。あなたの言葉に合うものが先に並びます。日付や内容は、公式の情報で確かめてください。</p><ul class="live-list" id="live-list-t"><li class="muted">読み込み中…</li></ul></section>
 {block("今週と来週の日", "今日から14日以内の日です。近い順です。", soon)}
 {block("新しく加わった日", "この30日に加わった日です。新しい順です。", fresh)}
 {'<p class="empty">いまは、ご案内できる新しい日がありません。</p>' if not soon and not fresh else ""}
@@ -1145,7 +1145,7 @@ def manual_page(c: Ctx) -> str:
 <h2>ボタン</h2>
 <dl class="info big-dl">
 <dt>{btn("☆ 予定に入れる")}</dt><dd>確認できた日付を自分のカレンダーに入れます。入ると「★ 予定に入っています」に変わり、もう一度押すと外れます。</dd>
-<dt>{btn("詳細", True)}</dt><dd>その日のページを開きます(日付の説明と公式ページへのリンク)。</dd>
+<dt>{btn("詳細", True)}</dt><dd>その日のページを開きます(日付の説明と、確かめた日)。</dd>
 <dt>{btn("開く")}</dt><dd>自分の予定の詳細を開きます。名前や日付の修正、メモと「やること」の記入もここから。</dd>
 <dt>{btn("消す", True)}</dt><dd>自分の予定を消します。</dd>
 <dt>{btn("シャッフル")}</dt><dd>ホームのカードを別の日に入れ替えます。</dd>
@@ -1354,7 +1354,7 @@ def legal(c: Ctx) -> dict:
     return legal_pages(
         site, cfg, c.preview,
         purpose="記録した日について、あと何日、もう何日かを数え、カレンダーで見られるようにすること。締切・試験・大会・お祭りの確認できた日付を、ワンタップで予定に入れられるようにすること。",
-        sources_html="公式の発表や報道などをもとに集めています。公式ページが分かる日付には、そのページへのリンクを付けています。",
+        sources_html="公式の発表をはじめとする複数の情報をもとにしています。",
         update_text="公式の発表や報道をもとに随時確認・追加します。",
         disclaimer_html="<p>カードの日付は間違っていることがあります。日付は、公式の発表や報道をもとに確認していますが、変更や中止になることもあります。申し込みや手続きの前に公式の情報で確認してください。当サイトの情報をもとにした行動の結果について、当サイトは責任を負いません。</p>"
                         "<p>「あと○日」「もう○日」は、お使いの端末の日付をもとに、ブラウザの中で数えています。端末の日付がずれていると、数字もずれます。</p>",
@@ -1498,7 +1498,7 @@ def rule_page(c: Ctx) -> str:
 </section>
 <p class="hint">ルールは、この端末の中にだけ残ります。当サイトには送りません。「この日を予定に入れる」で入れるのは、その1回分の日です。次の日は、このページで数えて、また入れてください。</p>
 <h2>数え方と、目安であること</h2>
-<p class="small muted">銀行の休みは、銀行法と銀行法施行令の定め(日曜日、土曜日、国民の祝日、12月31日から1月3日)のとおりに数えています(<a href="{bizday.BANK_LAW}" rel="noopener nofollow" target="_blank">銀行法施行令</a>)。祝日は、祝日法のきまりから数え直したものです。銀行は、このほかに営業所ごとの休みを決められるため、実際の引き落とし日や振込日は、利用する金融機関や会社の案内で確かめてください。数えられるのは、{c.today.year + 2}年末までです。年金の支払日は、<a href="/kyou/pension/">年金の支払日</a>にまとめています。</p>"""
+<p class="small muted">銀行の休みは、銀行法と銀行法施行令の定め(日曜日、土曜日、国民の祝日、12月31日から1月3日)のとおりに数えています。祝日は、祝日法のきまりから数え直したものです。銀行は、このほかに営業所ごとの休みを決められるため、実際の引き落とし日や振込日は、利用する金融機関や会社の案内で確かめてください。数えられるのは、{c.today.year + 2}年末までです。年金の支払日は、<a href="/kyou/pension/">年金の支払日</a>にまとめています。</p>"""
     return c.page("/rule/", f"毎月の日付の計算 休みなら前の営業日 | {NAME}", "毎月15日、休みなら前の営業日、のような日付を数えます。家賃・引き落とし・給料・年金の日に。", body, "rule", noindex=True)
 
 

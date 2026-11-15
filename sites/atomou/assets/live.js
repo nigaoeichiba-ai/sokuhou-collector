@@ -68,7 +68,7 @@
     if (!safe) return '';
     var add = it.d && C.parse(it.d) && C.totalDays(A.TODAY, C.parse(it.d)) >= 0 ? ' <a class="btn small ghost" href="/add/?kind=event&amp;title=' + encodeURIComponent(it.t.slice(0, 40)) + '&amp;date=' + it.d + '">予定に入れる</a>' : '';
     return '<li class="live-i' + (hit ? ' hit' : '') + '">' + (g ? '<span class="mark m' + g + '" data-g="' + g + '" aria-hidden="true"></span>' : '') +
-      '<div class="live-b"><a class="live-t" href="' + H(it.u) + '" target="_blank" rel="noopener noreferrer nofollow">' + H(it.t) + '</a>' +
+      '<div class="live-b"><span class="live-t">' + H(it.t) + '</span>' +
       '<p class="small muted">' + H(it.s) + ' ・ ' + H(ago(it.p)) + ' ・ 自動検出' + (it.d ? ' ・ 日付: ' + H(dayText(it.d)) : '') + (hit ? ' ・ <b>あなたの言葉: ' + H(hit) + '</b>' : '') + '</p>' + add + '</div></li>';
   }
   function draw() {
@@ -104,7 +104,7 @@
       A.toast('あなたの言葉の速報: ' + i.t.slice(0, 40));
       try {
         if (window.Notification && Notification.permission === 'granted') {
-          var opt = { body: i.s + ' ・ 公式ページで確かめてください', tag: 'live-' + i.id, data: { url: i.u } };
+          var opt = { body: i.s + ' ・ 公式の情報で確かめてください', tag: 'live-' + i.id, data: { url: i.u } };
           if (navigator.serviceWorker && navigator.serviceWorker.ready) navigator.serviceWorker.ready.then(function (r) { r.showNotification(i.t.slice(0, 60), opt); });
           else new Notification(i.t.slice(0, 60), opt);
         }

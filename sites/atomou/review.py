@@ -94,7 +94,7 @@ def event_page(c: ReviewCtx, e: dict, live: list[dict], guides: dict[str, dict])
     near = sorted((r for r in others if r["precision"] == "day" and e["precision"] == "day" and r not in same and r not in kin
                    and abs((date.fromisoformat(r["date"]) - d).days) <= 10), key=lambda r: (abs((date.fromisoformat(r["date"]) - d).days), r["date"], r["id"]))[:4]
 
-    official = (f'<p><a class="btn small ghost" href="{esc(B.official_link(e))}" rel="noopener nofollow" target="_blank">公式ページ</a></p>' if B.official_link(e) else "")
+    official = ""
 
     def block(head: str, rows: list[dict], hint: str = "") -> str:
         return f'<h2>{head}</h2>{hint}<div class="cards">' + "".join(B.card_html(r) for r in rows) + "</div>" if rows else ""
@@ -120,7 +120,7 @@ def legal(c: ReviewCtx) -> dict:
     return legal_pages(
         c.site, c.cfg, False,
         purpose="試験・締切・大会・天文・お祭りなど、公式の発表や報道をもとに日付をまとめ、あと何日かをわかりやすく示すこと。",
-        sources_html="公式の発表や報道などをもとに集めています。公式ページが分かる日付には、そのページへのリンクを付けています。",
+        sources_html="公式の発表をはじめとする複数の情報をもとにしています。",
         update_text="公式の発表や報道をもとに随時確認・追加します。",
         disclaimer_html="<p>カードの日付は間違っていることがあります。日付は、公式の発表や報道をもとに確認していますが、変更・中止されることもあります。申し込みや手続きの前に、公式の情報でご確認ください。当サイトの情報にもとづく行動の結果について、当サイトは責任を負いません。</p>"
                         "<p>「あと○日」「もう○日」は、お使いの端末の日付をもとにブラウザの中で数えています。端末の日付がずれていれば、数字もずれます。</p>",

@@ -147,7 +147,7 @@ class Pages(BuildOnce):
         self.assertIn(">詳細</a>", card)
         self.assertNotIn("カレンダーに入れる", card)
         page = self.rel[f"e/{e['id']}/index.html"]
-        self.assertIn("公式ページ</a>", page)  # an official page is linked on the detail page (no source table, no check date any more)
+        self.assertNotIn("公式ページ</a>", page)  # no link to the source page (owner, 2026-11-15)
         self.assertIn("メモ・やることを追加", page)
 
     def test_home_has_the_todays_list_block_first(self):
@@ -248,8 +248,8 @@ class Pages(BuildOnce):
         self.assertIsNotNone(line)
         self.assertIn("vbadge", line.group(1))
         self.assertNotIn(e["checked_on"], re.sub(r"(?s)<script.*?</script>", "", page))     # (the page markup for search engines keeps its dates)
-        self.assertIn(f'href="{e["source_url"]}"', line.group(1))     # an official source is the link "公式ページ"
-        self.assertIn("公式ページ</a>", line.group(1))
+        self.assertNotIn("<a ", line.group(1))     # no link to the source page (owner, 2026-11-15)
+        self.assertNotIn(e["source_url"], line.group(1))
 
     def test_use_case_pages_do_not_say_notices_are_missing(self):
         for k, v in self.rel.items():
@@ -403,10 +403,10 @@ class Pages(BuildOnce):
                     core = tok.replace("☆ ", "").replace("★ ", "")
                     self.assertTrue(core in src or tok in examples, f"{u['slug']}: 『{tok}』 is not on any screen")
 
-    def test_event_pages_link_the_official_page_and_say_the_date_may_be_wrong(self):   # the source table and the check date were taken off (owner, 2026-10-12)
+    def test_event_pages_do_not_link_the_official_page_and_say_the_date_may_be_wrong(self):   # the source table and the check date were taken off (owner, 2026-10-12)
         e = self.entries[0]
         page = self.rel[f"e/{e['id']}/index.html"]
-        self.assertIn(e["source_url"].replace("&", "&amp;"), page)
+        self.assertNotIn(e["source_url"].replace("&", "&amp;"), page)   # no link to the source (owner, 2026-11-15)
         self.assertNotIn(e["checked_on"], re.sub(r"(?s)<script.*?</script>", "", page))
         self.assertIn("カードの日付は間違っていることがあります", page)
 
@@ -688,7 +688,8 @@ class AppInChrome(BuildOnce):
         self.assertEqual(live.count("<li"), 2)                                          # the javascript: address is not shown
         self.assertLess(live.index("新作ゲーム"), live.index("日本銀行"))                  # the visitor's word first, then the newest
         self.assertIn("あなたの言葉: ゲーム", live)
-        self.assertRegex(live, r'<a class="live-t" href="https://www.nintendo.co.jp/y" target="_blank" rel="noopener noreferrer nofollow">')
+        self.assertRegex(live, r'<span class="live-t">')
+        self.assertNotIn("nintendo.co.jp", live)     # a headline is text, not a link to the source (owner, 2026-11-15)
         self.assertIn("自動検出", live)
         self.assertIn("日付: 2026年12月3日", live)
         self.assertIn("&lt;b&gt;", self.dom("/", "&livesrc=/fixtures/live.json").split('id="live-list"')[1].split("</ul>")[0].replace("&amp;lt;", "&lt;"))   # a headline is text, not markup

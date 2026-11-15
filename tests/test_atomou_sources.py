@@ -54,11 +54,11 @@ class Sources(unittest.TestCase):
                 for gone in ("出典と確認日", "出典の文", "確認日</dt>", "出典: "):
                     self.assertNotIn(gone, v, k)
 
-    def test_the_official_page_is_linked_only_when_it_is_known(self):
-        self.assertNotIn("公式ページ</a>", self.by["報道だけの新作"])
-        self.assertIn('href="https://maker.example/news"', self.by["報道と公式の新作"])
-        self.assertIn('href="https://maker.example/z"', self.by["公式の新作"])
-        self.assertIn("公式ページ</a>", self.by["公式の新作"])
+    def test_no_page_links_to_the_source_or_the_official_page(self):   # owner, 2026-11-15 (D26): only ads and application pages may be linked
+        for title, page in self.by.items():
+            self.assertNotIn("公式ページ</a>", page, title)
+            for u in ("https://maker.example/news", "https://maker.example/z", "https://news-a.example"):
+                self.assertNotIn(u, re.sub(r"(?s)<script.*?</script>", "", page), title)
 
     def test_the_badge_says_when_a_day_rests_on_reports(self):
         self.assertIn('vb-press" data-vbadge>報道で確認', self.by["報道だけの新作"])
