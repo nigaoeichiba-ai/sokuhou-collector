@@ -48,7 +48,7 @@ SITE = {
     "nav": list(BASE_NAV),
     "glyph": '<img src="/assets/img/logo-mark.webp" alt="" width="36" height="36">',
     "assets": HERE / "assets",
-    "source_html": "個人でも商用でも無料でお使いいただけます。",
+    "source_html": "個人でも商用でも無料でお使いいただけます。読みものは、公式の発表をはじめとする複数の情報をもとにしています。",
 }
 FONTS = '<meta name="theme-color" content="#2fd09b">\n'      # no Web fonts: the system's Japanese fonts (the Google ones were 122 files, about 1.5 MB, on every page)
 USES = {
@@ -122,9 +122,7 @@ def guide_page(cfg, preview, g: dict, series: list[dict]) -> str:
         if sec.get("partner"):      # the partner (A8) box of this section: the programme's own code, nothing when the page has none (partners.py)
             secs += partners.box(g["slug"])
     faq = "".join(f"<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>" for q, a in g.get("faq", []))
-    src = ""
-    if g.get("sources"):
-        src = ('<section class="art"><h2>参考にした情報</h2><ul>' + "".join(f'<li><a href="{esc(x["url"])}" rel="noopener nofollow" target="_blank">{esc(x["title"])}</a></li>' for x in g["sources"]) + "</ul></section>")
+    src = ""        # D26 (2026-11-15): the sources of a guide (g["sources"], kept in the data and checked by the tests) are not shown on the page
     rel = [s_ for slug in g.get("related_series", []) for s_ in series if s_["slug"] == slug]
     its = [i for s_ in rel for i in s_["items"]][:12]
     illust = (f'<section style="margin-top:36px"><h2><span class="scribble">この記事で使えるイラスト</span></h2>{grid(its)}'
@@ -1824,7 +1822,7 @@ def about_more(html: str, series: list[dict]) -> str:
 <ul>
 <li>崩れや不自然な部分があるイラストは、公開しません。</li>
 <li>各ページの大きさ・印刷の目安・色・背景との相性は、画像のファイルから測った数字です。</li>
-<li>読みものの日付や制度の説明は、確認した出典を付けて書きます。年によって変わることは、そう書きます。</li>
+<li>読みものの日付や制度の説明は、確認した日を付けて書きます。年によって変わることは、そう書きます。</li>
 <li>利用の条件は<a href="/license/">利用について</a>にまとめています。条件を変えるときは、このページの履歴に書きます。</li>
 </ul>
 <h2>誤りを見つけたら</h2>

@@ -30,7 +30,10 @@ class HagakiSize(unittest.TestCase):
 
     def test_official_figures_and_sources(self):
         html = self.page()
-        for t in ("14〜15.4cm", "9〜10.7cm", "2g以上6g以内", "85円", "170円", "4〜12g", "post.japanpost.jp/service/create/guideline/01.html"):
+        for t in ("14〜15.4cm", "9〜10.7cm", "2g以上6g以内", "85円", "170円", "4〜12g"):
+            self.assertIn(t, html)
+        self.assertNotIn("post.japanpost.jp/service/create/guideline", html)   # D26: no link to the source
+        for t in ():
             self.assertIn(t, html)
 
     def test_no_claim_about_the_address_side_layout(self):
