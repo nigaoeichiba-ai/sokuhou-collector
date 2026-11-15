@@ -37,7 +37,7 @@ class ReviewCtx(B.Ctx):
         genres = [(g, f"/c/{B.GROUP_SLUG[g]}/") for g in self.shown]
         self.site = dict(B.SITE)
         self.site["nav"] = [(g, u, u) for g, u in genres]
-        self.site["source_html"] = ("カードの日付は間違っていることがあります。 "
+        self.site["source_html"] = ("公式の発表をはじめとする複数の情報をもとにしています。カードの日付は間違っていることがあります。 "
                                     + " | ".join(f'<a href="{u}">{esc(g)}</a>' for g, u in genres))
 
     def finish(self, html: str, kind: str, noindex: bool = False) -> str:

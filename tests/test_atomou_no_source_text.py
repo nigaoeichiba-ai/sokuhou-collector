@@ -40,6 +40,16 @@ class NoSourceText(BuildOnce):
         self.assertEqual(bad[:10], [], f"{len(bad)} violations")
 
 
+class Footer(NoSourceText):
+    def test_every_page_has_the_one_general_sentence_in_the_footer(self):   # full build and the review copy
+        from sites.atomou import review
+        S = "公式の発表をはじめとする複数の情報をもとにしています。"
+        for k in ("index.html", "e/" + next(x for x in self.rel if x.startswith("e/")).split("/")[1] + "/index.html"):
+            self.assertIn(S, self.rel[k], k)
+        pages = review.build_pages(__import__("tests.test_atomou_build", fromlist=["CFG"]).CFG, __import__("tests.test_atomou_build", fromlist=["TODAY"]).TODAY)
+        self.assertIn(S, pages["index.html"])
+
+
 class Checker(unittest.TestCase):   # the check finds what it is for (negative cases)
     def test_it_finds_a_source_link_and_a_source_word(self):
         self.assertTrue(violations("e/x/index.html", '<p><a href="https://www.mhlw.go.jp/x" rel="noopener">公式ページ</a></p>'))
