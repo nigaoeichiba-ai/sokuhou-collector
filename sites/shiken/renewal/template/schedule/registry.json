@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-15T03:00:00.000Z",
+  "updatedAt": "2026-11-15T04:00:00.000Z",
   "exams": [
     {
       "id": "toeic",
@@ -1228,6 +1228,18 @@
       "page": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/jinzaikaihatsu/career_consultant01.html",
       "description": "学科試験と実技（論述）は同じ日で、実技（面接）は別の日に受けます。申請期間と合格発表日は確認できていません。",
       "category": "qualification"
+    },
+    {
+      "id": "denken3-r8-2",
+      "family": "denken",
+      "name": "第三種電気主任技術者試験（電験三種）",
+      "short": "電験三種",
+      "aliases": "令和8年度 下期 電験三種 第三種電気主任技術者試験 電験",
+      "field": "ビジネス",
+      "edition": "令和8年度 下期",
+      "page": "https://www.shiken.or.jp/chief/third/",
+      "description": "申込は2026年11月26日17時までです。CBT方式は2027年2月、筆記方式は2027年3月21日に受けます。",
+      "category": "qualification"
     }
   ],
   "sources": {
@@ -1734,6 +1746,18 @@
     "catalog-career-consultant-34": {
       "title": "厚生労働省｜キャリアコンサルタントになりたい方へ（試験日程・料金）",
       "url": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/jinzaikaihatsu/career_consultant01.html"
+    },
+    "catalog-cc34-jcda": {
+      "title": "日本キャリア開発協会｜キャリアコンサルタント試験 試験日程／試験地区",
+      "url": "https://www.jcda-careerex.org/about/schedule/"
+    },
+    "catalog-cc34-kyogikai": {
+      "title": "キャリアコンサルティング協議会｜キャリアコンサルタント試験 試験日程",
+      "url": "https://www.career-shiken.org/about/schedule/"
+    },
+    "catalog-denken3-r8-2": {
+      "title": "電気技術者試験センター｜第三種電気主任技術者試験（令和8年度下期）",
+      "url": "https://www.shiken.or.jp/chief/third/"
     }
   },
   "meta": {
@@ -6294,13 +6318,9 @@
     "career-consultant-34": {
       "checkedAt": "2026-11-15",
       "fields": {
-        "deadline": "unverified",
+        "deadline": "published",
         "exam": "published",
-        "result": "unverified"
-      },
-      "fieldNotes": {
-        "deadline": "受験申請の期間は、試験実施機関の発表で確認できていません。",
-        "result": "合格発表の日は、試験実施機関の発表で確認できていません。"
+        "result": "published"
       },
       "id": "career-consultant-34",
       "name": "キャリアコンサルタント試験",
@@ -6309,20 +6329,78 @@
       "edition": "第34回（2027年3月）",
       "sourceTitle": "厚生労働省｜キャリアコンサルタントになりたい方へ（試験日程・料金）",
       "sourceUrl": "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/jinzaikaihatsu/career_consultant01.html",
-      "application": [],
-      "applicationNote": "受験申請の期間は、確認できていません。",
-      "notes": "試験日と受験料は、確認した日付のものです。受験申請の期間と合格発表の日は、受験する機関の案内で見ておきましょう。次回の第35回は2027年7月4日（日）です。",
+      "application": [
+        {
+          "start": "2026-12-09",
+          "label": "日本キャリア開発協会の受験申請開始",
+          "sourceId": "catalog-cc34-jcda"
+        },
+        {
+          "start": "2026-12-11",
+          "label": "キャリアコンサルティング協議会の受験申請開始",
+          "sourceId": "catalog-cc34-kyogikai"
+        }
+      ],
+      "applicationNote": "受付の期間は、受ける機関で違います。日本キャリア開発協会は2026年12月9日〜12月23日、キャリアコンサルティング協議会は12月11日〜12月22日です。",
+      "notes": "受験申請の期間は、受ける機関で違います。受験票は2027年2月12日に発行・発送されます。次回の第35回は2027年7月4日（日）で、申請期間は日本キャリア開発協会が2027年4月13日〜4月28日です。",
       "procedureNotes": [
-        "試験は、キャリアコンサルティング協議会と日本キャリア開発協会のどちらかで受けます。実技（面接）の日と問題は、機関によって違います。",
+        "試験は、キャリアコンサルティング協議会と日本キャリア開発協会のどちらかで受けます。受験申請の期間と、実技（面接）の日・問題は、機関によって違います。",
         "受験料は、学科試験が8,900円、実技試験が29,900円で、両機関で同じです。",
         "受験できるのは、厚生労働大臣が認定する養成講習を修了した方、相談の経験が3年以上ある方、技能検定のキャリアコンサルティング職種の合格者、これらと同等以上の能力がある方です。",
-        "試験科目は、関係法令、理論、実務、社会的意義、倫理と行動の5つです。"
+        "試験科目は、関係法令、理論、実務、社会的意義、倫理と行動の5つです。",
+        "日本キャリア開発協会では、受験希望者が予定数を超えると、申請期間の途中でも受付が止まることがあります。締切より早めに申請しましょう。"
       ],
       "family": "career-consultant",
       "scope": "キャリアコンサルタント試験・第34回（2027年3月）",
       "sourceStatus": "verified",
       "sourceIds": [
-        "catalog-career-consultant-34"
+        "catalog-career-consultant-34",
+        "catalog-cc34-kyogikai",
+        "catalog-cc34-jcda"
+      ],
+      "fieldSourceIds": {},
+      "category": "qualification"
+    },
+    "denken3-r8-2": {
+      "checkedAt": "2026-11-15",
+      "fields": {
+        "deadline": "published",
+        "exam": "published",
+        "result": "published"
+      },
+      "id": "denken3-r8-2",
+      "name": "第三種電気主任技術者試験（電験三種）",
+      "short": "電験三種",
+      "field": "ビジネス",
+      "edition": "令和8年度 下期",
+      "sourceTitle": "電気技術者試験センター｜第三種電気主任技術者試験（令和8年度下期）",
+      "sourceUrl": "https://www.shiken.or.jp/chief/third/",
+      "application": [
+        {
+          "start": "2026-11-09",
+          "time": "10:00",
+          "label": "受験申込開始",
+          "sourceId": "catalog-denken3-r8-2"
+        }
+      ],
+      "examWindows": [
+        {
+          "start": "2027-02-04",
+          "end": "2027-02-28"
+        }
+      ],
+      "notes": "CBT方式と筆記方式は、申込の時に選びます。受験手数料は、インターネット申込みが7,700円、書面申込みが8,100円（非課税）で、別に事務手数料がかかります。令和9年度の日程は、電気技術者試験センターが別に案内しています。",
+      "procedureNotes": [
+        "CBT方式は、申込とは別に、会場の予約が必要です。予約期間は2026年12月7日から2027年1月7日までで、期間内に予約しないと受験できず、手数料も返金されません。",
+        "CBT方式の会場・日時の変更は、予約した試験日の3日前までです。",
+        "筆記方式の受験票は2027年3月5日に発送され、試験問題と解答は試験の日に公表されます。",
+        "結果通知書の発送は2027年4月16日です。"
+      ],
+      "family": "denken",
+      "scope": "電験三種・令和8年度 下期",
+      "sourceStatus": "verified",
+      "sourceIds": [
+        "catalog-denken3-r8-2"
       ],
       "fieldSourceIds": {},
       "category": "qualification"
@@ -11861,6 +11939,77 @@
       "note": "面接は試験実施機関ごとに日と問題が違います。キャリアコンサルティング協議会は3月12日・13日・14日・20日・21日・22日・27日、日本キャリア開発協会は3月13日・14日・20日・21日です。受験する機関の指定日に受けます。",
       "exam": "career-consultant-34",
       "sourceId": "catalog-career-consultant-34",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "career-consultant-34-deadline-kyogikai",
+      "date": "2026-12-22",
+      "type": "deadline",
+      "label": "キャリアコンサルタント試験 第34回・受験申請締切（キャリアコンサルティング協議会で受ける場合）",
+      "note": "受付期間は2026年12月11日〜12月22日です。",
+      "exam": "career-consultant-34",
+      "sourceId": "catalog-cc34-kyogikai",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "career-consultant-34-deadline-jcda",
+      "date": "2026-12-23",
+      "type": "deadline",
+      "label": "キャリアコンサルタント試験 第34回・受験申請締切（日本キャリア開発協会で受ける場合）",
+      "note": "受付期間は2026年12月9日〜12月23日で、郵送は締切日の消印有効です。受験希望者が予定数を超えると、期間の途中でも受付が止まることがあります。",
+      "exam": "career-consultant-34",
+      "sourceId": "catalog-cc34-jcda",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "career-consultant-34-result",
+      "date": "2027-04-20",
+      "type": "result",
+      "label": "キャリアコンサルタント試験 第34回・合格発表",
+      "note": "Webでは午前10時からです。日本キャリア開発協会の発表日は予定です。",
+      "exam": "career-consultant-34",
+      "sourceId": "catalog-cc34-kyogikai",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "denken3-r8-2-deadline",
+      "date": "2026-11-26",
+      "type": "deadline",
+      "label": "電験三種 令和8年度下期・受験申込締切",
+      "time": "17:00",
+      "note": "受付は2026年11月9日10時から。CBT方式と筆記方式で同じ期間です。原則インターネット申込みで、受験手数料の入金期限は11月27日です。",
+      "exam": "denken3-r8-2",
+      "sourceId": "catalog-denken3-r8-2",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "denken3-r8-2-exam-cbt",
+      "date": "2027-02-04",
+      "type": "exam",
+      "label": "電験三種 令和8年度下期・一次試験 CBT方式の実施期間の開始日",
+      "note": "2月4日〜2月28日の間で、会場と日時を選んで受けます。会場の予約期間は2026年12月7日〜2027年1月7日です。",
+      "exam": "denken3-r8-2",
+      "sourceId": "catalog-denken3-r8-2",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "denken3-r8-2-exam-written",
+      "date": "2027-03-21",
+      "type": "exam",
+      "label": "電験三種 令和8年度下期・一次試験 筆記方式",
+      "note": "受験票は3月5日に発送されます。",
+      "exam": "denken3-r8-2",
+      "sourceId": "catalog-denken3-r8-2",
+      "checkedAt": "2026-11-15"
+    },
+    {
+      "id": "denken3-r8-2-result",
+      "date": "2027-04-05",
+      "type": "result",
+      "label": "電験三種 令和8年度下期・試験結果発表（筆記方式）",
+      "note": "CBT方式は、受験日の約2週間後の正午からマイページで発表されます。",
+      "exam": "denken3-r8-2",
+      "sourceId": "catalog-denken3-r8-2",
       "checkedAt": "2026-11-15"
     }
   ]

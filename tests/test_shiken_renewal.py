@@ -142,7 +142,7 @@ class Renewal(unittest.TestCase):
             self.assertIn(f"exams/{e['id']}/index.html", self.pages, e["id"])
         for g in ("decided", "discover", "compare", "family", "prepared"):
             self.assertIn(f"guides/{g}/index.html", self.pages)
-        self.assertEqual(len(REGISTRY["exams"]), 96)
+        self.assertEqual(len(REGISTRY["exams"]), 97)
         self.assertGreaterEqual(len(self.pages), 125)
 
     def test_the_sitemap_lists_what_is_indexed_and_nothing_else(self):
@@ -311,7 +311,7 @@ class Renewal(unittest.TestCase):
             self.assertIn("【PR】", h, e["id"])
             self.assertEqual(AFF.problems(h), [], e["id"])
             n += 1
-        self.assertEqual(n, 96, sys_path)
+        self.assertEqual(n, 97, sys_path)
 
     def test_courses_of_the_partner_are_on_the_exams_it_covers(self):
         for eid in ("takken", "gyosei", "sharoshi", "shindanshi"):

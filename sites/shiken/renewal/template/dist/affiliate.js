@@ -38,7 +38,8 @@ export const GROUPS={
  kyodai:{name:'京都大学の入試',word:'京都大学 過去問'},
  hokudai:{name:'北海道大学の入試',word:'北海道大学 過去問'},
  daigaku:{name:'国公立大学の入試',word:'国公立大学 過去問'},
- careercon:{name:'キャリアコンサルタント',word:'キャリアコンサルタント 試験 テキスト'}
+ careercon:{name:'キャリアコンサルタント',word:'キャリアコンサルタント 試験 テキスト'},
+ denken:{name:'電験三種',word:'電験三種 参考書'}
 };
 // exam id / family -> group
 export function groupFor(exam){
@@ -49,7 +50,7 @@ export function groupFor(exam){
  if(id.startsWith('fp'))return 'fp';
  if(fam.startsWith('komuin'))return 'komuin';
  if(fam.startsWith('national')||fam.startsWith('public'))return 'daigaku';
- return {takken:'takken',gyosei:'gyosei',sharoshi:'sharoshi',shindanshi:'shindanshi',kaigo:'kaigo',nurse:'nurse',kanri:'kanri',boki:'boki',eiken:'eiken',toeic:'toeic','career-consultant':'careercon',kanken:'kanken',kyotsu:'kyotsu',itpassport:'itpassport',fe:'fe',touroku:'touroku',todai:'todai',kyodai:'kyodai',hokudai:'hokudai'}[fam]||null;
+ return {takken:'takken',gyosei:'gyosei',sharoshi:'sharoshi',shindanshi:'shindanshi',kaigo:'kaigo',nurse:'nurse',kanri:'kanri',boki:'boki',eiken:'eiken',toeic:'toeic','career-consultant':'careercon',denken:'denken',kanken:'kanken',kyotsu:'kyotsu',itpassport:'itpassport',fe:'fe',touroku:'touroku',todai:'todai',kyodai:'kyodai',hokudai:'hokudai'}[fam]||null;
 }
 // the section (an HTML string).  `idPrefix` makes the heading id unique in a page.
 export function affiliateSection(group,idPrefix='pr'){
