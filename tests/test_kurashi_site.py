@@ -165,3 +165,45 @@ class CheckLedger(unittest.TestCase):
             self.assertEqual(checks.open_failures(), [])
         finally:
             checks.FETCH_LOG = old
+
+
+class CheckDayInBuiltPages(unittest.TestCase):
+    """Every page of the ledger shows the ledger's day in the built HTML (the content pages and the guide pages differ in where they show it)."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.out = Path(cls.tmp.name) / "out"
+        newsite.main_build(SITE, ["--out", str(cls.out), "--release", "--strict-seo"])
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    @staticmethod
+    def shown_days(html: str) -> set[str]:
+        """the check days a page shows: '確認日：2026-11-15' / 'に公式情報と照合' / '2026年11月15日確認' / '確認日 2026年11月15日'"""
+        iso = set(re.findall(r"確認日：(\d{4}-\d{2}-\d{2})", html)) | set(re.findall(r"このガイドは(\d{4}-\d{2}-\d{2})に公式情報と照合", html))
+        for m in re.finditer(r"(?:(\d{4})年(\d{1,2})月(\d{1,2})日確認)|(?:確認日[ ：](\d{4})年(\d{1,2})月(\d{1,2})日)", html):
+            g = [x for x in m.groups() if x]
+            iso.add(f"{int(g[0]):04d}-{int(g[1]):02d}-{int(g[2]):02d}")
+        return iso
+
+    def page_html(self, path: str) -> str:
+        return (self.out / path.strip("/") / "index.html").read_text(encoding="utf-8") if path != "/" else (self.out / "index.html").read_text(encoding="utf-8")
+
+    def test_ledger_pages_show_the_ledger_day_and_no_older_day(self):
+        from sites.kurashi.gen import checks
+        for day, paths in checks.CHECKED_ON.items():
+            for path in paths:
+                if path == "/":
+                    continue          # the home page shows the holiday check day, which is a different check
+                shown = self.shown_days(self.page_html(path))
+                want = checks.checked_day(path)
+                self.assertIn(want, shown, f"{path}: the ledger day {want} is not shown (shown: {shown})")
+                self.assertFalse({s for s in shown if s < want}, f"{path}: an older check day is shown next to {want}: {shown}")
+
+    def test_negative_an_old_day_is_detected(self):
+        self.assertEqual(self.shown_days("<span>確認日：2026-11-13</span>"), {"2026-11-13"})
+        self.assertEqual(self.shown_days("2026年11月3日確認"), {"2026-11-03"})
+        self.assertEqual(self.shown_days("<span>確認日：2026年11月15日</span>"), {"2026-11-15"})

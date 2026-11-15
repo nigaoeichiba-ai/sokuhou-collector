@@ -119,12 +119,24 @@ def phrases(text: str) -> str:
 
 
 # ---------------------------------------------------------------- the data the pages and the browser share
+def _checks():
+    """gen/checks.py, loaded by its path (it imports nothing from the package)"""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("kurashi_checks", ROOT / "gen" / "checks.py")
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
 def load_guides() -> tuple[dict, dict]:
     g = {}
     for f in sorted((ROOT / "guides").glob("*.json")):
         if f.name.startswith("_"):
             continue
         d = json.loads(f.read_text(encoding="utf-8"))
+        if d.get("factCheck"):          # the day shown is the ledger's (gen/checks.py), never older than the day the guide file says
+            led = _checks().checked_day(d["path"])
+            d["factCheck"]["checkedAt"] = max(d["factCheck"]["checkedAt"], led)
         g[d["id"]] = d
     return g, json.loads((ROOT / "guides" / "_site.json").read_text(encoding="utf-8"))
 
@@ -353,6 +365,8 @@ def render_page(p: dict, ctx) -> tuple[str, str]:
     meta = f'<span>最終更新日：{updated.year}年{updated.month}月{updated.day}日</span>'
     if g:
         meta += f'<span>確認日：{e(g["factCheck"]["checkedAt"])}</span>'
+    elif re.match(r"\d{4}年\d{1,2}月\d{1,2}日確認$", p.get("data_basis") or ""):
+        meta += f'<span>確認日：{e(p["data_basis"][:-2])}</span>'          # a page without a guide shows its ledger day too
     meta += f'<span>読む目安：約{read_minutes(p, g)}分</span>'
     save = f'<button class="secondary-button" data-save-guide="{g["id"]}" aria-pressed="false">あとで読む</button>' if g else ""
     tools = f'<div class="article-tools">{save}<button type="button" class="text-button" data-print hidden>印刷する</button></div>'
