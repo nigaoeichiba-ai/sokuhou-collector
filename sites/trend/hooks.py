@@ -243,8 +243,7 @@ def add_nengajo_sim(pages: dict) -> None:
     if not isinstance(t, str) or NENGAJO_SIM_BEFORE not in t or NENGAJO_SIM_OLD_STEP not in t:
         raise SystemExit("nengajo sim: the insertion point or the step that points at the 30-sheet table is not in the article")
     js, css = (NENGAJO_SIM_DIR / "nengajo-sim.js").read_text(encoding="utf-8"), (NENGAJO_SIM_DIR / "nengajo-sim.css").read_text(encoding="utf-8")
-    block = (NENGAJO_SIM_DIR / "nengajo-sim.html").read_text(encoding="utf-8").replace(
-        "<!--SIM:links-->", "、".join(f'<a href="{u}" rel="noopener">{html.escape(n)}</a>' for u, n in NENGAJO_SIM_SOURCES))
+    block = (NENGAJO_SIM_DIR / "nengajo-sim.html").read_text(encoding="utf-8")   # no links to the companies' price pages (owner 2026-11-15, D26)
     ver = lambda s: hashlib.sha1(s.encode()).hexdigest()[:8]
     pages["assets/nengajo-sim.js"], pages["assets/nengajo-sim.css"] = js, css
     t = t.replace(NENGAJO_SIM_BEFORE, block + NENGAJO_SIM_BEFORE, 1).replace(NENGAJO_SIM_OLD_STEP, NENGAJO_SIM_NEW_STEP, 1)

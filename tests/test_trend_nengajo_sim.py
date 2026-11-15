@@ -189,8 +189,10 @@ class TestNengajoSimPage(unittest.TestCase):
         self.assertIn("www11.a8.net/0.gif?a8mat=4BGH3G+CRMT6Y+33J0+15OK2A", block)
         for text in re.findall(r"<a [^>]*>([^<]*)</a>", block):
             self.assertFalse(re.match(r"\s*(https?:|www\.)", text), f"link text is a URL: {text}")
-        for name in ("年賀状スクエア", "おたより本舗", "しまうまプリント", "挨拶状ドットコム", "Rakpo", "ラクスル", "郵便局"):
+        for name in ("ラクスル", "郵便局"):
             self.assertIn(name, block)
+        # no link to a company's price page (owner 2026-11-15, D26): the only link out of the block is the ad
+        self.assertEqual(re.findall(r'<a [^>]*href="https?://([^/"]+)', block), ["px.a8.net"])
         self.assertIn("2026年11月13日", block)
         self.assertNotRegex(block, r"<ol[^>]*>\s*</ol>")     # sitecheck refuses an empty list
 
