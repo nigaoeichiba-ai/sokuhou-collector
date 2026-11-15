@@ -212,6 +212,13 @@ def post(pages, content, cfg, spec, site_dir):
     ctx.content, ctx.by_path, ctx.per_page = content, {p["path"]: p for p in content}, per_page
     ctx.page_guide, ctx.guides, ctx.tsite, ctx.table_html = shell.guide_of_page(guides), guides, tsite, table_html
     ctx.official = official_lists(content, ctx.page_guide, spec, tsite)
+    # the words 出典 stay off the screen (owner 2026-11-15, D26): the shared legal pages say 情報の出典, so this site rewords them
+    for rel, pairs in (("about/index.html", (("<dt>情報の出典</dt>", "<dt>情報の確かめ方</dt>"), ("情報の出典、免責事項です", "情報の確かめ方、免責事項です"),
+                                          ("出典と照らして誤りと確認できたときは", "公表されている内容と照らして誤りと確認できたときは"))),
+                       ("privacy/index.html", (("免責事項と情報の出典は", "免責事項と情報の確かめ方は"),))):
+        if isinstance(pages.get(rel), str):
+            for a, b in pairs:
+                pages[rel] = pages[rel].replace(a, b)
     index = shell.pages_index(content, guides)
     data = shell.data_js(guides, tsite, spec, index, today)
     ver = asset_version(site_dir, data)

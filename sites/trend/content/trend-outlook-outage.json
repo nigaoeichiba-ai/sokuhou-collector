@@ -154,7 +154,7 @@
    ]
   },
   {
-   "html": "<ol><li><a href=\"https://status.cloud.microsoft/\" target=\"_blank\" rel=\"noopener\">Microsoftの公開ステータスページ</a>（status.cloud.microsoft）。管理センターが開けない人向けに、Microsoft自身がここでの確認を呼び掛けています</li><li><a href=\"https://x.com/MSFT365Status\" target=\"_blank\" rel=\"noopener\">Microsoftの公式Xアカウント</a>（MSFT365Status）。更新情報はここに時系列で追加されます</li><li>Microsoft 365管理センター（開ける場合）。障害の管理番号は、メール側がEX1550543、全体がMO1550821です</li></ol>"
+   "html": "<ol><li>Microsoftの公開ステータスページ。管理センターが開けない人向けに、Microsoft自身がここでの確認を呼び掛けています</li><li>Microsoftの公式Xアカウント（MSFT365Status）。更新情報はここに時系列で追加されます</li><li>Microsoft 365管理センター（開ける場合）。障害の管理番号は、メール側がEX1550543、全体がMO1550821です</li></ol>"
   },
   {
    "paras": [

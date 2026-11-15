@@ -1,7 +1,7 @@
 """trend-sokuho.com: no link to an information source is shown on a page (owner 2026-11-15, D26).
 
 Only ad links, the Rakuten API credit and the AdSense opt-out links of the privacy page may leave the site.  The bottom line of an article ('出典: 名前（公表日）をもとに作成', no link)
-stays.  The two 11/14 articles that are still being published one by one (NEWT, Outlook) are listed in PENDING and must be emptied when their source links are gone.
+stays.  A page listed in PENDING is skipped (empty now: the 11/14 NEWT and Outlook articles were cleaned on 2026-11-15).
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "sites" / "trend"
 ALLOWED_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "www.amazon.co.jp", "af.moshimo.com", "ck.jp.ap.valuecommerce.com", "adssettings.google.com", "www.aboutads.info",
                  "developers.rakuten.com")
-PENDING = ("trend-newt-blackfriday/index.html", "trend-outlook-outage/index.html")
+PENDING = ()
 
 
 def source_links(html: str) -> list[str]:

@@ -254,7 +254,7 @@ def shown_source_problems(html: str, rel: str) -> list[str]:
             bad.append("external link: " + host)
     text = re.sub(r"<(script|style).*?</>", "", html, flags=re.S)
     text = re.sub(r"<[^>]+>", "", text)
-    if rel != "about/index.html" and rel != "privacy/index.html":
+    if True:
         for w in ("出典", "参照:", "情報源"):
             if w in text:
                 bad.append("word: " + w)
