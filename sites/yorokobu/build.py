@@ -170,8 +170,8 @@ def vc_pixel(cfg: dict) -> str:
 
 
 def vc_a(cfg: dict, href: str, inner: str) -> str:
-    """A ValueCommerce link as the programme's code writes it: <a href rel="nofollow"> with the 1x1 counter first inside it, then the text (or the picture)."""
-    return f'<a href="{esc(href)}" rel="nofollow">{vc_pixel(cfg)}{inner}</a>'
+    """A ValueCommerce link: the programme's code (href, the 1x1 counter first inside it, then the text or the picture); the tag only takes target and rel, as every affiliate link of the site does (2026-11-15: sponsored noopener, _blank)."""
+    return f'<a href="{esc(href)}" target="_blank" rel="nofollow sponsored noopener">{vc_pixel(cfg)}{inner}</a>'
 
 
 def amazon_query(name: str, limit: int = 30) -> str:

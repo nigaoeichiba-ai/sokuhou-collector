@@ -192,9 +192,9 @@ A8_TEXT = "【シャディ公式】内祝や、お返しも！ギフト専門店
 
 
 def shaddy_a(cfg: dict) -> str:
-    """A8's text ad exactly as A8 gave it: the link (href and rel="nofollow" only) with its own words, and the 1x1 counter image right after it."""
+    """A8's text ad exactly as A8 gave it: the link (href; target and rel as every affiliate link of the site, 2026-11-15) with its own words, and the 1x1 counter image right after it."""
     m = cfg["shaddy_a8mat"]
-    return (f'<span class="a8-link"><a href="{esc(shaddy_url(cfg))}" rel="nofollow">{A8_TEXT}</a>'
+    return (f'<span class="a8-link"><a href="{esc(shaddy_url(cfg))}" target="_blank" rel="nofollow sponsored noopener">{A8_TEXT}</a>'
             f'<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat={esc(m)}" alt=""></span>')
 
 

@@ -34,16 +34,16 @@ class UrlTest(unittest.TestCase):
 
     def test_the_button_is_marked_as_an_advertisement_link(self):
         b = build.yahoo_btn(CFG_Y, "お歳暮", "Yahoo!ショッピングで探す")
-        self.assertRegex(b, r'^<span class="btn"><a href="//ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?[^"]+" rel="nofollow"><img ')          # the programme's code: href and rel="nofollow" only, the counter first inside
-        self.assertNotIn("target=", b)
-        self.assertNotIn("sponsored", b)
+        self.assertRegex(b, r'^<span class="btn"><a href="//ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?[^"]+" target="_blank" rel="nofollow sponsored noopener"><img ')          # the programme's code: href and rel="nofollow" only, the counter first inside
+        self.assertIn('target="_blank"', b)               # 2026-11-15: the tag takes target and rel like every affiliate link
+        self.assertIn("sponsored", b)
         self.assertNotIn("<a class=", b)
         self.assertIn("&amp;vc_url=", b)
 
     def test_each_link_carries_the_programmes_impression_counter(self):
         b = build.yahoo_btn(CFG_Y, "お歳暮", "x")
         self.assertIn('<a href="//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&amp;pid=892728268&amp;vc_url=', b)
-        self.assertIn('rel="nofollow"><img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3784606&amp;pid=892728268" height="1" width="1" border="0">x</a>', b)      # inside the link, before its text, in the programme's order of attributes
+        self.assertIn('target="_blank" rel="nofollow sponsored noopener"><img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3784606&amp;pid=892728268" height="1" width="1" border="0">x</a>', b)      # inside the link, before its text, in the programme's order of attributes
         self.assertEqual(b.count("<a "), 1)
 
     def test_the_real_config_has_the_ids(self):
@@ -75,7 +75,7 @@ class PagesTest(unittest.TestCase):
 
     def test_the_sheets_and_the_comparison_pages_offer_yahoo_and_say_that_no_yahoo_price_is_in_the_table(self):
         for rel in ("oseibo/index.html", "nenga/index.html", "oiwai/seijin/index.html", "oiwai/kekkon/index.html"):
-            self.assertRegex(self.read(rel), r'href="//ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3784606&amp;pid=892728268&amp;vc_url=[^"]+" rel="nofollow"><img src="//ad\.jp\.ap\.valuecommerce\.com/servlet/gifbanner\?sid=3784606&amp;pid=892728268" height="1" width="1" border="0">', rel)
+            self.assertRegex(self.read(rel), r'href="//ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3784606&amp;pid=892728268&amp;vc_url=[^"]+" target="_blank" rel="nofollow sponsored noopener"><img src="//ad\.jp\.ap\.valuecommerce\.com/servlet/gifbanner\?sid=3784606&amp;pid=892728268" height="1" width="1" border="0">', rel)
         t = self.read("compare/tumbler/index.html")
         self.assertIn("この表にYahoo!ショッピングの価格は入っていません", t)
         self.assertIn("valuecommerce.com", t)

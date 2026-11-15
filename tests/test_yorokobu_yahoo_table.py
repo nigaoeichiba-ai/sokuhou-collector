@@ -116,8 +116,8 @@ class PagesTest(unittest.TestCase):
         sec = self.section(self.read("compare/tumbler/index.html"))
         for i in range(1, 9):
             self.assertIn(f"https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3784606&amp;pid=892728268&amp;vc_url=https%3A%2F%2Fstore.shopping.yahoo.co.jp%2Fshop{i}%2Fitem{i}.html", sec)
-        self.assertEqual(sec.count('rel="nofollow">'), 16)                  # the photo and the button of each row (the words of a row are not a link): the programme's code, rel="nofollow" only
-        self.assertNotIn("sponsored", sec)
+        self.assertEqual(sec.count('rel="nofollow sponsored noopener">'), 16)                  # the photo and the button of each row (the words of a row are not a link): the programme's code, rel="nofollow" only
+        self.assertNotIn("nofollow\"><", sec)                      # no link of the table is left with the bare rel
         self.assertEqual(sec.count("servlet/gifbanner?sid=3784606&amp;pid=892728268"), 16)          # the counter inside every link, before its text or picture
 
     def test_the_pictures_are_the_products_own_photos_from_yahoos_image_host_at_the_size_given_and_nothing_else(self):

@@ -12,9 +12,9 @@ import re
 # hosts whose links are allowed on a screen: share buttons, the prescribed credits, the calendar add button, the privacy page's opt-out pages
 ALLOWED_HOSTS = ("line.me", "twitter.com", "x.com", "developers.rakuten.com", "developer.yahoo.co.jp", "calendar.google.com",
                  "adssettings.google.com", "www.aboutads.info", "yorokobu-present.com")
-AFFILIATE = ("rakuten.co.jp", "amazon.co.jp", "amzn.to", "shopping.yahoo.co.jp", "valuecommerce.com", "a8.net", "accesstrade", "moshimo.com")
+AFFILIATE = ("ap.valuecommerce.com", "rakuten.co.jp", "amazon.co.jp", "amzn.to", "shopping.yahoo.co.jp", "valuecommerce.com", "a8.net", "accesstrade", "moshimo.com")
 WORDS = ("出典", "情報源", "参考にした", "出どころ", "出所")
-_A = re.compile(r'<a\b[^>]*href="(https?://[^"]+)"', re.I)
+_A = re.compile(r'<a\s([^>]*?)href="((?:https?:)?//[^"]+)"([^>]*)>', re.I)
 
 
 def visible_text(html: str) -> str:
@@ -29,9 +29,14 @@ def problems(html: str) -> list[str]:
         if w in text:
             out.append(f"word {w}")
     for m in _A.finditer(re.sub(r"<script.*?</script>", "", html, flags=re.S)):
-        url = m.group(1)
-        host = re.match(r"https?://([^/]+)", url).group(1)
-        if host.endswith(ALLOWED_HOSTS) or any(a in host for a in AFFILIATE):
+        url = m.group(2)
+        host = re.match(r"(?:https?:)?//([^/]+)", url).group(1)
+        if host.endswith(ALLOWED_HOSTS):
+            continue
+        if any(a in host for a in AFFILIATE):
+            attrs = m.group(1) + m.group(3)
+            if 'target="_blank"' not in attrs or "sponsored" not in attrs:       # an advertising link carries target and rel (2026-11-15)
+                out.append(f"affiliate link without target/rel {host}")
             continue
         out.append(f"link {host}")
     return out
