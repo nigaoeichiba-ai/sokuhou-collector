@@ -18,10 +18,11 @@ SITE = ROOT / "sites" / "trend"
 ALLOWED_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "h.accesstrade.net", "www.amazon.co.jp", "af.moshimo.com", "ck.jp.ap.valuecommerce.com", "adssettings.google.com", "www.aboutads.info",
                  "developers.rakuten.com")
 PENDING = ()
+APPLY_LINKS = {"trend-yakou-shinkansen-amaneseru/index.html": ("www.jrview-travel.com",)}   # 申込の入口へのリンク(広告ではない。窓口の指定。2026-11-16)
 
 
-def source_links(html: str) -> list[str]:
-    return [h for h in re.findall(r'<a [^>]*href="https?://([^/"]+)', html) if h not in ALLOWED_HOSTS and "trend-sokuho.com" not in h]
+def source_links(html: str, extra=()) -> list[str]:
+    return [h for h in re.findall(r'<a [^>]*href="https?://([^/"]+)', html) if h not in ALLOWED_HOSTS and h not in extra and "trend-sokuho.com" not in h]
 
 
 class SourcesHidden(unittest.TestCase):
@@ -45,7 +46,7 @@ class SourcesHidden(unittest.TestCase):
         for rel, html in self.pages.items():
             if rel in PENDING:
                 continue
-            self.assertEqual(source_links(html), [], rel)
+            self.assertEqual(source_links(html, APPLY_LINKS.get(rel, ())), [], rel)
 
     def test_the_check_catches_a_source_link_and_lets_an_ad_through(self):
         self.assertEqual(source_links('<a href="https://www.nta.go.jp/x.htm">国税庁</a>'), ["www.nta.go.jp"])
