@@ -24,12 +24,20 @@
  "answer": "秋田県のクマ出没注意報は、11月30日まで延長されました。柿などの実、生ごみや米ぬか、車庫や物置の戸締まりを順に確認しましょう。",
  "related": [
   {
-   "path": "/bousai-keitai-toilet/",
-   "text": "携帯トイレの使い方と、使用後の保管・処理のしかた"
+   "path": "/trend-bousaicho-katei-5/",
+   "text": "防災庁が示した家庭の備えは5つ！水は1人1日3リットルが目安"
   },
   {
    "path": "/bousai/",
    "text": "防災グッズのチェックリスト、8項目で家の備えを確認しよう"
+  },
+  {
+   "path": "/bousai-mizu-shokuryo/",
+   "text": "水と食料の備蓄を続ける、保管と期限管理のコツ"
+  },
+  {
+   "path": "/bousai-keitai-toilet/",
+   "text": "携帯トイレの使い方と、使用後の保管・処理のしかた"
   },
   {
    "path": "/trend-typhoon32/",
@@ -220,6 +228,9 @@
    ]
   },
   {
+   "html": "<p>生ごみや米ぬかを外に置かないために、ふたが閉まる保管容器は通販でも探せます。<a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E5%25AF%2586%25E9%2596%2589%2520%25E4%25BF%259D%25E5%25AD%2598%25E5%25AE%25B9%25E5%2599%25A8%2520%25E5%25A4%25A7%25E5%259E%258B%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">ふたの閉まる保管容器を楽天市場で探す</a>（PR）</p><p>Amazonでも、同じ種類の物を探せます。<a href=\"https://www.amazon.co.jp/s?k=%E5%AF%86%E9%96%89%20%E4%BF%9D%E5%AD%98%E5%AE%B9%E5%99%A8%20%E5%A4%A7%E5%9E%8B&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで保管容器を探す</a>（PR）</p>"
+  },
+  {
    "h2": "外に出るときと、見かけたときの動き"
   },
   {
@@ -235,6 +246,9 @@
     "もし遭遇してしまった場合、県は、ゆっくり後ずさりしながら距離をとり、静かにその場を立ち去ることを求めています。背中を見せて走って逃げるのは禁物です。住宅地なら、建物や車の中へ避難します。",
     "市街地への侵入を抑えるため、県は鹿角市と秋田市の一部で、電気マットや電気柵の試行も始めています。歩行者や自転車、車は、靴を履いていれば通常どおり通れます。裸足の動物は感電するため、ペットを連れているときは、抱えてまたぐか、電源が切られているのを確認して通ります。"
    ]
+  },
+  {
+   "html": "<p>県は、音を出して人の存在を知らせながら行動するよう求めています。クマよけの鈴も、通販で探せます。<a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E3%2582%25AF%25E3%2583%259E%25E3%2582%2588%25E3%2581%2591%2520%25E9%2588%25B4%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">クマよけの鈴を楽天市場で探す</a>（PR）</p><p>Amazonでも、同じ種類の物を探せます。<a href=\"https://www.amazon.co.jp/s?k=%E3%82%AF%E3%83%9E%E3%82%88%E3%81%91%20%E9%88%B4&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonでクマよけの鈴を探す</a>（PR）</p>"
   },
   {
    "h2": "まず取りかかる手順"
