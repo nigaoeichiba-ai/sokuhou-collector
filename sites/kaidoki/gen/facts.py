@@ -48,7 +48,9 @@ EVENTS = [
 BY_ID = {e["id"]: e for e in EVENTS}
 
 # Yahoo!ショッピングの12月の日程(公式 shopping.yahoo.co.jp/promotion/campaign/guide/ の本文で確認、2026-11-12)。カレンダー一覧には入れず、/yahoo/ の表にだけ出す。
+YAHOO_CHECKED = "2026-11-16"      # the day the 12月 entries below were read again
 YAHOO_DEC = [
+    E("ypp-2026-12", "Yahoo!ショッピング", "12月超PayPay祭(最大21%)", "2026-12-18", "00:00", "2026-12-21", "01:59", note="公式は「12月20日(日)25:59まで」と表記", group="ypp12"),
     E("ysun-2026-12a", "Yahoo!ショッピング", "プレミアムな日曜日", "2026-12-06", "00:00", "2026-12-06", "23:59", group="ysun"),
     E("ysun-2026-12b", "Yahoo!ショッピング", "プレミアムな日曜日", "2026-12-13", "00:00", "2026-12-13", "23:59", group="ysun"),
     E("ysun-2026-12c", "Yahoo!ショッピング", "プレミアムな日曜日", "2026-12-27", "00:00", "2026-12-27", "23:59", group="ysun"),

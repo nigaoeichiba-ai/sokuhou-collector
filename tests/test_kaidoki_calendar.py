@@ -111,7 +111,8 @@ class PageTest(unittest.TestCase):
         self.assertIn("ybf-2026", self._upcoming_ids(y))
         self.assertIn("c-ypp-2026-12", self._upcoming_ids(y))
         tbl = re.search(r'<table class="cal-table cal-upcoming">.*?</table>', y, flags=re.S).group(0)
-        self.assertRegex(tbl, r"超PayPay祭 2026年12月\(開始日\).*?2026年12月18日.*?未発表")      # the last day is not announced: it says so
+        self.assertRegex(tbl, r"超PayPay祭 2026年12月.*?2026年12月18日.*?2026年12月20日")      # the official guide gives both days (12/18 0:00 to 12/20 25:59)
+        self.assertNotIn("終了日は未発表", re.search(r'data-id="c-ypp-2026-12".*?</tr>', tbl, flags=re.S).group(0))
         self.assertIn("確定", tbl)
         self.assertIn("例年の予想", tbl)
         self.assertEqual(self._upcoming_ids(self.pages["calendar/index.html"]).count("c-uniqlo-winter"), 1)
