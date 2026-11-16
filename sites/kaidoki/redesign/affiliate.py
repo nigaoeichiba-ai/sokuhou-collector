@@ -52,7 +52,7 @@ STORES = {
     "playstation": [("amazon_s", "PlayStation")],
 }
 # The shops of an ASP programme that is already ours (the programme's own landing page).
-ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", "")}
+ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", ""), "stardomain": ("a8", "stardomain", "")}      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
 ASP_NAME = {"dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
 MALLS = ("rakuten", "amazon", "yahoo")
@@ -81,7 +81,6 @@ NO_LINK = {
     "bic": "A8.netに物販の案件がない(2026-11-12の調査表)",
     "nojima": "A8.netに物販の案件がない(2026-11-12の調査表)。ノジマオンラインはセール対象外",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
-    "stardomain": "A8.net・バリューコマース・アクセストレードの審査待ち。承認されたらリンクを付ける",
 }
 
 

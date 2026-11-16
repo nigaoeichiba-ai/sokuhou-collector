@@ -667,7 +667,7 @@ def product_pages(ctx: Ctx, base_head: str) -> dict:
         stores = f'<div class="store-rows">{stores}</div>'
         fit = fit_box(pr.get("fit"))
         body = template("product", intro=paragraphs([pr["lead"]]), meta=f'<p class="meta-line">{e(pr["meta"])}</p>',
-                        stores_h2=e(pr["stores_h2"]), stores=stores, note=fit + notice(pr["note"]) + (affiliate.disclosure() if any(st.get("aff") or st["name"].startswith("Amazon") for st in pr["stores"]) else ""),
+                        stores_h2=e(pr["stores_h2"]), stores=stores, note=fit + notice(pr["note"]) + (affiliate.lines(affiliate.product_links(pr, {"aff": pr["note_aff"], "name": ""})) if pr.get("note_aff") else "") + (affiliate.disclosure() if (pr.get("note_aff") or any(st.get("aff") or st["name"].startswith("Amazon") for st in pr["stores"])) else ""),
                         calc_big=e(pr.get("calc_big", "価格の比べ方")), calc_text=e(pr.get("calc_text", "割引率・ポイント・特典は、条件を満たしたときの数字です。実質価格は、計算のページで確かめられます。")),
                         howto_h2=e(pr.get("howto_h2", "確認のしかた")), howto="".join(f"<p>{e(x)}</p>" for x in pr.get("howto", ["各行の確認日と公式ページで、いまも同じか見てから買います。終わった企画は、更新のときに外します。"])),
                         related="<h2>関連するセール</h2>" + sales_grid([s for s in ctx.sales if state(s, ctx.at) != "終了"][:4], ctx.at, block=True))

@@ -136,8 +136,13 @@ class CoverageTest(unittest.TestCase):
                     self.assertEqual(kind, "amazon_s", sid)
 
     def test_no_link_for_a_shop_waiting_for_its_programme_or_without_one(self):
-        for sid in ("stardomain", "sonystore", "lg", "uniqlo"):
+        for sid in ("sonystore", "lg", "uniqlo"):
             self.assertEqual([l for it in self.items if it["mall"] == sid for l in AFF.links_for(it)], [], sid)
+
+    def test_stardomain_has_its_a8_link_now_that_the_programme_approved_it(self):
+        links = [l for it in self.items if it["mall"] == "stardomain" for l in AFF.links_for(it)]
+        self.assertTrue(links)
+        self.assertTrue(all(l["kind"] == "a8" and "スタードメイン" in l["label"] and l["href"].startswith("https://px.a8.net/svt/ejp?a8mat=") for l in links))
 
     def test_yamada_has_its_rakuten_and_yahoo_stores(self):
         links = [l for it in self.items if it["mall"] == "yamada" for l in AFF.links_for(it)]
@@ -152,6 +157,35 @@ class CoverageTest(unittest.TestCase):
         text = " ".join(l["label"] for it in self.items for l in AFF.links_for(it))
         self.assertNotIn("オルビス", text)
         self.assertNotRegex(text, r"クーポン|ポイントバック|還元")      # DHC: no coupon is introduced; only the dates stand on the page
+
+
+NAMED = (("index.html", "スタードメイン"), ("fashion/sale-coupons/index.html", "ZOZOTOWN"), ("food/lohaco-food/index.html", "ベルーナ"), ("hobby/mall-hobby/index.html", "アルペン"))
+ANCHOR = re.compile(r'<a [^>]*href="([^"]+)"[^>]*rel="([^"]*)"[^>]*>([^<]*)', re.S)
+
+
+def unlinked_names(pages: dict) -> list[str]:
+    """The (page, advertiser) pairs where the page names an affiliated advertiser and no sponsored affiliate anchor carries that name (2026-11-16 audit: four such pairs)."""
+    bad = []
+    for path, name in NAMED:
+        html = pages[path]
+        links = [(h, t) for h, rel, t in ANCHOR.findall(html) if "sponsored" in rel and re.search(r"a8\.net|valuecommerce|hb\.afl\.rakuten|tag=", h)]
+        if name in html and not any(name in t for _, t in links):
+            bad.append(f"{path}: {name}")
+    return bad
+
+
+class NamedAdvertiserTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.pages = build({"KAIDOKI_REDESIGN": "1"})
+
+    def test_every_named_affiliated_advertiser_has_its_link_with_its_name(self):
+        self.assertEqual(unlinked_names(self.pages), [])
+
+    def test_negative_a_page_with_the_name_only_is_caught(self):
+        for path, name in NAMED:
+            stripped = {**self.pages, path: re.sub(r"<a [^>]*>[^<]*" + name + r"[^<]*(?:<img[^>]*>)?</a>(?:<img[^>]*>)?", name, self.pages[path])}
+            self.assertEqual(unlinked_names(stripped), [f"{path}: {name}"], path)
 
 
 if __name__ == "__main__":
