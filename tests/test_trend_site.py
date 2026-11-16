@@ -65,6 +65,7 @@ class TrendSite(unittest.TestCase):
         for name, page in _pages().items():
             html = "".join(s.get("html", "") for s in page["sections"])
             html = re.sub(r'<img [^>]*src="https://www\d*\.a8\.net/0\.gif[^>]*>', "", html)
+            html = re.sub(r'<img [^>]*src="https://ad\.jp\.ap\.valuecommerce\.com/servlet/gifbanner[^>]*>', "", html)   # バリューコマースの1x1の計測画像(同上)
             html = re.sub(r'<img [^>]*src="https://h\.accesstrade\.net/sp/rr\?[^>]*>', "", html)   # アクセストレードの1x1の計測画像(同上)   # the ASP's 1x1 counter pixel (alt="" by design, code used as provided)
             for src in re.findall(r'<img src="/assets/img/([^"]+)"', html):
                 self.assertTrue((SITE / "assets" / "img" / src).exists(), f"{name}: {src}")
