@@ -121,5 +121,24 @@ class Built(unittest.TestCase):
         self.assertGreater(n, 300)
 
 
+
+
+class SaleDays(unittest.TestCase):
+    def test_a_sale_filed_under_the_wrong_group_still_gets_links(self):
+        e = day(group="経済・政治", category="セール", subject="Amazonのセール")
+        self.assertEqual(affiliate.words_for(e), ["Amazonのセール"])
+
+    def test_an_amazon_sale_gets_amazon_links_only(self):
+        h = affiliate.links_for(day(group="買い物・料金・セール", category="セール", subject="Amazonのセール"))
+        self.assertIn("amazonmacs-22", h)
+        self.assertNotIn("rakuten", h)
+        self.assertIn('rel="nofollow sponsored noopener" target="_blank"', h)
+
+    def test_politics_without_a_sale_category_still_gets_nothing(self):
+        self.assertEqual(affiliate.links_for(day(group="経済・政治", category="選挙", subject="Amazonのセール")), "")
+
+    def test_a_quiet_sale_day_gets_nothing(self):
+        self.assertEqual(affiliate.links_for(day(category="セール", subject="Amazonのセール", quiet=True)), "")
+
 if __name__ == "__main__":
     unittest.main()

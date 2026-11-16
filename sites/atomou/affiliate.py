@@ -22,6 +22,7 @@ REL = 'rel="nofollow sponsored noopener" target="_blank"'
 NEVER_GROUPS = {"経済・政治", "国際"}
 NEVER_CATEGORIES = {"ふるさと納税", "年金・保険", "国民年金", "給付", "制度", "料金", "料金改定", "補助金", "銀行・金融", "日銀・金融", "保険", "金融", "医療", "健康", "薬", "予防接種", "ポリオ",
                     "災害", "防災", "火災予防", "訃報", "命日", "ペット", "お酒", "酒・ドリンク", "飲酒", "禁煙", "介護", "発達支援"}
+SALE_CATEGORIES = {"セール", "ポイント"}      # a sale day is a shopping day whichever group it was filed under (a mis-filed Amazon Black Friday card lost its links, 2026-11-16)
 OPEN_ONLY = {"天気・災害": {"天文", "惑星", "流星群", "月", "日食"}, "健康・くらし": set(), "お金・税金・制度": {"税"}}    # a group with only the listed categories open (an empty set: none)
 
 # category (the finer one) first, then the genre; the words are what a visitor of such a day looks for
@@ -94,12 +95,12 @@ def amazon_url(word: str) -> str:
     return f"https://www.amazon.co.jp/s?k={quote(word)}&tag={AMAZON_TAG}"
 
 
-def _block(words: list[str], heading: str, lead: str) -> str:
+def _block(words: list[str], heading: str, lead: str, only: str = "") -> str:
     def li(fn, label):
         return "<ul>" + "".join(f'<li><a href="{html.escape(fn(w), quote=True)}" {REL}>{label.format(w=html.escape(w))}</a><span class="pr">(PR)</span></li>' for w in words) + "</ul>"
     return (f'<section class="shop" aria-label="関連する商品の検索(広告)"><h2>{html.escape(heading)}<span class="pr">PR</span></h2><p class="small">{html.escape(lead)}</p>'
-            + '<p class="small muted">楽天市場の検索ページ</p>' + li(rakuten_url, "楽天市場で「{w}」を探す")
-            + '<p class="small muted">Amazonの検索ページ</p>' + li(amazon_url, "Amazonで「{w}」を探す")
+            + ('' if only == "amazon" else '<p class="small muted">楽天市場の検索ページ</p>' + li(rakuten_url, "楽天市場で「{w}」を探す"))
+            + ('' if only == "rakuten" else '<p class="small muted">Amazonの検索ページ</p>' + li(amazon_url, "Amazonで「{w}」を探す"))
             + '<p class="small muted">このブロックのリンクは広告です。購入すると、運営者に報酬が入ることがあります。</p></section>')
 
 
@@ -108,7 +109,7 @@ def words_for(e: dict) -> list[str]:
     if e.get("quiet") or e.get("ad_ok") is False:
         return []
     group, cat, subject = e.get("group") or "", e.get("category") or "", (e.get("subject") or "").strip()
-    if group in NEVER_GROUPS or cat in NEVER_CATEGORIES:
+    if (group in NEVER_GROUPS and cat not in SALE_CATEGORIES) or cat in NEVER_CATEGORIES:
         return []
     if group in OPEN_ONLY and cat not in OPEN_ONLY[group]:
         return []
@@ -128,7 +129,9 @@ def links_for(e: dict) -> str:
     w = words_for(e)
     if not w:
         return ""
-    return _block(w, "関連するものを探すなら", "この日に向けて、探すものがあれば、検索ページから探せます。")
+    subject = e.get("subject") or ""
+    only = "amazon" if "Amazon" in subject else "rakuten" if "楽天" in subject else ""      # a sale of one mall: only that mall's search
+    return _block(w, "関連するものを探すなら", "この日に向けて、探すものがあれば、検索ページから探せます。", only)
 
 
 def use_links(slug: str) -> str:
