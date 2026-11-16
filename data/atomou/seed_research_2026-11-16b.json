@@ -1,0 +1,24 @@
+[
+  {
+    "title": "F1アカデミー 2027 ハンガリーラウンド",
+    "date": "2027-07-30",
+    "date_end": "2027-08-01",
+    "precision": "day",
+    "kind": "開催",
+    "group": "スポーツ",
+    "category": "モータースポーツ",
+    "subject": "F1アカデミー",
+    "what": "ハンガロリンクで初開催",
+    "place": "ハンガリー・ブダペスト",
+    "source_url": "https://www.silverstone.co.uk/news/f1-academy-2027-calendar-full-list-venues-key-dates",
+    "source_quote": "30 July-1 August Hungaroring Budapest, Hungary",
+    "basis": "official",
+    "ad_ok": true,
+    "sensitivity": "none",
+    "checked_on": "2026-11-16",
+    "verified": true,
+    "son_toku": false,
+    "region": "ハンガリー・ブダペスト",
+    "note": "出典ページの本文で、日付を機械的に確かめた。"
+  }
+]
