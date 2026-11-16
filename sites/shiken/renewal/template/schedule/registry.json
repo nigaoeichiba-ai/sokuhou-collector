@@ -6739,14 +6739,19 @@
       "short": "沖縄県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-16",
+      "checkedAt": "2026-11-17",
       "sourceUrl": "https://www.pref.okinawa.jp/kyoiku/gakko/1008883/1008887/1041122.html",
       "sourceTitle": "令和9年度 沖縄県立高等学校入学者選抜 日程",
       "sourceStatus": "verified",
       "application": [
         {
+          "start": "2027-01-18",
+          "label": "Web出願システムでの志願情報の登録",
+          "sourceId": "catalog-koko-okinawa"
+        },
+        {
           "start": "2027-02-01",
-          "label": "特色選抜・一般選抜 出願",
+          "label": "特色選抜・一般選抜 出願書類の受付",
           "sourceId": "catalog-koko-okinawa"
         },
         {
@@ -6774,7 +6779,7 @@
         }
       ],
       "fieldNotes": {
-        "deadline": "特色選抜の検査日は、学校ごとの実施要項で決まります。取下げ・再提出は2月15日〜16日です。",
+        "deadline": "特色選抜の検査日は、学校ごとの実施要項で決まります。志願変更の申出は2月5日(金)・8日(月)、取下げ・再出願は2月15日(月)・16日(火)です。受付は、1日目が9時から16時、2日目が9時から14時までです。",
         "result": "特色選抜・一般選抜は3月17日、第2次募集は3月29日に発表されます。"
       },
       "family": "school-koko-okinawa",
@@ -12787,14 +12792,26 @@
       "checkedAt": "2026-11-16"
     },
     {
+      "id": "koko-okinawa-7",
+      "date": "2027-01-28",
+      "time": "12:00",
+      "type": "deadline",
+      "label": "Web出願システムでの志願情報の登録 締切",
+      "note": "登録は1月18日(月)から。出願書類の提出は、別に2月1日・2日です。",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-17"
+    },
+    {
       "id": "koko-okinawa-1",
       "date": "2027-02-02",
       "type": "deadline",
       "label": "特色選抜・一般選抜 出願 締切",
-      "note": "2月1日〜2日。出願先の変更は2月5日・8日です。",
+      "note": "出願書類の受付は、2月1日(月)が9時から16時、2月2日(火)が9時から14時までです。郵送も2日14時までに必着です。Web出願システムでの志願情報の登録は、1月28日(木)正午までに済ませます。志願変更の申出は、2月5日(金)・8日(月)です。",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-17",
+      "time": "14:00"
     },
     {
       "id": "koko-okinawa-2",
@@ -12803,7 +12820,7 @@
       "label": "一般選抜 学力検査(1日目)",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-17"
     },
     {
       "id": "koko-okinawa-3",
@@ -12813,7 +12830,7 @@
       "note": "面接等も、この期間に行われます。",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-17"
     },
     {
       "id": "koko-okinawa-4",
@@ -12822,17 +12839,18 @@
       "label": "特色選抜・一般選抜 合格発表",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-17"
     },
     {
       "id": "koko-okinawa-5",
       "date": "2027-03-19",
       "type": "deadline",
       "label": "第2次募集 出願 締切",
-      "note": "3月18日〜19日。",
+      "note": "3月18日〜19日。受付は、18日が9時から16時、19日が9時から14時までです。郵送も19日14時までに必着です。取下げ・再出願は、3月23日(火)の9時から14時です。",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-17",
+      "time": "14:00"
     },
     {
       "id": "koko-okinawa-6",
@@ -12841,7 +12859,7 @@
       "label": "第2次募集 合格発表",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-17"
     },
     {
       "id": "koko-fukui-1",
