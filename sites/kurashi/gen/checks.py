@@ -14,7 +14,11 @@ FIRST = "2026-11-03"
 
 # day -> the pages whose dates were compared with the sources that day
 CHECKED_ON = {
-    "2026-11-16": ["/nengajo/"],    # 日本郵便の公式発表(8/31)の全文を読んで照合した
+    "2026-11-16": [
+        "/nengajo/",                                          # 日本郵便の公式発表(8/31)の全文を読んで照合した
+        "/nenmatsu-chosei/",                                  # 国税庁の年調ソフトのページと11/15のPDFで照合した
+        "/moving/", "/moving/tenshutsu/",                     # マイナポータルの引越しの個別ページの本文で照合した
+    ],
     "2026-11-15": [
         "/", "/month/", "/month/11/", "/month/12/", "/month/1/", "/month/2/", "/month/3/",
         "/nengajo/", "/nenmatsu-nenshi/", "/nenmatsu-chosei/",
@@ -23,7 +27,8 @@ CHECKED_ON = {
     ],
 }
 
-# (day, what, how, result, note); result is "ok" or "failed". A later "ok" for the same what closes a "failed".
+# (day, what, how, result, note); result is "ok" (the body was read), "top" (only the top page or a list was read: never counts as "no change") or "failed".
+# A later "ok" for the same what closes a "failed"; a "top" does not.
 FETCH_LOG = [
     ("2026-11-15", "日本郵便 年賀はがき 引受開始・差出日・販売終了", "日本郵便の2026-08-31発表(検索の引用)+NHK", "ok", "12/20・12/27・1/15。サイトと一致"),
     ("2026-11-15", "日本郵便 /newyear/", "WebFetch・Chrome", "failed", "404(ページが移動)。上の発表で代替"),
@@ -36,7 +41,9 @@ FETCH_LOG = [
     ("2026-11-15", "gyosei.go.jp", "WebFetch", "failed", "名前解決不可。法令の解説で代替済み"),
     ("2026-11-16", "日本郵便 /newyear/", "Chrome(404のまま)→日本郵便の2026-08-31発表PDFをGoogle文書ビューアで全文", "ok", "発売11/2・販売終了1/15・引受開始12/20(日)・元日の目安12/27(日)・1/3(日)も配達。サイトと一致"),
     ("2026-11-16", "総務省 ふるさと納税 公式ページ", "Chrome(旧URLは移転)→総務省報道資料(令和7年6月24日)", "ok", "指定基準の改正(募集費用の透明化・地場産品基準の明確化)は令和8年10月開始の指定対象期間から適用。寄附する人の手続は変わらず、サイトの記述の変更は不要"),
-    ("2026-11-16", "マイナポータル 引越し手続", "Chrome(トップは開けた)", "ok", "トップのお知らせに引越し手続の変更なし(お知らせは離職票の受け取りのみ)。個別ページの本文までは未読"),
+    ("2026-11-16", "マイナポータル 引越し手続", "Chrome(トップは開けた)", "top", "トップのお知らせに引越し手続の変更なし(お知らせは離職票の受け取りのみ)。トップだけ読んだので「変更なし」には数えない"),
+    ("2026-11-16", "マイナポータル 引越し手続", "Chrome(個別ページ myna.go.jp/html/moving_oss.html の本文)+デジタル庁の引越し手続ページの更新日(検索)", "ok", "転出届の提出と来庁予定の連絡まで・転入届は来庁・14日以内・対象外の条件。サイトの記述(/moving/tenshutsu/・引越しのガイド)と一致。変更なし"),
+    ("2026-11-16", "国税庁 年末調整手続の電子化(nencho.htm)", "Chrome(本文)", "ok", "令和8年分の年調ソフトは12月1日以後の年末調整に対応。11/12に年調ソフトを再公開。サイトの『令和8年分で変わったところ』の4項目は11/15のPDFと一致し、直す記述なし"),
     ("2026-11-16", "gyosei.go.jp", "法令の解説で代替済み(11/15)。公式の名前解決は再試行せず", "ok", "行政機関の休日(12/29〜1/3)は法律で決まっており変更の話はない"),
 ]
 

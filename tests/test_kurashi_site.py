@@ -163,6 +163,8 @@ class CheckLedger(unittest.TestCase):
             self.assertEqual(len(checks.open_failures()), 1)           # the negative case: an unfetched source stays open
             checks.FETCH_LOG = [("2026-11-15", "A", "x", "failed", "n"), ("2026-11-16", "A", "y", "ok", "n")]
             self.assertEqual(checks.open_failures(), [])
+            checks.FETCH_LOG = [("2026-11-15", "A", "x", "failed", "n"), ("2026-11-16", "A", "y", "top", "n")]
+            self.assertEqual(len(checks.open_failures()), 1)           # the negative case: reading only the top page does not close it
         finally:
             checks.FETCH_LOG = old
 
