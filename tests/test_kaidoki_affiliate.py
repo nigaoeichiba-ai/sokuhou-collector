@@ -144,6 +144,15 @@ class CoverageTest(unittest.TestCase):
         self.assertTrue(links)
         self.assertTrue(all(l["kind"] == "a8" and "スタードメイン" in l["label"] and l["href"].startswith("https://px.a8.net/svt/ejp?a8mat=") for l in links))
 
+    def test_nta_has_its_valuecommerce_link_to_its_own_campaign_page(self):
+        links = [l for it in self.items if it["mall"] == "nta" for l in AFF.links_for(it)]
+        self.assertTrue(links)
+        for l in links:
+            self.assertEqual(l["kind"], "vc")
+            self.assertIn("sid=3787704&pid=892749530", l["href"])
+            self.assertIn("vc_url=https%3A%2F%2Fwww.nta.co.jp%2F", l["href"])      # only the programme's own domain
+            self.assertIn("日本旅行", l["label"])
+
     def test_yamada_has_its_rakuten_and_yahoo_stores(self):
         links = [l for it in self.items if it["mall"] == "yamada" for l in AFF.links_for(it)]
         self.assertGreaterEqual(len(links), 2)
