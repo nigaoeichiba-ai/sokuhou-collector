@@ -35,6 +35,7 @@ export const config={
  'flow':{parent:'/yomimono/',art:'prepared',related:[FEATURED]},
  'fp':{parent:'/schedule/',art:'decided',related:['fam:fp'],live:{scope:'fam:fp',types:['deadline','exam','result'],limit:12},pr:'fp'},
  'goukaku-ritsu':{parent:'/yomimono/',art:'decided',related:['ids:takken,gyosei,sharoshi,kaigo,nurse'],pr:'takken'},
+ 'nyugaku-tetsuzuki':{parent:'/nyushi/',art:'family',related:['ids:national-zenki-2027,national-koki-2027'],pr:'daigaku'},
  'kokkoritsu':{parent:'/nyushi/',art:'family',related:['cat:university'],live:{scope:'cat:university',types:['deadline','exam','result'],limit:14,heading:'これから先の日程'},pr:'daigaku'},
  'koko':{parent:'/nyushi/',art:'family',related:[],list:'pre:koko-',pr:'koko'},
  'kangoshi-ganshu':{parent:'/yomimono/',art:'decided',related:['ids:nurse'],live:{scope:'ids:nurse',types:['deadline','exam','result'],limit:6,heading:'第116回の日程'},pr:'nurse'},
