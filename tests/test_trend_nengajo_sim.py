@@ -16,8 +16,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SIM = ROOT / "sites" / "trend" / "nengajo_sim"
 JS = SIM / "nengajo-sim.js"
 
-SALE = "2026-11-13T15:00:00+09:00"      # 確認日の午後(早割は5社とも適用中)
-AFTER = "2026-11-17T10:00:00+09:00"     # おたより本舗・年賀状スクエア・挨拶状・Rakpo の締切後(しまうまは11/30まで)
+SALE = "2026-11-16T15:00:00+09:00"      # 確認日の午後(早割は5社とも適用中)
+AFTER = "2026-11-24T10:00:00+09:00"     # おたより本舗・年賀状スクエア・挨拶状・Rakpo の締切後(しまうまは11/30まで)
 
 
 def runtime() -> list[str]:
@@ -52,7 +52,7 @@ def mk(qty, address=True, now=SALE, login=False):
 class TestNengajoSimCalc(unittest.TestCase):
     def test_30_sheets_with_address_during_sale(self):
         r = by_id(compute([mk(30)])[0])
-        self.assertEqual((r["square"]["print"], r["square"]["min"]), (3628, 6178))          # 3,628 + 85x30
+        self.assertEqual((r["square"]["print"], r["square"]["min"]), (3699, 6249))          # 3,699 + 85x30 (48% OFF)
         self.assertEqual((r["otayori"]["min"], r["otayori"]["max"]), (5174, 8835))          # star 1 .. star 6
         self.assertEqual((r["otayori"]["print"], r["otayori"]["printMax"]), (2624, 6285))
         self.assertEqual(r["shimauma"]["min"], 6570)                                         # 123x30 + 2,550 + 330 (yu-packet)
@@ -80,17 +80,20 @@ class TestNengajoSimCalc(unittest.TestCase):
         self.assertEqual((late["onSale"], late["min"]), (False, 140 * 30 + 2550 + 330))      # unit 165 -> 15% off = 140
 
     def test_deadline_edges_in_jst(self):
-        c = [mk(30, now=t) for t in ("2026-11-15T23:59:30+09:00", "2026-11-16T00:00:00+09:00", "2026-11-16T12:59:00+09:00", "2026-11-16T13:00:00+09:00",
-                                      "2026-11-17T01:59:00+09:00", "2026-11-17T02:00:00+09:00", "2026-11-30T12:59:00+09:00", "2026-11-30T13:00:00+09:00")]
+        c = [mk(30, now=t) for t in ("2026-11-17T01:59:00+09:00", "2026-11-17T02:00:00+09:00", "2026-11-18T23:59:30+09:00", "2026-11-19T00:00:00+09:00",
+                                      "2026-11-19T12:59:00+09:00", "2026-11-19T13:00:00+09:00", "2026-11-23T23:59:00+09:00", "2026-11-24T00:00:00+09:00",
+                                      "2026-11-30T12:59:00+09:00", "2026-11-30T13:00:00+09:00")]
         g = [by_id(x) for x in compute(c)]
-        self.assertEqual([x["square"]["onSale"] for x in g], [True, False, False, False, False, False, False, False])
-        self.assertEqual([x["otayori"]["onSale"] for x in g], [True, True, True, False, False, False, False, False])
-        self.assertEqual([x["rakpo"]["onSale"] for x in g], [True, True, True, True, True, False, False, False])
-        self.assertEqual([x["shimauma"]["onSale"] for x in g], [True] * 7 + [False])
+        T, F = True, False
+        self.assertEqual([x["rakpo"]["onSale"] for x in g], [T, F, F, F, F, F, F, F, F, F])
+        self.assertEqual([x["square"]["onSale"] for x in g], [T, T, T, F, F, F, F, F, F, F])
+        self.assertEqual([x["otayori"]["onSale"] for x in g], [T, T, T, T, T, F, F, F, F, F])
+        self.assertEqual([x["aisatsu"]["onSale"] for x in g], [T, T, T, T, T, T, T, F, F, F])
+        self.assertEqual([x["shimauma"]["onSale"] for x in g], [T] * 9 + [F])
 
     def test_quantities_between_published_steps(self):
         r = by_id(compute([mk(35)])[0])
-        self.assertEqual(r["square"]["min"], 3928 + 85 * 35 )          # band 31-40
+        self.assertEqual(r["square"]["min"], 4005 + 85 * 35 )          # band 31-40
         self.assertFalse(r["aisatsu"]["estimate"])                     # 35 is in the official 5-step table
         self.assertEqual(r["aisatsu"]["print"], 4801)
         self.assertTrue(r["rakpo"]["estimate"])                        # rounded up to the 40-sheet price
@@ -106,7 +109,7 @@ class TestNengajoSimCalc(unittest.TestCase):
         res = compute([mk(150)])[0]
         self.assertEqual([x["id"] for x in res["rows"][-2:]], ["aisatsu", "rakpo"])          # the two that cannot be computed come last
         r = by_id(compute([mk(200)])[0])
-        self.assertEqual(r["square"]["print"], 8368)
+        self.assertEqual(r["square"]["print"], 8532)
         self.assertEqual((r["shimauma"]["print"], r["shimauma"]["shipping"]), (79 * 200, 880))   # 165 x 55% = 90, early 12% = 79
         self.assertEqual(r["otayori"]["min"], (8230 - 8230 * 35 // 100) * 11 // 10 + 85 * 200)
         self.assertEqual(by_id(compute([mk(108)])[0])["shimauma"]["shipping"], 330)
@@ -127,7 +130,7 @@ class TestNengajoSimCalc(unittest.TestCase):
     def test_negative_a_broken_number_is_caught(self):
         """数字を1つ壊した複製で、同じ検算が落ちること(検算が何も見ていない、を防ぐ)。"""
         src = JS.read_text(encoding="utf-8")
-        for old, new in (("3628", "3629"), ("[30, 7370, 4422]", "[30, 7370, 4423]"), ("5174", "5175"), ("[30, 6200, 2790]", "[30, 6200, 2791]")):
+        for old, new in (("3699", "3700"), ("[30, 7370, 4422]", "[30, 7370, 4423]"), ("5174", "5175"), ("[30, 6200, 2790]", "[30, 6200, 2791]")):
             if old not in src:
                 continue    # the number is not literally in the file (5174 is computed); the next one covers it
             with tempfile.TemporaryDirectory() as d:
@@ -135,7 +138,7 @@ class TestNengajoSimCalc(unittest.TestCase):
                 bad.write_text(src.replace(old, new, 1), encoding="utf-8")
                 r = by_id(compute([mk(30)], js=bad)[0])
                 got = (r["square"]["min"], r["aisatsu"]["min"], r["rakpo"]["min"])
-                self.assertNotEqual(got, (6178, 8061, 6015), old)
+                self.assertNotEqual(got, (6249, 8061, 6015), old)
         with tempfile.TemporaryDirectory() as d:     # a wrong star-1 price for 30 sheets (3670 -> 3680) changes the otayori total
             bad = Path(d) / "bad.js"
             bad.write_text(src.replace("[3670, 5050", "[3680, 5050", 1), encoding="utf-8")
@@ -193,7 +196,7 @@ class TestNengajoSimPage(unittest.TestCase):
             self.assertIn(name, block)
         # no link to a company's price page (owner 2026-11-15, D26): the only link out of the block is the ad
         self.assertEqual(re.findall(r'<a [^>]*href="https?://([^/"]+)', block), ["px.a8.net"])
-        self.assertIn("2026年11月13日", block)
+        self.assertIn("2026年11月16日", block)
         self.assertNotRegex(block, r"<ol[^>]*>\s*</ol>")     # sitecheck refuses an empty list
 
 
