@@ -3,9 +3,10 @@
 元の画像に小さなラベルが焼き込まれている場合は、足さずに元の画像をそのまま使う(足すなら、元のラベルをこのラベルで覆う位置に置く)。"""
 from PIL import Image, ImageDraw, ImageFont
 
-FONT = "C:/Windows/Fonts/YuGothB.ttc"
-if not __import__("os").path.exists(FONT):
-    FONT = "C:/Windows/Fonts/meiryob.ttc"
+FONT_CANDIDATES = ["C:/Windows/Fonts/YuGothB.ttc", "C:/Windows/Fonts/meiryob.ttc",
+                   "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc", "/usr/share/fonts/truetype/noto/NotoSansCJK-Bold.ttc",
+                   "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"]
+FONT = next((f for f in FONT_CANDIDATES if __import__("os").path.exists(f)), FONT_CANDIDATES[0])      # CI installs fonts-noto-cjk (deploy.yml)
 
 
 LABEL_FILL = (15, 15, 15)
@@ -15,7 +16,7 @@ def _geometry(w, h, side="right", scale=1.0, x_left=None, bottom_frac=0.955):
     box_w = round(w * 0.178 * scale)
     fsz = round(box_w * 0.17)
     pad_x, pad_y = round(fsz * 0.55), round(fsz * 0.32)
-    font = ImageFont.truetype(FONT, fsz, index=0)
+    font = ImageFont.truetype(FONT, fsz, index=0)  # index 0: the Japanese face of a Noto CJK collection
     tw = ImageDraw.Draw(Image.new("RGB", (4, 4))).textlength("イメージです。", font=font)
     bw, bh = round(tw + 2 * pad_x), round(fsz * 1.25 + 2 * pad_y)
     bottom = round(h * bottom_frac)

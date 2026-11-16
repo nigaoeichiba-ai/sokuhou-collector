@@ -13,8 +13,10 @@ label = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(label)
 
 
-@unittest.skipUnless(Path(label.FONT).exists(), "the label font is not installed here")
 class ImageLabel(unittest.TestCase):
+    def test_a_font_is_found(self):                # never skipped: a missing font must fail, not hide
+        self.assertTrue(Path(label.FONT).exists(), label.FONT)
+
     def pic(self):
         return Image.new("RGB", (1280, 720), (200, 60, 60))
 
