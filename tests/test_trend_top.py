@@ -203,8 +203,13 @@ class TrendTop(unittest.TestCase):
         m = re.search(r"var LABELS = (\[\[.*?\]\]);", h).group(1)
         self.assertEqual(json.loads(m), [[8, "バッチリ準備OK！"], [6, "あと一歩でカンペキ！"], [5, "最低限はクリア！"], [4, "半分くらい。まずは水と食料から！"], [0, "まずは水と食料から始めよう"]])
         self.assertNotIn('class="fl-u"', h)      # the "更新" badge on the flash items is gone (the three action badges and the typhoon chip stay)
-        for badge in ("11月15日まで", "設置10年目が目安", "温帯低気圧に変わりました"):
-            self.assertRegex(h, rf'<span class="deadline[^"]*">{badge}</span>')
+        # the three action badges come from the source data (content/home.json), not from fixed strings (they were stale after 11/15: 2026-11-16)
+        home_src = json.loads((ROOT / "sites" / "trend" / "content" / "home.json").read_text(encoding="utf-8"))
+        todo_html = next(s["html"] for s in home_src["sections"] if 'class="todo"' in s.get("html", ""))
+        badges = re.findall(r'<span class="badge">(.*?)</span>', todo_html)
+        self.assertEqual(len(badges), 3)
+        for badge in badges:
+            self.assertRegex(h, rf'<span class="deadline[^"]*">{re.escape(badge)}</span>')
         self.assertNotIn("typhoon-chip", h)      # No.32 became an extratropical low (11/11 21:00): no class and no danger level, so the home page shows no chip
         ty = self.html("/trend-typhoon32/")
         for part in ("温帯低気圧に変わりました（11日21時、気象庁）", "10日16時現在"):
