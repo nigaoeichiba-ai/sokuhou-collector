@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 CONTENT = Path(__file__).resolve().parents[1] / "sites" / "trend" / "content"
-AFF = re.compile(r'https://(hb\.afl\.rakuten\.co\.jp/hgc/|www\.amazon\.co\.jp/s\?|px\.a8\.net/)')
+AFF = re.compile(r'https://(hb\.afl\.rakuten\.co\.jp/hgc/|www\.amazon\.co\.jp/s\?|px\.a8\.net/|h\.accesstrade\.net/sp/cc)')
 ANCHOR = re.compile(r'<a\b([^>]*)>(.*?)</a>(.{0,12})', re.S)
 
 # articles that must have a Rakuten and an Amazon search link (topic has a product to look for), and the reasons for the rest

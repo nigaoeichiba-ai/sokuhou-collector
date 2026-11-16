@@ -15,7 +15,7 @@ from sokuhou import newsite
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "sites" / "trend"
-ALLOWED_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "www.amazon.co.jp", "af.moshimo.com", "ck.jp.ap.valuecommerce.com", "adssettings.google.com", "www.aboutads.info",
+ALLOWED_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "h.accesstrade.net", "www.amazon.co.jp", "af.moshimo.com", "ck.jp.ap.valuecommerce.com", "adssettings.google.com", "www.aboutads.info",
                  "developers.rakuten.com")
 PENDING = ()
 
