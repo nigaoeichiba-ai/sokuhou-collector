@@ -403,5 +403,27 @@ class RedesignTest(unittest.TestCase):
                 self.assertTrue(d["fit"].get("not_suits"), f)
 
 
+class ProductCheckedDayTest(unittest.TestCase):
+    """The confirmation day of a product page comes from its store rows (the oldest one): moving the page's day means re-reading the rows (Muse 2026-11-16: iPhone's page said 11/9 after a re-check)."""
+
+    def test_the_page_day_is_the_oldest_row_day_and_the_meta_line_follows(self):
+        import copy
+        for pr in render.load_products(SITE):
+            days = [re.search(r"(\d{4})年(\d{1,2})月(\d{1,2})日", st["checked"]).groups() for st in pr["stores"]]
+            old = min((int(y), int(m), int(d)) for y, m, d in days)
+            self.assertEqual(pr["checked"], "%04d-%02d-%02d" % old, pr["slug"])
+            self.assertIn("確認日：%d年%d月%d日" % old, pr["meta"], pr["slug"])
+
+    def test_negative_an_old_row_pulls_the_page_day_back_and_a_typed_page_day_cannot_hide_it(self):
+        import copy
+        pr = copy.deepcopy(render.load_products(SITE)[0])
+        pr["stores"][0]["checked"] = "2026年11月1日"
+        pr["checked"] = "2026-11-16"
+        pr["meta"] = "確認日：2026年11月16日"
+        out = render.derive_checked(pr)
+        self.assertEqual(out["checked"], "2026-11-01")
+        self.assertIn("確認日：2026年11月1日", out["meta"])
+
+
 if __name__ == "__main__":
     unittest.main()

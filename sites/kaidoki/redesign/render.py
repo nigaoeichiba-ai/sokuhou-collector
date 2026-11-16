@@ -15,7 +15,7 @@ import hashlib
 import json
 import os
 import re
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from html import escape
 from pathlib import Path
 
@@ -457,9 +457,27 @@ class Ctx:
         return [{"href": f"{genres.GENRE_PATH[p['category']]}{p['slug']}/", "title": p["title"], "description": p["lead"].split("。")[0] + "。", "label": p["kicker"]} for p in self.products if p["category"] == category]
 
 
+_JA_DAY = re.compile(r"(\d{4})年(\d{1,2})月(\d{1,2})日")
+
+
+def derive_checked(pr: dict) -> dict:
+    """The page's confirmation day comes from its store rows (one source): the OLDEST day of the rows, in 'checked' (ISO) and in the 確認日 of the meta line.
+    A page is never newer than its oldest row: moving a day means re-reading that row."""
+    days = []
+    for st in pr.get("stores", []):
+        m = _JA_DAY.search(st.get("checked", ""))
+        if m:
+            days.append(date(int(m[1]), int(m[2]), int(m[3])))
+    if days:
+        old = min(days)
+        pr["checked"] = old.isoformat()
+        pr["meta"] = re.sub(r"確認日：\d{4}年\d{1,2}月\d{1,2}日", f"確認日：{old.year}年{old.month}月{old.day}日", pr.get("meta", ""))
+    return pr
+
+
 def load_products(site_dir: Path) -> list[dict]:
     d = Path(site_dir) / "redesign" / "products"
-    return [_json(f) for f in sorted(d.glob("*.json"))] if d.is_dir() else []
+    return [derive_checked(_json(f)) for f in sorted(d.glob("*.json"))] if d.is_dir() else []
 
 
 def hero_headline(ctx: Ctx) -> str:
