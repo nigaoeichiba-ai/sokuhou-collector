@@ -709,8 +709,11 @@ def product_pages(ctx: Ctx, base_head: str) -> dict:
 
 
 def wrap(ctx: Ctx, path: str, head: str, breadcrumb: str, heading: str, body: str, updated: str, page_type: str) -> str:
-    if page_type in ("mall", "genre", "product"):          # owner 2026-11-15: no named source on a page; one general sentence instead
-        body = re.sub(r'<p class="credit">出典:.*?</p>', '<p class="credit">公式の発表をはじめとする複数の情報をもとにしています。</p>', body, flags=re.S)
+    GENERAL = "公式の発表をはじめとする複数の情報をもとにしています。"
+    if page_type != "404":          # owner 2026-11-15 (D26): no named source on a page; one general sentence instead
+        body = re.sub(r'<p class="credit">出典:.*?</p>', f'<p class="credit">{GENERAL}</p>', body, flags=re.S)
+        if GENERAL not in body and ('class="cal-' in body or page_type in ("home", "mall", "genre", "product")):
+            body += f'<p class="credit">{GENERAL}</p>'
     demo = ctx.set["demo"]
     bar = ""
     if demo:

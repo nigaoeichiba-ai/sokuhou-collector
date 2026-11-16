@@ -337,6 +337,24 @@ class RedesignTest(unittest.TestCase):
         self.assertRegex("<dt>出典</dt>", self.SOURCE_SHOWN)
         self.assertNotRegex("<p>確認日 2026年11月9日</p>", self.SOURCE_SHOWN)
 
+    SOURCE_LABEL = re.compile(r"出典の種類|<p class=\"credit\">出典")
+
+    def test_negative_the_source_type_label_is_caught(self):
+        self.assertRegex('<p class="cal-src">出典の種類: 主催者の公式発表 ／ 確認日 2026/11/12</p>', self.SOURCE_LABEL)
+        self.assertRegex('<th scope="col">出典の種類</th>', self.SOURCE_LABEL)
+        self.assertRegex('<p class="credit">出典: 各主催者の発表と報道をもとに作成</p>', self.SOURCE_LABEL)
+        self.assertNotRegex('<p class="cal-src">確認日 2026/11/12</p>', self.SOURCE_LABEL)
+
+    def test_no_page_shows_a_source_label_but_the_check_day_and_one_general_sentence_stay(self):
+        """Owner 2026-11-15 (D26): no named source or source type on a page. The calendar rows keep only the check day, and the top and calendar pages carry the one general sentence."""
+        general = "公式の発表をはじめとする複数の情報をもとにしています"
+        for rel, h in self.html(self.live).items():
+            self.assertNotRegex(h, self.SOURCE_LABEL, rel)
+        for rel in ("index.html", "calendar/index.html"):
+            h = self.live[rel]
+            self.assertIn(general, h, rel)
+            self.assertRegex(h, r'<p class="cal-src">確認日 \d{4}/\d{2}/\d{2}</p>', rel)
+
     RANKING = re.compile(r"最安|最安値|1位|第1位|No\.?\s?1|ランキング|おすすめ順|安い順")
 
     def test_prototype_shop_page_parts(self):

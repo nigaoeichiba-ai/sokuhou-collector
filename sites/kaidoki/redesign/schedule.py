@@ -367,7 +367,7 @@ def item_li(it: dict) -> str:
     return (f'<li class="cal-item k-{it["kind"]}" data-mall="{it["mall"]}" data-seg="{ENT[it["mall"]][2]}" data-kind="{it["kind"]}"{dates}><div class="cal-head"><span class="cal-badge k-{it["kind"]}">{sym} {e(label)}</span>'
             f'<span class="cal-mall">{e(mall_title)}</span><span class="cal-seg">{e(SEGMENTS[ENT[it["mall"]][2]])}</span><span class="cal-live" data-live></span></div>'
             f'<h4>{f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])}</h4><p class="cal-when">{e(it["when"])}</p>{extra}{ann}{basis}'
-            f'<p class="cal-src">出典の種類: {e(it["src"])} ／ 確認日 {e(it["checked"].replace("-", "/"))}</p>{AFF.lines(AFF.links_for(it))}</li>')
+            f'<p class="cal-src">確認日 {e(it["checked"].replace("-", "/"))}</p>{AFF.lines(AFF.links_for(it))}</li>')
 
 
 def month_section(ym: str, items: list[dict], shown: bool) -> str:
@@ -466,11 +466,11 @@ def regular_table(items: list[dict], mall: str | None) -> str:
             continue
         nxt = " ".join(it["days"] or [])
         rows += (f'<tr data-next="{e(nxt)}"><th scope="row">{f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])}<br><small>{e(ENT[it["mall"]][0])}</small>{AFF.lines(AFF.links_for(it))}</th><td>{e(it["when"])}</td>'
-                 f'<td>{e(it["note"])}</td><td><span class="cal-next-day" data-next-day></span></td><td>{e(it["src"])}<br><small>確認日 {e(it["checked"].replace("-", "/"))}</small></td></tr>')
+                 f'<td>{e(it["note"])}</td><td><span class="cal-next-day" data-next-day></span></td><td>{e(it["checked"].replace("-", "/"))}</td></tr>')
     if not rows:
         return ""
     return ('<div class="tablewrap"><table class="cal-table"><caption>毎月の定例</caption><thead><tr><th scope="col">名前</th><th scope="col">開かれる日</th><th scope="col">条件</th>'
-            '<th scope="col">次の日</th><th scope="col">出典の種類</th></tr></thead><tbody>' + rows + "</tbody></table></div>")
+            '<th scope="col">次の日</th><th scope="col">確認日</th></tr></thead><tbody>' + rows + "</tbody></table></div>")
 
 
 def basis_table(items: list[dict], mall: str | None) -> str:
@@ -479,11 +479,10 @@ def basis_table(items: list[dict], mall: str | None) -> str:
         if it["kind"] != "expected":
             continue
         rows += (f'<tr><th scope="row">{f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])}<br><small>{e(ENT[it["mall"]][0])}</small>{AFF.lines(AFF.links_for(it))}</th><td>{e(it["when"])}</td>'
-                 f'<td><ul>{"".join(f"<li>{e(b)}</li>" for b in it["basis"])}</ul></td><td>{e(it["src"])}</td></tr>')
+                 f'<td><ul>{"".join(f"<li>{e(b)}</li>" for b in it["basis"])}</ul></td></tr>')
     if not rows:
         return ""
-    return ('<div class="tablewrap"><table class="cal-table"><caption>例年の予想と、その根拠</caption><thead><tr><th scope="col">名前</th><th scope="col">予想</th><th scope="col">過去の実績</th>'
-            '<th scope="col">出典の種類</th></tr></thead><tbody>' + rows + "</tbody></table></div>")
+    return ('<div class="tablewrap"><table class="cal-table"><caption>例年の予想と、その根拠</caption><thead><tr><th scope="col">名前</th><th scope="col">予想</th><th scope="col">過去の実績</th></tr></thead><tbody>' + rows + "</tbody></table></div>")
 
 
 def counts(items: list[dict]) -> dict:
@@ -643,7 +642,7 @@ def hero_card(it: dict, n: int, total: int) -> str:
     return (f'<li class="hs-slide cal-item k-{cls}" data-kind="{it["kind"]}" data-id="{e(it["id"])}"{dates} aria-roledescription="スライド" aria-label="{n} / {total}">'
             f'<div class="cal-head"><span class="cal-badge k-{cls}">{sym} {e(label)}</span><span class="cal-mall">{e(ENT[it["mall"]][0])}</span><span class="cal-seg">{e(SEGMENTS[ENT[it["mall"]][2]])}</span>'
             f'<span class="cal-live" data-live></span></div><h3>{title}</h3><p class="cal-when">{e(it["when"])}</p>{notes}'
-            f'<p class="cal-src">出典の種類: {e(it["src"])} ／ 確認日 {e(it["checked"].replace("-", "/"))}</p>{AFF.lines(AFF.links_for(it))}{more}</li>')
+            f'<p class="cal-src">確認日 {e(it["checked"].replace("-", "/"))}</p>{AFF.lines(AFF.links_for(it))}{more}</li>')
 
 
 def hero_html(items: list[dict], today: date) -> str:
