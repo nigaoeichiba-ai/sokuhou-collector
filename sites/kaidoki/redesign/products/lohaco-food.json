@@ -5,7 +5,7 @@
  "h1_html": "食品・飲料の<br>セール情報",
  "sub": "対象：LOHACO・楽天市場　割引率・クーポン・期間を、確認日つきで並べます",
  "meta": "確認日：2026年11月15日",
- "lead": "食品・飲料に使える企画のうち、割引率と期間を確認できたものを4つまとめました。LOHACOの食品まとめ割・冬のお菓子祭まとめ割と大塚食品のクーポン、楽天市場のお歳暮・冬ギフトの早割です。",
+ "lead": "食品・飲料に使える企画のうち、割引率と期間を確認できたものを5つまとめました。LOHACOの食品・飲料のまとめ割3つと大塚食品のクーポン、楽天市場のお歳暮・冬ギフトの早割です。",
  "stores_burst": "",
  "stores_h2": "企画ごとのお得情報",
  "stores": [
@@ -159,6 +159,45 @@
     {
      "k": "yahoo",
      "url": "https://lohaco.yahoo.co.jp/coupon/others/NDk5M2ZmZDUxYjNhNDZhYTJkOTUyMTdkZmY3/",
+     "label": "Yahoo!ショッピングのLOHACOのページを見る"
+    }
+   ]
+  },
+  {
+   "name": "秋冬のおうちカフェまとめ割",
+   "tag": "企画 5",
+   "icon": "☕",
+   "headline": {
+    "pre": "4グループ以上で",
+    "big": "15%",
+    "post": "OFF",
+    "note": "3グループで10%、2グループで5%"
+   },
+   "rows": [
+    [
+     "割引（ストア表示）",
+     "レギュラーコーヒー、インスタントコーヒー・飲料、紅茶・ハーブ、ココア・甘酒、カフェインレス、すぐ飲めるボトル、お酒・リキュール、マグカップ・急須などの10グループから、買ったグループ数で割引。2グループ以上で5%OFF、3グループ以上で10%OFF、4グループ以上で15%OFF"
+    ],
+    [
+     "期間",
+     "2026年10月23日12:00〜12月18日12:00"
+    ],
+    [
+     "条件",
+     "クーポンの獲得は不要。ほかの企画と併用できる。お1人様何枚でも"
+    ]
+   ],
+   "checked": "2026年11月17日",
+   "links": [
+    [
+     "秋冬のおうちカフェまとめ割（LOHACO）",
+     "https://lohaco.yahoo.co.jp/coupon/others/MGI3NjUxZjBmYzg0NjVjNWM4ODRmZmRlYmZh/"
+    ]
+   ],
+   "aff": [
+    {
+     "k": "yahoo",
+     "url": "https://lohaco.yahoo.co.jp/coupon/others/MGI3NjUxZjBmYzg0NjVjNWM4ODRmZmRlYmZh/",
      "label": "Yahoo!ショッピングのLOHACOのページを見る"
     }
    ]
