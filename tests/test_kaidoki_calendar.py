@@ -173,8 +173,9 @@ def home_problems(html: str, today: date) -> list[str]:
     """What the top page must agree with in the data: the check day of every tile, the entry to the calendars, the two weeks it lists."""
     bad = []
     days = set(re.findall(r"確認日 (\d{4}/\d{2}/\d{2})", html))
-    if days != {REVERIFIED.replace("-", "/")}:
-        bad.append(f"check days on the top page {sorted(days)} are not the data's {REVERIFIED}")
+    data_days = {REVERIFIED.replace("-", "/")} | {it["checked"].replace("-", "/") for it in S.all_items() if it.get("checked") and it["checked"] >= REVERIFIED}      # an entry read on a later day carries its own day; never an older one
+    if not days or days - data_days:
+        bad.append(f"check days on the top page {sorted(days)} are not days of the data {sorted(data_days)}")
     for path in ("/calendar/", "/calendar/rakuten/", "/calendar/amazon/", "/calendar/yahoo/"):
         if f'href="{path}"' not in html:
             bad.append(f"no link to {path}")

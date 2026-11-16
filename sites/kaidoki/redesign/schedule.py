@@ -33,7 +33,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
        "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "yodobashi": ("ヨドバシ.com", "橋", "ec"), "bic": ("ビックカメラ", "ビ", "ec"), "gu": ("GU", "U", "brand"), "yokado": ("イトーヨーカドー", "ヨ", "ec"), "donki": ("ドン・キホーテ", "ド", "ec"), "aeon": ("イオン", "イ", "ec"), "nikon": ("ニコン", "コ", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
-       "stardomain": ("スタードメイン", "ス", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
+       "stardomain": ("スタードメイン", "ス", "web"), "nta": ("日本旅行", "日", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
@@ -162,6 +162,9 @@ EXTRA_CONFIRMED += [
     C("c-gu-app", "gu", "GU アプリ会員特別価格(終了日)", "2026-11-19", "2026-11-19", f"{jpd('2026-11-19')}まで(開始日は確認していません)", "", src=SRC_PAGE),
     C("c-ypp-2026-12", "yahoo", "超PayPay祭 2026年12月", "2026-12-18", "2026-12-20", f"{jpd('2026-12-18', True)}0時から{jpd('2026-12-20')}25時59分まで", "/yahoo/", src=SRC_PAGE,
       note="最大21%(利用先・期間限定。条件・上限あり)。『BONUS』の表記のある商品が対象で、決済の合計額に応じて+4%または+7%が加わります。値引きの期間限定セールも同時に開かれます。日程と内容は変更になることがあると、公式の案内に添えられています。"),
+    C("c-nta-bf", "nta", "日本旅行 ブラックフライデーセール", "2026-11-16", "2026-11-30", f"{jpd('2026-11-16', True)}15時から{jpd('2026-11-30')}14時59分まで", "", src=SRC_PAGE, checked="2026-11-16",
+      note="スペシャルクーポンの配布と予約の期間です。国内は宿泊・JR+宿泊・飛行機+宿泊、海外は海外ツアーと海外航空券+ホテルが対象で、日本旅行の会員登録が必要です。予約上限に達し次第、終了します。"
+           "出発できる期間は、国内が2026年11月17日(火)から2027年2月28日(日)まで、海外が2026年11月23日(月)から2027年5月31日(月)までです。公式は、11月20日(金)からのセールの予告も出しています。"),
     C("c-uniqlo-thanks", "uniqlo", "ユニクロ感謝祭", "2026-11-20", "2026-11-26", _span("2026-11-20", "2026-11-26"), "", src=SRC_PAGE, note="ユニクロの公式サイトに、7日間と案内されています。GUも同じ期間です。"),
     C("c-lavie-cb", "nec", "LAVIE キャッシュバックキャンペーン", "2026-10-27", "2027-01-11", _span("2026-10-27", "2027-01-11"), "", src=PRESS2, note="購入期間です。申し込みの締め切りは、2027年2月14日です。"),
     C("c-yodobashi-stock", "yodobashi", "ヨドバシ.com 文房具・ファッション 在庫限りの特価(終了日)", "2026-11-30", "2026-11-30", f"{jpd('2026-11-30')}まで(開始日は確認していません)", "", src=SRC_PAGE),
