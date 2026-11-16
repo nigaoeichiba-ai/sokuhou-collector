@@ -91,6 +91,37 @@ class PageTest(unittest.TestCase):
         for seg in S.SEGMENTS.values():
             self.assertIn(seg, h)
 
+    def _upcoming_ids(self, h: str) -> list[str]:
+        m = re.search(r'<table class="cal-table cal-upcoming">.*?</table>', h, flags=re.S)
+        self.assertTrue(m, "the table of the coming sales is on the page (not only in the hidden month list)")
+        return re.findall(r'data-id="([^"]+)"', m.group(0))
+
+    def test_the_coming_confirmed_sales_are_in_a_visible_table_with_the_first_and_last_day(self):
+        today = date(2026, 11, 12)
+        for mall, path in S.CAL_PATH.items():
+            h = self.pages[path.strip("/") + "/index.html"]
+            ids = self._upcoming_ids(h)
+            want = [it["id"] for it in S.upcoming_rows(S.all_items(), mall, today) if it["kind"] == "confirmed"]
+            self.assertTrue(want or mall == "amazon", mall)      # on 11/12 Amazon has only an expected sale and an announcement day
+            for i in want:
+                self.assertIn(i, ids, f"{mall}: {i}")
+            self.assertIn("開始日", h)
+            self.assertIn("終了日", h)
+        y = self.pages["calendar/yahoo/index.html"]
+        self.assertIn("ybf-2026", self._upcoming_ids(y))
+        self.assertIn("c-ypp-2026-12", self._upcoming_ids(y))
+        tbl = re.search(r'<table class="cal-table cal-upcoming">.*?</table>', y, flags=re.S).group(0)
+        self.assertRegex(tbl, r"超PayPay祭 2026年12月\(開始日\).*?2026年12月18日.*?未発表")      # the last day is not announced: it says so
+        self.assertIn("確定", tbl)
+        self.assertIn("例年の予想", tbl)
+        self.assertEqual(self._upcoming_ids(self.pages["calendar/index.html"]).count("c-uniqlo-winter"), 1)
+
+    def test_negative_a_table_without_the_confirmed_row_is_caught(self):
+        h = self.pages["calendar/yahoo/index.html"]
+        cut = re.sub(r'<tr class="k-confirmed"[^>]*data-id="ybf-2026".*?</tr>', "", h, count=1, flags=re.S)
+        self.assertNotIn("ybf-2026", self._upcoming_ids(cut))      # the check above would fail on such a page
+        self.assertNotEqual(cut, h)
+
     def test_each_mall_has_its_own_page_with_its_own_head(self):
         heads = set()
         for m, path in S.CAL_PATH.items():

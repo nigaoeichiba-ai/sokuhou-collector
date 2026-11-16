@@ -587,6 +587,7 @@ def cal_howto() -> str:
 def calendar_page_body(ctx: "Ctx") -> str:
     cards = article_cards([{"href": schedule.CAL_PATH[m], "title": MALL_CAL_TEXT[m][0], "description": MALL_CAL_TEXT[m][2], "label": "モール別"} for m in schedule.MALLS])
     return ('<div class="wrap page-content cal-wrap">' + notice("日付ごとに、楽天・Amazon・Yahoo!ショッピングと、そのほかの大手EC・ブランド公式EC・WEBサービスのセールを、1つのカレンダーに並べています。赤い●は確定、破線の◇は例年の予想です。") + cal_howto()
+            + '<section class="content-block"><h2>これから開かれる企画</h2>' + schedule.upcoming_table(ctx.sched, None, ctx.at.date()) + "</section>"
             + '<section class="content-block"><h2>全ショップの月間カレンダー</h2>' + cal_block(ctx, None) + "</section>"
             + '<section class="content-block"><h2>モールごとのカレンダー</h2>' + cards + "</section>"
             + '<section class="content-block"><h2>毎月の定例</h2>' + schedule.regular_table(ctx.sched, None)
@@ -599,6 +600,7 @@ def mall_calendar_body(ctx: "Ctx", mall: str) -> str:
     reg_html = (f'<section class="content-block"><h2>{e(title)}の毎月の定例</h2>{regular}</section>' if regular
                 else f'<section class="content-block"><h2>{e(title)}の毎月の定例</h2>{notice(title + "で、毎月同じ日に開かれる定例の企画は、確認できていません。")}</section>')
     return ('<div class="wrap page-content cal-wrap">' + notice(f"{title}の予定だけを並べたカレンダーです。赤い●は確定、破線の◇は例年の予想です。") + cal_howto()
+            + f'<section class="content-block"><h2>{e(title)}のこれから開かれる企画</h2>{schedule.upcoming_table(ctx.sched, mall, ctx.at.date())}</section>'
             + f'<section class="content-block"><h2>{e(title)}の月間カレンダー</h2>' + cal_block(ctx, mall) + "</section>" + reg_html
             + f'<section class="content-block"><h2>{e(title)}の例年の予想と、その根拠</h2>{schedule.basis_table(ctx.sched, mall)}</section>'
             + '<section class="content-block"><h2>関連するページ</h2>' + article_cards([

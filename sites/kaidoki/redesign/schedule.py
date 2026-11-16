@@ -409,6 +409,50 @@ def calendar_block(items: list[dict], mall: str | None, today: date) -> str:
             f'<script type="application/json" class="cal-data">{payload(its)}</script></div>')
 
 
+def upcoming_rows(items: list[dict], mall: str | None, today: date) -> list[dict]:
+    """The coming and running sales (confirmed, expected, the day an organiser will announce) of the mall(s), by the day they start.  A monthly rule is not here (it has its own table)."""
+    out = []
+    for it in for_mall(items, mall):
+        if it["kind"] == "regular":
+            continue
+        if it.get("s"):
+            if d(it["e"] or it["s"]) < today:
+                continue
+        elif not it.get("mo") or it["mo"] < f"{today.year}-{today.month:02d}":
+            continue
+        out.append(it)
+    out.sort(key=lambda it: ((it.get("s") or (it["mo"] + "-31")), 0 if it["kind"] == "confirmed" else 1, it["title"]))
+    return out
+
+
+def _upcoming_days(it: dict) -> tuple[str, str]:
+    """(the first day, the last day) as shown: what is not known is said so."""
+    if not it.get("s"):
+        return f"{int(it['mo'][5:])}月ごろ", "未発表"
+    s, en = jpd(it["s"], True), jpd(it["e"] or it["s"], True)
+    if it["kind"] == "expected":
+        return f"{s}ごろ", (f"{en}ごろ" if (it["e"] or it["s"]) != it["s"] else "未発表")
+    if "(終了日)" in it["title"]:
+        return "確認していません", en
+    if "(開始日)" in it["title"]:
+        return s, "未発表"
+    return s, en
+
+
+def upcoming_table(items: list[dict], mall: str | None, today: date) -> str:
+    rows = ""
+    for it in upcoming_rows(items, mall, today):
+        label, sym, _ = KINDS[it["kind"]]
+        a, b = _upcoming_days(it)
+        title = f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])
+        rows += (f'<tr class="k-{it["kind"]}" data-kind="{it["kind"]}" data-id="{e(it["id"])}"><td><span class="cal-badge k-{it["kind"]}">{sym} {e(label)}</span></td>'
+                 f'<th scope="row">{title}<br><small>{e(ENT[it["mall"]][0])}</small></th><td>{e(a)}</td><td>{e(b)}</td></tr>')
+    if not rows:
+        return ""
+    return ('<div class="tablewrap"><table class="cal-table cal-upcoming"><caption>これから開かれる企画(開催中を含む。開始日の順)</caption><thead><tr><th scope="col">区分</th><th scope="col">名前</th>'
+            '<th scope="col">開始日</th><th scope="col">終了日</th></tr></thead><tbody>' + rows + "</tbody></table></div>")
+
+
 def regular_table(items: list[dict], mall: str | None) -> str:
     rows = ""
     for it in for_mall(items, mall):
