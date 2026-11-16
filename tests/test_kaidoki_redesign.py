@@ -369,6 +369,13 @@ class RedesignTest(unittest.TestCase):
         for rel, h in self.html(self.live).items():
             self.assertNotRegex(h, self.OFFICIAL_ONLY, rel)
 
+    def test_no_product_file_words_a_source_as_official_only(self):
+        """The shop and product files in the repository (the real pages' words) carry no 公式発表 wording either, apart from the one general sentence."""
+        import glob
+        for f in glob.glob(str(ROOT / "sites" / "kaidoki" / "redesign" / "products" / "*.json")):
+            text = open(f, encoding="utf-8").read()
+            self.assertNotRegex(text, self.OFFICIAL_ONLY, f)
+
     RANKING = re.compile(r"最安|最安値|1位|第1位|No\.?\s?1|ランキング|おすすめ順|安い順")
 
     def test_prototype_shop_page_parts(self):
