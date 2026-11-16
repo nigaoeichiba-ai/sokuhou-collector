@@ -1,6 +1,7 @@
 """trend-sokuho.com: the home page, the category pages, the cards and the head of every page (sites/trend/hooks.py).  The desk's fixed wording must be on the page word for word."""
 from __future__ import annotations
 
+import datetime
 import io
 import json
 import re
@@ -203,10 +204,10 @@ class TrendTop(unittest.TestCase):
         m = re.search(r"var LABELS = (\[\[.*?\]\]);", h).group(1)
         self.assertEqual(json.loads(m), [[8, "バッチリ準備OK！"], [6, "あと一歩でカンペキ！"], [5, "最低限はクリア！"], [4, "半分くらい。まずは水と食料から！"], [0, "まずは水と食料から始めよう"]])
         self.assertNotIn('class="fl-u"', h)      # the "更新" badge on the flash items is gone (the three action badges and the typhoon chip stay)
-        # the three action badges come from the source data (content/home.json), not from fixed strings (they were stale after 11/15: 2026-11-16)
-        home_src = json.loads((ROOT / "sites" / "trend" / "content" / "home.json").read_text(encoding="utf-8"))
-        todo_html = next(s["html"] for s in home_src["sections"] if 'class="todo"' in s.get("html", ""))
-        badges = re.findall(r'<span class="badge">(.*?)</span>', todo_html)
+        # the three action badges are what pick_todo() chooses from the articles' own `todo` data on the build day (not a hand-written list: it was stale after 11/15)
+        fb = re.findall(r'<li><span class="badge">(.*?)</span><h3><a href="(.*?)">(.*?)</a></h3><p>(.*?)</p></li>',
+                        next(s["html"] for s in json.loads((ROOT / "sites" / "trend" / "content" / "home.json").read_text(encoding="utf-8"))["sections"] if 'class="todo"' in s.get("html", "")))
+        badges = [x[0] for x in _homepage().pick_todo(_prepared(), fb, today=datetime.date(2026, 11, 10))]
         self.assertEqual(len(badges), 3)
         for badge in badges:
             self.assertRegex(h, rf'<span class="deadline[^"]*">{re.escape(badge)}</span>')

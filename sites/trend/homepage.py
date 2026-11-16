@@ -85,6 +85,41 @@ def _tile_article(arts: list[dict], href: str, cat_path: dict, by: dict) -> dict
     return mine[0] if mine else by[CAT_TILE_ARTICLE[href]]
 
 
+TODO_KEYS = ("deadline", "badge", "title", "text")
+
+
+def pick_todo(content: list[dict], fallback: list, today=None) -> list:
+    """The three actions of 「今日やること」: built on every build from the articles' own `todo` data (deadline = last day, YYYY-MM-DD, JST),
+    never from a hand-written list. Only items whose deadline has not passed are used, the earliest deadline first (ties by path); fewer than 3 -> the timeless fallback in home.json.
+    A `todo` with a missing key or a bad date stops the build."""
+    from datetime import date, datetime, timedelta, timezone
+    today = today or TODAY
+    if today is None:
+        today = datetime.now(timezone(timedelta(hours=9))).date()
+    open_items = []
+    for p in content:
+        td = p.get("todo")
+        if not td:
+            continue
+        missing = [k for k in TODO_KEYS if not td.get(k)]
+        if missing:
+            raise SystemExit(f"{p['path']}: todo is missing {missing}")
+        try:
+            last = date.fromisoformat(td["deadline"])
+        except ValueError:
+            raise SystemExit(f"{p['path']}: todo deadline {td['deadline']!r} is not YYYY-MM-DD")
+        if last >= today:
+            open_items.append((td["deadline"], p["path"], (td["badge"], p["path"], esc(td["title"]), esc(td["text"]))))
+    open_items.sort(key=lambda x: (x[0], x[1]))
+    chosen = [x[2] for x in open_items][:3]
+    for f in fallback:
+        if len(chosen) >= 3:
+            break
+        if f[1] not in [c[1] for c in chosen]:
+            chosen.append(f)
+    return chosen
+
+
 def newest_first(arts: list[dict]) -> list[dict]:
     return sorted(arts, key=lambda p: (p["published"], p.get("seq", 0), p["path"]), reverse=True)
 
@@ -119,7 +154,9 @@ def body(home: dict, content: list[dict], spec: dict, cfg: dict, slug_of, card_w
 
     # ---- 今日やること
     todo_sec = _section(home, 'class="todo"')
-    todo = re.findall(r'<li><span class="badge">(.*?)</span><h3><a href="(.*?)">(.*?)</a></h3><p>(.*?)</p></li>', todo_sec["html"])
+    fallback = re.findall(r'<li><span class="badge">(.*?)</span><h3><a href="(.*?)">(.*?)</a></h3><p>(.*?)</p></li>', todo_sec["html"])
+    assert len(fallback) == 3, fallback      # home.json's three items are the timeless fallback (no deadline): they fill the gaps when fewer than 3 dated items are still open
+    todo = pick_todo(content, fallback)
     assert len(todo) == 3, todo
     kinds = [("red", ""), ("navy", " soft"), ("yellow", " soft")]
     cards = "".join(f'<li class="action-card"><span class="action-icon {k}" aria-hidden="true">{PARTS["action_icons"][i]}</span><h3><a href="{h}">{t}</a></h3><p>{p}</p>'
