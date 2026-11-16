@@ -1,5 +1,5 @@
 {
- "measured": "2026-11-09",
+ "measured": "2026-11-16",
  "window": "2026-10-04..2026-11-06",
  "rule": "municipality pages with at least 1 click or 50 impressions in Search Console in the window (page hashes only; no counts)",
  "cities": [
@@ -17,6 +17,7 @@
   "6c866e",
   "73e70c",
   "99ff65",
+  "9f7e6d",
   "a6154e",
   "b9663e",
   "ba767b",
