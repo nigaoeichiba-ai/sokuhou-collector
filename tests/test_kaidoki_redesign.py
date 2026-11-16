@@ -355,6 +355,20 @@ class RedesignTest(unittest.TestCase):
             self.assertIn(general, h, rel)
             self.assertRegex(h, r'<p class="cal-src">確認日 \d{4}/\d{2}/\d{2}</p>', rel)
 
+    OFFICIAL_ONLY = re.compile(r"公式発表|公式の発表(?!をはじめとする複数の情報をもとにしています)")
+
+    def test_negative_an_official_only_wording_is_caught(self):
+        self.assertRegex("最終的な日程は、主催者の公式発表でご確認ください。", self.OFFICIAL_ONLY)
+        self.assertRegex("2026年の公式発表は確認できず", self.OFFICIAL_ONLY)
+        self.assertRegex("次の大型セールは公式発表待ちです", self.OFFICIAL_ONLY)
+        self.assertNotRegex("公式の発表をはじめとする複数の情報をもとにしています。", self.OFFICIAL_ONLY)
+        self.assertNotRegex("最終的な日程は、各社の最新の案内でご確認ください。", self.OFFICIAL_ONLY)
+
+    def test_no_page_words_a_source_as_official_only(self):
+        """Owner policy: secondary sources count too, so no page says 公式発表 (the one general sentence is the exception)."""
+        for rel, h in self.html(self.live).items():
+            self.assertNotRegex(h, self.OFFICIAL_ONLY, rel)
+
     RANKING = re.compile(r"最安|最安値|1位|第1位|No\.?\s?1|ランキング|おすすめ順|安い順")
 
     def test_prototype_shop_page_parts(self):

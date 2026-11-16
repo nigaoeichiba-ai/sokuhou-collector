@@ -137,7 +137,7 @@ V5 = """<section class="hero">
 <div class="fcard">
 <div class="copy">
 <div class="kicker">NEXT BIG MATCH</div>
-<div class="name">次の大型セールは<br>公式発表待ちです</div>
+<div class="name">次の大型セールは<br>日程の発表待ちです</div>
 <div class="dates">12月は大型企画の予告が出ています</div>
 <p class="desc">Yahoo!ショッピングは12月からの大型企画で最大25%付与と予告していますが、日程と内容は変わる場合があるという注記つきで、確定ではありません。このサイトでは、公式に確定した日程だけを扱います。</p>
 </div>
@@ -203,7 +203,7 @@ SCRIPT = """<script>
         label.textContent = "";
         setCount(BF_END - now);
       } else {
-        ended(badge, label, "このセールは終了しました。次のセールは公式発表が出たらお知らせします。");
+        ended(badge, label, "このセールは終了しました。次のセールの日程は、日程カレンダーにあります。");
       }
     }
   }

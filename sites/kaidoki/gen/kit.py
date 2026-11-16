@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from .common import CHECKED
 
-CLOSING = "最終的な日程は、主催者の公式発表でご確認ください。"
+CLOSING = "最終的な日程は、各社の最新の案内でご確認ください。"
 
 
 def R(path: str, text: str) -> dict:
