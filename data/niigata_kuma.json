@@ -1,8 +1,8 @@
 {
- "as_of": "2026-11-15",
+ "as_of": "2026-11-16",
  "bad_coords": 0,
  "credit": "出典: 新潟県鳥獣被害対策支援センター「にいがたクマ出没マップ」(https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html)の公開データを、新潟県環境対策課の許可を得て、加工して作成(新潟県が作成したものではありません)",
- "fetched_at": "2026-11-16T06:19:10.769451+09:00",
+ "fetched_at": "2026-11-16T10:05:38.612860+09:00",
  "fy_current": "R08",
  "monthly": {
   "R07": {
@@ -21,7 +21,7 @@
   },
   "R08": {
    "10": 33,
-   "11": 5,
+   "11": 7,
    "4": 67,
    "5": 161,
    "6": 218,
@@ -32,6 +32,16 @@
  },
  "sightings": [
   {
+   "city": "三条市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 37.566,
+   "lon": 138.9401,
+   "observed_at": "2026-11-16",
+   "place": "大面",
+   "species": "ツキノワグマ"
+  },
+  {
    "city": "魚沼市",
    "count": 1,
    "kind": "目撃",
@@ -39,6 +49,16 @@
    "lon": 138.9585,
    "observed_at": "2026-11-15",
    "place": "小平尾",
+   "species": "ツキノワグマ"
+  },
+  {
+   "city": "南魚沼市",
+   "count": 1,
+   "kind": "目撃",
+   "lat": 37.1751,
+   "lon": 138.9225,
+   "observed_at": "2026-11-13",
+   "place": "新町",
    "species": "ツキノワグマ"
   },
   {
@@ -7752,7 +7772,7 @@
    "species": "ツキノワグマ"
   }
  ],
- "sightings_in_window": 4234,
+ "sightings_in_window": 4236,
  "source": "niigata",
  "source_file": "https://services6.arcgis.com/SKz58fvdFlaEB35q/arcgis/rest/services/survey123_08d14b98657b47309b868f49602375c8_results/FeatureServer/0",
  "source_page": "https://www.pref.niigata.lg.jp/site/tyoujyutaisakusienn/241009kumamap.html",
