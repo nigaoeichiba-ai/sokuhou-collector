@@ -49,6 +49,10 @@ _OLD_ICONS = "\n".join([
     '<link rel="apple-touch-icon" href="/apple-touch-icon.png">']) + "\n"
 
 
+
+SOCIAL_LINKS = (("X", "https://x.com/sokuhofukabori"), ("Bluesky", "https://bsky.app/profile/sokuho-fukabori.bsky.social"))
+SOCIAL_P = '<p class="social">公式SNS：' + "　".join(f'<a href="{u}" rel="noopener nofollow" target="_blank">{n}</a>' for n, u in SOCIAL_LINKS) + "</p>"
+
 def _swap_icons(t: str) -> str:
     return t.replace(_OLD_ICONS, ICON_LINES, 1) if _OLD_ICONS in t else t
 
@@ -318,6 +322,8 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
         t = t.replace('<header class="site">', '<div class="wrap"><p class="tagline" style="margin:.4rem 0 0;font-size:.82rem;color:#555">ニュースの見出しで終わらせない「速報×深掘り」メディア</p></div>\n<header class="site">', 1)
         t = t.replace('<p class="legal">', '<p class="src"><span>「今日の話題」は、気になる速報ニュースをどこよりも深く、多角的に読み解くメディアです。</span></p>\n<p class="legal">', 1)
         t = t.replace("<span>&copy; 今日の話題</span>", "<span>&copy; 今日の話題 速報×深掘り All Rights Reserved.</span>", 1)
+        if rel != "index.html":   # 自サイトの公式 SNS(オーナー回答 2026-11-17。情報元ではない)。トップは homepage.py のフッター
+            t = t.replace("</div></footer>", SOCIAL_P + "</div></footer>", 1)
         if p and p.get("category"):
             t = _add_json_image(t, base + src)
         if rel == "index.html":

@@ -21,6 +21,8 @@ FONT_LINKS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n<lin
 STATUS_LABELS = [(8, "バッチリ準備OK！", "high"), (6, "あと一歩でカンペキ！", "mid"), (5, "最低限はクリア！", "mid"), (4, "半分くらい。まずは水と食料から！", "mid"), (0, "まずは水と食料から始めよう", "low")]
 
 
+SOCIAL_FOOTER = '<p class="footer-meta">公式SNS：<a href="https://x.com/sokuhofukabori" rel="noopener nofollow" target="_blank">X</a>　<a href="https://bsky.app/profile/sokuho-fukabori.bsky.social" rel="noopener nofollow" target="_blank">Bluesky</a></p>'
+
 def esc(s) -> str:
     return html.escape(str(s), quote=True)
 
@@ -248,7 +250,8 @@ def body(home: dict, content: list[dict], spec: dict, cfg: dict, slug_of, card_w
               f'<ul class="footer-nav">{cat_links}</ul><ul class="footer-nav">{legal}</ul>'
               '<p class="footer-meta">「今日の話題」は、気になる速報ニュースをどこよりも深く、多角的に読み解くメディアです。<br>'
               f'最終更新：{ja_date(home["updated"])}<br>&copy; 今日の話題 速報×深掘り All Rights Reserved.<br>'
-              '<a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a></p></div></footer>')
+              '<a href="https://developers.rakuten.com/" target="_blank">Supported by Rakuten Developers</a></p>'
+              + SOCIAL_FOOTER + '</div></footer>')
 
     return f"{header}\n<main>\n{hero_html}\n{today}\n{promise}\n{articles}\n{category}\n{bousai}\n{standards}\n</main>\n{footer}\n"
 

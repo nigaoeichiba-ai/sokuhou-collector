@@ -21,8 +21,17 @@ PENDING = ()
 APPLY_LINKS = {"trend-yakou-shinkansen-amaneseru/index.html": ("www.jrview-travel.com",)}   # 申込の入口へのリンク(広告ではない。窓口の指定。2026-11-16)
 
 
+# 自サイトの公式 SNS(情報元ではない。オーナー回答 2026-11-17)。この2つの宛先だけを許可し、ほかの x.com / bsky.app は情報元として止める
+OWN_SNS = ("https://x.com/sokuhofukabori", "https://bsky.app/profile/sokuho-fukabori.bsky.social")
+
+
 def source_links(html: str, extra=()) -> list[str]:
-    return [h for h in re.findall(r'<a [^>]*href="https?://([^/"]+)', html) if h not in ALLOWED_HOSTS and h not in extra and "trend-sokuho.com" not in h]
+    out = []
+    for url, host in re.findall(r'<a [^>]*href="(https?://([^/"]+)[^"]*)"', html):
+        if url in OWN_SNS or host in ALLOWED_HOSTS or host in extra or "trend-sokuho.com" in host:
+            continue
+        out.append(host)
+    return out
 
 
 class SourcesHidden(unittest.TestCase):
@@ -51,6 +60,9 @@ class SourcesHidden(unittest.TestCase):
     def test_the_check_catches_a_source_link_and_lets_an_ad_through(self):
         self.assertEqual(source_links('<a href="https://www.nta.go.jp/x.htm">国税庁</a>'), ["www.nta.go.jp"])
         self.assertEqual(source_links('<a href="https://px.a8.net/svt/ejp?a8mat=A" rel="nofollow sponsored">広告</a><a href="/x/">内</a>'), [])
+        # 自サイトの公式 SNS の2つは通し、ほかの X / Bluesky のリンクは情報元として止める(負例)
+        self.assertEqual(source_links('<a href="https://x.com/sokuhofukabori" rel="noopener nofollow">X</a><a href="https://bsky.app/profile/sokuho-fukabori.bsky.social">Bluesky</a>'), [])
+        self.assertEqual(source_links('<a href="https://x.com/someone/status/1">投稿</a>'), ["x.com"])
 
     def test_the_price_simulator_does_not_link_to_the_companies(self):
         self.assertEqual(source_links(self.pages["trend-nengajo-hayawari/index.html"]), [])
