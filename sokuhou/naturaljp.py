@@ -30,7 +30,7 @@ from pathlib import Path
 from typing import Callable, Iterable
 
 ROOT = Path(__file__).resolve().parents[1]
-SITES = ("yorokobu", "minna", "atomou", "kuma", "saichin")        # the inventory order (yorokobu first: the owner's strongest complaint)
+SITES = ("yorokobu", "minna", "atomou", "kuma", "saichin", "trend", "shiken", "kurashi", "kaidoki")   # the inventory order (yorokobu first: the owner's strongest complaint); the later four were added 2026-11-17
 LEVEL_RANK = {"low": 0, "mid": 1, "high": 2}
 
 JP = r"ぁ-んァ-ヶー一-龥々〆"
@@ -929,7 +929,8 @@ def site_hits(headings: list[str], site: str | None, min_level: str = "low", onl
 
 
 # --------------------------------------------------------------------------------------------------------------------------------- sites: where the published text is
-BUILD_ARGS = {"saichin": ["--release"], "kuma": ["--release"], "minna": ["--release"], "atomou": ["--release"], "yorokobu": []}
+BUILD_ARGS = {"saichin": ["--release"], "kuma": ["--release"], "minna": ["--release"], "atomou": ["--release"], "yorokobu": [],
+              "trend": ["--release"], "shiken": ["--release"], "kurashi": ["--release"], "kaidoki": ["--release"]}
 
 
 def site_of(path: Path) -> str | None:

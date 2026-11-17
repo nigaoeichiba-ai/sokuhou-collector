@@ -87,11 +87,24 @@ class GateTest(unittest.TestCase):
 
     def test_a_high_finding_stops_it_even_when_the_baseline_has_it(self):
         f = Folder(self, {"a.html": page(PLAIN, HIGH)})
-        base = baseline_of("kuma", f.root)
-        self.assertEqual(base["sites"]["kuma"]["counts"]["high"], 1)
+        base = baseline_of("kuma", f.root)                                                         # a plain baseline does not hold high findings
+        self.assertEqual(base["sites"]["kuma"]["counts"]["high"], 0)
+        self.assertNotIn("high_keys", base["sites"]["kuma"])
         code, text, v = sg.run_check(f.root, "kuma", "ratchet", baseline=base)
         self.assertEqual((code, [h.rule for h in v.high]), (1, ["closing_ikaga"]))
         self.assertIn("closing_ikaga", text)
+
+    def test_a_site_that_joins_with_high_findings_has_them_grandfathered_and_a_new_one_still_fails(self):
+        f = Folder(self, {"a.html": page(PLAIN, HIGH)})
+        hits, _ = sg.collect(f.root, "kuma", dictionary=False)
+        base = {"version": 1, "sites": {"kuma": sg.baseline_entry(hits, "2026-11-17", grandfather_high=True)}}
+        self.assertEqual(base["sites"]["kuma"]["counts"]["high"], 1)
+        code, text, v = sg.run_check(f.root, "kuma", "ratchet", baseline=base)
+        self.assertEqual((code, v.high, v.old_high), (0, [], 1))                                    # known: counted, not failing
+        self.assertIn("既存の high 1", text)
+        g = Folder(self, {"a.html": page(PLAIN, HIGH, "それでは、一緒に見ていきましょう。")})       # a new high finding (lets_go)
+        code, text, v = sg.run_check(g.root, "kuma", "ratchet", baseline=base)
+        self.assertEqual((code, [h.rule for h in v.high], v.old_high), (1, ["lets_go"], 1))
 
     def test_shadow_reports_the_same_but_never_stops(self):
         f = Folder(self, {"a.html": page(PLAIN, MID, HIGH)})

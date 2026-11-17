@@ -73,8 +73,16 @@ def known_keys(base: dict, site: str) -> set[str] | None:
     return {f"{rule}:{h}" for rule, hs in s.get("keys", {}).items() for h in hs}
 
 
-def baseline_entry(hits: list[nj.Hit], today: str) -> dict:
+def known_high_keys(base: dict, site: str) -> set[str]:
+    """The high findings a site had when it joined the gate (2026-11-17: trend, shiken, kaidoki): written down once, to be fixed, never added to except by `baseline --grandfather-high`."""
+    s = base.get("sites", {}).get(site) or {}
+    return {f"{rule}:{h}" for rule, hs in s.get("high_keys", {}).items() for h in hs}
+
+
+def baseline_entry(hits: list[nj.Hit], today: str, grandfather_high: bool = False) -> dict:
+    """mid findings go in `keys`.  High findings go in `high_keys` only when asked for (a site that joins the gate with high findings already on it); otherwise a high finding is never excused."""
     keys: dict[str, set[str]] = defaultdict(set)
+    high_keys: dict[str, set[str]] = defaultdict(set)
     counts = Counter()
     seen = set()
     for h in hits:
@@ -84,10 +92,18 @@ def baseline_entry(hits: list[nj.Hit], today: str) -> dict:
         if k in seen:
             continue
         seen.add(k)
-        counts[h.level] += 1
         rule, _, digest = k.partition(":")
+        if h.level == "high":
+            if grandfather_high:
+                high_keys[rule].add(digest)
+                counts["high"] += 1
+            continue
+        counts["mid"] += 1
         keys[rule].add(digest)
-    return {"date": today, "counts": {"high": counts["high"], "mid": counts["mid"]}, "keys": {r: sorted(v) for r, v in sorted(keys.items())}}
+    out = {"date": today, "counts": {"high": counts["high"], "mid": counts["mid"]}, "keys": {r: sorted(v) for r, v in sorted(keys.items())}}
+    if high_keys:
+        out["high_keys"] = {r: sorted(v) for r, v in sorted(high_keys.items())}
+    return out
 
 
 # ------------------------------------------------------------------------------------------------------------------------------ the mode of a site
@@ -116,7 +132,8 @@ class Verdict:
         self.site, self.mode, self.pages = site, mode, pages
         self.high: list[nj.Hit] = []            # always a failure
         self.new: list[nj.Hit] = []             # mid, not in the baseline: a failure
-        self.old = 0                            # mid/high already in the baseline (not counted again)
+        self.old = 0                            # mid already in the baseline (not counted again)
+        self.old_high = 0                       # high findings the site had when it joined (grandfathered; to be fixed)
         self.fixed = 0                          # in the baseline, not found any more
         self.low = 0
         self.note = ""                          # e.g. "no baseline"
@@ -133,6 +150,7 @@ class Verdict:
 def evaluate(hits: list[nj.Hit], site: str, mode: str, pages: int, base: dict) -> Verdict:
     v = Verdict(site, mode, pages)
     known = known_keys(base, site)
+    known_high = known_high_keys(base, site)
     if known is None:
         v.note = "このサイトには基準値(data/style/baseline.json)がありません。判定せず、警告だけにします。"
     seen: set[str] = set()
@@ -147,7 +165,10 @@ def evaluate(hits: list[nj.Hit], site: str, mode: str, pages: int, base: dict) -
         if known is None:
             continue
         if h.level == "high":
-            v.high.append(h)                      # a high finding is a failure even when it is in the baseline
+            if k in known_high:
+                v.old_high += 1                   # on the site before it joined the gate: counted, not failing, to be fixed
+            else:
+                v.high.append(h)                  # any other high finding is a failure, even when it is in the mid baseline
         elif k in known:
             v.old += 1
         else:
@@ -177,7 +198,7 @@ def fix_hint(site: str) -> str:
 
 def render(v: Verdict, limit: int = 40) -> str:
     head = (f"## 文章チェック(naturaljp ゲート) {v.site} — モード {v.mode}\n"
-            f"読んだページ {v.pages} / 新しい mid {len(v.new)} / high {len(v.high)} / 基準値にある既存の警告 {v.old} / 直って基準値から外せる {v.fixed} / low(警告のみ) {v.low}")
+            f"読んだページ {v.pages} / 新しい mid {len(v.new)} / high {len(v.high)} / 基準値にある既存の警告 {v.old}(既存の high {v.old_high}) / 直って基準値から外せる {v.fixed} / low(警告のみ) {v.low}")
     if v.note:
         head += f"\n{v.note}"
     if not v.fails:
@@ -332,27 +353,30 @@ def cmd_accept(site: str, log: Path, only: set[str] | None) -> int:
     print(f"{site}: {len(keys)} key(s) written into the baseline: {', '.join(sorted({k.split(':')[0] for k in keys}))}")
     return 0
 
-def cmd_baseline(site: str, directory: Path | None, shrink: bool) -> int:
+def cmd_baseline(site: str, directory: Path | None, shrink: bool, grandfather_high: bool = False) -> int:
     root = directory or nj.built_dir(site, rebuild=True, base=ROOT / "out" / "stylegate")
     hits, pages = collect(root, site, dictionary=directory is None)
     base = load_baseline()
     today = dt.date.today().isoformat()
-    new = baseline_entry(hits, today)
+    new = baseline_entry(hits, today, grandfather_high)
     if shrink:
         old = base.get("sites", {}).get(site)
         if old is None:
             print(f"{site}: no baseline to shrink")
             return 2
-        have = {f"{r}:{h}" for r, hs in new["keys"].items() for h in hs}
+        now = baseline_entry(hits, today, True)                       # everything found now, mid and high
+        have = {f"{r}:{h}" for r, hs in now["keys"].items() for h in hs}
+        have_high = {f"{r}:{h}" for r, hs in now.get("high_keys", {}).items() for h in hs}
         kept = {r: [h for h in hs if f"{r}:{h}" in have] for r, hs in old["keys"].items()}
         kept = {r: hs for r, hs in kept.items() if hs}
+        kept_high = {r: [h for h in hs if f"{r}:{h}" in have_high] for r, hs in old.get("high_keys", {}).items()}
+        kept_high = {r: hs for r, hs in kept_high.items() if hs}
         entry = {"date": old.get("date", today), "shrunk": today, "keys": kept}
-        n = Counter()
-        for r, hs in kept.items():
-            n[nj.RULES[r].level if r in nj.RULES else "mid"] += len(hs)
-        entry["counts"] = {"high": n["high"], "mid": n["mid"]}
+        if kept_high:
+            entry["high_keys"] = kept_high
+        entry["counts"] = {"high": sum(len(v) for v in kept_high.values()), "mid": sum(len(v) for v in kept.values())}
         base["sites"][site] = entry
-        print(f"{site}: {sum(len(v) for v in old['keys'].values())} → {sum(len(v) for v in kept.values())} entries")
+        print(f"{site}: mid {sum(len(v) for v in old['keys'].values())} → {entry['counts']['mid']}, high {sum(len(v) for v in old.get('high_keys', {}).values())} → {entry['counts']['high']}")
     else:
         base.setdefault("sites", {})[site] = new
         print(f"{site}: baseline written: high {new['counts']['high']} / mid {new['counts']['mid']} ({pages} pages)")
@@ -376,6 +400,7 @@ def main(argv: list[str] | None = None) -> int:
     b.add_argument("--site", required=True, choices=list(nj.SITES))
     b.add_argument("--dir")
     b.add_argument("--shrink", action="store_true")
+    b.add_argument("--grandfather-high", action="store_true", help="a site that joins the gate with high findings already on it: write them down as known (they are counted, not failing; any new high one fails)")
     ac = sub.add_parser("accept", help="write the findings of a deploy log (GATEKEYS line) into the baseline")
     ac.add_argument("--site", required=True, choices=list(nj.SITES))
     ac.add_argument("--log", required=True)
@@ -392,7 +417,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.cmd == "accept":
         return cmd_accept(args.site, Path(args.log), set(args.rule) if args.rule else None)
     if args.cmd == "baseline":
-        return cmd_baseline(args.site, Path(args.dir) if args.dir else None, args.shrink)
+        return cmd_baseline(args.site, Path(args.dir) if args.dir else None, args.shrink, args.grandfather_high)
     if args.cmd == "precheck":
         return precheck(args.base, args.site, args.all)
     code, text, v = run_check(Path(args.dir), args.site, args.mode, dictionary=args.apply_dictionary)

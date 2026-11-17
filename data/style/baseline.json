@@ -8,6 +8,23 @@
    "date": "2026-10-20",
    "keys": {}
   },
+  "kaidoki": {
+   "counts": {
+    "high": 1,
+    "mid": 1
+   },
+   "date": "2026-11-17",
+   "high_keys": {
+    "long_sentence": [
+     "dfd94c2f54f7"
+    ]
+   },
+   "keys": {
+    "long_sentence": [
+     "c671b245eac5"
+    ]
+   }
+  },
   "kuma": {
    "counts": {
     "high": 0,
@@ -19,6 +36,14 @@
      "8509f6a4d32e"
     ]
    }
+  },
+  "kurashi": {
+   "counts": {
+    "high": 0,
+    "mid": 0
+   },
+   "date": "2026-11-17",
+   "keys": {}
   },
   "minna": {
    "counts": {
@@ -35,6 +60,160 @@
    },
    "date": "2026-10-20",
    "keys": {}
+  },
+  "shiken": {
+   "counts": {
+    "high": 5,
+    "mid": 37
+   },
+   "date": "2026-11-17",
+   "high_keys": {
+    "lets_go": [
+     "1422c1545a16",
+     "1a6c868178c1",
+     "c2bfb11a058b",
+     "cb591418af2c",
+     "d3554d286cba"
+    ]
+   },
+   "keys": {
+    "child_tone": [
+     "066429ebaa8d",
+     "17962ce6b719",
+     "1edfbfd596c4",
+     "33bad9536502",
+     "3c28fd8dc564",
+     "4ad776c18c78",
+     "4fa5f7de0f4c",
+     "540473acc6f4",
+     "544e3e07c57d",
+     "5b1ed72adefc",
+     "5e9b22d66923",
+     "6518a72285d9",
+     "6a0f9102f02c",
+     "6b65f5698bfd",
+     "74f61837ccb6",
+     "763659c77fad",
+     "77708f882fd9",
+     "7fb7f73dcaf6",
+     "8049586e5c8a",
+     "80cbcdc33285",
+     "8a11f245c490",
+     "9f03d150006f",
+     "a4f22eb48a83",
+     "aa49d356c326",
+     "aad11580feda",
+     "adacc5c5746c",
+     "b79049cd212e",
+     "bedfbf09aec1",
+     "c9df1f15ad8f",
+     "d5afa5cefa9f",
+     "dd196ba65cb5",
+     "e156823bb2d5",
+     "ee5f02e342e1",
+     "f1f7c1647668",
+     "ff8327c642d9"
+    ],
+    "long_sentence": [
+     "86f21902ea7e",
+     "ee5edb880972"
+    ]
+   }
+  },
+  "trend": {
+   "counts": {
+    "high": 9,
+    "mid": 53
+   },
+   "date": "2026-11-17",
+   "high_keys": {
+    "closing_ikaga": [
+     "2af644e285a7",
+     "84089e3a168d"
+    ],
+    "hedge_deshou": [
+     "24e37a26ed4e",
+     "79e66e943633",
+     "9face277754b",
+     "b2bea081b107",
+     "eb50d5012b50"
+    ],
+    "lets_go": [
+     "16f7b97585a7",
+     "e46e3eeca632"
+    ]
+   },
+   "keys": {
+    "child_tone": [
+     "183d1947eda5",
+     "df406b994b66"
+    ],
+    "flowery": [
+     "073ad6548de1",
+     "262bee82e4ec",
+     "d91a726b04cb"
+    ],
+    "heading_mood_subtitle": [
+     "c57cead874fa"
+    ],
+    "intro_announce": [
+     "5d8bb6558eb1"
+    ],
+    "long_sentence": [
+     "05e8468a6541",
+     "098e4088c9b0",
+     "1097c31a30f1",
+     "10d9a96eac98",
+     "186b2dc26db9",
+     "19d9ac7b0cd1",
+     "1b3a05945f98",
+     "1da908584ce1",
+     "3059f0c611ad",
+     "38d08c551c4d",
+     "498505e4a2f9",
+     "6785b8a47598",
+     "6d7662a92189",
+     "7bd8e1849ee2",
+     "7d9b01082303",
+     "83252464f564",
+     "85d5992d1030",
+     "90832f32c866",
+     "92408d037d83",
+     "931e5f4416ac",
+     "963c856d8602",
+     "971ab29fedad",
+     "98e72c3042d6",
+     "a69d6511aa30",
+     "b5e30a9f7838",
+     "b7c6756765ee",
+     "bbb7d4b317e1",
+     "c40e4b49b6c9",
+     "c9005b06f65e",
+     "cca8809fb259",
+     "ccc97c035dad",
+     "ce3fc655abe4",
+     "cfdfadd00113",
+     "d22c43c30e3e",
+     "dc3e3fc21550",
+     "e162d20eaff0",
+     "eb622c149974",
+     "f2a33fda92aa",
+     "f2b4fa666fad",
+     "f4e4d0dd643a"
+    ],
+    "monotone_ending": [
+     "ca433d839baa"
+    ],
+    "pet_verb": [
+     "13a75ed560f2",
+     "ae570a80654f",
+     "cb70c2241acc"
+    ],
+    "suggest_ka": [
+     "2af644e285a7",
+     "84089e3a168d"
+    ]
+   }
   },
   "yorokobu": {
    "counts": {
