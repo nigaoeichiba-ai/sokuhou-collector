@@ -86,6 +86,25 @@ class SeoTest(unittest.TestCase):
                 if q in prod:
                     self.assertIn(p, links[q], f"{q} does not list {p} back")
 
+    def test_the_related_block_names_no_affiliated_advertiser(self):
+        """The 2026-11-17 deploy was stopped by the linkage gate: the related links named other advertisers (お名前.com ...) on pages that carry no link for them."""
+        import json
+        from pathlib import Path
+        ads = json.loads((Path(__file__).resolve().parents[1] / "data" / "linkage" / "advertisers.json").read_text(encoding="utf-8"))["advertisers"]
+        names = [n for a in ads if "kaidoki" in a["sites"] for n in a["names"]]
+        block = re.compile(r'<h2>関連するページ</h2>\s*<ul class="links">(.*?)</ul>', re.S)
+        seen = 0
+        for p, h in self.pages.items():
+            m = block.search(h)
+            if m and p.count("/") == 3 and "store-row" in h:
+                texts = " ".join(re.findall(r">([^<]+)</a>", m.group(1)))
+                seen += 1
+                for n in names:
+                    self.assertNotIn(n, texts, f"{p} names {n} in its related links")
+        self.assertGreaterEqual(seen, 20)
+        # negative: the titles as they were (the pages' own h1) do name advertisers, so the check above has something to catch
+        self.assertTrue(any(n in "お名前.comのドメイン移管キャッシュバック" for n in names))
+
     def test_negative_each_finding_is_caught(self):
         dup = dict(self.pages)
         a, b = "/food/lohaco-food/", "/food/"

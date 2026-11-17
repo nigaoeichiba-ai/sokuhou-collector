@@ -679,6 +679,11 @@ def product_title(pr: dict) -> str:
     return re.sub(r"<br\s*/?>", "", pr["h1_html"])
 
 
+def related_text(pr: dict) -> str:
+    """The words of a link to a product page from another product page: its own 'related_text' (it names no advertiser: a page that names an affiliated advertiser must carry that advertiser's affiliate link)."""
+    return pr.get("related_text") or product_title(pr)
+
+
 def related_products(ctx: Ctx, pr: dict) -> str:
     """'関連するページ' of a product page, made from the data: the other product pages of its genre and of the neighbouring genres (genres.NEIGHBOURS).
     The relation is symmetric, so every listed page lists this one back (the linkage gate's 'related-oneway' stays empty)."""
@@ -688,7 +693,7 @@ def related_products(ctx: Ctx, pr: dict) -> str:
     if not rel:
         return ""
     return ('<h2>関連するページ</h2>\n<ul class="links">' + "".join(
-        f'<li><a href="{e(genres.GENRE_PATH[o["category"]] + o["slug"] + "/")}">{e(product_title(o))}</a></li>' for o in rel) + "</ul>")
+        f'<li><a href="{e(genres.GENRE_PATH[o["category"]] + o["slug"] + "/")}">{e(related_text(o))}</a></li>' for o in rel) + "</ul>")
 
 
 def product_pages(ctx: Ctx, base_head: str) -> dict:

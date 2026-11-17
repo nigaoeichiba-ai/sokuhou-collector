@@ -1,6 +1,6 @@
 {
  "slug": "game-sales",
- "title": "ゲームのセール日程｜Steamのブラックフライデー・ウィンターセールとPS Storeの最大80%OFF",
+ "title": "ゲームのセール日程｜SteamとPS Storeのブラックフライデー",
  "kicker": "ゲーム",
  "h1_html": "ゲームの<br>セール日程",
  "sub": "対象：Steam・PlayStation Store　期間と割引率を、確認日つきで並べます",
@@ -109,5 +109,6 @@
  ],
  "checked": "2026-11-15",
  "category": "hobby",
- "crumb": "ゲームのセール"
+ "crumb": "ゲームのセール",
+ "related_text": "ゲームのセール日程"
 }

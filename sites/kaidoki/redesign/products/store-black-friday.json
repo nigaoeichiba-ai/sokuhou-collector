@@ -1,6 +1,6 @@
 {
  "slug": "store-black-friday",
- "title": "ファッションのブラックフライデー情報｜AOKI・ABC-MART・Gap・タカキューなどの割引率と期間",
+ "title": "ファッションのブラックフライデー情報｜AOKI・ABC-MARTなど",
  "kicker": "ファッション",
  "h1_html": "ファッションの<br>ブラックフライデー情報",
  "sub": "対象：AOKI・ABC-MART・Gap　割引率・特典・期間を、確認日つきで並べます",
@@ -216,5 +216,6 @@
  ],
  "checked": "2026-11-15",
  "category": "fashion",
- "crumb": "ファッションのブラックフライデー"
+ "crumb": "ファッションのブラックフライデー",
+ "related_text": "ファッションのブラックフライデー"
 }

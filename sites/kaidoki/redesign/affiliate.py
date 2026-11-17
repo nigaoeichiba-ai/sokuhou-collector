@@ -107,7 +107,7 @@ def vc_text_href(pid: str) -> str:
 
 
 def vc_counter(pid: str) -> str:
-    return f'<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid={VC_SID}&amp;pid={pid}" height="1" width="0" border="0">'
+    return f'<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid={VC_SID}&amp;pid={pid}" height="1" width="0" border="0" alt="">'
 
 
 def a8_href(key: str) -> str:
