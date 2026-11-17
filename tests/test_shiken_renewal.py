@@ -325,6 +325,29 @@ class Renewal(unittest.TestCase):
         old = "TOEIC（2027年）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。"
         self.assertNotRegex(old, r"申込の締切は20\d\d年")
 
+    def test_audit_items_h1_inbound_links_and_article_data(self):
+        # SEO audit 2026-11-17: the h1 of the exam pages are not shared, the pages that were linked from one page only have more, the articles carry Article data
+        h1s: dict[str, str] = {}
+        for rel, h in self.pages.items():
+            if rel.startswith("exams/"):
+                t = re.sub(r"<[^>]+>", "", re.search(r"<h1[^>]*>(.*?)</h1>", h, re.S).group(1))
+                self.assertNotIn(t, h1s, f"{rel} has the h1 of {h1s.get(t)}")
+                h1s[t] = rel
+        inbound: dict[str, set] = {}
+        for rel, h in self.pages.items():
+            me = "/" if rel == "index.html" else "/" + rel[: -len("index.html")]
+            for link in set(re.findall(r'href="(/[^"#?]*)"', h)):
+                if link != me:
+                    inbound.setdefault(link, set()).add(me)
+        for page in ("/kokkoritsu/", "/koko/", "/nendo/", "/takken-junbi/", "/zenki-koki/"):
+            self.assertGreaterEqual(len(inbound.get(page, ())), 2, page)
+        for rel in ("takken-junbi/index.html", "goukaku-ritsu/index.html", "nendo/index.html"):
+            self.assertIn('"@type":"Article"', self.pages[rel], rel)
+        self.assertNotIn('"@type":"Article"', self.pages["exams/toeic/index.html"])
+        # negative case: two pages with one h1 are noticed
+        dup = {"a": re.search(r"<h1>(.*?)</h1>", "<h1>X</h1>").group(1), "b": re.search(r"<h1>(.*?)</h1>", "<h1>X</h1>").group(1)}
+        self.assertEqual(len(set(dup.values())), 1)
+
     # --- affiliate links ------------------------------------------------------------------------------------------------------------------
     def test_exam_pages_carry_the_pr_section_with_both_malls(self):
         sys_path = str(TEMPLATE / "dist")

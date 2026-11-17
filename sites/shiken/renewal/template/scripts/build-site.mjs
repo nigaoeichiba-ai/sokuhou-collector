@@ -42,17 +42,17 @@ export async function buildSite(out){
  const legacy=await loadLegacy(root);
  // ---- pages that are not made by the browser templates: the old articles and the site-wide pages -----------------------------
  const crumbsOf={};
- const wrap=(main,{pathname,title,description,noindex,h1})=>{
+ const wrap=(main,{pathname,title,description,noindex,h1,kind})=>{
   const doc=parseHTML(shell.toString()).document;
   doc.querySelector('main').innerHTML=main.html;
   doc.querySelector('script[src]').setAttribute('src',prefix+'/legacy.js');
   doc.querySelector('.skip-link').setAttribute('href','#legacy-title');doc.querySelector('.skip-link').textContent='本文へ進む';
   crumbsOf[pathname]=main.crumbs;
-  pages.push({pathname,html:doc.toString(),title:title+'｜'+SITE_NAME,description,noindex});
+  pages.push({pathname,html:doc.toString(),title:title+'｜'+SITE_NAME,description,noindex,kind,h1});
  };
  for(const [slug,data] of Object.entries(legacy)){
   const main=legacyMain({slug,data,registry,today,prefix,legacy});
-  wrap(main,{pathname:`/${slug}/`,title:data.title,description:data.description,noindex:config[slug].noindex});
+  wrap(main,{pathname:`/${slug}/`,title:data.title,description:data.description,noindex:config[slug].noindex,kind:data.kind,h1:data.h1});
  }
  for(const key of ['about','contact','privacy','thanks']){const p=siteWide[key];wrap(siteWideMain(key,prefix),{pathname:key==='thanks'?'/contact/thanks.html':`/${key}/`,title:p.title,description:p.description,noindex:p.noindex});}
  // ---- every page: title, description, robots, canonical, social tags, structured data ----------------------------------------
@@ -68,6 +68,7 @@ export async function buildSite(out){
   const crumbs=crumbsOf[p.pathname]||autoCrumbs(p.pathname,registry,document);
   const ld=[{'@context':'https://schema.org','@type':'WebPage',url:canonical,name:title,description:p.description,inLanguage:'ja',isPartOf:{'@type':'WebSite',name:SITE_NAME,url:origin+'/'}}];
   if(crumbs&&crumbs.length>1)ld.push({'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:crumbs.map((c,i)=>({'@type':'ListItem',position:i+1,name:c.name,item:origin+c.url}))});
+  if((p.kind==='article'||p.kind==='analysis')&&p.h1)ld.push({'@context':'https://schema.org','@type':'Article',headline:p.h1,description:p.description,mainEntityOfPage:canonical,inLanguage:'ja',dateModified:today,author:{'@type':'Organization',name:SITE_NAME},publisher:{'@type':'Organization',name:SITE_NAME}});
   const qa=[...document.querySelectorAll('.faq-static details, .ed-faq details')].map(d=>[d.querySelector('summary')?.textContent.trim(),d.querySelector('p')?.textContent.trim()]).filter(([q,a])=>q&&a);
   if(qa.length>=2)ld.push({'@context':'https://schema.org','@type':'FAQPage',mainEntity:qa.map(([q,a])=>({'@type':'Question',name:q,acceptedAnswer:{'@type':'Answer',text:a}}))});
   document.head.insertAdjacentHTML('beforeend',`<link rel="canonical" href="${canonical}"><meta property="og:type" content="website"><meta property="og:site_name" content="${SITE_NAME}"><meta property="og:locale" content="ja_JP"><meta property="og:url" content="${canonical}"><meta property="og:title" content="${escape(title)}"><meta property="og:description" content="${escape(p.description)}"><meta property="og:image" content="${origin+prefix}/assets/hero-wide-v2.webp"><meta name="twitter:card" content="summary_large_image">${ld.map(x=>`<script type="application/ld+json">${JSON.stringify(x).replaceAll('<','\\u003c')}</script>`).join('')}`);
