@@ -51,7 +51,7 @@ function renderDay(){
    const related=events.find(x=>x.id===e.relatedExamEventId);const exam=events.find(x=>x.exam===e.exam&&x.type==='exam');const examDates=related?eventLabel(related)+'：'+formatDate(related.date,true):scheduleSummary(events,e.exam,'exam',key=>formatDate(key,true));
    return `<article class="day-event">${badge(e)}<h4>${e.name}</h4><p class="event-time">${e.time?'◷ '+e.time+(e.type==='deadline'?'まで':''):formatDate(e.date)}</p>${e.note?`<p class="event-note">${e.note}</p>`:''}${exam&&e.type!=='exam'?`<p class="event-secondary">試験日：${examDates}</p>`:''}${dayDiff(e.date)<0?'<p class="event-note">この日程は終了しました。</p>':''}<button class="primary" data-event="${e.id}"><span class="desktop-detail">日程・申込方法を見る</span><span class="mobile-detail">詳細</span> ›</button><button class="save-button" data-save="${e.exam}" aria-pressed="${state.saved.includes(e.exam)}">${state.saved.includes(e.exam)?'✓ 保存済み':'♧ 保存'}</button>${eventSourceHtml(e)}</article>`;
  };
- $('#day-events').innerHTML=items.length?items.slice(0,3).map(card).join('')+(items.length>3?`<details class="day-more"><summary>ほか${items.length-3}件の予定を見る</summary>${items.slice(3).map(card).join('')}</details>`:''):'<div class="day-empty"><h4>この日に掲載している予定はありません。</h4><p>ほかの日付や、予定の種類も選んでみてくださいね。</p></div>';
+ $('#day-events').innerHTML=items.length?items.slice(0,3).map(card).join('')+(items.length>3?`<details class="day-more"><summary>ほか${items.length-3}件の予定を見る</summary>${items.slice(3).map(card).join('')}</details>`:''):'<div class="day-empty"><h4>この日に掲載している予定はありません。</h4><p>ほかの日付や、予定の種類も選んでみてください。</p></div>';
 }
 function renderSituations(){
  $('#situation-links').innerHTML=guides.map(g=>`<a class="situation-card" href="#/guide/${g.id}"><strong>${g.title}</strong><small>${g.sub}</small><span class="situation-art sprite art-${g.art}" aria-hidden="true"></span></a>`).join('');
@@ -63,12 +63,12 @@ function examCard(exam,{prepared=false}={}){
 function renderSaved(){
  const saved=exams.filter(e=>state.saved.includes(e.id));
  $('#saved-count').textContent=saved.length?` (${saved.length})`:'';
- $('#saved-list').innerHTML=saved.length?`<div class="saved-grid">${saved.map(e=>examCard(e,{prepared:true})).join('')}</div>`:'<div class="empty-saved"><p>まだ保存した試験はありません。</p><p>気になる試験が見つかったら、「保存」を押しておいてくださいね。あとからここで、日程や準備を確認できます。</p><a href="#calendar-section" class="text-link">カレンダーから試験を探す ›</a></div>';
+ $('#saved-list').innerHTML=saved.length?`<div class="saved-grid">${saved.map(e=>examCard(e,{prepared:true})).join('')}</div>`:'<div class="empty-saved"><p>まだ保存した試験はありません。</p><p>気になる試験が見つかったら、「保存」を押しておきましょう。あとからここで、日程や準備を確認できます。</p><a href="#calendar-section" class="text-link">カレンダーから試験を探す ›</a></div>';
 }
 function renderSearch(query){
  const q=query.trim().toLocaleLowerCase('ja');const items=exams.filter(e=>!q||`${e.name} ${e.short} ${e.aliases}`.toLocaleLowerCase('ja').includes(q));
  $('#search-results').hidden=false;$('#search-heading').textContent=q?`「${query.trim()}」の検索結果`:'掲載している試験';
- $('#search-result-list').innerHTML=items.length?items.map(e=>`<div class="search-result-row"><div><strong>${e.name}</strong><p class="small-note">${e.edition}</p></div><button class="primary" data-exam="${e.id}">日程を見る ›</button></div>`).join(''):'<p>名前に合う試験が見つかりませんでした。英検・TOEIC・簿記など、短い名前でもう一度探してみてくださいね。掲載していない試験・実施回もあります。</p>';
+ $('#search-result-list').innerHTML=items.length?items.map(e=>`<div class="search-result-row"><div><strong>${e.name}</strong><p class="small-note">${e.edition}</p></div><button class="primary" data-exam="${e.id}">日程を見る ›</button></div>`).join(''):'<p>名前に合う試験が見つかりませんでした。英検・TOEIC・簿記など、短い名前でもう一度探してみましょう。掲載していない試験・実施回もあります。</p>';
  $('#search-results').scrollIntoView({block:'start',behavior:'smooth'});
 }
 function dialog(content){$('#dialog-body').innerHTML=content;$('#detail-dialog').showModal();}
@@ -78,11 +78,11 @@ function showExam(id,eventId=null){
  location.hash='#/exam/'+id+(eventId?'?event='+encodeURIComponent(eventId):'');
 }
 const articles={
- postal:{title:'「必着」と「消印有効」、どちらになっていますか？',body:'<p>郵送で申し込むときは、同じ締切日でも意味が違います。募集要項の言葉を、一度確かめておきましょう。</p><h3>「必着」と書かれている場合</h3><p>締切日までに、書類が相手に届く必要があります。投函する日ではないので、配達にかかる時間も見込んでくださいね。</p><h3>「消印有効」と書かれている場合</h3><p>指定日までの郵便局の消印があることが条件です。ポストに入れる時刻によっては当日の消印にならないこともあるため、余裕をもって窓口で確認しましょう。</p><p>提出先、郵送方法、受付時刻などの条件は、試験ごとの公式案内をご確認ください。</p>'},
- method:{title:'受け方が違うと、申込方法も変わります。',body:'<h3>決まった日に受ける試験</h3><p>申込期間と試験日が決まっています。会場や級によって受付期間が異なる場合もあるので、ご自身が受ける試験の案内を確認しましょう。</p><h3>日時や会場を選んで受ける試験</h3><p>CBTなどでは、会場の空き状況を見て日時を選ぶことがあります。希望する日がある方は、予約の開始時期や休止期間も確かめておいてくださいね。</p><h3>申込後にも、ひとつ確認を</h3><p>支払期限、受付完了のお知らせ、受験票の受け取り方まで確認しておくと、当日の準備がしやすくなります。</p>'},
- about:{title:'資格・試験への道について',body:'<p>受けたい試験が決まったときも、これから何を学ぶか迷っているときも。日程や準備を確かめる場所として、気軽に使っていただけるサイトを目指しています。</p><p>掲載している日程には、確認日を添えています。申込方法や変更のお知らせなど、詳しい条件は主催者の案内で確かめておいてくださいね。</p>'},
+ postal:{title:'「必着」と「消印有効」、どちらになっていますか？',body:'<p>郵送で申し込むときは、同じ締切日でも意味が違います。募集要項の言葉を、一度確かめておきましょう。</p><h3>「必着」と書かれている場合</h3><p>締切日までに、書類が相手に届く必要があります。投函する日ではないので、配達にかかる時間も見込んでください。</p><h3>「消印有効」と書かれている場合</h3><p>指定日までの郵便局の消印があることが条件です。ポストに入れる時刻によっては当日の消印にならないこともあるため、余裕をもって窓口で確認しましょう。</p><p>提出先、郵送方法、受付時刻などの条件は、試験ごとの公式案内をご確認ください。</p>'},
+ method:{title:'受け方が違うと、申込方法も変わります。',body:'<h3>決まった日に受ける試験</h3><p>申込期間と試験日が決まっています。会場や級によって受付期間が異なる場合もあるので、ご自身が受ける試験の案内を確認しましょう。</p><h3>日時や会場を選んで受ける試験</h3><p>CBTなどでは、会場の空き状況を見て日時を選ぶことがあります。希望する日がある方は、予約の開始時期や休止期間も確かめておきましょう。</p><h3>申込後にも、ひとつ確認を</h3><p>支払期限、受付完了のお知らせ、受験票の受け取り方まで確認しておくと、当日の準備がしやすくなります。</p>'},
+ about:{title:'資格・試験への道について',body:'<p>受けたい試験が決まったときも、これから何を学ぶか迷っているときも。日程や準備を確かめる場所として、気軽に使っていただけるサイトを目指しています。</p><p>掲載している日程には、確認日を添えています。申込方法や変更のお知らせなど、詳しい条件は主催者の案内で確かめておきましょう。</p>'},
  sources:{title:'日程を確認するときに',body:'<p>実際に申し込む際は、試験の主催者が出している最新の案内をご確認ください。級、受験方式、会場、提出方法などによって、日程や条件が変わることがあります。</p><p>掲載している資格・試験を、実施回や地域に分けてご案内しています。対象はトップの一覧からお選びいただけます。確認日は各試験のページに載せています。公表された予定日は「予定」、日程の公表がないものは「未発表」、日付を確定できないものは「未確認」と分けています。予約制や地域ごとに違う日程も、その旨を表示しています。掲載のない日も、試験がないことを意味しません。</p><p>予定の保存や「申込済み」のチェックは、ご自身の確認用です。主催者への申込や支払いは行われません。</p>'},
- privacy:{title:'保存した予定について',body:'<p>ログインしなくても、試験を保存できます。保存先は、いまお使いのブラウザです。このサイトから、保存した内容をサーバーへ送信することはありません。</p><p>別の端末には引き継がれません。また、ブラウザのデータを消したり、プライベートモードを閉じたりすると、保存した予定が消えることがあります。</p><p>共有の端末をお使いのときは、この点にも気をつけてくださいね。</p>'}
+ privacy:{title:'保存した予定について',body:'<p>ログインしなくても、試験を保存できます。保存先は、いまお使いのブラウザです。このサイトから、保存した内容をサーバーへ送信することはありません。</p><p>別の端末には引き継がれません。また、ブラウザのデータを消したり、プライベートモードを閉じたりすると、保存した予定が消えることがあります。</p><p>共有の端末をお使いのときは、この点にも気をつけてください。</p>'}
 };
 function showArticle(id){const a=articles[id];if(a)dialog(`<h2 id="dialog-heading">${a.title}</h2>${a.body}`);}
 function renderGuide(id,params=new URLSearchParams()){
@@ -90,7 +90,7 @@ function renderGuide(id,params=new URLSearchParams()){
  mountGuide(id,params,{state,exams,events,types,guides,esc,formatDate,examCard,eventSummary,checklist,updateProgress,toast});
 }
 function checklist(key,items){return `<div class="checklist">${items.map(([title,sub],i)=>`<label><input type="checkbox" data-check="${key}-${i}" ${state.checks[`${key}-${i}`]?'checked':''}><span><strong>${title}</strong><small>${sub}</small></span></label>`).join('')}</div><p class="check-progress" aria-live="polite"></p>`;}
-function updateProgress(){const n=$$('[data-check]:checked').length;const total=$$('[data-check]').length;const p=$('.check-progress');if(p)p.textContent=n===total?'ひと通り確認できましたね。直前に主催者からのお知らせも、もう一度ご覧ください。':`${total}つのうち、${n}つ確認できました。ご自身のペースで進めてくださいね。`;}
+function updateProgress(){const n=$$('[data-check]:checked').length;const total=$$('[data-check]').length;const p=$('.check-progress');if(p)p.textContent=n===total?'ひと通り確認できましたね。直前に主催者からのお知らせも、もう一度ご覧ください。':`${total}つのうち、${n}つ確認できました。ご自身のペースで進めましょう。`;}
 export function route(){renderRoute();normalizeLinks();
  const canonical='https://shiken-nittei.com'+location.pathname;
  document.querySelector('link[rel="canonical"]')?.setAttribute('href',canonical);
