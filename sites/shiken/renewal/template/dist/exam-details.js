@@ -18,6 +18,7 @@ export function mountExam(id,params,c){
   const starts=(v.application||[]).map(a=>a.start).filter(Boolean).sort(),opens=!starts.length||starts[0]<=today;
   return opens&&ownEvents.some(e=>e.type==='deadline'&&e.date>=today);})();
  const applySection=applyOpen?`<section class="ed-apply" id="exam-${id}-apply" aria-labelledby="exam-${id}-apply-title"><div class="ed-section-title"><div><span class="ed-kicker">準備ができたら</span><h2 id="exam-${id}-apply-title">申し込みのページへ</h2></div></div><p>${esc(scheduleMeta[id].applyPage.note||'受ける回と受け方を確かめたら、主催者の申し込みのページへ進めます。')}別のサイトが開きます。</p><a class="primary ed-apply-button" href="${scheduleMeta[id].applyPage.url}" target="_blank" rel="noopener nofollow">申し込みのページへ <span aria-hidden="true">↗</span></a></section>`:'';
+ const todayJ=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
  const siblings=exams.filter(e=>exam.field==='高校入試'?e.field==='高校入試':e.family===exam.family);
  const key=s=>`exam-${id}-${s}`;
  const nav=[['dates','日程'],['flow','受験までの流れ'],['packing','持ち物・当日の流れ'],['faq','よくある質問']];
@@ -52,5 +53,7 @@ export function mountExam(id,params,c){
  root.addEventListener('change',e=>{if(e.target.matches('[data-check]'))progress();},{signal});
  if(selectedEvent)$('.ed-date-tools').open=true;
  document.title=meta.seoTitle||exam.name+'｜'+exam.edition+'の日程・受験準備｜資格・試験への道';
- document.querySelector('meta[name="description"]').content=meta.seoDesc||(exam.name+'（'+exam.edition+'）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。');
+ const upcoming=t=>ownEvents.filter(e=>e.type===t&&e.date>=todayJ).sort((x,y)=>x.date.localeCompare(y.date))[0];
+ const dlE=upcoming('deadline'),exE=upcoming('exam'),reE=upcoming('result'),rolling=scheduleMeta[id]?.fields?.deadline==='rolling',bits=[dlE?'申込の締切は'+formatDate(dlE.date,true)+(dlE.time?' '+dlE.time+'まで':''):'',exE?'試験日は'+formatDate(exE.date,true):'',reE?'合格発表は'+formatDate(reE.date,true):''].filter(Boolean);
+ document.querySelector('meta[name="description"]').content=meta.seoDesc||(bits.length?exam.name+'（'+exam.edition+'）の'+bits.join('、')+'。申し込みから当日までの流れと持ち物を、確認日つきでまとめています。':rolling?exam.name+'（'+exam.edition+'）は、受ける日と会場を選んで予約する試験です。申し込みから当日までの流れと、受けられない期間を、確認日つきでまとめています。':(exam.name+'（'+exam.edition+'）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。'));
 }

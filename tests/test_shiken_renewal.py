@@ -306,6 +306,25 @@ class Renewal(unittest.TestCase):
             self.assertEqual(missing(self.pages[f"guides/{g}/index.html"]), [], g)
         self.assertTrue(missing("<main><div id=\"guide-exams\"></div></main>"))      # negative case: a guide whose list is only drawn by a script is caught
 
+    def test_the_search_words_are_in_the_titles_and_the_exam_pages_describe_their_own_dates(self):
+        # Search Console (2026-11-17): '2027年 国立大学入試日程' and '看護師国家試験 申し込み 締め切り' found pages whose titles lacked the words
+        def title(rel):
+            return re.search(r"<title>(.*?)</title>", self.pages[rel], re.S).group(1)
+        for rel, words in (("kokkoritsu/index.html", ("入試日程", "国立大学", "2027")), ("nyushi/index.html", ("入試日程", "国立大学")),
+                           ("kangoshi-ganshu/index.html", ("申し込み", "締め切り")), ("exams/nurse/index.html", ("申し込み", "締め切り"))):
+            for w in words:
+                self.assertIn(w, title(rel), f"{rel} lacks {w}")
+        # an exam page with a coming date says it in the description (not only the same sentence with another name), and carries its FAQ as structured data
+        d = re.search(r'<meta name="description" content="(.*?)"', self.pages["exams/toeic/index.html"]).group(1)
+        self.assertRegex(d, r"申込の締切は20\d\d年\d+月\d+日")
+        self.assertRegex(d, r"試験日は20\d\d年\d+月\d+日")
+        for rel, h in self.pages.items():
+            if rel.startswith("exams/") and "ed-faq" in h:
+                self.assertIn('"@type":"FAQPage"', h, rel)
+        # negative case: the old sentence that only changed the exam name is recognised
+        old = "TOEIC（2027年）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。"
+        self.assertNotRegex(old, r"申込の締切は20\d\d年")
+
     # --- affiliate links ------------------------------------------------------------------------------------------------------------------
     def test_exam_pages_carry_the_pr_section_with_both_malls(self):
         sys_path = str(TEMPLATE / "dist")

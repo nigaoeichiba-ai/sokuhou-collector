@@ -107,7 +107,7 @@ function renderRoute(){
  $('.skip-link').href=detail?'#exam-title':guide?'#guide-title':'#calendar-section';$('.skip-link').textContent=detail||guide?'本文へ進む':'カレンダーへ進む';
  // Keep skip links within the current route instead of treating a section ID as the home route.
  if(detail){mountExam(examMatch[1],new URLSearchParams(examMatch[2]||''),{state,exams,events,formatDate,esc,checklist,updateProgress});window.scrollTo({top:0,behavior:'instant'});return;}
- document.querySelector('meta[name="description"]').content=guide?(guides.find(g=>g.id===match[1])?.intro||'試験の準備を確認できます。'):'資格・試験への道。試験日や申込の締切をカレンダーで確認し、ご自身の状況から必要な準備を探せます。日程の確認日は、各試験のページに載せています。';
+ document.querySelector('meta[name="description"]').content=guide?((guides.find(g=>g.id===match[1])?.desc||guides.find(g=>g.id===match[1])?.intro)||'試験の準備を確認できます。'):'資格・試験への道。試験日や申込の締切をカレンダーで確認し、ご自身の状況から必要な準備を探せます。日程の確認日は、各試験のページに載せています。';
  if(guide){renderGuide(match[1],new URLSearchParams(match[2]||''));document.title=($('#guide-title').textContent||'受験の案内')+'｜資格・試験への道';window.scrollTo({top:0,behavior:'instant'});}
  else {document.title='資格・試験への道｜試験日程・申込期限・受験準備';renderSaved();if(hash&&hash!=='#/')requestAnimationFrame(()=>document.getElementById(hash.slice(1))?.scrollIntoView());else window.scrollTo({top:0,behavior:'instant'});}
 }
