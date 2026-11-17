@@ -1222,6 +1222,191 @@
   "unchanged": 64,
   "units": 89
  },
+ "gift/birthday-grandfather/index.html": {
+  "accepted": [
+   {
+    "from": "湯呑みは毎朝のお茶や来客時に使えるため、軽くて手になじむ物なら手元に置いてもらえます。",
+    "kind": "item",
+    "to": "湯呑みは毎朝のお茶や来客時に使えます。軽くて手になじむ物を選びます。",
+    "why": "推測を選ぶ基準にした"
+   },
+   {
+    "from": "湯呑みは重さ、持ち手の有無、電子レンジ対応を確認し、文字入りなら読みやすい大きさにする。",
+    "kind": "item",
+    "to": "湯呑みは重さ、持ち手の有無、電子レンジ対応を確認します。文字入りなら、読みやすい大きさを選びます。",
+    "why": "一文一論点に分けた"
+   },
+   {
+    "from": "甚平は普段の服のサイズを家族に聞き、前開きやウエストの締めつけが強くない物を選ぶ。",
+    "kind": "item",
+    "to": "甚平は普段の服のサイズを家族に聞きます。前開きでウエストの締めつけが強くない物を選びます。",
+    "why": "確認と選択を分けた"
+   },
+   {
+    "from": "和菓子は賞味期限と一個あたりの大きさを見て、飲み込みやすい柔らかさかどうかも確認する。",
+    "kind": "item",
+    "to": "和菓子は賞味期限と一個あたりの大きさを見ます。飲み込みやすい柔らかさかどうかも確認します。",
+    "why": "一文一論点に分けた"
+   }
+  ],
+  "date": "2026-11-17",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 選ぶ理由と候補の説明が重複し、注意点が商品紹介の後に離れています。",
+   "具体: 導入の結論が弱く、商品を選ぶ基準が長い段落に埋もれています。",
+   "声: Amazonの商品説明に「妻」「新しい部屋」という別ページの文脈が残っています。"
+  ],
+  "failed": "",
+  "hash": "f25d3a64501e",
+  "needs_check": [
+   {
+    "question": "「人気の4点」の根拠となるランキングや集計データがあるか確認してください。",
+    "text": "祖父への誕生日プレゼント、種類の違う人気の4点"
+   }
+  ],
+  "page": "gift/birthday-grandfather/index.html",
+  "rejected": [
+   {
+    "after": "祖父への誕生日プレゼントは、軽い湯呑み、肌ざわりのよい甚平、食べ切りやすい和菓子が候補です。手に持つ重さや文字の見やすさ、家族でお茶を囲む場面を考えて選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['プレゼント', '候補']"
+    ],
+    "text": "祖父の誕生日は長く話すきっかけも一緒に贈れる日です。軽い湯呑み、肌ざわりのよい甚平、食べ切りやすい和菓子など、手に持つ重"
+   },
+   {
+    "after": "LINEの自分のトークか自分宛てのメールに送るとあとでスマホから見返せます。",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "あとでスマホから見返すときは、LINEの自分のトークか、自分宛てのメールに送れます。"
+   },
+   {
+    "after": "3つの候補の特徴",
+    "problems": [
+     "numbers differ: [] -> ['3']"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "祖父への誕生日プレゼント 4つの候補",
+    "problems": [
+     "numbers differ: [] -> ['4']"
+    ],
+    "text": "祖父への誕生日、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "軽い湯呑みは毎朝のお茶や来客時にも使いやすく、手元に置いて使えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['湯呑']"
+    ],
+    "text": "毎朝のお茶や来客時に使いやすく、重さを気にせず手元に置いてもらえます。"
+   },
+   {
+    "after": "甚平は家でくつろぐ時間や夏の夕方に着られます。誕生日会で写真を撮るときにも合います。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['甚平']"
+    ],
+    "text": "家でくつろぐ時間や夏の夕方に着られ、誕生日会の写真にも穏やかに映えます。"
+   },
+   {
+    "after": "和菓子は家族でお茶を囲むときに分けやすい品です。好きな味を聞いて選べます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['和菓子']"
+    ],
+    "text": "家族でお茶を囲む時に分けやすく、好きな味を聞きながら選ぶ会話も生まれます。"
+   },
+   {
+    "after": "名入れ箸は孫から贈る誕生日祝いとして毎日の食事で使えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名入']"
+    ],
+    "text": "毎日の食事で使える小さな記念品として、孫からの誕生日祝いを身近に感じてもらえます。"
+   },
+   {
+    "after": "4つの候補を特徴で比べる",
+    "problems": [
+     "numbers differ: [] -> ['4']"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "横軸は「食べて消える」から「ずっと残る」まで、縦軸は「定番・無難」から「個性的・意外」までです。番号を押すと各候補に移動します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['各候補']"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから祖父の誕生日に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖父', '誕生日']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "ギフトボックス入りの定番のシングルモルトスコッチ。お酒を飲む祖父に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖父']"
+    ],
+    "text": "シングルモルトスコッチの定番でギフトボックスに入っています。お酒を飲む人へ。"
+   },
+   {
+    "after": "6インチの薄くて軽い電子書籍リーダーです。通勤中や寝る前に読書をする祖父に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖父']"
+    ],
+    "text": "6インチの薄くて軽い電子書籍リーダーです。通勤中や寝る前に読書をする妻に向きます。"
+   },
+   {
+    "after": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。祖父への実用品に向きます。",
+    "problems": [
+     "numbers differ: ['1'] -> []",
+     "words added that the original does not have (information must not grow): ['祖父', '実用品']"
+    ],
+    "text": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋に置く1台として向いています。"
+   },
+   {
+    "after": "祖父の好きなものや趣味、年齢などを入力すると近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖父', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "サイズや香りは好みが分かれるため、事前に確認します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['確認']"
+    ],
+    "text": "サイズや香りなど好みが強く出るものは事前に探りを入れます"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月17日 11:05時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "after": "電子機器は操作の説明を添えて渡します",
+    "problems": [
+     "added claim/condition dropped: 「操作が難しい」という条件が落ち、電子機器全般への助言に広がっている"
+    ],
+    "text": "操作が難しい電子機器を説明なしで渡すこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「選び方のポイント…」〜「和菓子は賞味期限と一個あたり…」と「気をつけたいこと…」〜「操作が難しい電子機器を説明な…」を一つの「選ぶ前に確認すること」にまとめ、商品を絞り込む「条件で絞って比べる…」の前へ移します。",
+   "「喜ばれやすい理由…」〜「羊羹や最中などの和菓子は、家…」は「祖父への誕生日、こんな贈り方…」〜「毎日の食事で使える小さな記念…」の各候補説明と内容が重なるため、各候補の説明へ統合します。"
+  ],
+  "unchanged": 69,
+  "units": 93
+ },
  "gift/birthday-grandmother/index.html": {
   "accepted": [
    {
