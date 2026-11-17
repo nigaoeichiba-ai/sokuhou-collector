@@ -17,6 +17,13 @@ GENRES: dict[str, dict] = {
     "service": {"path": "/service/", "brands": ("xserver", "xdomain", "stardomain"), "amazon": "", "crumb": "WEBサービス"},
 }
 GENRE_PATH = {k: v["path"] for k, v in GENRES.items()}
+# genres whose product pages are shown to each other as related (a symmetric relation: the listing below is read both ways, so a page that lists another is listed by it)
+NEIGHBOURS = (("food", "daily"), ("daily", "beauty"), ("beauty", "fashion"), ("fashion", "hobby"), ("hobby", "electronics"), ("electronics", "service"), ("home", "daily"), ("home", "electronics"))
+
+
+def related_genres(gid: str) -> set[str]:
+    return {gid} | {b for a, b in NEIGHBOURS if a == gid} | {a for a, b in NEIGHBOURS if b == gid}
+
 GENRE_OF_BRAND = {b: k for k, v in GENRES.items() for b in v["brands"]}
 GENRE_PREFIXES = tuple(v["path"] for k, v in GENRES.items())
 
