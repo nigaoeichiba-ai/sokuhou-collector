@@ -27,3 +27,5 @@ export const examDetails={
 };
 
 extendDetailCopy(examDetails);
+// 検索語に合わせた題と説明(2026-11-17。『共通テスト 追試 いつ』『追試 会場』の表示に合わせる)。日付は schedule-records の確認済みの値。
+if(examDetails['kyotsu-tsuishi-2027']){Object.assign(examDetails['kyotsu-tsuishi-2027'],{seoTitle:'共通テストの追試験・再試験はいつ 2027年度は1月23日・24日｜資格・試験への道',seoDesc:'大学入学共通テスト2027年度の追試験・再試験は、1月23日と24日です。申し込みから当日までの準備を、確認日と公表状況を分けてまとめました。'});}
