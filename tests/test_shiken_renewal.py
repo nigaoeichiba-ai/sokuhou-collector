@@ -81,6 +81,7 @@ def page_problems(pages: dict[str, str]) -> list[str]:
 
 
 APPLY_URLS = {m["applyPage"]["url"] for m in REGISTRY["meta"].values() if m.get("applyPage")}
+PIXEL_HOST = {"5YJRM": "www15", "614CY": "www12", "61Z82": "www16", "60H7M": "www18"}
 FOOTER_SENTENCE = "掲載の日程は、公式の発表をはじめとする複数の情報をもとにしています。申し込みの前に、主催者の最新の案内もご確認ください。"
 
 
@@ -337,6 +338,8 @@ class Renewal(unittest.TestCase):
             self.assertTrue(tag, eid)
             self.assertIn('rel="nofollow sponsored noopener"', tag.group(1))
             self.assertIn("PR", text_of(h))
+            self.assertIn(f"https://{PIXEL_HOST[code]}.a8.net/0.gif?a8mat=4BGJFS+GCTW8I+44M0+{code}", h, eid)      # the pixel host of the real material (A8 console), not a guess
+            self.assertIn("動画の講義", text_of(h), eid)                                                   # the advertiser wants a description of the course near the link
         for eid in ("kaigo", "nurse", "toeic", "eiken", "fp"):
             self.assertNotIn("a8mat=4BGJFS+GCTW8I", self.pages[f"exams/{eid}/index.html"], eid)
         self.assertEqual(AFF.problems('<p>広告(PR)<a href="https://px.a8.net/svt/ejp?a8mat=4BGJFS+GCTW8I+44M0+614CY">https://px.a8.net/x</a></p>') != [], True)   # negative case: a bare address as the link text is caught
