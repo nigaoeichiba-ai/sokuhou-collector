@@ -175,6 +175,27 @@ SPECIALS = [
         ],
     },
     {
+        "slug": "nenmatsu-nenshi", "name": "年末年始(大掃除・大晦日・お正月)", "title": "年末年始のイラスト(大掃除・大晦日・冬至・お正月) 無料・商用OK",
+        "description": "大掃除、年越し、冬至、おせち、七草まで。年末年始のお知らせ、おたより、掲示に使えるイラストと飾り枠を、場面ごとにそろえました。無料・商用OK・登録不要の透明PNG。",
+        "season": {"from": "11-20", "to": "01-15"},
+        "guides": ["nenmatsu-junbi-calendar", "nenmatsu-kyugyo-oshirase", "toji-kabocha-yuzuyu", "nanakusa-gayu-shogatsu-gyoji"],
+        "match_series": ["nenmatsu-wa", "nenmatsu-todo-pictogram", "winter-prep-year-end-flat", "year-end-office-faceless", "frames-year-end-flat", "omisoka-toshikoshi-flat",
+                         "newyear-eve-cool-sumi", "touji-yuzu-kawaii", "osechi-wa", "newyear-objects-flat", "newyear-objects-wa", "nanakusa-wa"],
+        "intro": [
+            "12月の大掃除から、大晦日、お正月、1月7日の七草までに使える素材を集めました。年末年始休業のお知らせ、給食だよりや園だより、店頭の掲示、会社の案内に使えます。",
+            "日程の確認は読みものにまとめています。冬至は2026年12月22日、七草がゆは1月7日です。休業案内の書き方や大掃除の段取りも、あわせて読めます。",
+        ],
+        "steps": [
+            ("場面を選ぶ", "大掃除、年越し、冬至、おせち、七草などの素材と、年末用の飾り枠があります。"),
+            ("PNG(透明)をダウンロード", "登録やログインは不要です。"),
+            ("お知らせや掲示に配置する", "休業日や日付は、文面に自分で書き入れます。"),
+        ],
+        "faq": [
+            ("年末年始休業のお知らせに使えますか?", "はい。無料・商用OK・クレジット表示不要です。文面の作り方は、読みものの「年末年始休業のお知らせの作り方」にあります。"),
+            ("年賀状に使える素材はどこにありますか?", "年賀状は、別の特集「2027年 年賀状(未年)」にまとめています。"),
+        ],
+    },
+    {
         "slug": "business", "name": "仕事・ビジネス", "title": "仕事・ビジネスのイラスト(会議・テレワーク・オフィス) 無料・商用OK",
         "description": "会議、テレワーク、オフィス、年末の仕事。プレゼン資料や社内文書、提案書に使える、顔なし・フラット・手書きなど、いろいろなタッチの人物イラスト。無料・商用OK。",
         "season": None,
