@@ -196,7 +196,7 @@ class TestNengajoSimPage(unittest.TestCase):
             self.assertIn(name, block)
         # no link to a company's price page (owner 2026-11-15, D26): the only link out of the block is the ad
         self.assertEqual(re.findall(r'<a [^>]*href="https?://([^/"]+)', block), ["px.a8.net"])
-        self.assertIn("2026年11月16日", block)
+        self.assertIn("2026年11月17日", block)
         self.assertNotRegex(block, r"<ol[^>]*>\s*</ol>")     # sitecheck refuses an empty list
 
 
