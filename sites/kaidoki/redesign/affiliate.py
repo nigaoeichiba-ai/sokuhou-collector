@@ -19,7 +19,7 @@ CFG = json.loads((Path(__file__).resolve().parents[1] / "config.json").read_text
 SITE_NAME = json.loads((Path(__file__).resolve().parent / "site.json").read_text(encoding="utf-8"))["name"]       # the redesign's name (config.json still has the old one)
 REL = "nofollow sponsored noopener"
 VC_SID = "3787704"
-VC_PID = {"yahoo": "892746613", "nta": "892749530", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204", "orbis": "892748240", "daimaru": "892748241", "belluna": "892748242", "ablenet": "892748243"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
+VC_PID = {"yahoo": "892746613", "nta": "892749530", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204", "orbis": "892748240", "daimaru": "892748241", "belluna": "892748242", "ablenet": "892748243", "expedia": "892749934"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
 A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+1F7FFM+CO4+6AZAQ", "www16"), "xbiz": ("4BEHX9+1GEAN6+CO4+3SZMKY", "www14"),
           # approved 2026-11-13, link codes read from the A8 tool (media 007 = this calendar).  Not yet in ASP: the calendar has no dated sale of these shops to attach them to
           # (a shop is listed only when a sale is confirmed; Alpen's Black Friday 2026 days were not published when read).  To switch on: add the shop to schedule.ENT with a confirmed entry and to ASP below.
@@ -52,9 +52,10 @@ STORES = {
     "playstation": [("amazon_s", "PlayStation")],
 }
 # The shops of an ASP programme that is already ours (the programme's own landing page).
-ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", ""), "stardomain": ("a8", "stardomain", ""), "nta": ("vc", "nta", "https://www.nta.co.jp/cpn/campaign/black-friday/")}      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
+ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", ""), "stardomain": ("a8", "stardomain", ""), "nta": ("vc", "nta", "https://www.nta.co.jp/cpn/campaign/black-friday/"),
+       "expedia": ("vctext", "expedia", "")}      # expedia: a VC free-text ad (material 2927839, its landing page is the Black Friday page), code read from the VC tool 2026-11-17      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
-ASP_NAME = {"nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
+ASP_NAME = {"expedia": "エクスペディア", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
 MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).
@@ -79,7 +80,6 @@ NO_LINK = {
     "gu": "3つのASPの調査表(2026-11-12)に載っていない。案件の有無を調べて、あれば申請する(未確認)",
     "yodobashi": "A8.netに物販の案件がない(2026-11-12の調査表)",
     "bic": "A8.netに物販の案件がない(2026-11-12の調査表)",
-    "expedia": "バリューコマース(2040179)は即時提携のプログラムで、このサイト(ID 3787704)では2026-11-17の画面で「広告素材を選ぶ」の前の状態。提携の操作のあと、リンクコードを取って貼る",
     "nojima": "A8.netに物販の案件がない(2026-11-12の調査表)。ノジマオンラインはセール対象外",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
 }
@@ -138,6 +138,8 @@ def links_for(it: dict) -> list[dict]:
         name = ASP_NAME[key]
         if kind == "vc":
             return [_link("vc", vc_href(VC_PID[key], url), f"{name}のページを見る", key)]
+        if kind == "vctext":
+            return [_link("vc", vc_text_href(VC_PID[key]), f"{name}のページを見る", key)]
         return [_link("a8", a8_href(key), f"{name}のサイトを見る", key)]
     out = []
     for kind, target in STORES.get(mall, []):

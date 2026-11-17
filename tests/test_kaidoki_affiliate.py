@@ -86,7 +86,10 @@ class CoverageTest(unittest.TestCase):
                 elif l["kind"] == "amazon":
                     self.assertRegex(l["href"], r"^https://www\.amazon\.co\.jp/(?:[a-z/]+\?tag=|s\?k=[^&]+&tag=)" + cfg["amazon_tracking_id"] + "$")
                 elif l["kind"] == "vc":
-                    self.assertRegex(l["href"], r"^//ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3787704&pid=\d+&vc_url=https%3A%2F%2F")
+                    if AFF.ASP.get(it["mall"], ("",))[0] == "vctext":      # a VC text ad: its own landing page, no vc_url (the form the tool gave)
+                        self.assertRegex(l["href"], r"^//ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3787704&pid=\d+$")
+                    else:
+                        self.assertRegex(l["href"], r"^//ck\.jp\.ap\.valuecommerce\.com/servlet/referral\?sid=3787704&pid=\d+&vc_url=https%3A%2F%2F")
                     self.assertIn(AFF.VC_PID[l["key"]], l["href"])
                 elif l["kind"] == "a8":
                     self.assertRegex(l["href"], r"^https://px\.a8\.net/svt/ejp\?a8mat=[0-9A-Z+]+$")
