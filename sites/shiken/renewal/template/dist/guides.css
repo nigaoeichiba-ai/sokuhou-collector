@@ -250,3 +250,4 @@
  .enhanced-guides .guide-other{margin-top:28px;padding-top:19px}.enhanced-guides .guide-other h2{font-size:22px}.enhanced-guides #guide-links{grid-template-columns:1fr;gap:8px}.enhanced-guides #guide-links a{padding:14px 30px 14px 15px}.enhanced-guides #guide-links a span{font-size:16px}.enhanced-guides #guide-links a small{font-size:13px;margin-top:2px}.enhanced-guides #guide-links a b{top:21px}
 }
 @media(prefers-reduced-motion:reduce){.enhanced-guides *{scroll-behavior:auto}}
+.g-all-exams{margin-top:22px;border:1px solid #d9e3eb;border-radius:9px;background:#f8fbfd}.g-all-exams summary{padding:13px 17px;font-weight:700;cursor:pointer;color:#3f617b}.g-all-exams ul{list-style:none;margin:0;padding:4px 17px 16px;columns:2;column-gap:28px}.g-all-exams li{break-inside:avoid;padding:5px 0;font-size:14px;line-height:1.7;overflow-wrap:anywhere}@media(max-width:700px){.g-all-exams ul{columns:1}}

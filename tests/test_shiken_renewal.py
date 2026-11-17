@@ -297,6 +297,14 @@ class Renewal(unittest.TestCase):
         self.assertEqual(source_problems('<section class="ed-apply"><a href="https://mp.toeic.or.jp/home/apply?testType=T" target="_blank" rel="noopener nofollow">申込</a></section>', {"https://mp.toeic.or.jp/home/apply?testType=T"}), [])
         self.assertEqual(source_problems('<a href="https://hb.afl.rakuten.co.jp/x" rel="nofollow sponsored noopener">広告</a>'), [])
 
+    def test_the_guides_link_every_exam_page_in_the_static_html(self):
+        # the parent of the exam pages is the guide: a crawler (and the linkage check) reads the HTML before any script runs, so the links must be in it
+        def missing(html: str) -> list[str]:
+            return [e["id"] for e in REGISTRY["exams"] if f'href="/exams/{e["id"]}/"' not in html]
+        for g in ("decided", "discover"):
+            self.assertEqual(missing(self.pages[f"guides/{g}/index.html"]), [], g)
+        self.assertTrue(missing("<main><div id=\"guide-exams\"></div></main>"))      # negative case: a guide whose list is only drawn by a script is caught
+
     # --- affiliate links ------------------------------------------------------------------------------------------------------------------
     def test_exam_pages_carry_the_pr_section_with_both_malls(self):
         sys_path = str(TEMPLATE / "dist")
