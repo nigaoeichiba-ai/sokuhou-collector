@@ -1,0 +1,17 @@
+{
+ "date": "2026-11-17",
+ "words": 0,
+ "rss": "8198 headlines from 23 feeds",
+ "searches": 4,
+ "fetches": 9,
+ "candidates": 2,
+ "cards": 2,
+ "rejected": 3,
+ "rejected_reasons": "bad kind/group (fixed); second-source quote lacked date (fixed); overwrite by re-run made Hanshin duplicate (re-output to 17b)",
+ "failed_words": 0,
+ "injections": 0,
+ "results_written": 0,
+ "cards_detail": "Hanshin official movie 12/18 (press: fashion-press + pia), musical Yomei 10nen 2027-06 month (press: theatergirl + zaikei)",
+ "not_done": "CARRY OVER FIRST NEXT RUN: results (15+ days waiting; top: sports e.g. 11/13 soccer Olympic qualifier, 11/11 Best Hit Kayosai), ideas file 2026-11-17 + Codex, more leads (CDTV 11/30, KEY TO LIT event, F1 Academy 2027 calendar, Lotte movie already seeded)",
+ "note": "short run; target word count not reached"
+}
