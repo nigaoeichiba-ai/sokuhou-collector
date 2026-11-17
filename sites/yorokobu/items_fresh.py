@@ -45,7 +45,7 @@ def age_hours(data: dict, now: datetime) -> float:
 
 def missing(c: dict, data: dict) -> tuple[list[str], list[str], list[str]]:
     """(item codes of the daily picks that the file does not have, page keys that it does not have, recipient slugs whose like lines it does not have)."""
-    codes = [x for x in dp.rakuten_codes(c.get("daily") or []) if x not in (data.get("daily") or {})]
+    codes = list(dict.fromkeys(x for x in dp.rakuten_codes(c.get("daily") or []) if x not in (data.get("daily") or {})))   # a code reused on two days is looked up once
     keys = [ct.pair_key(p) for p in ct.pages(c) if ct.pair_key(p) not in (data.get("pairs") or {})]
     likes = [r["slug"] for r in c.get("recipients") or [] if r.get("like_rows") and r["slug"] not in (data.get("likes") or {})]
     return codes, keys, likes
