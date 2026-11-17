@@ -87,7 +87,8 @@ class Renewal(unittest.TestCase):
         for f in self.out.rglob("*"):
             if f.suffix in (".js", ".css", ".xml", ".txt", ".json", ".ics"):
                 self.assertNotIn(OLD_NAME, f.read_text(encoding="utf-8"), f.name)
-        self.assertIn(f"| {NEW_NAME}</title>", self.page("/nengajo/"))
+        self.assertIn("| 暮らしの準備</title>", self.page("/nengajo/"))          # the short form at the end of <title> (SEO audit 2026-11-17: the long name pushed titles past 40 characters)
+        self.assertNotIn(f"| {NEW_NAME}</title>", self.page("/nengajo/"))
         self.assertIn(NEW_NAME, self.page("/about/"))
         self.assertIn(NEW_NAME, self.page("/privacy/"))
         self.assertIn(f"&copy; {NEW_NAME}", self.page("/"))

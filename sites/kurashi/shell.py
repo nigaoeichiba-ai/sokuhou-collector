@@ -245,8 +245,7 @@ def crumbs(items: list[tuple[str, str | None]]) -> str:
 
 
 def css_links(ver: str) -> str:
-    return "".join(f'<link rel="stylesheet" href="/assets/t/{n}.css?v={ver}">' for n in ("styles", "illustrated", "readability", "pages", "hierarchy")) + \
-           f'<link rel="stylesheet" href="/assets/kurashi.css?v={ver}">'
+    return f'<link rel="stylesheet" href="/assets/t/all.css?v={ver}">'
 
 
 def rewrap(old: str, main: str, *, path: str, ver: str, body_class: str, modules: str = "pages", noindex: bool = False, foot_note: str = "", with_tools: str = "",

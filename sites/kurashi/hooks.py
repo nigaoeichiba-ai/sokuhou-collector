@@ -251,6 +251,13 @@ def post(pages, content, cfg, spec, site_dir):
     for name in ("app", "calendar", "library", "pages", "illustrations"):
         pages[f"assets/t/{name}.js"] = pages[f"assets/t/{name}.js"].replace("__V__", ver)
     pages["assets/t/data.js"] = data
+    # one style sheet instead of six (fewer requests before the first paint): the same files in the same order; every url() in them is absolute
+    css = [(site_dir / "assets" / "t" / f"{n}.css").read_text(encoding="utf-8") for n in ("styles", "illustrated", "readability", "pages", "hierarchy")]
+    pages["assets/t/all.css"] = "\n".join(css) + "\n" + (site_dir / "assets" / "kurashi.css").read_text(encoding="utf-8")
+    # the name at the end of <title> is long: the short form keeps the search term at the front within the width of a search result
+    for rel, h in list(pages.items()):
+        if isinstance(h, str) and rel.endswith(".html"):
+            pages[rel] = re.sub(r"(<title>[^<]*?) \| 暮らしの準備と手続き</title>", r"\1 | 暮らしの準備</title>", h, count=1)
     pages["assets/tools.js"] = tools
     icon32 = '<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">'
     for rel, h in list(pages.items()):         # the 16px and 48px icons beside the 32px one the shared head already has
