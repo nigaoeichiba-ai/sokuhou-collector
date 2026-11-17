@@ -330,6 +330,16 @@ class Renewal(unittest.TestCase):
         self.assertIn("px.a8.net/svt/ejp?a8mat=4BGJFS+FXCMIA+373C+7B7B6", fp)
         self.assertIn("a8.net/0.gif?a8mat=4BGJFS+FXCMIA+373C+7B7B6", fp)
         self.assertNotIn("px.a8.net", self.pages["exams/nurse/index.html"])
+        # Agaroot Academy (A8, approved 2026-11-17): the course link of the material that fits each exam; none where the partner has no course
+        for eid, code in (("gyosei", "614CY"), ("takken", "61Z82"), ("sharoshi", "60H7M"), ("shindanshi", "5YJRM"), ("komuin-sogo", "5YJRM"), ("komuin-ippan", "5YJRM")):
+            h = self.pages[f"exams/{eid}/index.html"]
+            tag = re.search(r'<a href="https://px\.a8\.net/svt/ejp\?a8mat=4BGJFS\+GCTW8I\+44M0\+%s"([^>]*)>' % code, h)
+            self.assertTrue(tag, eid)
+            self.assertIn('rel="nofollow sponsored noopener"', tag.group(1))
+            self.assertIn("PR", text_of(h))
+        for eid in ("kaigo", "nurse", "toeic", "eiken", "fp"):
+            self.assertNotIn("a8mat=4BGJFS+GCTW8I", self.pages[f"exams/{eid}/index.html"], eid)
+        self.assertEqual(AFF.problems('<p>広告(PR)<a href="https://px.a8.net/svt/ejp?a8mat=4BGJFS+GCTW8I+44M0+614CY">https://px.a8.net/x</a></p>') != [], True)   # negative case: a bare address as the link text is caught
 
     def test_the_articles_that_fit_have_their_pr_section(self):
         for slug in ("boki", "boki-net", "eiken", "fp", "komuin", "koko", "minkan", "takken-junbi", "goukaku-ritsu", "kokkoritsu", "zenki-koki", "nyushi"):

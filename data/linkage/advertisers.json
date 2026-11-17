@@ -315,6 +315,31 @@
    "sites": [
     "kaidoki"
    ]
+  },
+  {
+   "id": "agaroot",
+   "names": [
+    "アガルート",
+    "アガルートアカデミー"
+   ],
+   "sites": [
+    "shiken"
+   ],
+   "href_has": [
+    "a8mat=4BGJFS+GCTW8I+44M0"
+   ]
+  },
+  {
+   "id": "shikaku-square",
+   "names": [
+    "資格スクエア"
+   ],
+   "sites": [
+    "shiken"
+   ],
+   "href_has": [
+    "a8mat=4BGJFS+FXCMIA"
+   ]
   }
  ]
 }
