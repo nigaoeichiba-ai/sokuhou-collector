@@ -352,6 +352,64 @@ class ScaffoldTest(unittest.TestCase):
             if name != "atomou":
                 self.assertIn(site["domain"], keys, f"{name}: no IndexNow key for {site['domain']}: python -m sokuhou.indexnow add-key {site['domain']}")
 
+    # ---- the share image (kurashi's home had no og:image, SEO audit 2026-11-17) ----
+    def test_every_indexable_page_has_exactly_one_share_image(self):
+        import re as _re
+        for rel, html in self.pages.items():
+            if rel.endswith("index.html"):
+                self.assertEqual(len(_re.findall(r'property="og:image" content', html)), 1, rel)
+        home = self.pages["index.html"]
+        self.assertIn('<meta property="og:image" content="https://dummy.example/assets/og.jpg">', home)
+        self.assertIn('<meta property="og:image:width" content="1200">', home)
+        self.assertIn('summary_large_image', self.pages["about/index.html"])      # the legal pages carry it too
+        self.assertIn("assets/og.jpg", self.pages)
+
+    def test_share_image_must_exist_and_be_1200x630(self):
+        d = self.edit("ogmissing", None)
+        (d / "assets" / "og.jpg").unlink()
+        with self.assertRaises(sitekit.BuildError) as cm:
+            self.rebuild(d)
+        self.assertIn("not in the site's assets", str(cm.exception))
+        d2 = self.edit("ogsize", None)
+        from PIL import Image
+        Image.new("RGB", (600, 600), (1, 2, 3)).save(d2 / "assets" / "og.jpg")
+        with self.assertRaises(sitekit.BuildError) as cm:
+            self.rebuild(d2)
+        self.assertIn("1200x630", str(cm.exception))
+        d3 = self.edit("ogpath", None)
+        self.mutate(d3, "guide", lambda p: p.update(og_image="https://x.example/a.jpg"))
+        with self.assertRaises(sitekit.BuildError):
+            self.rebuild(d3)
+
+    def test_page_og_image_overrides_and_a_site_without_one_has_none(self):
+        d = self.edit("ogpage", None)
+        shutil.copy(d / "assets" / "og.jpg", d / "assets" / "og2.jpg")
+        self.mutate(d, "guide", lambda p: p.update(og_image="/assets/og2.jpg"))
+        pages, _ = self.rebuild(d)
+        self.assertIn("/assets/og2.jpg", pages["guide/index.html"])
+        self.assertNotIn("/assets/og2.jpg", pages["list/index.html"])
+        d2 = self.edit("ognone", None)
+        spec = json.loads((d2 / "site.json").read_text(encoding="utf-8"))
+        spec.pop("og_image")
+        (d2 / "site.json").write_text(json.dumps(spec, ensure_ascii=False), encoding="utf-8")
+        pages, _ = self.rebuild(d2)
+        self.assertNotIn('property="og:image"', pages["index.html"])
+
+    def test_make_og_cuts_any_image_to_the_share_size(self):
+        from PIL import Image
+        src, out = self.tmp / "wide.png", self.tmp / "o" / "og.jpg"
+        Image.new("RGB", (2384, 1008), (200, 100, 50)).save(src)
+        self.assertEqual(newsite.make_og(src, out), (1200, 630))
+        self.assertEqual(Image.open(out).size, (1200, 630))
+        Image.new("RGB", (500, 900), (10, 100, 50)).save(src)
+        newsite.make_og(src, out)
+        self.assertEqual(Image.open(out).size, (1200, 630))
+
+    def test_init_gives_a_new_site_a_share_image(self):
+        d = newsite.init_site("ogsite", "og.example", "共有画像", "共", self.tmp / "ogs", "2026-11-17")
+        self.assertEqual(json.loads((d / "site.json").read_text(encoding="utf-8"))["og_image"], "/assets/og.jpg")
+        self.assertTrue((d / "assets" / "og.jpg").is_file())
+
     # ---- negative tests: each check finds the failure it was made for ----
     def test_thin_page_becomes_noindex_and_leaves_the_sitemap(self):
         """minna 2026-10-20: a list that is only a grid of pictures is no page for a search to send anyone to."""

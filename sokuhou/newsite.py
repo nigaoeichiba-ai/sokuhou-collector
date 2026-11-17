@@ -294,6 +294,72 @@ def page_body(page: dict, spec: dict, by_path: dict, cfg: dict) -> str:
     return "\n".join(x for x in out if x)
 
 
+OG_SIZE = (1200, 630)       # what sitekit.layout declares in og:image:width / height
+
+
+def og_for(page: dict, spec: dict, site_dir: Path) -> str | None:
+    """The share image of a page: its own `og_image`, else the site's (site.json "og_image", the top image cut to 1200x630).  The file must be in the site's assets and be exactly
+    1200x630, because the meta tags say so; a missing or wrong file fails the build (kurashi's home had no og:image at all, SEO audit 2026-11-17)."""
+    path = page.get("og_image") or spec.get("og_image")
+    if not path:
+        return None
+    if not path.startswith("/assets/"):
+        raise BuildError(f"{page['_file']}: og_image must be a file under /assets/, got {path!r}")
+    f = site_dir / "assets" / path[len("/assets/"):]
+    if not f.is_file():
+        raise BuildError(f"{page['_file']}: og_image {path} is not in the site's assets")
+    try:
+        from PIL import Image
+        with Image.open(f) as im:
+            if im.size != OG_SIZE:
+                raise BuildError(f"{path} is {im.size[0]}x{im.size[1]}; the share image must be {OG_SIZE[0]}x{OG_SIZE[1]} (python -m sokuhou.newsite og <site> --from <image>)")
+    except ImportError:
+        pass
+    return path
+
+
+def _with_og(html: str, cfg: dict, og: str | None) -> str:
+    """The about / privacy / contact pages come from sitekit.legal_pages, which has no share image of its own: give them the site's, in the same tags layout() writes."""
+    if not og or 'property="og:image"' in html:
+        return html
+    url = esc(cfg["site_url"].rstrip("/") + og)
+    tags = (f'<meta property="og:image" content="{url}">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'
+            f'<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:image" content="{url}">\n')
+    return html.replace('<meta name="twitter:card" content="summary">\n', tags, 1)
+
+
+def make_og(src: Path, out: Path, quality: int = 85) -> tuple[int, int]:
+    """The top image cut to the share size: scaled to cover 1200x630 and cropped about the centre (a little above it, where faces and titles usually are)."""
+    from PIL import Image
+    with Image.open(src) as im:
+        im = im.convert("RGB")
+        w, h = im.size
+        k = max(OG_SIZE[0] / w, OG_SIZE[1] / h)
+        im = im.resize((max(OG_SIZE[0], round(w * k)), max(OG_SIZE[1], round(h * k))), Image.LANCZOS)
+        left = (im.width - OG_SIZE[0]) // 2
+        top = round((im.height - OG_SIZE[1]) * 0.4)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        im.crop((left, top, left + OG_SIZE[0], top + OG_SIZE[1])).save(out, "JPEG", quality=quality, optimize=True)
+    return OG_SIZE
+
+
+def _og_default(assets: Path, site_name: str) -> None:
+    """A starting share image for a new site (brand colour and the site name); the site replaces it with its top image (`og`)."""
+    from PIL import Image, ImageDraw, ImageFont
+    im = Image.new("RGB", OG_SIZE, (23, 96, 107))
+    d = ImageDraw.Draw(im)
+    font = None
+    for f in (r"C:\Windows\Fonts\YuGothB.ttc", r"C:\Windows\Fonts\meiryob.ttc", "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc"):
+        try:
+            font = ImageFont.truetype(f, 84)
+            break
+        except OSError:
+            continue
+    if font is not None:
+        d.text((OG_SIZE[0] / 2, OG_SIZE[1] / 2), site_name, fill="white", font=font, anchor="mm")
+    im.save(assets / "og.jpg", "JPEG", quality=85, optimize=True)
+
+
 def ld_script(d: dict) -> str:
     return '<script type="application/ld+json">' + json.dumps(d, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
 
@@ -359,7 +425,7 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
         body = page_body(p, spec, by_path, cfg)
         rel = "index.html" if p["path"] == "/" else p["path"].strip("/") + "/index.html"
         pages[rel] = sitekit.layout(site, cfg, preview, path=p["path"], title=(p["title"] if cfg.get("title_suffix_once") and cfg["site_name"] in p["title"] else f"{p['title']} | {cfg['site_name']}"), description=p["description"], body=body,
-                                    head_extra=page_ld(p, spec, cfg) + measure_tag)
+                                    head_extra=page_ld(p, spec, cfg) + measure_tag, og_image=og_for(p, spec, site_dir))
         kinds[rel] = p["kind"]
         rel_of[p["path"]] = rel
         metas.append({"path": p["path"], "kind": p["kind"], "primary_kw": p.get("primary_kw"), "secondary_kw": p.get("secondary_kw"), "intent": p.get("intent"),
@@ -367,7 +433,8 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
         if p.get("dataset"):
             pages[p["dataset"]["csv"]] = csv_text(p["sections"][p["dataset"].get("table_section", 0)]["table"])
 
-    legal = sitekit.legal_pages(site, cfg, preview, purpose=esc(spec["purpose"]), sources_html=_sources_html(spec), update_text=esc(spec.get("update_text", "")),
+    site_og = og_for({"_file": "site.json"}, spec, site_dir) if not preview else None
+    legal = sitekit.legal_pages(site, cfg, preview, finish=lambda html: _with_og(html, cfg, site_og), purpose=esc(spec["purpose"]), sources_html=_sources_html(spec), update_text=esc(spec.get("update_text", "")),
                                 disclaimer_html=_disclaimer_html(spec), contact_notice="お返事には数日かかることがあります。内容によっては、お返事できないこともあります。")
     pages.update(legal)
     pages.update(sitekit.asset_pages(site["assets"]))
@@ -509,10 +576,11 @@ def init_site(name: str, domain: str, site_name: str, glyph: str, sites_dir: Pat
     (d / "content").mkdir()
     shutil.copy(ASSETS_SRC / "style.css", d / "assets" / "style.css")
     _icons(d / "assets", glyph)
+    _og_default(d / "assets", site_name)
     cfg = {"site_url": f"https://{domain}", "site_name": site_name, "operator_name": "株式会社MACS", "contact_email": None, "contact_own": True, "contact_kinds": DEFAULT_KINDS, "measure": True}
     (d / "config.json").write_text(json.dumps(cfg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     spec = {
-        "glyph": glyph, "updated": today, "home_label": "トップ",
+        "glyph": glyph, "updated": today, "home_label": "トップ", "og_image": "/assets/og.jpg",
         "nav": [["数字の一覧", "/list/", "/list/"], ["解説", "/guide/", "/guide/"]],
         "footer_html": "出典: (例)各ページの末尾に、機関名・表の名前・基準日・取得日を書いています。",
         "purpose": "(例)公的な統計を、ページごとに一つの問いへ答える形に整えて載せること。",
@@ -640,6 +708,10 @@ def main(argv: list[str] | None = None) -> int:
     g = sub.add_parser("register", help="add an existing sites/<name> to data/sites.json (after the deploy gate knows the name)")
     g.add_argument("site_dir")
     g.add_argument("--min-pages", type=int, default=10)
+    o = sub.add_parser("og", help="cut a top image to the 1200x630 share image of a site (assets/og.jpg); then set \"og_image\": \"/assets/og.jpg\" in site.json")
+    o.add_argument("site_dir")
+    o.add_argument("--from", dest="src", required=True, help="the image, a path under the site's assets or a file")
+    o.add_argument("--out", default="og.jpg")
     b = sub.add_parser("build")
     b.add_argument("site_dir")
     b.add_argument("rest", nargs=argparse.REMAINDER)
@@ -666,6 +738,12 @@ def main(argv: list[str] | None = None) -> int:
                 print("not registered. The line for data/sites.json:  " + json.dumps({"name": a.name, "domain": a.domain, "marker": a.site_name, "min_pages": a.min_pages, "needs_var": True}, ensure_ascii=False))
             return 0
         site_dir = Path(a.site_dir)
+        if a.cmd == "og":
+            src = Path(a.src) if Path(a.src).is_file() else site_dir / "assets" / a.src.removeprefix("/assets/")
+            out = site_dir / "assets" / a.out
+            make_og(src, out)
+            print(f"wrote {out} (1200x630). Set " + chr(34) + "og_image" + chr(34) + ": " + chr(34) + "/assets/" + a.out + chr(34) + " in site.json.")
+            return 0
         if a.cmd == "register":
             cfg = json.loads((site_dir / "config.json").read_text(encoding="utf-8"))
             register(site_dir.name, cfg["site_url"].split("//")[-1], cfg["site_name"], ROOT / "data" / "sites.json", a.min_pages, site_dir=site_dir)
