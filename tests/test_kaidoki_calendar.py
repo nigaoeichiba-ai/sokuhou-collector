@@ -276,5 +276,20 @@ class HomeTest(unittest.TestCase):
         self.assertTrue(home_problems(h.replace(f'data-id="{sid}"', f'data-id="{sid}" hidden', 1), self.TODAY))      # the two weeks differ from the data
 
 
+class CancelledSaleTest(unittest.TestCase):
+    """DHC's Black Friday coupon (11/21-11/26) was cancelled by the advertiser (ValueCommerce notice 2026-11-17 11:06): nothing may present it as a sale."""
+
+    def test_the_cancelled_dhc_black_friday_is_not_in_the_data_or_on_the_pages(self):
+        self.assertNotIn("c-dhc-bf", {it["id"] for it in S.all_items()})
+        pages = build({"KAIDOKI_REDESIGN": "1"})
+        for path, html in pages.items():
+            if isinstance(html, str) and path.endswith(".html"):
+                self.assertNotIn("DHC ブラックフライデー", html, path)
+
+    def test_negative_the_check_would_see_the_entry_if_it_came_back(self):
+        items = S.all_items() + [dict(S.all_items()[0], id="c-dhc-bf")]
+        self.assertIn("c-dhc-bf", {it["id"] for it in items})
+
+
 if __name__ == "__main__":
     unittest.main()
