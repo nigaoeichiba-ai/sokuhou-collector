@@ -410,6 +410,37 @@ class ScaffoldTest(unittest.TestCase):
         self.assertEqual(json.loads((d / "site.json").read_text(encoding="utf-8"))["og_image"], "/assets/og.jpg")
         self.assertTrue((d / "assets" / "og.jpg").is_file())
 
+    # ---- titles and descriptions of the fixed pages (SEO audit 2026-11-17: 13-25 characters) ----
+    def head_of(self, html: str) -> tuple[str, str]:
+        import re as _re, html as _h
+        return (_h.unescape(_re.search(r"<title>(.*?)</title>", html).group(1)), _h.unescape(_re.search(r'<meta name="description" content="([^"]*)"', html).group(1)))
+
+    def test_fixed_pages_say_what_they_hold(self):
+        for rel, word in (("about/index.html", "運営者情報と編集方針"), ("privacy/index.html", "プライバシーポリシー"), ("contact/index.html", "お問い合わせ")):
+            title, desc = self.head_of(self.pages[rel])
+            self.assertIn(word, title, rel)
+            self.assertTrue(80 <= len(desc) <= 120, f"{rel}: {len(desc)} characters: {desc}")
+        self.assertIn("ダミー統計", self.head_of(self.pages["privacy/index.html"])[1])
+        self.assertTrue(self.head_of(self.pages["about/index.html"])[0].startswith("運営者情報と編集方針 | "))
+
+    def test_descriptions_fit_for_any_purpose_text(self):
+        """Short, long (trend's purpose is 358 characters), empty and odd purposes all end up in the 80-120 range."""
+        cfg = {"site_name": "試験サイト"}
+        for purpose in ("", "短い。", "暮らしの手続きを整理して載せること。" + "あ" * 300, "あ" * 60 + "。続き。", "二つの文です。もう一つの文です。"):
+            for name in ("試験", "とても長い名前のサイトのためのテスト用のサイト名"):
+                m = newsite.legal_meta({"purpose": purpose}, {"site_name": name})
+                for k, (title, desc) in m.items():
+                    self.assertTrue(80 <= len(desc) <= 120, f"{k} {name!r} {purpose[:8]!r}: {len(desc)}: {desc}")
+                    self.assertGreaterEqual(len(title), 10)
+
+    def test_a_site_that_passes_no_meta_keeps_its_short_pages(self):
+        """The sites that call legal_pages themselves (atomou, kuma, minna, yorokobu) are unchanged."""
+        site = {"nav": [], "glyph": "x", "source_html": "x", "assets": self.site / "assets"}
+        cfg = {"site_url": "https://x.example", "site_name": "旧サイト", "operator_name": "o", "contact_email": "a@b.example"}
+        pages = sitekit.legal_pages(site, cfg, False, purpose="p", sources_html="s", update_text="u", disclaimer_html="d", contact_notice="n")
+        self.assertEqual(self.head_of(pages["about/index.html"]), ("運営者情報 | 旧サイト", "旧サイトの運営者情報と免責事項です。"))
+        self.assertEqual(self.head_of(pages["contact/index.html"])[1], "旧サイトへのお問い合わせ先です。")
+
     # ---- negative tests: each check finds the failure it was made for ----
     def test_thin_page_becomes_noindex_and_leaves_the_sitemap(self):
         """minna 2026-10-20: a list that is only a grid of pictures is no page for a search to send anyone to."""

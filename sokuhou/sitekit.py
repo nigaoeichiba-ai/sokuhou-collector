@@ -280,8 +280,11 @@ def analytics_text(cfg: dict) -> str:
 
 
 def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_html: str, update_text: str,
-                disclaimer_html: str, contact_notice: str, input_note: str = "", finish=lambda s: s, sources_label: str = "ご利用にあたって") -> dict[str, str]:
-    """about / privacy / contact / 404, with the site-specific sentences passed in."""
+                disclaimer_html: str, contact_notice: str, input_note: str = "", finish=lambda s: s, sources_label: str = "ご利用にあたって",
+                meta: dict | None = None) -> dict[str, str]:
+    """about / privacy / contact / 404, with the site-specific sentences passed in.  `meta` ({"about": (title, description), "privacy": ..., "contact": ...}) replaces the short
+    default title and description of those pages (the new sites say what the page holds: SEO audit 2026-11-17); without it every site keeps its own as before."""
+    meta = meta or {}
     name = cfg["site_name"]
     op = esc(cfg["operator_name"] or "(未設定)")
 
@@ -322,9 +325,9 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
     extra = contact_files(cfg, page) if cfg.get("contact_own") else {}
     return {
         **extra,
-        "about/index.html": page("/about/", "運営者情報", f"{name}の運営者情報と免責事項です。", about),
-        "privacy/index.html": page("/privacy/", "プライバシーポリシー", f"{name}のプライバシーポリシーです。取得する情報、広告、Cookie の扱いについて説明します。", privacy),
-        "contact/index.html": page("/contact/", "お問い合わせ", f"{name}へのお問い合わせ先です。", contact),
+        "about/index.html": page("/about/", *meta.get("about", ("運営者情報", f"{name}の運営者情報と免責事項です。")), about),
+        "privacy/index.html": page("/privacy/", *meta.get("privacy", ("プライバシーポリシー", f"{name}のプライバシーポリシーです。取得する情報、広告、Cookie の扱いについて説明します。")), privacy),
+        "contact/index.html": page("/contact/", *meta.get("contact", ("お問い合わせ", f"{name}へのお問い合わせ先です。")), contact),
         "404.html": page("/404.html", "ページが見つかりません", "ページが見つかりません。", nf),
     }
 

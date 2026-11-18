@@ -318,6 +318,42 @@ def og_for(page: dict, spec: dict, site_dir: Path) -> str | None:
     return path
 
 
+DESC_MIN, DESC_MAX = seokit.DESC_RANGE
+
+
+def legal_meta(spec: dict, cfg: dict) -> dict:
+    """Titles and descriptions of the about / privacy / contact pages: they say what the page holds (80-120 characters, the SEO audit of 2026-11-17 found 13-25), with the site's own
+    purpose in them.  The purpose is used by its first sentence when that is short enough; a description is padded with one more true sentence, or shortened, to fit."""
+    name = cfg["site_name"]
+    first = (spec.get("purpose") or "").split("。")[0].strip()
+    topic = first if 8 <= len(first) <= 45 else ""
+
+    def fit(variants: list[list[str]], pad: list[str]) -> str:
+        """The first variant (richest first) whose text is 80-120 characters; failing that the last one, padded with true sentences while it is too short."""
+        for parts in variants:
+            text = "".join(parts)
+            if DESC_MIN <= len(text) <= DESC_MAX:
+                return text
+        text = "".join(variants[-1])
+        for extra in pad:
+            if len(text) >= DESC_MIN:
+                break
+            text += extra
+        return text
+
+    aim = f"{topic}を目的にしています。" if topic.endswith(("こと", "ため")) else (f"{topic}。" if topic else "")
+    head, how = f"{name}の運営者情報と編集方針です。", "数字の出し方、情報の扱い、誤りを見つけたときの訂正の方法、免責事項をまとめています。"
+    about = fit([[head, aim, how], [head, aim, "訂正の方法と免責事項も載せています。"], [head, aim, "お問い合わせの方法も載せています。"], [head, how]],
+                ["お問い合わせの方法も載せています。", "公開している内容の更新のしかたも説明しています。"])
+    priv_head = f"{name}のプライバシーポリシーです。"
+    priv = "お問い合わせで取得する情報、広告とアフィリエイトリンクの扱い、Cookie(クッキー)の考え方を説明しています。"
+    privacy = fit([[priv_head, priv, "第三者への提供についても書いています。"], [priv_head, priv]], ["第三者への提供についても書いています。", "ブラウザの設定で選べることも案内しています。"])
+    c_head = f"{name}へのお問い合わせ窓口です。"
+    c_mid = "数字や内容の誤りのご指摘、ご意見・ご要望を、フォームから送れます。"
+    contact = fit([[c_head, c_mid, "お返事には数日かかることがあります。"], [c_head, c_mid]], ["お返事には数日かかることがあります。", "内容によっては、お返事できないこともあります。"])
+    return {"about": ("運営者情報と編集方針", about), "privacy": ("プライバシーポリシーと広告・Cookieの扱い", privacy), "contact": ("お問い合わせ(誤りのご指摘・ご意見)", contact)}
+
+
 def _with_og(html: str, cfg: dict, og: str | None) -> str:
     """The about / privacy / contact pages come from sitekit.legal_pages, which has no share image of its own: give them the site's, in the same tags layout() writes."""
     if not og or 'property="og:image"' in html:
@@ -434,7 +470,7 @@ def build_pages(site_dir: Path, *, release: bool = False, allow_example: bool = 
             pages[p["dataset"]["csv"]] = csv_text(p["sections"][p["dataset"].get("table_section", 0)]["table"])
 
     site_og = og_for({"_file": "site.json"}, spec, site_dir) if not preview else None
-    legal = sitekit.legal_pages(site, cfg, preview, finish=lambda html: _with_og(html, cfg, site_og), purpose=esc(spec["purpose"]), sources_html=_sources_html(spec), update_text=esc(spec.get("update_text", "")),
+    legal = sitekit.legal_pages(site, cfg, preview, meta=legal_meta(spec, cfg), finish=lambda html: _with_og(html, cfg, site_og), purpose=esc(spec["purpose"]), sources_html=_sources_html(spec), update_text=esc(spec.get("update_text", "")),
                                 disclaimer_html=_disclaimer_html(spec), contact_notice="お返事には数日かかることがあります。内容によっては、お返事できないこともあります。")
     pages.update(legal)
     pages.update(sitekit.asset_pages(site["assets"]))

@@ -5,10 +5,24 @@ from pathlib import Path
 from sokuhou import sitekit
 
 CFG = {"site_url": "https://example.test", "site_name": "テスト", "adsense_pub_id": None}
-_ASSETS = tempfile.TemporaryDirectory()
-(Path(_ASSETS.name) / "style.css").write_text("body{}", encoding="utf-8")
-SITE = {"nav": [("トップ", "/", "/")], "glyph": "", "assets": Path(_ASSETS.name), "source_html": ""}
 LARGE = '<meta name="googlebot" content="max-image-preview:large">'
+SITE: dict = {}
+
+
+def setUpModule():
+    """The assets folder is made when this module's tests start, not when the module is imported (test discovery imports every module first, minutes before the
+    tests run; a temporary folder made then can be gone, or another test's cleanup can take it, by the time sitekit.layout reads it: 2026-11-18, four errors that
+    appeared only in a whole run after the shiken tests).  It is removed again when the module is done."""
+    global _ASSETS
+    _ASSETS = tempfile.TemporaryDirectory()
+    (Path(_ASSETS.name) / "style.css").write_text("body{}", encoding="utf-8")
+    SITE.clear()
+    SITE.update({"nav": [("トップ", "/", "/")], "glyph": "", "assets": Path(_ASSETS.name), "source_html": ""})
+
+
+def tearDownModule():
+    sitekit._VERSIONS.pop(str(SITE.get("assets")), None)
+    _ASSETS.cleanup()
 
 
 def page(preview=False, og_image="/og.png"):
