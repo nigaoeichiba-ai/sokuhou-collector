@@ -384,6 +384,15 @@ class Renewal(unittest.TestCase):
             self.assertIn("動画の講義", text_of(h), eid)                                                   # the advertiser wants a description of the course near the link
         for eid in ("kaigo", "nurse", "toeic", "eiken", "fp"):
             self.assertNotIn("a8mat=4BGJFS+GCTW8I", self.pages[f"exams/{eid}/index.html"], eid)
+        # the new course of 2026-11-18 (advertiser news): its name and the price as an example with the day, and none of the claims the advertiser's terms forbid
+        sh = text_of(self.pages["exams/sharoshi/index.html"])
+        for w in ("社労士試験 速習カリキュラム", "税込217,800円", "2026年11月18日"):
+            self.assertIn(w, sh)
+        for page, h in self.pages.items():
+            tx = text_of(h)
+            if "アガルート" in tx:
+                for bad in ("合格実績", "全額返金", "97%", "カバー率"):
+                    self.assertNotIn(bad, tx, f"{page}: {bad}")
         self.assertEqual(AFF.problems('<p>広告(PR)<a href="https://px.a8.net/svt/ejp?a8mat=4BGJFS+GCTW8I+44M0+614CY">https://px.a8.net/x</a></p>') != [], True)   # negative case: a bare address as the link text is caught
 
     def test_the_articles_that_fit_have_their_pr_section(self):

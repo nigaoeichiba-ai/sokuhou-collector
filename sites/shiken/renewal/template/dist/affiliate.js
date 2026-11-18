@@ -15,7 +15,7 @@ const AGAROOT={
  sogo:{label:'アガルートアカデミー | 難関資格試験の通信講座',code:'5YJRM',px:'www15',text:'アガルートアカデミーの講座一覧'},
  gyosei:{label:'アガルートアカデミー 行政書士試験の講座',code:'614CY',px:'www12',text:'アガルートアカデミーの行政書士試験の講座'},
  takken:{label:'アガルートアカデミー 宅建士試験の講座',code:'61Z82',px:'www16',text:'アガルートアカデミーの宅建士試験の講座'},
- sharoshi:{label:'アガルートアカデミー 社労士試験の講座',code:'60H7M',px:'www18',text:'アガルートアカデミーの社労士試験の講座'}
+ sharoshi:{label:'アガルートアカデミー 社労士試験の講座',code:'60H7M',px:'www18',text:'アガルートアカデミーの社労士試験の講座',news:'2027年（令和9年度）に受ける方向けの講座として、「社労士試験 速習カリキュラム」が出ています。料金は税込217,800円の例です（2026年11月18日時点）。'}
 };
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const rakutenUrl=word=>`https://hb.afl.rakuten.co.jp/hgc/${RAKUTEN_ID}/?pc=${encodeURIComponent('https://search.rakuten.co.jp/search/mall/'+encodeURIComponent(word)+'/')}`;
@@ -66,6 +66,6 @@ export function affiliateSection(group,idPrefix='pr'){
  const A=g.link==='fp'?A8_FP:A8_COURSE;
  const course=g.course?`<p>${g.name}の講座をオンラインで探している方は、資格スクエアの講座ページを見てみてください。講座の内容や料金は、申し込む前に運営会社のページで確かめておきましょう。</p><p><a href="${A.href}" ${REL}>${A.label}</a><img border="0" width="1" height="1" src="${A.pixel}" alt=""></p>`:'';
  const ag=g.agaroot?AGAROOT[g.agaroot]:null;
- const agaroot=ag?`<p>講座を比べたい方は、${ag.text}もあります。動画の講義とオリジナルのテキストで進める通信講座で、質問できるサービスも使えます。内容や料金は、申し込む前に運営会社のページで確かめておきましょう。</p><p><a href="https://px.a8.net/svt/ejp?a8mat=${A8_AGAROOT}${ag.code}" ${REL}>${ag.label}</a><img border="0" width="1" height="1" src="https://${ag.px}.a8.net/0.gif?a8mat=${A8_AGAROOT}${ag.code}" alt=""></p>`:'';
+ const agaroot=ag?`<p>講座を比べたい方は、${ag.text}もあります。動画の講義とオリジナルのテキストで進める通信講座で、質問できるサービスも使えます。${ag.news?ag.news:''}内容や料金は、申し込む前に運営会社のページで確かめておきましょう。</p><p><a href="https://px.a8.net/svt/ejp?a8mat=${A8_AGAROOT}${ag.code}" ${REL}>${ag.label}</a><img border="0" width="1" height="1" src="https://${ag.px}.a8.net/0.gif?a8mat=${A8_AGAROOT}${ag.code}" alt=""></p>`:'';
  return `<section class="ed-pr" aria-labelledby="${idPrefix}-title"><div class="ed-section-title"><div><span class="ed-kicker">PR・広告</span><h2 id="${idPrefix}-title">【PR】${esc(g.name)}の${g.course||ag?'勉強を始めるなら':'参考書・問題集を探すなら'}</h2></div></div><p class="small-note">この項目には、広告（PR）が含まれます。リンク先の販売ページで購入されると、当サイトに紹介料が入ることがあります。</p>${course}${agaroot}${g.course||ag?'<h3>参考書・問題集を探すなら</h3>':''}<p>楽天市場では、<a href="${rakutenUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p><p>Amazonでも、<a href="${amazonUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p></section>`;
 }
