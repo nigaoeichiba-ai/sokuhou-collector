@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" class="care-symbol" viewBox="0 0 72 72" fill="none" aria-hidden="true" focusable="false" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M36 34C32 30 21 23 21 16C21 8 30 7 36 14C42 7 51 8 51 16C51 23 40 30 36 34Z" stroke="#dfa91a" stroke-width="2.8"/>
+  <g stroke="#d39b13" stroke-width="2.8">
+    <path d="M30 64L22 60C16 57 12 53 9 48L4 38C2 34 6 32 8 35L17 47L24 52"/>
+    <path d="M17 47L12 41C10 38 13 35 16 38L27 47C31 50 33 55 33 60V64"/>
+    <g transform="translate(72 0) scale(-1 1)">
+      <path d="M30 64L22 60C16 57 12 53 9 48L4 38C2 34 6 32 8 35L17 47L24 52"/>
+      <path d="M17 47L12 41C10 38 13 35 16 38L27 47C31 50 33 55 33 60V64"/>
+    </g>
+  </g>
+</svg>

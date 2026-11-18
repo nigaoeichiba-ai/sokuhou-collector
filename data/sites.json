@@ -38,6 +38,7 @@
     {"name": "shiken", "textgate": "stop", "domain": "shiken-nittei.com", "marker": "資格・試験への道", "min_pages": 10, "needs_var": true},
     {"name": "kurashi", "domain": "kurashi-calendar.com", "marker": "暮らしの準備と手続き", "min_pages": 10, "needs_var": true},
     {"name": "trend", "linkage": "ratchet", "domain": "trend-sokuho.com", "marker": "今日の話題", "min_pages": 3, "needs_var": true},
+    {"name": "moneyinfo", "domain": "kurashi-no-money.com", "marker": "暮らしのマネー情報", "min_pages": 18, "needs_var": true},
     {"name": "kaidoki", "linkage": "ratchet", "domain": "sale-calendar.com", "marker": "SALEカレンダー", "min_pages": 10, "needs_var": true, "textgate": "shadow"}
   ]
 }

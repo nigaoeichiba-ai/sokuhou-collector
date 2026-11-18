@@ -1,0 +1,13 @@
+{
+  "name": "kurashi-no-money-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test jstests/*.test.mjs",
+    "build": "python build.py",
+    "preview": "node server.mjs"
+  },
+  "devDependencies": {
+    "happy-dom": "^21.0.4"
+  }
+}
