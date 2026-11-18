@@ -348,6 +348,19 @@ class Renewal(unittest.TestCase):
         dup = {"a": re.search(r"<h1>(.*?)</h1>", "<h1>X</h1>").group(1), "b": re.search(r"<h1>(.*?)</h1>", "<h1>X</h1>").group(1)}
         self.assertEqual(len(set(dup.values())), 1)
 
+    def test_the_fixed_pages_have_informative_titles_and_descriptions(self):
+        # SEO audit 2026-11-17: the fixed pages (about, privacy, contact) had one-word titles and descriptions under 60 characters
+        for rel in ("about/index.html", "privacy/index.html", "contact/index.html"):
+            h = self.pages[rel]
+            t = re.search(r"<title>(.*?)</title>", h, re.S).group(1).split("｜")[0]
+            d = re.search(r'<meta name="description" content="(.*?)"', h).group(1)
+            self.assertGreaterEqual(len(t), 10, rel)
+            self.assertGreaterEqual(len(d), 80, rel)
+            self.assertLessEqual(len(d), 120, rel)
+            self.assertIn("資格・試験への道", d, rel)
+        # negative case: the old one-line description is too short
+        self.assertLess(len("資格・試験への道へのお問い合わせ先です。日程の誤りのご指摘、ご意見・ご要望をお送りいただけます。"), 80)
+
     # --- affiliate links ------------------------------------------------------------------------------------------------------------------
     def test_exam_pages_carry_the_pr_section_with_both_malls(self):
         sys_path = str(TEMPLATE / "dist")
