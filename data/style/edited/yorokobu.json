@@ -1569,6 +1569,394 @@
   "unchanged": 68,
   "units": 90
  },
+ "gift/birthday-husband/index.html": {
+  "accepted": [
+   {
+    "from": "入浴剤やルームウェアは、夕食後に家で休む時間を大切にしてほしい気持ちを実用品として渡せます。",
+    "kind": "item",
+    "to": "入浴剤やルームウェアは夕食後に家で休んでほしいと伝えられる実用品です。",
+    "why": "抽象的な気持ちを具体化"
+   },
+   {
+    "from": "夫への誕生日、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "夫が仕事や休憩で使える品",
+    "why": "候補の用途を見出しに"
+   }
+  ],
+  "date": "2026-11-18",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 「喜ばれやすい理由」と「選び方」が3項目ずつの型になり、商品候補の説明とも内容が重複しています。",
+   "構成: 選ぶ前に必要な「気をつけたいこと」が商品一覧より後ろにあり、判断の順が逆です。",
+   "具体: Amazon欄に「妻」「新しい部屋」が混じり、夫の誕生日という場面とつながらない箇所があります。",
+   "見出し: 「どんなタイプ？」「こんな贈り方」のように、節の中身が分かりにくい見出しがあります。"
+  ],
+  "failed": "",
+  "hash": "d6f213093bda",
+  "needs_check": [
+   {
+    "question": "掲載する4点の内訳と「人気」と呼べる根拠を確認してください。",
+    "text": "夫への誕生日プレゼント、種類の違う人気の4点"
+   },
+   {
+    "question": "贈る相手が「妻」になっています。夫へのページ用の説明か確認してください。",
+    "text": "6インチの薄くて軽い電子書籍リーダーです。通勤中や寝る前に読書をする妻に向きます。"
+   },
+   {
+    "question": "「新しい部屋」が夫の誕生日という場面に合う説明か確認してください。",
+    "text": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋に置く1台として向いています。"
+   }
+  ],
+  "page": "gift/birthday-husband/index.html",
+  "rejected": [
+   {
+    "after": "夫への誕生日プレゼントは仕事や休憩で本人が使う品から選びます。財布や名入れペンは仕事中、タンブラーは通勤や在宅勤務中、入浴剤は子どもが寝た後に使えます。平日の過",
+    "problems": [
+     "numbers differ: ['一'] -> []",
+     "words added that the original does not have (information must not grow): ['プレゼント', '候補', '過']"
+    ],
+    "text": "夫の誕生日には家族全体で使うものではなく、本人の一日が少し楽になる品を中心に考えたいです。財布や名入れペンなら仕事中に、"
+   },
+   {
+    "after": "夫への誕生日プレゼントは、家族で使うものより本人が仕事や休憩で使う品を選びます。財布や名入れペンは仕事中、タンブラーは通勤や在宅勤務中、入浴剤は子どもが寝た後に",
+    "problems": [
+     "numbers differ: ['一'] -> []",
+     "words added that the original does not have (information must not grow): ['プレゼント', '過']"
+    ],
+    "text": "夫の誕生日には家族全体で使うものではなく、本人の一日が少し楽になる品を中心に考えたいです。財布や名入れペンなら仕事中に、"
+   },
+   {
+    "after": "価格・在庫は2026年11月18日 10:16時点の情報です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格や販売状況は変わる場合があります。購入時",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月18日 10:16時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "after": "財布や名刺入れは仕事先で人目に触れます。商談や挨拶の場で傷みが目立つなら、誕生日は買い替える機会になります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場']"
+    ],
+    "text": "財布や名刺入れは仕事先で人目に触れるため、商談や挨拶で傷みが目立つなら誕生日を機に替えやすい品です。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "名刺入れは仕事先で人目に触れます。傷みが気になるときの誕生日祝いに向いています。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名刺入']"
+    ],
+    "text": "仕事先で人目に触れる小物なので、傷みが気になる時の誕生日祝いに向いています。"
+   },
+   {
+    "after": "在宅勤務の机や車通勤の朝に使えます。飲み物が冷めにくく、誕生日の後も出番が続く品です。",
+    "problems": [
+     "numbers differ: ['一'] -> []"
+    ],
+    "text": "在宅勤務の机や車通勤の朝に置けて、夫の一日を少し楽にしながら、誕生日後も出番が続きます。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、夫への誕生日プレゼントに合うものを選びました。価格や在庫は変わるため、購入前にAmazonの商品ページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['誕生日', 'プレゼント', '商品']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "ギフトボックス入りの定番シングルモルトスコッチです。お酒を飲む夫への贈り物に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['贈']"
+    ],
+    "text": "シングルモルトスコッチの定番でギフトボックスに入っています。お酒を飲む人へ。"
+   },
+   {
+    "after": "サイズや香りなど好みが分かれるものは事前に本人に聞きます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['本人']"
+    ],
+    "text": "サイズや香りなど好みが強く出るものは事前に探りを入れます"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "家用の品は先に収納場所を考えます。マッサージ器など大きい物は置ける場所を本人に聞いてから選びます。",
+    "problems": [
+     "condition dropped: 本人への聞き方を示す「軽く」が落ちています。"
+    ],
+    "text": "家用の品は収納場所を考え、マッサージ器など大きい物は置ける場所を本人に軽く聞く。"
+   },
+   {
+    "after": "この条件に合う商品はありません。条件をゆるめるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "added claim: 「見つからなかった」が、商品自体が存在しないという断定に変わっています。"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "仕事中に使う品なので家族からの誕生日祝いを持ち歩けます。",
+    "problems": [
+     "condition dropped: 持ち歩き方の条件である「さりげなく」が落ちています。"
+    ],
+    "text": "仕事中に手に取りやすい品で、家族からの誕生日祝いをさりげなく持ち歩けます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "本人の家事が増えるだけに見える便利グッズは避けます",
+    "problems": [
+     "added claim: 元にない「避ける」という勧めと、家事が実際に増えるという表現が加わっています。"
+    ],
+    "text": "本人の家事負担を増やすだけに見える便利グッズ"
+   }
+  ],
+  "structure_suggestions": [
+   "「選び方のポイント」→「気をつけたいこと」→「条件で絞って比べる」の順にし、注意点を商品一覧より前に置く。",
+   "「喜ばれやすい理由」と各候補の説明は内容が重なるため、前者を導入直後の短い選び方に統合する。",
+   "楽天市場の商品候補とAmazonの商品候補を続けて配置し、「迷ったときの次の一歩」は商品を比べ終えた後に置く。"
+  ],
+  "unchanged": 67,
+  "units": 92
+ },
+ "gift/birthday-mother/index.html": {
+  "accepted": [
+   {
+    "from": "母への誕生日プレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "母への誕生日プレゼント、種類の違う4点",
+    "why": "根拠のない人気を外す"
+   },
+   {
+    "from": "入浴剤や焼き菓子は、家事のあとにお茶を入れて、自分のための時間を持ってほしい気持ちを形にできます。",
+    "kind": "item",
+    "to": "入浴剤や焼き菓子は、家事のあとに母自身のための時間を過ごしてもらいたいときに向きます。",
+    "why": "抽象的な結びを外す"
+   },
+   {
+    "from": "母が今使っている財布の重さや開き方を見て、ファスナー式かがま口かなど扱いやすい形を選ぶ。",
+    "kind": "item",
+    "to": "母が今使っている財布の重さや開き方を見て、ファスナー式やがま口など扱いやすい形を選ぶ。",
+    "why": "並列を自然にする"
+   },
+   {
+    "from": "母への誕生日、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "母の外出と休憩に合う品",
+    "why": "紹介内容を見出しにする"
+   },
+   {
+    "from": "梅の実を感じるあらごし梅酒です。Amazon限定のギフトボックス付きでお酒を飲む人に贈れます。",
+    "kind": "para",
+    "to": "梅の実を感じるあらごし梅酒です。Amazon限定のギフトボックス付きで、お酒を飲む母への贈り物に向きます。",
+    "why": "贈る相手を明確にする"
+   },
+   {
+    "from": "サイズや香りなど好みが強く出るものは事前に探りを入れます",
+    "kind": "item",
+    "to": "サイズや香りは好みが分かれるため、事前に母の好みを確かめます。",
+    "why": "口語的な表現を直す"
+   }
+  ],
+  "date": "2026-11-18",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 選び方の注意が商品一覧より後にあり、購入前に知りたい情報へ戻る流れになっています。",
+   "具体: 冒頭や商品説明に「気持ちを届ける」「この場面に合う」など、品や使う場面をぼかす表現があります。",
+   "声: Amazonの商品欄に「妻」「新しい部屋」など、母への誕生日プレゼントと一致しない説明が混じっています。"
+  ],
+  "failed": "",
+  "hash": "351b3683e6be",
+  "needs_check": [
+   {
+    "question": "掲載商品が実際にAmazonの売れ筋ランキングから選ばれ、母への誕生日プレゼントに合うか確認してください。",
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。"
+   },
+   {
+    "question": "母へのページで贈る相手が「妻」になっています。「母」の誤りか確認してください。",
+    "text": "6インチの薄くて軽い電子書籍リーダーです。通勤中や寝る前に読書をする妻に向きます。"
+   },
+   {
+    "question": "母への誕生日プレゼントの説明として「新しい部屋に置く1台」が適切か確認してください。",
+    "text": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋に置く1台として向いています。"
+   },
+   {
+    "question": "対応する商品名が見当たりません。どの商品についての説明か確認してください。",
+    "text": "テレビにつなぐと動画配信サービスを大画面で見られます。テレビと無線LANがある家で使えます。"
+   }
+  ],
+  "page": "gift/birthday-mother/index.html",
+  "rejected": [
+   {
+    "after": "母への誕生日プレゼントは母自身が好きなものから選びます。財布や名入れポーチは外出に入浴剤やお茶菓子は夜の休憩に向く品です。台所用品だけでなく、友人との外出やひと",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['プレゼント', '時間']"
+    ],
+    "text": "母の誕生日は家族の用事から少し離れて、母自身の好きなものを思い出す日です。財布や名入れポーチは外出に、入浴剤やお茶菓子は"
+   },
+   {
+    "after": "母への誕生日プレゼントは母自身が好きなものから選びます。財布や名入れポーチは外出に入浴剤やお茶菓子は夜の休憩に向く品です。台所用品だけでなく、友人との外出やひと",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['プレゼント']"
+    ],
+    "text": "母の誕生日は家族の用事から少し離れて、母自身の好きなものを思い出す日です。財布や名入れポーチは外出に、入浴剤やお茶菓子は"
+   },
+   {
+    "after": "価格・在庫は2026年11月18日 10:16時点の情報です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格や在庫は変更される場合があります。購入に",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月18日 10:16時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "after": "予算や種類を選ぶと下の商品から条件に合うものだけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "買い物や通院で使う財布は軽くて中身が見やすい物が向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['中身']"
+    ],
+    "text": "買い物や通院のたびに使う物なので軽く見やすい財布は母の日常に合います。"
+   },
+   {
+    "after": "名入れポーチはバッグの中で使える小さな記念品です。離れて暮らす母にも贈りやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名入', 'ポーチ']"
+    ],
+    "text": "バッグの中で使える小さな記念品として、離れて暮らす母にも気持ちを届けやすいです。"
+   },
+   {
+    "after": "焼き菓子は家事のあとにお茶を入れて休む時間に楽しんでもらえます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['菓子']"
+    ],
+    "text": "家事のあとにお茶を入れて、母自身のための休憩時間をゆっくり持ってもらえます。"
+   },
+   {
+    "after": "明るい色のストールは、季節の変わり目の外出に使いやすく、装いの印象も変えられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ストール', '印象']"
+    ],
+    "text": "季節の変わり目の外出に使いやすく、明るい色なら装いと気分の両方を軽く変えられます。"
+   },
+   {
+    "after": "家事用品ばかりでは、母自身へのプレゼントという意図が伝わりにくくなります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['母自身', 'プレゼント', '意図']"
+    ],
+    "text": "家事用品ばかりで感謝が伝わりにくい選び方"
+   },
+   {
+    "after": "母への贈り物をAmazonで探す",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['贈']"
+    ],
+    "text": "Amazonで探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "財布やカードケースは買い物や通院のたびに使います。軽くて中身が見やすい物が選びやすいです。",
+    "problems": [
+     "added claim: 「軽くて中身が見やすい物が選びやすい」という元にない評価を追加"
+    ],
+    "text": "財布やカードケースは、買い物や通院のたびに使うため、軽くて中身が見やすい物なら日常になじみます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「気をつけたいこと…」〜「家事用品ばかりで感謝が伝わり…」を「選び方のポイント…」〜「遠方から贈る場合は、誕生日の…」の直後に移し、選び方と注意点を商品一覧より先にまとめる。",
+   "「Amazonで見つけた贈り物…」〜「Amazonで選ぶ贈り物をす…」は、商品名・説明・贈る相手の対応を確認してから一つの商品紹介欄として並べ直す。",
+   "「この日を忘れない(たいせつな…」はページ末の「迷ったときの次の一歩」に統合し、最後にする操作として見せる。"
+  ],
+  "unchanged": 65,
+  "units": 94
+ },
  "gift/birthday-teen/index.html": {
   "accepted": [
    {
@@ -1722,6 +2110,209 @@
   ],
   "unchanged": 67,
   "units": 87
+ },
+ "gift/birthday-university-student/index.html": {
+  "accepted": [
+   {
+    "from": "あとでスマホから見返すときは、LINEの自分のトークか、自分宛てのメールに送れます。",
+    "kind": "para",
+    "to": "あとでスマホから見返すなら、LINEで自分だけのトークに送るか、自分宛てのメールに送れます。",
+    "why": "送り先を分かりやすく"
+   },
+   {
+    "from": "大学生への誕生日プレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "大学生への誕生日プレゼント、種類別の人気4点",
+    "why": "語順を整えた"
+   },
+   {
+    "from": "ペンケースやノートは、レポートや試験前に毎日触れる物で、高校までの物から買い替える節目になります。",
+    "kind": "item",
+    "to": "ペンケースやノートはレポートや試験前に毎日使います。高校まで使っていた物から買い替えるきっかけにもなります。",
+    "why": "一文一論点に整理"
+   },
+   {
+    "from": "文具は黒や紺など、授業にもゼミにも持ち込める落ち着いた色を選ぶ。",
+    "kind": "item",
+    "to": "文具は授業にもゼミにも持っていける黒や紺などの落ち着いた色を選びます。",
+    "why": "語順を自然にした"
+   },
+   {
+    "from": "食器は割れたときに困らない値段で、電子レンジに使えるかを表示で確かめる。",
+    "kind": "item",
+    "to": "食器は電子レンジで使えるか表示を確かめます。割れても買い直せる値段にします。",
+    "why": "確認事項を分けた"
+   },
+   {
+    "from": "大学生への誕生日、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "大学生への誕生日プレゼント、品物別の選び方",
+    "why": "曖昧な問いを具体化"
+   }
+  ],
+  "date": "2026-11-18",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 「喜ばれやすい理由」と商品別の説明が重なり、同じ内容を二度読ませています。",
+   "見出し: 「こんな贈り方はどうでしょう」など、節の中身が見出しだけでは分からない箇所があります。",
+   "語: 「ぴったり」「探りを入れる」など、条件や動作が曖昧な言葉が残っています。"
+  ],
+  "failed": "",
+  "hash": "148ea65ce626",
+  "needs_check": [
+   {
+    "question": "大学生向けのページで贈る相手が「妻」になっています。別ページの説明が混ざっていないか確認してください。",
+    "text": "6インチの薄くて軽い電子書籍リーダーです。通勤中や寝る前に読書をする妻に向きます。"
+   }
+  ],
+  "page": "gift/birthday-university-student/index.html",
+  "rejected": [
+   {
+    "after": "大学生への誕生日プレゼントは、3,000円から5,000円ほどで選ぶと気軽に受け取ってもらえます。授業やレポートで使うペンケースやモバイルバッテリー、一人暮らし",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['プレゼント']"
+    ],
+    "text": "大学生の誕生日は、予算を3,000円から5,000円ほどに決めると、本人も気軽に受け取れます。授業やレポートで毎日使うペ"
+   },
+   {
+    "after": "モバイルバッテリーは授業やバイト、電車での通学と一日中出番があります。外出先で充電できる実用品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['外出先']"
+    ],
+    "text": "モバイルバッテリーは、授業、バイト、通学の電車と一日中使う場面があり、持っていて困らない品です。"
+   },
+   {
+    "after": "マグカップやタオルは一人暮らしの部屋で使える日用品です。大きな置き場所も要りません。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日用品']"
+    ],
+    "text": "マグカップやタオルは、一人暮らしの部屋でそのまま使えて、置き場所をとりません。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "授業やバイトで一日スマートフォンを使う大学生には、外出先で充電できるモバイルバッテリーが役立ちます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['大学生', 'モバイルバッテリー']"
+    ],
+    "text": "授業とバイトで一日スマートフォンを使うので、外出先で充電できる品は毎日役立ちます。"
+   },
+   {
+    "after": "ペンケースは授業やレポートで毎日使い、高校までの筆箱から買い替える候補になります。",
+    "problems": [
+     "names / quoted words lost: ['ノート']",
+     "words added that the original does not have (information must not grow): ['ペンケース', '授業', '候補']"
+    ],
+    "text": "レポートやノートで毎日使い、高校までの筆箱から買い替える節目になります。"
+   },
+   {
+    "after": "タオルは洗い替えが必要な日用品です。枚数が増えても使えて部屋にも届けやすい品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['タオル']"
+    ],
+    "text": "洗い替えが要る日用品で、枚数が増えても困らず、部屋に届けやすい品です。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、大学生への誕生日プレゼントに合うものを選びました。価格や在庫は変わるため、購入前にAmazonの商品ページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['大学生', '誕生日', 'プレゼント', '商品']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "相手について一言入力してください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "サイズや香りは好みが分かれるので事前に相手の好みを確かめます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手']"
+    ],
+    "text": "サイズや香りなど好みが強く出るものは事前に探りを入れます"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月18日 10:16時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "充電器はスマートフォンの端子の形を確かめて機種に合う物を選びます。",
+    "problems": [
+     "condition dropped: 「本人の機種」という対象条件が落ちた"
+    ],
+    "text": "充電器はスマートフォンの端子の形を確かめ、本人の機種に合う物を選ぶ。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "一人暮らしの部屋では置き場所が限られるため、大きな品は避けます",
+    "problems": [
+     "added claim/condition dropped: 部屋の置き場所が限られると一般化し、「置き場所のない品」という条件も落ちた"
+    ],
+    "text": "一人暮らしの部屋に置き場所のない大きな品は避けます"
+   }
+  ],
+  "structure_suggestions": [
+   "「気をつけたいこと…」〜「一人暮らしの部屋に置き場所の…」を「選び方のポイント…」〜「食器は割れたときに困らない値…」の直後に移し、商品を選ぶ前の確認事項を一か所にまとめる。",
+   "「喜ばれやすい理由…」〜「マグカップやタオルは、一人暮…」は「授業とバイトで一日スマートフ…」〜「洗い替えが要る日用品で、枚数…」と内容が重なるため、商品別の説明へ統合して一度だけ読ませる。"
+  ],
+  "unchanged": 56,
+  "units": 84
  },
  "gift/birthday-wife/index.html": {
   "accepted": [
