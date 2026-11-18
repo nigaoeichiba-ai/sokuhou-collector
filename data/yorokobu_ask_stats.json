@@ -45,7 +45,8 @@
    "pop.r.wide02:10014094": 1
   },
   "2026-11": {
-   "ask.new.o": 1
+   "ask.new.o": 1,
+   "pop.r.dotline:10000195": 1
   }
  },
  "total": {
@@ -89,6 +90,7 @@
   "pop.a.B00TYDVCWE": 1,
   "pop.a.B09F37JV55": 1,
   "pop.r.bellevie-harima:10013197": 1,
+  "pop.r.dotline:10000195": 1,
   "pop.r.naturavie:10004784": 1,
   "pop.r.wide02:10014094": 1
  }
