@@ -7,7 +7,7 @@ from __future__ import annotations
 
 # genre id -> (page path, the shops of schedule.ENT that sell in it, the word of the Amazon search link on the page, the page's own title and description)
 GENRES: dict[str, dict] = {
-    "electronics": {"path": "/kaden/", "brands": ("yamada", "sonystore", "google", "asus", "lg", "sharp", "panasonic", "nec", "dyson"), "amazon": "家電", "crumb": "家電・デジタル"},
+    "electronics": {"path": "/kaden/", "brands": ("yamada", "sonystore", "google", "asus", "lg", "sharp", "panasonic", "nec", "lenovo", "dyson"), "amazon": "家電", "crumb": "家電・デジタル"},
     "food": {"path": "/food/", "brands": (), "amazon": "食品", "crumb": "食品・飲料"},
     "daily": {"path": "/daily/", "brands": (), "amazon": "日用品", "crumb": "日用品"},
     "fashion": {"path": "/fashion/", "brands": ("uniqlo", "zozo"), "amazon": "ファッション", "crumb": "ファッション"},
