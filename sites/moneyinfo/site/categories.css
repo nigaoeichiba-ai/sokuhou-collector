@@ -93,3 +93,68 @@
 .quote-fields input{min-width:0;width:100%;min-height:44px;border:1px solid #cdbb9f;border-radius:8px;background:#fff;color:#432919;padding:.45rem .65rem;font:inherit}
 .case-quote output:not(:empty){display:block;font-weight:700;margin-top:.8rem}
 @media(max-width:600px){.quote-fields{grid-template-columns:1fr}}
+
+.site-footer { padding-block: 1.4rem 1.15rem; }
+.site-footer .footer-top { gap: 1rem; }
+.site-footer .footer-links {
+  min-width: 0;
+  max-width: none;
+  gap: 0;
+  font-size: .875rem;
+}
+.site-footer .footer-links a {
+  min-height: 44px;
+  padding: .45rem clamp(.55rem, 1vw, 1rem);
+  white-space: nowrap;
+}
+.site-footer .footer-bottom {
+  max-width: 48rem;
+  margin: .85rem auto 0;
+  font-size: .8rem;
+  line-height: 1.6;
+}
+@media (min-width: 1000px) {
+  .site-footer .footer-links { flex-wrap: nowrap; }
+}
+@media (min-width: 601px) and (max-width: 999px) {
+  .site-footer .footer-top { flex-direction: column; align-items: center; }
+  .site-footer .footer-links { justify-content: center; }
+}
+@media (max-width: 600px) {
+  .site-footer .footer-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: .7rem;
+  }
+  .site-footer .footer-links a {
+    justify-content: center;
+    padding-inline: .25rem;
+    border: 0;
+    border-bottom: 1px solid #e4d5b9;
+    white-space: normal;
+    text-align: center;
+  }
+  .site-footer .footer-links a:last-child { grid-column: 1 / -1; }
+}
+
+.guide-article-header h1,
+.hub-hero h1,
+.guide-section :is(h2,h3) {
+  text-wrap: balance;
+  word-break: auto-phrase;
+  overflow-wrap: break-word;
+}
+.guide-section > p { line-height: 1.8; }
+.guide-section > p + p { margin-top: .8em; }
+.guide-section > p + h3 { margin-top: 1.35em; }
+.guide-section > h3 { margin-bottom: .5em; }
+.household-profile > p > strong { white-space: nowrap; }
+
+.home-page > .reading-section { padding-block-end: clamp(2rem, 5vw, 4rem); }
+.reading-section .news-list a { min-height: 44px; }
+.reading-section .news-list .painted-icon {
+  width: clamp(2rem, 6vw, 4rem);
+  height: auto;
+  flex: none;
+  margin-inline-start: .5rem;
+}

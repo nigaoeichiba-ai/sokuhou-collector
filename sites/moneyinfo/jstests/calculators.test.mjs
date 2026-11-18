@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { savings, annualPlan, monthDifference, depositEstimate, money } from '../site/calculators.mjs';
+import { savings, annualPlan, monthDifference, depositEstimate, money } from '../site/calculators.js';
 
 test('端数を切り上げ、最終回を調整して目標に届く', () => {
   const r = savings({ target: 100, saved: 0, months: 3 });

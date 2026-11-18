@@ -1,4 +1,4 @@
-import { savings, annualPlan, monthDifference, depositEstimate } from './calculators.mjs';
+import { savings, annualPlan, monthDifference, depositEstimate } from './calculators.js';
 
 const yen = value => `${new Intl.NumberFormat('ja-JP').format(value)}円`;
 const $ = selector => document.querySelector(selector);

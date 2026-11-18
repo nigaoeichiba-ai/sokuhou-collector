@@ -1,5 +1,6 @@
 """Release/review output of the site (run through build.py). The local preview always stays noindex."""
 import argparse
+from hashlib import sha256
 from html import escape, unescape
 import json
 from pathlib import Path
@@ -12,6 +13,7 @@ from xml.etree import ElementTree as ET
 
 from PIL import Image, ImageOps
 from case_articles import AVERAGE, CASES
+from release_art import optimize_release_art
 
 ROOT = Path(__file__).resolve().parent
 BASE = "https://kurashi-no-money.com/"
@@ -119,20 +121,27 @@ def build(output, contact_url, review, own_contact=False):
                 hero.thumbnail((1120, 590), Image.Resampling.LANCZOS)
                 canvas = Image.new("RGB", (1200, 630), (255, 250, 240))
                 canvas.paste(hero, ((1200 - hero.width) // 2, (630 - hero.height) // 2), hero)
-                canvas.save(og_dir / "home.jpg", quality=90)
+                canvas.save(og_dir / "home.jpg", quality=90, optimize=True)
             continue
         with Image.open(source / "assets" / f"{asset}.webp") as picture:
             ImageOps.fit(picture.convert("RGB"), (1200, 630),
-                         method=Image.Resampling.LANCZOS).save(og_dir / f"{key}.jpg", quality=90)
+                         method=Image.Resampling.LANCZOS).save(og_dir / f"{key}.jpg", quality=90, optimize=True)
     ET.register_namespace("", SITEMAP_NS)
     sitemap = ET.Element(f"{{{SITEMAP_NS}}}urlset")
+    assets = {p.name: p.read_bytes() for p in source.iterdir() if p.suffix in {".css", ".js", ".mjs"}}
+    calculator_version = sha256(assets["calculators.js"]).hexdigest()[:12].encode("ascii")
+    assets["tools.js"] = assets["tools.js"].replace(b"./calculators.js'", b"./calculators.js?v=" + calculator_version + b"'")
+    versions = {name: sha256(content).hexdigest()[:12] for name, content in assets.items()}
+    for name, content in assets.items():
+        (output / name).write_bytes(content)
     for page in sorted(source.iterdir()):
-        if page.suffix in {".css", ".js", ".mjs"}:
-            shutil.copy2(page, output / page.name)
         if page.suffix != ".html":
             continue
         slug = page.stem
         html = page.read_text(encoding="utf-8")
+        html = re.sub(r'(href|src)="([^"/]+\.(?:css|js))"',
+                      lambda m: f'{m[1]}="{m[2]}?v={versions[m[2]]}"' if m[2] in versions else m[0],
+                      html)
         title = unescape(re.search(r"<title>(.*?)</title>", html)[1])
         if slug in DESC_OVERRIDE:
             html = re.sub(r'<meta name="description" content="[^"]*">',
@@ -178,6 +187,11 @@ def build(output, contact_url, review, own_contact=False):
             html = html.replace("公開前のプレビュー", "暮らしのマネー情報")
             for old, new in RELEASE_TEXT:
                 html = html.replace(old, new)
+        if own_contact:
+            html = html.replace('href="information.html#contact">お問い合わせ</a>',
+                                'href="/contact/">お問い合わせ</a>')
+            if slug == "information":
+                html = html.replace('href="contact.html"', 'href="/contact/"')
         if slug == "contact" and own_contact:
             html = re.sub(r"<p data-contact-preview>.*?</p>",
                           f'<p>お問い合わせは、フォームから受け付けています。</p><p><a href="{CONTACT_FORM_URL}">お問い合わせフォームを開く</a></p>', html)
@@ -191,6 +205,7 @@ def build(output, contact_url, review, own_contact=False):
         ET.SubElement(node, f"{{{SITEMAP_NS}}}loc").text = canonical
     if own_contact:
         own_contact_pages(output, contact_template, '<meta name="robots" content="noindex,follow">')
+    optimize_release_art(output)
     ET.indent(sitemap)   # one <loc> per line: the deploy's live check counts them with grep -c
     ET.ElementTree(sitemap).write(output / "sitemap.xml", encoding="utf-8", xml_declaration=True)
     robots = "User-agent: *\nDisallow: /\n" if review else f"User-agent: *\nAllow: /\nDisallow: /contact/\nSitemap: {BASE}sitemap.xml\n"

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { Window } from 'happy-dom';
-import * as calculations from '../site/calculators.mjs';
+import * as calculations from '../site/calculators.js';
 
 function page(name, script) {
   const window = new Window({ url: `http://localhost/${name}.html`, settings: { enableJavaScriptEvaluation: true, disableJavaScriptFileLoading: true, disableCSSFileLoading: true } });
