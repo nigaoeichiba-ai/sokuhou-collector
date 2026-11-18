@@ -358,6 +358,12 @@ class Renewal(unittest.TestCase):
             self.assertGreaterEqual(len(d), 80, rel)
             self.assertLessEqual(len(d), 120, rel)
             self.assertIn("資格・試験への道", d, rel)
+        # every other indexed page that is not an exam page keeps its description between 80 and 130 characters (the 71-79 ones of 2026-11-18 are gone)
+        for rel, h in self.pages.items():
+            if rel.startswith(("exams/", "404", "contact/thanks", "google")) or "noindex" in h:
+                continue
+            d = re.search(r'<meta name="description" content="(.*?)"', h).group(1)
+            self.assertTrue(80 <= len(d) <= 130, f"{rel}: {len(d)}")
         # negative case: the old one-line description is too short
         self.assertLess(len("資格・試験への道へのお問い合わせ先です。日程の誤りのご指摘、ご意見・ご要望をお送りいただけます。"), 80)
 
