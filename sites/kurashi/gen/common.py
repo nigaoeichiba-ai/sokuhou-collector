@@ -17,8 +17,11 @@ FIRST_UPDATED = "2026-11-03"   # the day the dates were checked
 # 2026-11-13: the pages went into the new design and the checked guides were merged into eleven of them; these pages only changed their frame, so their day stays
 UNCHANGED = ("/method/", "/kakutei-shinkoku/hitsuyo/", "/kakutei-shinkoku/kanpu/", "/moving/menkyo-sha/", "/life/", "/month/3/")
 REDESIGN_DAY = "2026-11-13"
+SEO_DAY = "2026-11-17"   # the style sheets were joined and the end of every <title> was shortened: every page changed that day (the sitemap lastmod follows the page's own day)
+# the pages whose title, description or lead answer were rewritten after that (the day of the change)
+CHANGED_LATER = {"/nenmatsu-nenshi/": "2026-11-18", "/nenmatsu-chosei/": "2026-11-18", "/moving/tenshutsu/": "2026-11-18"}
 EDITED = {}          # kept for readers of the old name: a page's day is FIRST_UPDATED if it is in UNCHANGED, else REDESIGN_DAY (page() below)
-SITE_UPDATED = REDESIGN_DAY
+SITE_UPDATED = max([SEO_DAY, *CHANGED_LATER.values()])
 WD = "月火水木金土日"
 
 
@@ -87,7 +90,7 @@ def row_link(text: str, path: str) -> dict:
 
 
 def page(path, kind, parent, title, h1, kw, intent, desc, answer, sections, related, sources, *, secondary=(), basis=None, updated=None, noindex=False):
-    updated = updated or (SITE_UPDATED if path == "/" else FIRST_UPDATED if path in UNCHANGED else REDESIGN_DAY)
+    updated = updated or (SITE_UPDATED if path == "/" else CHANGED_LATER.get(path, SEO_DAY))
     p = {
         "updated": updated,
         "data_basis": basis or f"{checks.label(checks.checked_day(path))}確認",

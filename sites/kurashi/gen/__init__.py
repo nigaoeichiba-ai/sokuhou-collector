@@ -42,6 +42,7 @@ def file_name(path: str) -> str:
 
 def site_json() -> dict:
     return {
+        "og_image": "/assets/og.jpg",          # the share image (1200x630) made by `newsite og`; without this line the share tags disappear
         "glyph": "暦",
         "updated": SITE_UPDATED,
         "home_label": "トップ",

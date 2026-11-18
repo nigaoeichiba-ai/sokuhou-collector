@@ -22,6 +22,13 @@ SITE = ROOT / "sites" / "kurashi"
 BASE = "https://kurashi-calendar.com"
 
 
+def lastmod_problems(sitemap: str, updated: dict[str, str]) -> list[str]:
+    """The <lastmod> of every URL must be the page's own `updated` (a page changed on 11/16-17 kept 11/13 for days: the search engine was not told about the change)."""
+    got = dict(re.findall(r"<loc>https://kurashi-calendar\.com([^<]*)</loc>\s*<lastmod>([^<]*)</lastmod>", sitemap))
+    out = [f"{path}: sitemap {got.get(path)!r}, page {day!r}" for path, day in updated.items() if got.get(path) != day]
+    return out
+
+
 class Dates(unittest.TestCase):
     def test_weekdays_of_the_deadlines(self):
         self.assertEqual(common.wd(date(2027, 2, 16)), "火")          # the first day of the filing for reiwa 8
@@ -122,6 +129,18 @@ class Build(unittest.TestCase):
     def test_search_console_verification_file_is_written(self):
         f = self.out / "googleabcac004d8b7d556.html"
         self.assertEqual(f.read_text(encoding="utf-8"), "google-site-verification: googleabcac004d8b7d556.html\n")
+
+    def test_sitemap_lastmod_is_the_pages_own_day(self):
+        updated = {p["path"]: p["updated"] for p in gen.all_pages()}
+        self.assertEqual(lastmod_problems((self.out / "sitemap.xml").read_text(encoding="utf-8"), updated), [])
+        self.assertEqual(updated["/"], max(updated.values()))
+        self.assertGreaterEqual(min(updated.values()), "2026-11-17")      # every page changed on 11/17 (style sheet, title)
+
+    def test_a_stale_lastmod_is_caught(self):
+        sm = '<urlset><url><loc>https://kurashi-calendar.com/a/</loc><lastmod>2026-11-13</lastmod></url></urlset>'
+        self.assertTrue(lastmod_problems(sm, {"/a/": "2026-11-17"}))
+        self.assertTrue(lastmod_problems(sm, {"/b/": "2026-11-17"}))
+        self.assertEqual(lastmod_problems(sm, {"/a/": "2026-11-13"}), [])
 
     def test_a_thin_page_would_be_caught(self):
         """The bar is real: a page with a table but a few lines is reported by the same function the build uses."""
