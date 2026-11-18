@@ -191,6 +191,7 @@ def build(output, contact_url, review, own_contact=False):
         ET.SubElement(node, f"{{{SITEMAP_NS}}}loc").text = canonical
     if own_contact:
         own_contact_pages(output, contact_template, '<meta name="robots" content="noindex,follow">')
+    ET.indent(sitemap)   # one <loc> per line: the deploy's live check counts them with grep -c
     ET.ElementTree(sitemap).write(output / "sitemap.xml", encoding="utf-8", xml_declaration=True)
     robots = "User-agent: *\nDisallow: /\n" if review else f"User-agent: *\nAllow: /\nDisallow: /contact/\nSitemap: {BASE}sitemap.xml\n"
     (output / "robots.txt").write_text(robots, encoding="utf-8")

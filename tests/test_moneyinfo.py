@@ -126,6 +126,14 @@ class MoneyinfoBuildTest(unittest.TestCase):
             self.assertEqual(kind, contactform._php_text(kind))   # nothing in a choice can end or alter the PHP string
         self.assertNotRegex(php, r"info@[a-z0-9-]+\.[a-z]")        # the address is built at run time, never printed
 
+    def test_the_sitemap_has_one_loc_per_line_and_the_home_page_carries_the_marker(self):
+        """deploy.yml's Verify step counts `grep -c '<loc>'` (lines, not tags) and greps the home page for the marker: a one-line sitemap counted 1 and rolled the first deploy back."""
+        lines = [l for l in (self.rel / "sitemap.xml").read_text(encoding="utf-8").splitlines() if "<loc>" in l]
+        entry = next(e for e in json.loads((ROOT / "data" / "sites.json").read_text(encoding="utf-8"))["sites"] if e["name"] == "moneyinfo")
+        self.assertEqual(len(lines), 20)
+        self.assertGreaterEqual(len(lines), entry["min_pages"] - 5)
+        self.assertIn(entry["marker"], (self.rel / "index.html").read_text(encoding="utf-8"))
+
     def test_the_release_has_what_the_deploy_step_demands(self):
         """deploy.yml's Build step fails without index.html and .htaccess, and with fewer pages than data/sites.json asks for (the first deploy failed on .htaccess)."""
         htaccess = (self.rel / ".htaccess").read_text(encoding="utf-8")
