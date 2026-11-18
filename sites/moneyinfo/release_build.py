@@ -206,6 +206,11 @@ def build(output, contact_url, review, own_contact=False):
     if own_contact:
         own_contact_pages(output, contact_template, '<meta name="robots" content="noindex,follow">')
     optimize_release_art(output)
+    if not review:
+        for proof in ROOT.glob("google*.html"):
+            if re.fullmatch(r"google[0-9a-f]{16}\.html", proof.name):
+                shutil.copyfile(proof, output / proof.name)
+
     ET.indent(sitemap)   # one <loc> per line: the deploy's live check counts them with grep -c
     ET.ElementTree(sitemap).write(output / "sitemap.xml", encoding="utf-8", xml_declaration=True)
     robots = "User-agent: *\nDisallow: /\n" if review else f"User-agent: *\nAllow: /\nDisallow: /contact/\nSitemap: {BASE}sitemap.xml\n"

@@ -69,6 +69,8 @@ class MoneyinfoBuildTest(unittest.TestCase):
     def test_every_page_has_canonical_og_and_structured_data_and_is_in_the_sitemap(self):
         sitemap = (self.rel / "sitemap.xml").read_text(encoding="utf-8")
         for page in self.rel.glob("*.html"):
+            if re.fullmatch(r"google[0-9a-f]{16}\.html", page.name):
+                continue
             html = page.read_text(encoding="utf-8")
             url = BASE + "/" if page.name == "index.html" else f"{BASE}/{page.name}"
             self.assertIn(f'<link rel="canonical" href="{url}">', html, page.name)
@@ -79,6 +81,17 @@ class MoneyinfoBuildTest(unittest.TestCase):
                 json.loads(block)
         for jpg in re.findall(r'og:image" content="[^"]*/assets/shares/([^"]+)"', "".join(p.read_text(encoding="utf-8") for p in self.rel.glob("*.html"))):
             self.assertTrue((self.rel / "assets" / "shares" / jpg).exists(), jpg)
+
+    def test_ownership_file_is_published_only_in_release_and_not_in_sitemap(self):
+        proofs = [p for p in SITE.glob("google*.html")
+                  if re.fullmatch(r"google[0-9a-f]{16}\.html", p.name)]
+        self.assertTrue(proofs)
+        sitemap = (self.rel / "sitemap.xml").read_text(encoding="utf-8")
+        for proof in proofs:
+            self.assertEqual((self.rel / proof.name).read_bytes(),
+                             f"google-site-verification: {proof.name}\n".encode("utf-8"))
+            self.assertFalse((self.rev / proof.name).exists())
+            self.assertNotIn(proof.name, sitemap)
 
     def test_no_ad_link_and_no_outside_link_before_a_partnership_exists(self):
         self.assertEqual(external_links(self.rel), [])
