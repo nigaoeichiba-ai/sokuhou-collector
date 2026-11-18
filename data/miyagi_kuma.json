@@ -1,15 +1,15 @@
 {
- "as_of": "2026-11-16",
+ "as_of": "2026-11-18",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 0,
  "dates_after_as_of_by_month": {},
- "fetched_at": "2026-11-17T06:17:29.160476+09:00",
+ "fetched_at": "2026-11-19T06:17:16.295075+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
    "10": 107,
-   "11": 24,
+   "11": 29,
    "12": 0,
    "2": 0,
    "3": 0,
@@ -23,6 +23,46 @@
  },
  "monthly_note": "月別計は公表表の全行で検算し、as_of後の日付も含みます",
  "sightings": [
+  {
+   "city": "仙台市太白区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-16T17:30:00+09:00",
+   "place": "秋保町長袋字清水久保地内",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-11-16T06:00:00+09:00",
+   "place": "南吉成２丁目２２－２０",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-15T18:15:00+09:00",
+   "place": "高野原３丁目１５－１６",
+   "species": "クマ"
+  },
+  {
+   "city": "富谷市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-11-15T16:20:00+09:00",
+   "place": "石積堂ケ沢地区",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-11-15T16:00:00+09:00",
+   "place": "上愛子字遠野原３３－１",
+   "species": "クマ"
+  },
   {
    "city": "東松島市",
    "count": 1,
@@ -11473,7 +11513,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261116.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261118.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }

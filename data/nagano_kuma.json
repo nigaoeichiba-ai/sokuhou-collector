@@ -1,6 +1,48 @@
 {
- "as_of": "2026-09-28",
+ "as_of": "2026-10-27",
  "corroborated": [
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-27",
+   "place": "鬼無里 七ツ室バス停付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-21",
+   "place": "小田切 水内鎮神社周辺"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-10-14",
+   "place": "信州新町 秋葉神社北東付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-12",
+   "place": "若槻 田子池北側付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-05",
+   "place": "第二 地附山公園最終ゲート付近"
+  },
+  {
+   "city": "長野市",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-10-05",
+   "place": "信州新町 牧野島公民館南付近"
+  },
   {
    "city": "長野市",
    "count": null,
@@ -759,14 +801,15 @@
   }
  ],
  "corroborated_on": {
-  "長野市": "2026-11-17"
+  "長野市": "2026-11-19"
  },
  "credit": "出典: 長野市「野生獣(クマなど)の出没」(https://www.city.nagano.nagano.jp/n162000/contents/p001080.html)の公開データから、月別の件数を、当サイトが集計して作成(長野市が作成したものではありません)",
- "fetched_at": "2026-11-17T06:20:10.460457+09:00",
+ "fetched_at": "2026-11-19T06:20:06.102789+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
   "R08": {
+   "10": 6,
    "4": 11,
    "5": 20,
    "6": 32,
@@ -777,9 +820,10 @@
  },
  "municipalities": {
   "長野市": {
-   "latest": "2026-09-28",
+   "latest": "2026-10-27",
    "monthly": {
     "R08": {
+     "10": 6,
      "4": 11,
      "5": 20,
      "6": 32,
@@ -791,9 +835,9 @@
   }
  },
  "source": "nagano",
- "source_file": "https://www.city.nagano.nagano.jp/documents/3071/kuma_20260930.pdf",
+ "source_file": "https://www.city.nagano.nagano.jp/documents/3071/kuma_20261031.pdf",
  "source_page": "https://www.city.nagano.nagano.jp/n162000/contents/p001080.html",
- "total_fy": 108,
+ "total_fy": 114,
  "unparsed": 0,
  "update_note": "長野市が、月1回(締め日の1週間ほど後)に更新します。最新の記録は、更新時点から1か月ほど遅れます。件数は、市役所・支所に寄せられた目撃と、足跡や被害などの痕跡(出没)の報告です"
 }
