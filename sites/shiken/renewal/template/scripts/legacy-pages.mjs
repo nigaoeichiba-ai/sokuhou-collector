@@ -39,6 +39,7 @@ export const config={
  'kokkoritsu':{parent:'/nyushi/',art:'family',related:['cat:university'],live:{scope:'cat:university',types:['deadline','exam','result'],limit:14,heading:'これから先の日程'},pr:'daigaku'},
  'koko':{parent:'/nyushi/',art:'family',related:[],list:'pre:koko-',pr:'koko'},
  'kaigo-hakuhyo':{parent:'/yomimono/',art:'decided',related:['ids:kaigo'],live:{scope:'ids:kaigo',types:['deadline','exam','result'],limit:6,heading:'第39回の日程'},pr:'kaigo'},
+ 'kangoshi-hakuhyo':{parent:'/yomimono/',art:'decided',related:['ids:nurse'],live:{scope:'ids:nurse',types:['deadline','exam','result'],limit:6,heading:'第116回の日程'},pr:'nurse'},
  'kangoshi-ganshu':{parent:'/yomimono/',art:'decided',related:['ids:nurse'],live:{scope:'ids:nurse',types:['deadline','exam','result'],limit:6,heading:'第116回の日程'},pr:'nurse'},
  'komuin':{parent:'/schedule/',art:'decided',related:['fam:komuin'],live:{scope:'fam:komuin',types:['deadline','exam','result'],limit:10},pr:'komuin'},
  'method':{parent:'/yomimono/',art:'decided',related:[FEATURED]},
