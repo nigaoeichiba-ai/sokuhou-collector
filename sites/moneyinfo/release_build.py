@@ -19,6 +19,13 @@ OPERATOR = "暮らしのマネー情報運営部"
 SITEMAP_NS = "http://www.sitemaps.org/schemas/sitemap/0.9"
 
 
+HTACCESS = (
+    'SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off\n'
+    'SetEnvIf Request_URI ".*" Ngx_Cache_AllCacheMode\n'
+    "RewriteEngine on\n"
+    "RewriteCond %{HTTPS} !on\n"
+    "RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]\n"
+)
 CONTACT_KINDS = ["記事の数字・内容の誤りのご指摘", "ご意見・ご要望", "広告・掲載に関するご連絡", "その他"]
 SITE_NAME = "暮らしのマネー情報"
 CONTACT_FORM_URL = BASE + "contact/"
@@ -187,6 +194,8 @@ def build(output, contact_url, review, own_contact=False):
     ET.ElementTree(sitemap).write(output / "sitemap.xml", encoding="utf-8", xml_declaration=True)
     robots = "User-agent: *\nDisallow: /\n" if review else f"User-agent: *\nAllow: /\nDisallow: /contact/\nSitemap: {BASE}sitemap.xml\n"
     (output / "robots.txt").write_text(robots, encoding="utf-8")
+    # the deploy refuses a release without .htaccess (the same file as the other sites: server cache on, http -> https)
+    (output / ".htaccess").write_text(HTACCESS, encoding="utf-8")
     print(f"{len(sitemap)} pages: {output}")
 
 

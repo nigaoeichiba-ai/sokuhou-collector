@@ -126,6 +126,15 @@ class MoneyinfoBuildTest(unittest.TestCase):
             self.assertEqual(kind, contactform._php_text(kind))   # nothing in a choice can end or alter the PHP string
         self.assertNotRegex(php, r"info@[a-z0-9-]+\.[a-z]")        # the address is built at run time, never printed
 
+    def test_the_release_has_what_the_deploy_step_demands(self):
+        """deploy.yml's Build step fails without index.html and .htaccess, and with fewer pages than data/sites.json asks for (the first deploy failed on .htaccess)."""
+        htaccess = (self.rel / ".htaccess").read_text(encoding="utf-8")
+        self.assertIn("RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]", htaccess)
+        reg = json.loads((ROOT / "data" / "sites.json").read_text(encoding="utf-8"))
+        entry = next(e for e in reg["sites"] if e["name"] == "moneyinfo")
+        self.assertGreaterEqual(len(list(self.rel.rglob("*.html"))), entry["min_pages"])
+        self.assertTrue((self.rel / "index.html").exists())
+
     def test_a_release_without_a_way_to_be_contacted_is_refused(self):
         with self.assertRaises(SystemExit):
             self.rb.build(self.tmp / "refused", None, review=False, own_contact=False)
