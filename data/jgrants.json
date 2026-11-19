@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-16T21:16:41.181494+00:00",
+ "fetched_at": "2026-11-19T21:17:01.587632+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -39,7 +39,7 @@
    "title": "農林水産物認証取得支援事業（水産認証取得支援事業）補助金"
   },
   {
-   "acceptance_end_datetime": "2027-12-31T14:59:00.000Z",
+   "acceptance_end_datetime": "2032-12-31T14:59:00.000Z",
    "acceptance_start_datetime": "2022-09-15T09:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0W2x000007Cos5EAC",
    "id": "a0W2x000007Cos5EAC",
