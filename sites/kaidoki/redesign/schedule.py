@@ -26,7 +26,7 @@ REGULAR_TO = date(2027, 6, 30)                   # ... and up to this day (a cam
 VERIFIED = REVERIFIED                             # the day the entries below were read again (gen/common.py: one value for the top page, the tiles and the calendars)
 
 MALLS = {"rakuten": ("楽天市場", "楽"), "amazon": ("Amazon", "A"), "yahoo": ("Yahoo!ショッピング", "Y")}      # the three malls: each has its own calendar page
-SEGMENTS = {"mall": "大型モール", "ec": "そのほか大手EC", "brand": "ブランド公式EC", "web": "WEBサービス"}
+SEGMENTS = {"mall": "大型モール", "ec": "そのほか大手EC", "brand": "ブランド直販EC", "web": "WEBサービス"}
 # every shop the calendar lists: id -> (name, one letter for the grid, segment).  A shop is listed only when a sale of it is confirmed (the malls: or expected).
 ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "mall"), "yahoo": ("Yahoo!ショッピング", "Y", "mall"),
        "yamada": ("ヤマダウェブコム", "ヤ", "ec"), "nitori": ("ニトリ", "ニ", "brand"), "dyson": ("ダイソン", "ダ", "brand"), "playstation": ("PlayStation公式", "P", "brand"),

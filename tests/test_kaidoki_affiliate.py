@@ -174,7 +174,9 @@ class CoverageTest(unittest.TestCase):
         bad = r"公式|オフィシャル|ポイント還元|[0-9]+%"
         self.assertNotRegex(shown, bad)
         for wrong in ("オルビス公式オンラインショップのページを見る", "オルビスオフィシャルサイト", "最大30%ポイント還元"):      # the check does catch the words
-            self.assertRegex(wrong, bad)
+            self.assertRegex(wrong, bad)
+        from sites.kaidoki.redesign import schedule as _S      # the segment name shown on the Orbis row must not carry 「公式」 either
+        self.assertNotRegex(_S.SEGMENTS[_S.ENT["orbis"][2]], bad)
         self.assertNotRegex(text, r"クーポン|ポイントバック|還元")      # DHC: no coupon is introduced; only the dates stand on the page
 
 

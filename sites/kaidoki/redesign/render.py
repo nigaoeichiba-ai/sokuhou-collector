@@ -604,7 +604,7 @@ def cal_howto() -> str:
 
 def calendar_page_body(ctx: "Ctx") -> str:
     cards = article_cards([{"href": schedule.CAL_PATH[m], "title": MALL_CAL_TEXT[m][0], "description": MALL_CAL_TEXT[m][2], "label": "モール別"} for m in schedule.MALLS])
-    return ('<div class="wrap page-content cal-wrap">' + notice("日付ごとに、楽天・Amazon・Yahoo!ショッピングと、そのほかの大手EC・ブランド公式EC・WEBサービスのセールを、1つのカレンダーに並べています。赤い●は確定、破線の◇は例年の予想です。") + cal_howto()
+    return ('<div class="wrap page-content cal-wrap">' + notice("日付ごとに、楽天・Amazon・Yahoo!ショッピングと、そのほかの大手EC・ブランド直販EC・WEBサービスのセールを、1つのカレンダーに並べています。赤い●は確定、破線の◇は例年の予想です。") + cal_howto()
             + '<section class="content-block"><h2>これから開かれる企画</h2>' + schedule.upcoming_table(ctx.sched, None, ctx.at.date()) + "</section>"
             + '<section class="content-block"><h2>全ショップの月間カレンダー</h2>' + cal_block(ctx, None) + "</section>"
             + '<section class="content-block"><h2>モールごとのカレンダー</h2>' + cards + "</section>"
