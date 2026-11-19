@@ -6,7 +6,9 @@
  "kuma": {
   "2026-10.jsonl": 4
  },
- "kurashi": {},
+ "kurashi": {
+  "2026-11.jsonl": 1
+ },
  "minna": {
   "2026-10.jsonl": 3,
   "req-202610.jsonl": 8
