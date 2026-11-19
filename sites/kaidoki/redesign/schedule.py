@@ -33,7 +33,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
        "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "expedia": ("エクスペディア", "旅", "web"), "yodobashi": ("ヨドバシ.com", "橋", "ec"), "bic": ("ビックカメラ", "ビ", "ec"), "gu": ("GU", "U", "brand"), "yokado": ("イトーヨーカドー", "ヨ", "ec"), "donki": ("ドン・キホーテ", "ド", "ec"), "aeon": ("イオン", "イ", "ec"), "nikon": ("ニコン", "コ", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
-       "stardomain": ("スタードメイン", "ス", "web"), "nta": ("日本旅行", "日", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand"), "lenovo": ("Lenovo公式オンラインストア", "ボ", "brand")}
+       "stardomain": ("スタードメイン", "ス", "web"), "nta": ("日本旅行", "日", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand"), "lenovo": ("Lenovo公式オンラインストア", "ボ", "brand"), "orbis": ("オルビス公式オンラインショップ", "オ", "brand")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
@@ -115,6 +115,8 @@ EXTRA_CONFIRMED += [
       note="ネット限定で、初回購入に使えるクーポンがもらえます。条件は、ヤマダウェブコムのトップページの表示にあります。"),
     C("c-lenovo-coupon", "lenovo", "Lenovo 期間限定クーポン(終了日)", "2026-11-26", "2026-11-26", f"{jpd('2026-11-26')}23時59分まで(開始日は確認していません)", "", src="広告主(Lenovo)の案内",
       note="対象の製品が決まったクーポンです。製品と条件は、Lenovo公式オンラインストアの表示にあります(広告主の案内 2026-11-18)。"),
+    C("c-orbis-wrinkle", "orbis", "オルビス ザ リンクルセラム 1周年 贅沢マスクプレゼント(終了日)", "2026-11-30", "2026-11-30", f"{jpd('2026-11-30')}まで(開始日は確認していません)", "", src=SRC_PAGE,
+      note="対象の商品を買うともらえるプレゼントの企画です。対象と条件は、オルビス公式オンラインショップの特集ページの表示にあります。"),
     C("c-sony-thanks", "sonystore", "ソニーストア Thanks Lot", "2026-10-01", "2027-01-13", _span("2026-10-01", "2027-01-13", "10:00", "10:00"), "", src=SRC_PAGE),
     C("c-google-bf", "google", "Googleストア ブラックフライデーセール", "2026-11-20", "2026-12-03", _span("2026-11-20", "2026-12-03", "07:00", "06:59"), "", src="公式ページの題名と、報道(3件が一致)"),
     C("c-asus-flash", "asus", "ASUS Store フラッシュセール", "2026-11-09", "2026-11-24", _span("2026-11-09", "2026-11-24", "", "12:00"), "", src=SRC_PAGE),

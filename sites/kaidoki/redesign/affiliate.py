@@ -53,9 +53,9 @@ STORES = {
 }
 # The shops of an ASP programme that is already ours (the programme's own landing page).
 ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", ""), "stardomain": ("a8", "stardomain", ""), "nta": ("vc", "nta", "https://www.nta.co.jp/cpn/campaign/black-friday/"),
-       "expedia": ("vctext", "expedia", ""), "lenovo": ("vctext", "lenovo", "")}      # expedia: a VC free-text ad (material 2927839, its landing page is the Black Friday page), code read from the VC tool 2026-11-17      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
+       "expedia": ("vctext", "expedia", ""), "lenovo": ("vctext", "lenovo", ""), "orbis": ("vctext", "orbis", "")}      # expedia: a VC free-text ad (material 2927839, its landing page is the Black Friday page), code read from the VC tool 2026-11-17      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
-ASP_NAME = {"happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
+ASP_NAME = {"orbis": "オルビス公式オンラインショップ", "happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
 MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).

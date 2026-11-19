@@ -11,7 +11,7 @@ GENRES: dict[str, dict] = {
     "food": {"path": "/food/", "brands": (), "amazon": "食品", "crumb": "食品・飲料"},
     "daily": {"path": "/daily/", "brands": (), "amazon": "日用品", "crumb": "日用品"},
     "fashion": {"path": "/fashion/", "brands": ("uniqlo", "zozo"), "amazon": "ファッション", "crumb": "ファッション"},
-    "beauty": {"path": "/beauty/", "brands": ("dhc",), "amazon": "美容", "crumb": "美容・健康"},
+    "beauty": {"path": "/beauty/", "brands": ("dhc", "orbis"), "amazon": "美容", "crumb": "美容・健康"},
     "home": {"path": "/home/", "brands": ("nitori",), "amazon": "インテリア", "crumb": "家具・暮らし"},
     "hobby": {"path": "/hobby/", "brands": ("playstation",), "amazon": "スポーツ アウトドア", "crumb": "趣味・レジャー"},
     "service": {"path": "/service/", "brands": ("xserver", "xdomain", "stardomain"), "amazon": "", "crumb": "WEBサービス"},

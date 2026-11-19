@@ -167,7 +167,7 @@ class CoverageTest(unittest.TestCase):
 
     def test_conditions_of_the_advertisers(self):
         text = " ".join(l["label"] for it in self.items for l in AFF.links_for(it))
-        self.assertNotIn("オルビス", text)
+        # オルビス: partnered at ValueCommerce (message of 2026-11-16), listed from 2026-11-19 with its own page link; its name is in the link text on purpose
         self.assertNotRegex(text, r"クーポン|ポイントバック|還元")      # DHC: no coupon is introduced; only the dates stand on the page
 
 
