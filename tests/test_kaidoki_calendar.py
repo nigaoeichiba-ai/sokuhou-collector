@@ -225,14 +225,16 @@ class HomeTest(unittest.TestCase):
         sl = S.hero_slides(S.all_items(), self.TODAY)
         mall = [i for i in sl if S.ENT[i["mall"]][2] == "mall"]
         self.assertGreaterEqual(len(mall), 4)
-        self.assertEqual({S.hero_kind(i) for i in mall}, {"confirmed", "announced", "expected"})      # the three kinds, each told apart
+        kinds = {S.hero_kind(i) for i in mall}
+        self.assertTrue({"confirmed", "expected"} <= kinds <= {"confirmed", "announced", "expected"})      # the kinds in use, each told apart (an announced-only sale exists only between a notice and its dates: none on 2026-11-19 after Amazon's dates came out)
         self.assertEqual([S.ENT[i["mall"]][2] for i in sl], sorted([S.ENT[i["mall"]][2] for i in sl], key=lambda x: x != "mall"))      # the malls first
         names = " ".join(i["title"] for i in sl)
-        for w in ("Yahoo!ショッピング ブラックフライデー 2026", "Amazon ブラックフライデー 2026", "楽天ブラックフライデー 2026", "楽天スーパーSALE 2026年12月", "Googleストア"):
+        for w in ("Yahoo!ショッピング ブラックフライデー 2026", "ブラックフライデー 2026 先行セール", "ブラックフライデー 2026 本セール", "楽天ブラックフライデー 2026", "楽天スーパーSALE 2026年12月", "Googleストア"):
             self.assertIn(w, names)
         self.assertEqual(h.count('<li class="hs-slide'), len(sl))                      # without the script every card is in the HTML (a column)
-        for badge in ("● 確定", "▲ 開催は発表済み・詳細待ち", "◇ 例年の予想"):
-            self.assertIn(badge, h)
+        for kind, badge in (("confirmed", "● 確定"), ("announced", "▲ 開催は発表済み・詳細待ち"), ("expected", "◇ 例年の予想")):
+            if kind in kinds:
+                self.assertIn(badge, h)
         self.assertLessEqual(len(sl) - len(mall), S.HERO_OTHERS)
         self.assertIn('aria-roledescription="カルーセル"', h)
         js = (S.__file__.replace("schedule.py", "static/scripts/calendar.js"))

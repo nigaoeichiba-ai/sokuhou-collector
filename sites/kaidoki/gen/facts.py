@@ -1,5 +1,5 @@
 """The sales this site shows: start and end read on the organiser's own announcement (read = 'text': the page opened; 'summary': the official page seen in a search result).
-Only what the organiser has published.  What it has not (Rakuten Super SALE 2026-12, Amazon Black Friday 2026, Rakuten Hatsuuri 2027) stays out and the pages say 未発表.
+Only what the organiser has published.  What it has not (Rakuten Super SALE 2026-12, Rakuten Hatsuuri 2027) stays out and the pages say 未発表.
 Hours are as the organiser writes them; '25:59' is written as the next day 1:59."""
 from __future__ import annotations
 
@@ -34,6 +34,8 @@ EVENTS = [
     E("abf-2024", "Amazon", "ブラックフライデー 2024", "2024-11-29", "00:00", "2024-12-06", "23:59", group="abf"),
     E("abf-2025", "Amazon", "ブラックフライデー 2025 本セール", "2025-11-24", "00:00", "2025-12-01", "23:59", group="abf"),
     E("abfe-2025", "Amazon", "ブラックフライデー 2025 先行セール", "2025-11-21", "00:00", "2025-11-23", "23:59", group="abfe"),
+    E("abfe-2026", "Amazon", "ブラックフライデー 2026 先行セール", "2026-11-27", "00:00", "2026-11-29", "23:59", note="一部の商品が対象(2026-11-19の発表)", group="abfe"),
+    E("abf-2026", "Amazon", "ブラックフライデー 2026 本セール", "2026-11-30", "00:00", "2026-12-07", "23:59", note="2026-11-19の発表", group="abf"),
     E("ashin-2026", "Amazon", "新生活セール 2026 本セール", "2026-03-06", "00:00", "2026-03-09", "23:59", group="ashin"),
     E("ahat-2026", "Amazon", "初売り 2026", "2026-01-03", "09:00", "2026-01-07", "23:59", note="12月27日12時から一部の商品を事前公開", group="ahat"),
     # --- Yahoo!ショッピング
@@ -61,7 +63,6 @@ YAHOO_DEC = [
 # Not announced on the organiser's own pages on CHECKED (the pages say 未発表; this list is what --stale asks to look at again).
 UNANNOUNCED = [
     ("楽天スーパーSALE 2026年12月", "楽天", "2026年の日程は確認できていません"),
-    ("Amazon ブラックフライデー 2026", "Amazon", "11月の開催は発表済み(11月5日、Amazonニュースルーム)。期間は11月19日午前に発表の予定(2026-11-12確認)"),
     ("Rakuten初売り 2027", "楽天", "日程は確認できていません"),
     ("Amazon 初売り 2027", "Amazon", "日程は確認できていません"),
     ("プライムデー 2027", "Amazon", "日程は確認できていません"),
