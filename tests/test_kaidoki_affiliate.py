@@ -167,7 +167,14 @@ class CoverageTest(unittest.TestCase):
 
     def test_conditions_of_the_advertisers(self):
         text = " ".join(l["label"] for it in self.items for l in AFF.links_for(it))
-        # オルビス: partnered at ValueCommerce (message of 2026-11-16), listed from 2026-11-19 with its own page link; its name is in the link text on purpose
+        # オルビス: partnered at ValueCommerce (advertiser condition in the ASP ledger: no 「公式」「オフィシャル」, point back up to 20%); the name itself may be shown
+        orb = [it for it in self.items if it["mall"] == "orbis"]
+        self.assertTrue(orb)
+        shown = " ".join(str(v) for it in orb for v in it.values()) + " " + " ".join(l["label"] for it in orb for l in AFF.links_for(it))
+        bad = r"公式|オフィシャル|ポイント還元|[0-9]+%"
+        self.assertNotRegex(shown, bad)
+        for wrong in ("オルビス公式オンラインショップのページを見る", "オルビスオフィシャルサイト", "最大30%ポイント還元"):      # the check does catch the words
+            self.assertRegex(wrong, bad)
         self.assertNotRegex(text, r"クーポン|ポイントバック|還元")      # DHC: no coupon is introduced; only the dates stand on the page
 
 
