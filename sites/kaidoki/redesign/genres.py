@@ -29,7 +29,7 @@ GENRE_PREFIXES = tuple(v["path"] for k, v in GENRES.items())
 
 # the programmes we are partners of, per genre: the shop's own page behind our link (no claim about a sale; the sales stay in the tables above).  ("a8" | "vctext", key, link text)
 PARTNERS: dict[str, list[tuple[str, str, str]]] = {
-    "electronics": [("vctext", "lenovo", "Lenovo公式オンラインストアを見る"), ("vctext", "minisforum", "MINISFORUMのサイトを見る")],
+    "electronics": [("vctext", "lenovo", "Lenovo公式オンラインストアを見る"), ("vctext", "minisforum", "MINISFORUMのサイトを見る"), ("a8", "happy", "家電レンタルみんなのHappyを見る(対象は東京23区など一部の地域)")],
     "food": [("a8", "oisix", "Oisixのおためしセットのページを見る"), ("vctext", "belluna", "ベルーナグルメのサイトを見る")],
     "beauty": [("vctext", "orbis", "オルビスのサイトを見る")],
     "fashion": [("vctext", "daimaru", "大丸松坂屋オンラインストアを見る")],
