@@ -165,6 +165,21 @@ class CoverageTest(unittest.TestCase):
         self.assertIn("valuecommerce", text)
         self.assertTrue(all("ヤマダデンキ" in l["label"] and "ウェブコム" not in l["label"] for l in links))
 
+    def test_randoseru_has_one_link_to_each_mall_with_the_pr_mark(self):
+        from sites.kaidoki.redesign import render as R
+        h = R.page_affiliate("/randoseru/")
+        anchors = re.findall(r'<a [^>]*href="([^"]+)"[^>]*target="_blank"[^>]*rel="([^"]*)"[^>]*>([^<]*)', h)
+        self.assertEqual(len(anchors), 3)
+        for href, rel, text in anchors:
+            self.assertEqual(rel, "nofollow sponsored noopener")
+            self.assertNotIn("http", text)
+            self.assertTrue(text.endswith("を見る"), text)
+        self.assertIn("hb.afl.rakuten.co.jp", anchors[0][0])
+        self.assertIn("tag=amazonmacs-22", anchors[1][0])
+        self.assertIn("valuecommerce.com", anchors[2][0])
+        self.assertEqual(h.count('class="pr-chip"'), 4)      # three lines + the disclosure sentence
+        self.assertEqual(R.page_affiliate("/kaden/pc/"), "")
+
     def test_conditions_of_the_advertisers(self):
         text = " ".join(l["label"] for it in self.items for l in AFF.links_for(it))
         # オルビス: partnered at ValueCommerce (advertiser condition in the ASP ledger: no 「公式」「オフィシャル」, point back up to 20%); the name itself may be shown

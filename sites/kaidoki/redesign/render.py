@@ -387,6 +387,31 @@ def split_sections(rest: str):
     return parts[0].strip(), [(parts[i], parts[i + 1].strip()) for i in range(1, len(parts) - 1, 2)], tail.strip()
 
 
+PAGE_AFFILIATE = {
+    "/randoseru/": ("次の行動は、展示会のあとに売り場で比べること", "ランドセルは、専門店やメーカーの直販のページでも買えます。展示会などで候補を決めたあとに、価格や在庫を比べたいときは、モールの売り場でも探せます。モールの価格や在庫は、このページには載せていません。",
+                    ("rakuten", "https://search.rakuten.co.jp/search/mall/%E3%83%A9%E3%83%B3%E3%83%89%E3%82%BB%E3%83%AB/", "楽天のランドセル売り場を見る"),
+                    ("amazon_s", "ランドセル", "Amazonのランドセル売り場を見る"),
+                    ("yahoo", "https://shopping.yahoo.co.jp/search?p=%E3%83%A9%E3%83%B3%E3%83%89%E3%82%BB%E3%83%AB", "Yahoo!ショッピングのランドセル売り場を見る")),
+}
+
+
+def page_affiliate(path: str) -> str:
+    """A page's own 'next action' block: the malls' sales floors for what the page is about, each link on its own line with the PR mark (never one mall's link beside another's)."""
+    spec = PAGE_AFFILIATE.get(path)
+    if not spec:
+        return ""
+    title, text, *items = spec
+    links = []
+    for kind, target, label in items:
+        if kind == "rakuten":
+            links.append(affiliate._link("rakuten", affiliate.rakuten_href(target), label))
+        elif kind == "amazon_s":
+            links.append(affiliate._link("amazon", affiliate.amazon_search_href(target), label))
+        else:
+            links.append(affiliate._link("vc", affiliate.vc_href(affiliate.VC_PID["yahoo"], target), label, "yahoo"))
+    return f'<section class="content-block"><h2>{e(title)}</h2><p>{e(text)}</p>' + affiliate.lines(links) + affiliate.disclosure() + "</section>"
+
+
 def kit_doc(ctx, path: str, rest: str) -> str:
     """A page's text in the kit's article layout (templates/article.html): intro, table of contents (long articles), content blocks, 'also read' cards, the source line as a notice."""
     if not rest.strip():
@@ -406,7 +431,7 @@ def kit_doc(ctx, path: str, rest: str) -> str:
     if kind in ("analysis", "article") and len(toc_items) >= 4:
         toc = '<nav class="toc" aria-label="目次"><strong>この記事の内容</strong><ol>' + "".join(f'<li><a href="#part-{i}">{t}</a></li>' for i, t in enumerate(toc_items)) + "</ol></nav>"
     meta = f'<div class="notice source-notice">{tail}</div>' if tail else ""
-    return f'<div class="wrap page-content doc"><article class="reading-column">{kit_body(intro)}{toc}{blocks}{meta}</article>{related}</div>'
+    return f'<div class="wrap page-content doc"><article class="reading-column">{kit_body(intro)}{toc}{blocks}{page_affiliate(path)}{meta}</article>{related}</div>'
 
 
 def home_more(ctx, answer: str, rest: str) -> tuple[str, str]:
