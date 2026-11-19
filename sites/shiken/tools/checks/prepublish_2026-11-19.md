@@ -26,3 +26,6 @@
 
 ## 追記(同日2回目)
 - /exams/takken/ と /exams/nurse/ に、新ページ3本へのリンク文を追加(exam-details-data.js)。新しい数字・日付なし。判定: テストが通ったので公開する。tests/run_tests.py --site shiken: exit 0。
+
+## 追記(同日3回目): トップに「新しい特集」欄(窓口の判断)
+- build-site.mjs が、legacy/*.json の published(記事データ)から新しい順に6本を自動で出す。手書きなし。既存の部品(catalog-cards)。tests に、最新日の記事がトップに出る検査を追加。新しい数字・日付の文章なし。判定: テストが通ったので公開する。tests/run_tests.py --site shiken: exit 0(996件)。

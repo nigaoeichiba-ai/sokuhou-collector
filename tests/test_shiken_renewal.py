@@ -247,6 +247,23 @@ class Renewal(unittest.TestCase):
             self.assertNotRegex(text_of(h), r"あと\s*\d+\s*日", rel)
 
     # --- links ------------------------------------------------------------------------------------------------------------------------
+    def test_the_top_page_lists_the_newest_dated_articles_from_the_data(self):
+        # the newest articles (legacy/*.json "published") come to the top page by themselves; nothing on the top page is typed by hand
+        legacy = Path(__file__).resolve().parents[1] / "sites" / "shiken" / "renewal" / "template" / "legacy"
+        dated = []
+        for f in legacy.glob("*.json"):
+            d = json.loads(f.read_text(encoding="utf-8"))
+            if d.get("published") and d.get("kind") == "article":
+                dated.append((d["published"], f.stem))
+        dated.sort(key=lambda x: (x[0], ), reverse=True)
+        self.assertTrue(dated, "no article has a published day")
+        newest_day = dated[0][0]
+        top = self.pages["index.html"]
+        self.assertIn('id="new-articles"', top)
+        for day, slug in dated:
+            if day == newest_day:
+                self.assertIn(f'href="/{slug}/"', top, f"the newest article /{slug}/ is not on the top page")
+
     def test_no_page_is_an_orphan_and_the_lists_reach_every_exam(self):
         links: dict[str, set] = {}
         for rel, h in self.pages.items():
