@@ -6272,6 +6272,510 @@
   "unchanged": 69,
   "units": 93
  },
+ "gift/longevity-grandfather/index.html": {
+  "accepted": [
+   {
+    "from": "祖父への長寿祝いプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "祖父への長寿祝いプレゼント、人気の4点",
+    "why": "語の重なりを整理"
+   },
+   {
+    "from": "和菓子は賞味期限、個包装、硬さを見て、祝いの日に間に合う配送日を指定する。",
+    "kind": "item",
+    "to": "和菓子は賞味期限、個包装、硬さを確かめます。祝いの日に間に合う配送日も指定します。",
+    "why": "論点を二文に分けた"
+   },
+   {
+    "from": "孫や家族の写真を飾れるので、長寿のお祝いの日の記憶を毎日見える形にできます。",
+    "kind": "para",
+    "to": "孫や家族の写真を飾り、長寿祝いの日の記憶を毎日見返せます。",
+    "why": "不自然な複合表現を修正"
+   }
+  ],
+  "date": "2026-11-20",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 同じ3品の特徴が複数の節で繰り返され、理由3つ・選び方3つの型が内容より前に出ています。",
+   "具体: 「喜ばれやすい」「ぴったり」「この場面」など、判断の根拠や対象が分かりにくい語が残っています。",
+   "リズム: 一文に条件を重ねた説明と似た文末が続き、商品ごとの差が読み取りにくくなっています。"
+  ],
+  "failed": "",
+  "hash": "7af7811d6b45",
+  "needs_check": [
+   {
+    "question": "老いをからかう表現や年齢だけを強調する演出を避ける理由が本文にないため、掲載する根拠を確認してください。",
+    "text": "老いをからかう表現や年齢だけを強調する演出は避けます"
+   }
+  ],
+  "page": "gift/longevity-grandfather/index.html",
+  "rejected": [
+   {
+    "after": "祖父の長寿祝いは年齢を大きく掲げるより、家族で囲む食卓や毎日使える品を大切にします。湯呑み、甚平、和菓子に写真や手紙を添えると祝いの日の記憶が残ります。",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "祖父の長寿祝いは年齢を大きく掲げるより、家族で食卓を囲む時間や毎日の使いやすさを大事にしたいです。湯呑み、甚平、和菓子の"
+   },
+   {
+    "after": "祖父の長寿祝いは年齢を大きく掲げるより、家族で囲む食卓や毎日使える品を大切にします。湯呑み、甚平、和菓子に写真や手紙を添えると祝いの日の記憶が残ります。家族が集",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['後']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "祖父の長寿祝いは年齢を大きく掲げるより、家族で食卓を囲む時間や毎日の使いやすさを大事にしたいです。湯呑み、甚平、和菓子の"
+   },
+   {
+    "after": "長寿祝いの日を登録する(たいせつな日メモに登録)",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['長寿祝']"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "after": "3つの品の特徴",
+    "problems": [
+     "numbers differ: [] -> ['3']"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "湯呑みはお茶を飲む祖父に使ってもらいやすい品です。名前入りなら、食卓でも長寿祝いの品だと伝わります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['長寿祝', '品']"
+    ],
+    "text": "湯呑みはお茶を飲む習慣がある祖父に使ってもらいやすく、名前入りなら食卓で特別感が出ます。"
+   },
+   {
+    "after": "甚平は家でくつろぐときや夏の集まりに涼しく着られます。家族写真にも祝いの日らしさが残ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日']"
+    ],
+    "text": "甚平は家でくつろぐ時間や夏の集まりに室内で涼しく着られ、家族写真にも祝いの雰囲気が残ります。"
+   },
+   {
+    "after": "和菓子は家族が集まる祝いの席で分けやすい品です。個包装を選び、柔らかさや甘さを祖父に合わせると食べやすくなります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖父']"
+    ],
+    "text": "和菓子は家族で集まる祝いの席で分けやすく、個包装で柔らかさや甘さを選べば食べやすくできます。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "4点の違いを図で見る",
+    "problems": [
+     "numbers differ: [] -> ['4']"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから祖父の長寿祝いに合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖父', '長寿祝']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "シングルモルトスコッチの定番でギフトボックス入りです。お酒を飲む祖父への贈り物に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖父', '贈']"
+    ],
+    "text": "シングルモルトスコッチの定番でギフトボックスに入っています。お酒を飲む人へ。"
+   },
+   {
+    "after": "祖父の好きなもの、趣味、年齢などを一言で入力してください。条件に近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖父', '入力', '条件']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "贈る前に確認する2点",
+    "problems": [
+     "numbers differ: [] -> ['2']"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月20日 9:56時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "湯呑みは重さ、持ち手、口当たり、文字の見やすさを家族と確かめます。",
+    "problems": [
+     "condition dropped: 「重すぎないか」という重さの条件が落ちています。"
+    ],
+    "text": "湯呑みは重すぎないか、持ち手や口当たり、文字の見やすさを家族と確認する。"
+   },
+   {
+    "after": "甚平は普段の服のサイズを家族に聞きます。素材と脱ぎ着しやすい前開きも確かめます。",
+    "problems": [
+     "condition dropped: 素材について「脱ぎ着しやすい」という条件が落ちています。"
+    ],
+    "text": "甚平は普段の服のサイズを家族に聞き、脱ぎ着しやすい前開きや素材を選ぶ。"
+   },
+   {
+    "after": "この条件に合う商品はありません。条件を減らすか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "added claim/hedge removed: 「見つからなかった」を、商品自体が「ない」と言い切っています。"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "after": "操作が難しい電子機器は使い方を説明して渡します",
+    "problems": [
+     "added claim: 避けるべき行為から、電子機器を説明して渡すという行為が追加されています。"
+    ],
+    "text": "操作が難しい電子機器を説明なしで渡すこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「長寿祝いの早見表…」〜「長寿祝いの早見表(還暦・古希…」の早見表を「祖父の長寿祝いは年齢を大きく…」の直後へ移し、年齢・色・金額・表書きを先に確認できる構成にします。",
+   "「喜ばれやすい理由…」〜「和菓子は賞味期限、個包装、硬…」の特徴と選び方を「祖父への還暦・長寿祝い、品物…」〜「楽天市場で「フォトフレーム …」の品物別説明へ統合すると、湯呑み、甚平、和菓子の説明の重複を減らせます。",
+   "「気をつけたいこと…」〜「操作が難しい電子機器を説明な…」は商品を選ぶ前に読みたい内容なので、「祖父への長寿祝いプレゼント、…」の商品紹介より前へ移します。"
+  ],
+  "unchanged": 64,
+  "units": 89
+ },
+ "gift/longevity-grandmother/index.html": {
+  "accepted": [
+   {
+    "from": "祖母の長寿祝いは赤い色や年齢を前面に出すより、家族で囲む席に華やぎを足す贈り物が似合います。花、和菓子、薄手のストールなら写真にも残り、持ち帰りや収納の負担も小さめです。離れて暮らす孫からなら、当日の電話や手紙も一緒に添",
+    "kind": "note",
+    "to": "祖母の長寿祝いには、赤い色や年齢を前面に出す品より家族の席を明るくする花、和菓子、薄手のストールが向きます。写真に残しやすく、持ち帰りや収納の手間も少なめです。離れて暮らす孫なら、当日の電話や手紙も添えます。",
+    "why": "結論を先にして文を完結"
+   },
+   {
+    "from": "祖母へ贈る長寿祝い、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "祖母への長寿祝い 種類別に選ぶ人気の4点",
+    "why": "語の重なりを整理"
+   },
+   {
+    "from": "上生菓子や羊羹の詰め合わせは、祖母が後日お茶の時間に少しずつ楽しめて、来客にも出しやすい品です。",
+    "kind": "item",
+    "to": "上生菓子や羊羹の詰め合わせは、祖母が後日のお茶の時間に少しずつ楽しめます。来客にも出しやすい品です。",
+    "why": "一文一論点に分ける"
+   },
+   {
+    "from": "祖母への還暦・長寿祝い、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "祖母への還暦・長寿祝い 花・和菓子・ストール・湯呑み",
+    "why": "品名が分かる見出しに"
+   }
+  ],
+  "date": "2026-11-20",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 品を選ぶ理由と4つの提案に重複があり、確認事項より商品案内が長く続きます。",
+   "見出し: 「こんな贈り方はどうでしょう」「どんなタイプ？」では、節の中身が分かりません。",
+   "具体: 「ぴったり」「負担」などの抽象語が一部に残り、操作や確認事項が伝わりにくくなっています。"
+  ],
+  "failed": "",
+  "hash": "36a3d1f6698c",
+  "needs_check": [
+   {
+    "question": "「テレビにつなぐと動画配信サービスを大画面で見られます」はAmazon Fire HD 10 タブレットの説明ではなく、別商品の説明に見えます。対応する商品名と配置を確認してください。",
+    "text": "テレビにつなぐと動画配信サービスを大画面で見られます。テレビと無線LANがある家で使えます。"
+   }
+  ],
+  "page": "gift/longevity-grandmother/index.html",
+  "rejected": [
+   {
+    "after": "LINEの自分だけのトークか、自分宛てのメールに送るとあとでスマホから見返せます。",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "あとでスマホから見返すなら、LINEの自分だけのトークか、自分宛てのメールに送れます。"
+   },
+   {
+    "after": "価格・在庫は2026年11月20日 9:56時点です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格や販売可能情報は変更される場合があります。購入に",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月20日 9:56時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "4つの提案を図で比べる",
+    "problems": [
+     "numbers differ: [] -> ['4']"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから祖母の長寿祝いに合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖母', '長寿祝']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "祖母について一言教えてください(好きなもの、趣味、年齢など)。入力内容に合う商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖母', '入力内容']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "大きく重い品や片付けに困る飾り物は置き場所を家族に確認してから贈ります",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場所', '家族']"
+    ],
+    "text": "大きく重い品や片付けに困る飾り物を確認なしで贈らないようにします"
+   },
+   {
+    "after": "祖母の長寿祝いには、家族で囲む席を明るくする花、和菓子、薄手のストールが向きます。赤い色や年齢を前面に出す品より写真に残しやすく、持ち帰りや収納の手間も少なめで",
+    "problems": [
+     "added claim: 花などが赤い色や年齢を強調する品より写真に残しやすく負担が少ない、という比較が足されています。"
+    ],
+    "text": "祖母の長寿祝いは赤い色や年齢を前面に出すより、家族で囲む席に華やぎを足す贈り物が似合います。花、和菓子、薄手のストールな"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「喜ばれやすい理由…」〜「軽いストールは通院や近所への…」の理由を「祖母への還暦・長寿祝い、こん…」〜「楽天市場で「名入れ 湯呑み …」の各提案へ統合し、同じ利点の繰り返しを減らす。",
+   "「選び方のポイント…」〜「ストールは首元に当たる素材を…」の選び方と「気をつけたいこと…」〜「大きく重い品や片付けに困る飾…」の注意点を商品一覧より前にまとめ、確認事項を読んでから候補を選べる順にする。"
+  ],
+  "unchanged": 68,
+  "units": 86
+ },
+ "gift/mothers-day-grandmother/index.html": {
+  "accepted": [
+   {
+    "from": "祖母への母の日は孫や子ども世代からの近況が伝わると品物以上に温かい時間になります。花、和菓子、ストールは写真を添えて贈りやすく、施設や遠方の家へ送る時も量や重さを調整しやすい組み合わせです。電話や手紙を添えると誰から届いたかがはっきりして会話も生まれます。",
+    "kind": "para",
+    "to": "祖母への母の日には、花、和菓子、ストールに写真を添えると品物だけでなく近況も伝えられます。施設や遠方の家へ送るときは量や重さを調整しやすい組み合わせです。電話や手紙も添えると誰から届いたかが分かり、会話のきっかけになります。",
+    "why": "結論と品名を先にした"
+   },
+   {
+    "from": "母の日にみんなはいくらで何を贈る？",
+    "kind": "heading",
+    "to": "母の日にプレゼントを贈る人と選ぶ品",
+    "why": "掲載データに合わせた"
+   }
+  ],
+  "date": "2026-11-20",
+  "deleted": [
+   "喜ばれやすい理由",
+   "小ぶりな花のアレンジメントは、玄関や食卓に置きやすく、施設の部屋にも持ち込みやすい大きさにできます。",
+   "和菓子はお茶の時間に合わせやすく、同居家族や訪問した親戚と少しずつみんなで温かく分け合えます。",
+   "軽いストールは外出や通院の時に一枚羽織れて、季節の変わり目にも使いやすい身近な贈り物です。"
+  ],
+  "diagnosis": [
+   "構成: 品物を勧める理由が商品案内で繰り返され、理由3つの型が前に出ています。",
+   "具体: 「温かい時間」「季節の明るさ」「次の一歩」など、品物や行動が分からない表現があります。",
+   "見出し: 調査内容と合わない問いや、節の中身が分からない見出しが残っています。"
+  ],
+  "failed": "",
+  "hash": "62f487a85955",
+  "needs_check": [
+   {
+    "question": "「人気」の根拠となる販売数や集計データがあるか確認してください。",
+    "text": "祖母への母の日プレゼント、種類の違う人気の4点"
+   },
+   {
+    "question": "祖母向けのページで「妻の役割」となっています。別ページの文が混ざったものか確認してください。",
+    "text": "家事用品だけを贈ると、家事を妻の役割として押しつけた印象になることがあります"
+   }
+  ],
+  "page": "gift/mothers-day-grandmother/index.html",
+  "rejected": [
+   {
+    "after": "母の日の調査結果をくわしく見る(データ室)",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日']"
+    ],
+    "text": "調査の数字をくわしく見る(データ室)"
+   },
+   {
+    "after": "予算や種類を選ぶと下の商品から条件に合うものだけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "祖母への母の日に選ぶ4つの品",
+    "problems": [
+     "numbers differ: [] -> ['4']"
+    ],
+    "text": "祖母への母の日、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "小ぶりな花のアレンジメントなら、玄関や食卓、施設の部屋に置きやすく、遠方の家にも季節の花を送れます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['アレンジメント', '花']"
+    ],
+    "text": "玄関や食卓に置きやすく、施設の部屋や遠方の家にも季節の明るさを届けられます。"
+   },
+   {
+    "after": "和菓子はお茶の時間に少しずつ食べられ、同居する家族や訪ねてきた親戚とも分けられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['和菓子']"
+    ],
+    "text": "お茶の時間に少しずつ食べられ、同居家族や訪問した親戚とも分けやすいです。"
+   },
+   {
+    "after": "軽いストールは外出や通院の時に一枚羽織れ、季節の変わり目にも使えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ストール']"
+    ],
+    "text": "外出や通院の時に一枚羽織れて季節の変わり目にも使いやすい身近な品です。"
+   },
+   {
+    "after": "名入れの湯呑みは毎日のお茶に使え、孫や子ども世代から贈られた品として手元に残ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名入', '湯呑']"
+    ],
+    "text": "毎日のお茶の時間に使えるので、孫や子ども世代からの気持ちが手元に残ります。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから祖母への母の日に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['祖母', '母', '日']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "おばあちゃんの好きなものや趣味、年齢を入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "大きく重い品や片付けに困る飾り物は置き場所を確認してから贈ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場所']"
+    ],
+    "text": "大きく重い品や片付けに困る飾り物を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月20日 9:56時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "ストールは重さと洗濯表示を確認し、家族写真を見ながら顔色が明るく見える色を選ぶ。",
+    "problems": [
+     "added claim: 色を「考える」から実際に「選ぶ」へ強めている"
+    ],
+    "text": "ストールは重さと洗濯表示を確認し、顔色が明るく見える色を家族写真から考える。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "迷ったときの次の一歩"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「母の日にみんなはいくらで何を…」〜「調査の数字をくわしく見る(デ…」を「祖母への母の日は孫や子ども世…」の直後へ移し、調査結果を見てから商品候補へ進む順にする。",
+   "「気をつけたいこと…」〜「大きく重い品や片付けに困る飾…」を「選び方のポイント…」〜「ストールは重さと洗濯表示を確…」の直後へ移し、選び方、注意点、商品比較の順にする。",
+   "「喜ばれやすい理由…」〜「軽いストールは外出や通院の時…」の内容は「玄関や食卓に置きやすく、施設…」、「お茶の時間に少しずつ食べられ…」、「外出や通院の時に一枚羽織れて…」と重なるため、後半の商品案内にまとめる。"
+  ],
+  "unchanged": 62,
+  "units": 89
+ },
  "gift/mothers-day-wife/index.html": {
   "accepted": [
    {
