@@ -352,6 +352,17 @@ class Renewal(unittest.TestCase):
         # negative case: an indexed page is recognised as not noindex
         self.assertNotIn("noindex", re.search(r'name="robots" content="([^"]*)"', self.pages["exams/gyosei/index.html"]).group(1))
 
+    def test_pattern_exam_pages_open_with_their_own_dates(self):
+        # Search Console (2026-11-20): 80 exam pages crawled-not-indexed; the prefecture/round pages shared most of their sentences, so each now states its own dates in the first view
+        for rel in ("exams/koko-aomori/index.html", "exams/koko-tokyo/index.html", "exams/eiken-2026-1/index.html", "exams/kanken-2027-02-14/index.html"):
+            self.assertIn('class="ed-own-dates"', self.pages[rel], rel)
+        a = re.search(r'class="ed-own-dates">(.*?)</p>', self.pages["exams/koko-aomori/index.html"]).group(1)
+        b = re.search(r'class="ed-own-dates">(.*?)</p>', self.pages["exams/koko-tokyo/index.html"]).group(1)
+        self.assertNotEqual(a, b)                 # the sentence differs from page to page
+        self.assertRegex(a, r"20\d\d年\d+月\d+日")
+        # negative case: a page without the sentence is recognised
+        self.assertNotIn('class="ed-own-dates"', self.pages["about/index.html"])
+
     def test_audit_items_h1_inbound_links_and_article_data(self):
         # SEO audit 2026-11-17: the h1 of the exam pages are not shared, the pages that were linked from one page only have more, the articles carry Article data
         h1s: dict[str, str] = {}

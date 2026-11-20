@@ -4,7 +4,7 @@ export function extendDetailCopy(details){
   const school=p.field==='高校入試',admission=school||p.field==='大学入試';
   const shared=(p.family==='toeic'||p.family==='eiken'||p.id.startsWith('fp1-gakka-'))?details[p.family]:null;
   const notes=p.procedureNotes||[];
-  details[p.id]={...(shared||{}),theme:admission?'peach':p.field.includes('語学')?'cream':p.field.includes('金融')?'sky':'mint',art:admission?'family':p.availability?'discover':'decided',scope:p.edition,
+  details[p.id]={...(shared||{}),autoLead:true,theme:admission?'peach':p.field.includes('語学')?'cream':p.field.includes('金融')?'sky':'mint',art:admission?'family':p.availability?'discover':'decided',scope:p.edition,
    intro:shared?.intro||(admission?'出願先や選抜の種類が決まったら、期限と当日の予定を順番に確かめておきましょう。ご本人の受ける日程に合わせて、分かるところから準備を進めてください。':'受ける回や方式が決まったら、申し込みと当日の支度を順に確認できます。ご自身に当てはまる案内か確かめながら、少しずつ準備を進めてください。'),
    focus:[p.edition,'申し込む窓口と、受付の条件','会場・時刻と当日の注意事項'],
    advice:admission?'学校の案内も、一緒に確認を':'受ける回と方式を、最初に確認',adviceBody:admission?'同じ地域や大学でも、選抜の種類や学部によって必要な手続きが違うことがあります。志望する学校の募集要項も手元に置いて、予定を確かめてみましょう。':'過去の回や、別の方式の案内と取り違えないように、実施回を確かめておきましょう。迷うところは、公式案内にある問い合わせ先へ確認してみましょう。',
