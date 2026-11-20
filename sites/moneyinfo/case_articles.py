@@ -141,6 +141,7 @@ def cards():
         f'<img src="assets/{c.get("image", c["slug"])}.webp" alt="" width="1200" height="600" loading="lazy">'
         f'<div><span class="entry-tag">{escape(c["tag"])}</span>'
         f'<h3>{escape(c["title"])}</h3><p class="case-card-amount">{escape(c["amount"])}</p>'
+        + (f'<p class="case-card-condition">{escape(c["condition"])}</p>' if c.get("condition") else "") +
         f'<p class="case-card-date">確認日 {escape(c["checked"])}</p>'
         '<span class="entry-more">記事を読む ›</span></div></a>'
         for c in CASES

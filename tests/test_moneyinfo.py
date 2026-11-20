@@ -233,6 +233,18 @@ class ConsultArticlesTest(unittest.TestCase):
         for published in ("初任給までの一人暮らしの準備", "育休から復職までの家計", "親と自分の家計を分けた準備"):
             self.assertNotIn(published, planned)       # a case that is published is not announced as "coming"
 
+    def test_a_consult_card_shows_one_amount_and_one_condition_and_the_coming_cases_are_a_list(self):
+        cases = self.page("cases")
+        for slug in ("case-first-living", "case-childbirth-leave", "case-parent-care"):
+            card = re.search(rf'<a class="case-index-card"[^>]*href="{slug}.html">(.*?)</a>', cases, re.S)[1]
+            amount = re.search(r'case-card-amount">([^<]*)<', card)[1]
+            self.assertEqual(len(re.findall(r"円", amount)), 1, amount)       # one amount, whole yen
+            self.assertEqual(card.count("case-card-condition"), 1, slug)       # one condition line
+        coming = cases.split("これから加えるモデルケース")[1]
+        self.assertIn("進学（制作予定）", coming)
+        self.assertIn("退職前後（制作予定）", coming)
+        self.assertNotIn("planned-case\"", coming)                              # not cards any more
+
     def test_the_manuscript_check_never_leaves_a_planned_ad_place_on_the_screen(self):
         import consult_articles  # the module sits next to release_build.py (put on sys.path by load_release_build)
         slots = consult_articles.affiliate_slots()

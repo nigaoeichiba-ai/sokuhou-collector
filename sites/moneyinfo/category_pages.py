@@ -60,8 +60,8 @@ def cases():
     from case_articles import cards as article_cards, case_filters
     plans=[('education','子どもの進学','学費と入学前の支払い'),('retirement','退職前後','年金を受け取るまでの資金')]
     boxes={key:box for key,_,_,box in __import__('faithful_pages').EVENTS}
-    cards=''.join(f'<div class="planned-case">{art(boxes[key],"planned-case-art")}<div><span class="entry-tag">{tag}</span><h3>{title}</h3><p class="availability">制作予定</p><a href="events.html?event={key}">関連するテーマを見る ›</a></div></div>' for key,tag,title in plans)
-    return f'<main class="wrap hub-page" id="main">{crumb("モデルケース")}{hero("モデルケース","必要なお金は環境によってそれぞれ。","お金を知れば暮らしが豊かになります。",(682,827,313,90))}<section class="hub-section" id="readable-cases">{heading("暮らしのシーンでお金を考える")}{case_filters()}<div class="case-index-grid">{article_cards()}</div><p><a href="travel-cost-average.html">帰省費用の平均と内訳を読む ›</a></p></section><section class="hub-section">{heading("これから加えるモデルケース")}<div class="planned-cases">{cards}</div></section><section class="hub-endnote"><h2>先に、費用の考え方を知りたい方へ</h2><p>世帯の条件にかかわらず、支払う時期と使える資金を分けることから始められます。</p><a href="guide.html">お金の基本を見る ›</a></section></main>'
+    cards='<ul class="planned-list">'+''.join(f'<li>{name}（制作予定）</li>' for name in ("進学","退職前後"))+'</ul>'
+    return f'<main class="wrap hub-page" id="main">{crumb("モデルケース")}{hero("モデルケース","必要なお金は環境によってそれぞれ。","お金を知れば暮らしが豊かになります。",(682,827,313,90))}<section class="hub-section" id="readable-cases">{heading("暮らしのシーンでお金を考える")}{case_filters()}<div class="case-index-grid">{article_cards()}</div><p><a href="travel-cost-average.html">帰省費用の平均と内訳を読む ›</a></p></section><section class="hub-section">{heading("これから加えるモデルケース")}{cards}</section><section class="hub-endnote"><h2>先に、費用の考え方を知りたい方へ</h2><p>世帯の条件にかかわらず、支払う時期と使える資金を分けることから始められます。</p><a href="guide.html">お金の基本を見る ›</a></section></main>'
 
 def tools_category():
     from faithful_pages import art,heading,button
