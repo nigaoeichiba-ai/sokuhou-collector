@@ -14,7 +14,7 @@ CHECKED = "2026-11-20"
 
 META = (
     {
-        "slug": "case-first-living", "file": "first-living.md", "image": "card-first-living", "timeline": "timeline-first-living",
+        "slug": "case-first-living", "hero": "hero-first-living", "hero_alt": "就職を控えた大学生が実家の食卓で賃貸物件の間取りを確認する様子", "file": "first-living.md", "image": "card-first-living", "timeline": "timeline-first-living",
         "theme": "就職・一人暮らし", "household": "単身", "tag": "新社会人・初めての一人暮らし",
         "lead": "来春に就職して一人暮らしを始めるときの初期費用は、契約・引越し・家具家電で合計52万円。貯蓄65万円から初任給までの生活費13万円を残す分け方を、収支のリストと予定表で整理します。",
         "amount": "520,000円（初期費用の合計）", "condition": "家賃7万円・敷金礼金各1か月分の契約条件で、引越しと家具・家電を含む場合",
@@ -23,7 +23,7 @@ META = (
                     ("basics-household.html", "年払いの支出を家計に入れる")),
     },
     {
-        "slug": "case-childbirth-leave", "file": "childbirth-leave.md", "image": "card-childbirth-leave", "timeline": "timeline-childbirth-leave",
+        "slug": "case-childbirth-leave", "hero": "hero-childbirth-leave", "hero_alt": "出産を控えた夫婦が赤ちゃんの服と準備のノートを確認する様子", "file": "childbirth-leave.md", "image": "card-childbirth-leave", "timeline": "timeline-childbirth-leave",
         "theme": "出産・育休", "household": "子どもが生まれる世帯", "tag": "共働き・第1子の出産前",
         "lead": "出産費用の自己負担は8万円の見込み。出産手当金と育児休業給付金は入金が後になるため、生活費2か月分ほどの手元資金で給付を待つ家計計画を、予定表と収支のリストで整理します。",
         "amount": "80,000円（出産費用の自己負担の見込み）", "condition": "出産育児一時金を差し引いた自己負担の見込み",
@@ -32,7 +32,7 @@ META = (
                     ("basics-household.html", "年払いの支出を家計に入れる")),
     },
     {
-        "slug": "case-parent-care", "file": "parent-care.md", "image": "card-parent-care", "timeline": "timeline-parent-care",
+        "slug": "case-parent-care", "hero": "hero-parent-care", "hero_alt": "母と息子が玄関先で段差と手すりの取り付け場所を相談する様子", "file": "parent-care.md", "image": "card-parent-care", "timeline": "timeline-parent-care",
         "theme": "親の介護", "household": "夫婦と親", "tag": "50代夫婦・親が要介護2",
         "lead": "親が要介護2と認定されたとき、毎月の自己負担は約1万8千円、住宅改修は最終的な自己負担が8万円の見込みで、償還払いなら支払い時に26万円が必要です。親御さんの家計と子世帯の家計を分ける考え方を、予定表と収支のリストで整理します。",
         "amount": "約18,000円（毎月の介護サービスの自己負担）", "condition": "要介護2・負担割合1割のケアプランの場合",
@@ -41,7 +41,7 @@ META = (
                     ("events.html?event=care", "介護に必要なお金のテーマを見る")),
     },
     {
-        "slug": "case-deposit-types", "file": "deposit-types.md", "image": "card-deposit-types", "timeline": "timeline-deposit-types",
+        "slug": "case-deposit-types", "hero": "hero-deposit-types", "hero_alt": "中学生のお子さまとご夫婦が食卓で進学に向けたお金について話す様子", "file": "deposit-types.md", "image": "card-deposit-types", "timeline": "timeline-deposit-types",
         "theme": "貯蓄・預金", "household": "共働き・子どもが中学生", "tag": "計算・比較型",
         "lead": "使う時期が決まっているお金は、普通預金と定期預金のどちらに置くか。300万円を1年預けた場合の利息の差は税引前で6千円です。使う時期で分ける目安と注意点を、利息の計算つきで整理します。",
         "amount": "300万円を1年預けた利息の差は税引前6千円",
@@ -149,7 +149,7 @@ def build(meta):
     return {
         "slug": meta["slug"], "image": meta["image"], "theme": meta["theme"], "household": meta["household"], "tag": meta["tag"],
         "title": d["title"], "lead": meta["lead"], "amount": meta["amount"], "condition": meta.get("condition", ""), "checked": CHECKED, "alt": meta["alt"],
-        "related": meta["related"], "points": tuple(d["points"]), "sections": (),
+        "related": meta["related"], "hero": meta["hero"], "hero_alt": meta["hero_alt"], "points": tuple(d["points"]), "sections": (),
         "consult": True, "kind": meta.get("kind", "相談型モデルケース"), "toc_html": toc,
         "body_html": note + body + foot,
     }

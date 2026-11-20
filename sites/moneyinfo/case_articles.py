@@ -188,6 +188,7 @@ def consult_article(case):
 <nav class="breadcrumbs" aria-label="パンくず"><a href="index.html">トップ</a><span>›</span><a href="cases.html">モデルケース</a><span>›</span><span aria-current="page">{escape(case["title"])}</span></nav>
 <article><header class="guide-article-header"><span class="entry-tag">{case["kind"]} · {escape(case["tag"])}</span>
 <h1>{escape(case["title"])}</h1><p>{escape(case["lead"])}</p></header>
+<figure class="consult-hero"><img src="assets/{case["hero"]}.webp" alt="{escape(case["hero_alt"], quote=True)}" width="1536" height="768" fetchpriority="high"></figure>
 <section class="model-points"><h2>この記事の要点</h2><ul>{points}</ul><p>制度・金額の確認日 {checked}</p></section>
 <nav class="guide-toc" aria-label="目次"><h2>目次</h2><ol>{case["toc_html"]}</ol></nav>
 {case["body_html"]}
