@@ -19,7 +19,7 @@ CFG = json.loads((Path(__file__).resolve().parents[1] / "config.json").read_text
 SITE_NAME = json.loads((Path(__file__).resolve().parent / "site.json").read_text(encoding="utf-8"))["name"]       # the redesign's name (config.json still has the old one)
 REL = "nofollow sponsored noopener"
 VC_SID = "3787704"
-VC_PID = {"yahoo": "892746613", "nta": "892749530", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204", "orbis": "892748240", "daimaru": "892748241", "belluna": "892748242", "ablenet": "892748243", "expedia": "892749934"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
+VC_PID = {"yahoo": "892746613", "nta": "892749530", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204", "orbis": "892748240", "daimaru": "892748241", "belluna": "892748242", "ablenet": "892748243", "expedia": "892749934", "jalan": "892753320"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
 A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+1F7FFM+CO4+6AZAQ", "www16"), "xbiz": ("4BEHX9+1GEAN6+CO4+3SZMKY", "www14"),
           # approved 2026-11-13, link codes read from the A8 tool (media 007 = this calendar).  Not yet in ASP: the calendar has no dated sale of these shops to attach them to
           # (a shop is listed only when a sale is confirmed; Alpen's Black Friday 2026 days were not published when read).  To switch on: add the shop to schedule.ENT with a confirmed entry and to ASP below.
@@ -53,9 +53,10 @@ STORES = {
 }
 # The shops of an ASP programme that is already ours (the programme's own landing page).
 ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", ""), "stardomain": ("a8", "stardomain", ""), "nta": ("vc", "nta", "https://www.nta.co.jp/cpn/campaign/black-friday/"),
+       "jalan": ("vc", "jalan", "https://www.jalan.net/theme/otoku_10days/"),      # じゃらんnet (VC programme 2021810, approved for this site 2026-11-20); MyLink code read from the VC tool 2026-11-20; only the programme's own domain
        "expedia": ("vctext", "expedia", ""), "lenovo": ("vctext", "lenovo", ""), "orbis": ("vctext", "orbis", "")}      # expedia: a VC free-text ad (material 2927839, its landing page is the Black Friday page), code read from the VC tool 2026-11-17      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
-ASP_NAME = {"orbis": "オルビス", "happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
+ASP_NAME = {"orbis": "オルビス", "happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "jalan": "じゃらんnet", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
 MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).

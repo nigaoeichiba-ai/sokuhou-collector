@@ -156,6 +156,16 @@ class CoverageTest(unittest.TestCase):
             self.assertIn("vc_url=https%3A%2F%2Fwww.nta.co.jp%2F", l["href"])      # only the programme's own domain
             self.assertIn("日本旅行", l["label"])
 
+    def test_jalan_has_its_valuecommerce_link_to_its_own_campaign_page(self):
+        links = [l for it in self.items if it["mall"] == "jalan" for l in AFF.links_for(it)]
+        self.assertTrue(links)
+        for l in links:
+            self.assertEqual(l["kind"], "vc")
+            self.assertIn("sid=3787704&pid=892753320", l["href"])
+            self.assertIn("vc_url=https%3A%2F%2Fwww.jalan.net%2F", l["href"])      # only the programme's own domain
+            self.assertIn("じゃらんnet", l["label"])
+            self.assertNotIn("http", l["label"])
+
     def test_yamada_has_its_rakuten_and_yahoo_stores(self):
         links = [l for it in self.items if it["mall"] == "yamada" for l in AFF.links_for(it)]
         self.assertGreaterEqual(len(links), 2)
@@ -191,7 +201,7 @@ class CoverageTest(unittest.TestCase):
         for wrong in ("オルビス公式オンラインショップのページを見る", "オルビスオフィシャルサイト", "最大30%ポイント還元"):      # the check does catch the words
             self.assertRegex(wrong, bad)
         from sites.kaidoki.redesign import schedule as _S      # the segment name shown on the Orbis row must not carry 「公式」 either
-        self.assertNotRegex(_S.SEGMENTS[_S.ENT["orbis"][2]], bad)
+        self.assertNotRegex(_S.SEGMENTS[_S.ENT["orbis"][2]], bad)
         self.assertNotRegex(text, r"クーポン|ポイントバック|還元")      # DHC: no coupon is introduced; only the dates stand on the page
 
 
