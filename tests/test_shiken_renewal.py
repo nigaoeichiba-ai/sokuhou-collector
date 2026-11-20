@@ -342,6 +342,16 @@ class Renewal(unittest.TestCase):
         old = "TOEIC（2027年）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。"
         self.assertNotRegex(old, r"申込の締切は20\d\d年")
 
+    def test_thin_utility_pages_are_noindex_and_out_of_the_sitemap(self):
+        # Search Console (2026-11-20): crawled-not-indexed jumped to 80; the thin fixed pages (form, privacy, change log) are kept out of the index and the sitemap
+        sm = re.findall(r"<loc>(.*?)</loc>", (self.out / "sitemap.xml").read_text(encoding="utf-8"))
+        for rel in ("contact/index.html", "privacy/index.html", "corrections/index.html"):
+            self.assertIn("noindex,follow", self.pages[rel], rel)
+            self.assertNotIn("https://shiken-nittei.com/" + rel.replace("index.html", ""), sm, rel)
+        self.assertIn("index,follow", self.pages["about/index.html"])
+        # negative case: an indexed page is recognised as not noindex
+        self.assertNotIn("noindex", re.search(r'name="robots" content="([^"]*)"', self.pages["exams/gyosei/index.html"]).group(1))
+
     def test_audit_items_h1_inbound_links_and_article_data(self):
         # SEO audit 2026-11-17: the h1 of the exam pages are not shared, the pages that were linked from one page only have more, the articles carry Article data
         h1s: dict[str, str] = {}

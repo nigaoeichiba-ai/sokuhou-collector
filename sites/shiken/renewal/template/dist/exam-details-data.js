@@ -27,6 +27,17 @@ export const examDetails={
 };
 
 extendDetailCopy(examDetails);
+if(examDetails['gyosei']){Object.assign(examDetails['gyosei'],{seoTitle:'行政書士試験 2026年度の日程｜試験日11月8日・合格発表2027年1月27日｜資格・試験への道',seoDesc:'行政書士試験(令和8年度)は2026年11月8日に実施。合格発表は2027年1月27日、合格証の発送予定は2月12日です。申込期間・試験時間・合格発表後の手続きまで、日付つきで整理しています。'});}
+if(examDetails['kanri']){Object.assign(examDetails['kanri'],{seoTitle:'管理業務主任者試験 2026年度の日程｜試験日12月6日・合格発表1月15日｜資格・試験への道',seoDesc:'管理業務主任者試験(令和8年度)の試験日は2026年12月6日、合格発表は2027年1月15日です。申込から当日の準備、合格後の登録の流れまで、日付つきで確認できます。'});}
+if(examDetails['takken']){Object.assign(examDetails['takken'],{seoTitle:'宅建試験 2026年度の日程｜合格発表11月25日9時30分・合格後の手続き｜資格・試験への道',seoDesc:'宅建試験(2026年度)の合格発表は11月25日(水)午前9時30分です。発表の見方、合格後の登録の流れ、次年度に向けた準備を、日付つきでまとめています。'});}
+if(examDetails['kaigo']){Object.assign(examDetails['kaigo'],{seoTitle:'介護福祉士国家試験 第39回の日程｜試験日1月31日・合格発表3月23日｜資格・試験への道',seoDesc:'介護福祉士国家試験(第39回)の筆記試験は2027年1月31日、合格発表は3月23日、結果通知の発送は3月26日です。試験の流れと合格発表の見方を日付つきで確認できます。'});}
+if(examDetails['kyotsu']){Object.assign(examDetails['kyotsu'],{seoTitle:'共通テスト 2027年度の日程｜本試験1月16日・17日・成績閲覧4月1日｜資格・試験への道',seoDesc:'大学入学共通テスト(2027年度入試)の本試験は2027年1月16日・17日、成績閲覧の開始は4月1日です。Web出願から当日の持ち物、大学別出願までの流れをまとめています。'});}
+if(examDetails['shindanshi']){Object.assign(examDetails['shindanshi'],{seoTitle:'中小企業診断士試験 2026年度の日程｜第2次試験の合格発表は2027年1月13日｜資格・試験への道',seoDesc:'中小企業診断士試験(令和8年度)の第2次試験の合格発表は2027年1月13日です。第1次・第2次の日程と、受験の流れを日付つきで整理しています。'});}
+if(examDetails['toeic']){Object.assign(examDetails['toeic'],{seoTitle:'TOEIC L&R公開テスト 2027年1月10日の日程｜申込締切・認定証の発行日｜資格・試験への道'});}
+if(examDetails['fp']){Object.assign(examDetails['fp'],{seoTitle:'FP技能検定1級学科 2027年1月24日の日程｜申請締切12月1日・合格発表3月5日｜資格・試験への道',seoDesc:'FP技能検定1級学科(きんざい)の2027年1月実施回は、申請締切が2026年12月1日、試験が1月24日、学科の合格発表が3月5日です。受検票の印刷と当日の準備までまとめています。'});}
+if(examDetails['eiken']){Object.assign(examDetails['eiken'],{seoTitle:'英検 2026年度第3回の日程｜一次1月24日・二次2月28日と3月7日｜資格・試験への道',seoDesc:'英検(2026年度第3回・従来型)の一次試験は2027年1月24日、二次試験はA日程2月28日・B日程3月7日です。申込締切、合否の公開日、当日の持ち物まで確認できます。'});}
+if(examDetails['koko-tokyo']){Object.assign(examDetails['koko-tokyo'],{seoTitle:'東京都 公立高校入試 2027年度の日程｜推薦1月26日・27日、学力検査2月21日｜資格・試験への道',seoDesc:'東京都の公立高校入試(2027年度)は、推薦の検査が2027年1月26日・27日、第一次募集の学力検査が2月21日、合格発表が3月1日です。願書の締切と手続きの順番も整理しています。'});}
+if(examDetails['todai-2027']){Object.assign(examDetails['todai-2027'],{seoTitle:'東京大学 2027年度 一般選抜の日程｜第2次試験2月25日・26日、合格発表3月10日｜資格・試験への道',seoDesc:'東京大学の2027年度一般選抜は、出願の最終日が2月3日、第2次学力試験が2月25日・26日、最終合格者の発表が3月10日です。第1段階選抜の発表日までの流れをまとめています。'});}
 if(examDetails.gyosei){Object.assign(examDetails.gyosei,{advice:'いまは、結果を待っている方も',adviceBody:'令和8年度の試験は2026年11月8日に終わりました。合格発表は2027年1月27日(水)です。見方は<a href="/gyosei-hakuhyo/">行政書士試験の合格発表の見方</a>、合格後の手続きは<a href="/gyosei-toroku/">行政書士試験に合格したあとの登録</a>にまとめています。'});}
 if(examDetails.kanri){Object.assign(examDetails.kanri,{advice:'合格したあとの手続きも、いまから',adviceBody:'令和8年度の試験は2026年12月6日(日)、合格発表は2027年1月15日(金)です。合格後の登録・登録実務講習・主任者証の順番は、<a href="/kanri-toroku/">管理業務主任者に合格したあとの手続き</a>にまとめています。'});}
 
