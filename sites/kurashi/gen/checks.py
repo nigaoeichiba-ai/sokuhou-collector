@@ -14,6 +14,10 @@ FIRST = "2026-11-03"
 
 # day -> the pages whose dates were compared with the sources that day
 CHECKED_ON = {
+    "2026-11-20": [
+        "/nengajo/",                                          # 日本郵便の公式発表(8/31)のPDFをChrome(Google文書ビューア)で全文読んで照合した
+        "/furusato/deadline/",                                # 総務省「税金の控除について」を全文読み、寄附年と3月15日の申告を照合した(変更届の1月10日は一次未取得のまま)
+    ],
     "2026-11-16": [
         "/nengajo/",                                          # 日本郵便の公式発表(8/31)の全文を読んで照合した
         "/nenmatsu-chosei/",                                  # 国税庁の年調ソフトのページと11/15のPDFで照合した
@@ -30,6 +34,9 @@ CHECKED_ON = {
 # (day, what, how, result, note); result is "ok" (the body was read), "top" (only the top page or a list was read: never counts as "no change") or "failed".
 # A later "ok" for the same what closes a "failed"; a "top" does not.
 FETCH_LOG = [
+    ("2026-11-20", "日本郵便 2027年用年賀はがきの発行概要(2026-08-31発表のPDF)", "Chrome+Google文書ビューア", "ok", "販売11/2〜1/15・引受開始12/20・元日の目安12/27・1/3も配達。サイトと一致"),
+    ("2026-11-20", "総務省 ふるさと納税 税金の控除について", "Chrome", "ok", "3月15日までの確定申告・ワンストップ・控除の式。サイトと一致"),
+    ("2026-11-20", "マイナポータル 引越し手続(hikkoshi_top)", "WebFetch・Chrome", "failed", "403。入口からの再確認が必要"),
     ("2026-11-15", "日本郵便 年賀はがき 引受開始・差出日・販売終了", "日本郵便の2026-08-31発表(検索の引用)+NHK", "ok", "12/20・12/27・1/15。サイトと一致"),
     ("2026-11-15", "日本郵便 /newyear/", "WebFetch・Chrome", "failed", "404(ページが移動)。上の発表で代替"),
     ("2026-11-15", "国税庁 令和8年分 年末調整のしかた(101.pdf)", "Google文書ビューア経由", "ok", "変更点4項目・納期限 令和9年1月12日。サイトの記述と一致"),
