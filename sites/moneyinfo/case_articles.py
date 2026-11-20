@@ -198,8 +198,9 @@ VC = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3788870&pid="
 # approved partnerships of this site (ValueCommerce site 3788870). Only the approved, designed places carry a link.
 ADS = {
     "case-family-trip": (
-        {"pid": "892753631", "text": "国内の宿を探す",
-         "lead": "宿を別々に手配する場合は、日程と人数を決めてから、料金と取消条件を同じ基準で見比べます。条件を入れて探すには、"},
+        {"pid": "892753631", "text": "国内の宿を探す"},
+        {"pid": "892753632", "text": "ホテルを検索する"},
+        {"pid": "892753633", "text": "ホテル・旅館の予約を見る"},
     ),
 }
 
@@ -209,9 +210,9 @@ def ad_html(slug):
     if not ads:
         return ""
     items = "".join(
-        f'<p>{escape(a["lead"])}<a href="{VC}{a["pid"]}" rel="nofollow sponsored noopener" target="_blank">{escape(a["text"])}</a>から探せます。</p>'
-        for a in ads)
-    return f'<aside class="ad-box" aria-label="広告"><p class="ad-label">PR（広告）</p>{items}</aside>'
+        f'<li><a href="{VC}{a["pid"]}" rel="nofollow sponsored noopener" target="_blank">{escape(a["text"])}</a></li>' for a in ads)
+    lead = "宿を別々に手配する場合は、日程と人数を決めてから、複数のサービスで料金と取消条件を同じ基準で見比べます。条件を入れて探すときは、次のリンクが使えます。"
+    return f'<aside class="ad-box" aria-label="広告"><p class="ad-label">PR（広告）</p><p>{lead}</p><ul>{items}</ul></aside>'
 
 
 def article(case):

@@ -111,15 +111,16 @@ class MoneyinfoBuildTest(unittest.TestCase):
 
     def test_the_only_advertisement_is_the_approved_one_with_pr_rel_target_and_a_word_as_text(self):
         ads = ad_links(self.rel)
-        self.assertEqual(len(ads), 1, ads)
-        page, tag = ads[0].split(": ", 1)
-        self.assertEqual(page, "case-family-trip.html")
-        self.assertIn('rel="nofollow sponsored noopener"', tag)
-        self.assertIn('target="_blank"', tag)
-        self.assertIn("pid=892753631", tag)
-        text = re.sub(r"<[^>]+>", "", tag)
-        self.assertNotIn("http", text)
-        self.assertNotIn("JTB", text)                    # the advertiser's condition: no JTB wording of our own
+        self.assertEqual(len(ads), 3, ads)
+        for ad, pid in zip(sorted(ads), ("892753631", "892753632", "892753633")):
+            page, tag = ad.split(": ", 1)
+            self.assertEqual(page, "case-family-trip.html")
+            self.assertIn('rel="nofollow sponsored noopener"', tag)
+            self.assertIn('target="_blank"', tag)
+            self.assertIn("pid=" + pid, tag)
+            text = re.sub(r"<[^>]+>", "", tag)
+            self.assertNotIn("http", text)
+            self.assertNotIn("JTB", text)                # the advertiser's condition: no JTB wording of our own
         self.assertIn("PR（広告）", (self.rel / "case-family-trip.html").read_text(encoding="utf-8"))
 
     def test_the_outside_link_check_finds_a_planted_link(self):
