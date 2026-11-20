@@ -101,6 +101,10 @@ CASES = (
 )
 
 
+from consult_articles import CONSULT  # noqa: E402  the consultation-type articles (consult/*.md), newest first
+CASES = (*CONSULT, *CASES)
+
+
 AVERAGE = {
     "slug": "travel-cost-average", "image": "case-family-trip",
     "tag": "帰省・旅行の基礎", "theme": "帰省・旅行", "household": "",
@@ -175,7 +179,23 @@ def quote_form(slug):
 </form><noscript>入力による試算にはJavaScriptが必要です。</noscript></section>'''
 
 
+def consult_article(case):
+    points = "".join(f"<li>{escape(p)}</li>" for p in case["points"])
+    related = "".join(f'<a href="{href}">{escape(label)} ›</a>' for href, label in case["related"])
+    checked = case["checked"].replace("-", "年", 1).replace("-", "月", 1) + "日"
+    return f'''<main class="wrap model-article consult-article" id="main">
+<nav class="breadcrumbs" aria-label="パンくず"><a href="index.html">トップ</a><span>›</span><a href="cases.html">モデルケース</a><span>›</span><span aria-current="page">{escape(case["title"])}</span></nav>
+<article><header class="guide-article-header"><span class="entry-tag">{case["kind"]} · {escape(case["tag"])}</span>
+<h1>{escape(case["title"])}</h1><p>{escape(case["lead"])}</p></header>
+<section class="model-points"><h2>この記事の要点</h2><ul>{points}</ul><p>制度・金額の確認日 {checked}</p></section>
+<nav class="guide-toc" aria-label="目次"><h2>目次</h2><ol>{case["toc_html"]}</ol></nav>
+{case["body_html"]}
+<footer class="model-back"><h2>次に確認すること</h2><div class="related-grid">{related}</div><a href="cases.html#readable-cases">ほかのモデルケースを読む ›</a></footer></article></main>'''
+
+
 def article(case):
+    if case.get("consult"):
+        return consult_article(case)
     points = "".join(f"<li>{escape(p)}</li>" for p in case["points"])
     toc = "".join(f'<li><a href="#part-{i}">{escape(h)}</a></li>'
                   for i, (h, _) in enumerate(case["sections"], 1))

@@ -143,7 +143,7 @@ class MoneyinfoBuildTest(unittest.TestCase):
         """deploy.yml's Verify step counts `grep -c '<loc>'` (lines, not tags) and greps the home page for the marker: a one-line sitemap counted 1 and rolled the first deploy back."""
         lines = [l for l in (self.rel / "sitemap.xml").read_text(encoding="utf-8").splitlines() if "<loc>" in l]
         entry = next(e for e in json.loads((ROOT / "data" / "sites.json").read_text(encoding="utf-8"))["sites"] if e["name"] == "moneyinfo")
-        self.assertEqual(len(lines), 20)
+        self.assertEqual(len(lines), (self.rel / "sitemap.xml").read_text(encoding="utf-8").count("<loc>"))   # one <loc> per line
         self.assertGreaterEqual(len(lines), entry["min_pages"] - 5)
         self.assertIn(entry["marker"], (self.rel / "index.html").read_text(encoding="utf-8"))
 
@@ -163,6 +163,82 @@ class MoneyinfoBuildTest(unittest.TestCase):
     def test_the_build_does_not_overwrite_the_sources(self):
         with self.assertRaises(SystemExit):
             self.rb.build(SITE / "inside", None, review=True)
+
+
+FORBIDDEN = ("ファイナンシャルプランナー", "FP", "厚生労働省", "金利一覧", "試作", "サンプル", "〔アフィリ")   # 記事制作ルール 2026-11-20 and D26: no qualification, no source name, no production note
+CONSULT_SLUGS = ("case-first-living", "case-childbirth-leave", "case-parent-care", "case-deposit-types")
+
+
+def forbidden_in(text):
+    return [w for w in FORBIDDEN if w in text]
+
+
+def visible_text(html):
+    html = re.sub(r"<(script|style).*?</>", "", html, flags=re.S)
+    return re.sub(r"<[^>]+>", " ", html)
+
+
+class ConsultArticlesTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.tmp = Path(tempfile.mkdtemp(prefix="moneyinfo_consult_"))
+        cls.rb = load_release_build()
+        cls.rb.build(cls.tmp / "release", None, review=False, own_contact=True)
+        cls.rel = cls.tmp / "release"
+
+    @classmethod
+    def tearDownClass(cls):
+        shutil.rmtree(cls.tmp, ignore_errors=True)
+
+    def page(self, slug):
+        return (self.rel / f"{slug}.html").read_text(encoding="utf-8")
+
+    def test_the_four_articles_are_published_with_their_schedule_picture_and_lists(self):
+        for slug in CONSULT_SLUGS:
+            html = self.page(slug)
+            self.assertIn("schedule-figure", html, slug)
+            self.assertRegex(html, r'<img src="assets/timeline-[a-z-]+\.webp" alt="[^"]{10,}"', slug)   # the picture has a real alt text
+            self.assertIn("<ul>", html, slug)
+            self.assertIn("この記事の要点", html, slug)
+            self.assertIn(f"{BASE}/{slug}.html", (self.rel / "sitemap.xml").read_text(encoding="utf-8"), slug)
+            name = re.search(r'assets/(timeline-[a-z-]+\.webp)', html)
+            self.assertTrue(name and (self.rel / "assets" / name[1]).exists(), slug)
+            self.assertTrue((self.rel / "assets" / f"card-{slug[5:]}.webp").exists(), slug)      # the card and share picture
+
+    def test_the_consultation_type_shows_a_budget_as_lists_not_as_a_run_of_numbers(self):
+        for slug in ("case-first-living", "case-childbirth-leave", "case-parent-care"):
+            html = self.page(slug)
+            for heading in ("収入", "支出", "残りと資産"):
+                self.assertRegex(html, rf"<h3>[^<]*{heading}[^<]*</h3>\s*<ul>", (slug, heading))
+
+    def test_no_forbidden_word_no_source_name_no_decimal_yen_and_no_hidden_ad_marker(self):
+        for slug in CONSULT_SLUGS:
+            text = visible_text(self.page(slug))
+            self.assertEqual(forbidden_in(text), [], slug)
+            self.assertIsNone(re.search(r"\d+\.\d+円", text), slug)
+            self.assertIn("2026年11月20日", text, slug)       # the date the amounts were checked
+        self.assertNotIn("〔アフィリ", "".join(p.read_text(encoding="utf-8") for p in self.rel.rglob("*.html")))
+        self.assertEqual(external_links(self.rel), [])      # no ad before the partnership of this site is approved
+
+    def test_the_forbidden_word_check_finds_a_planted_word(self):
+        self.assertEqual(forbidden_in("ファイナンシャルプランナーが提案します。厚生労働省の案内で確認"), ["ファイナンシャルプランナー", "厚生労働省"])
+        self.assertEqual(forbidden_in("このご家庭の結論"), [])
+
+    def test_the_home_the_list_and_the_planned_cases_know_the_new_articles(self):
+        index, cases = self.page("index"), self.page("cases")
+        for slug in CONSULT_SLUGS:
+            self.assertIn(f'href="{slug}.html"', index, slug)
+            self.assertIn(f'href="{slug}.html"', cases, slug)
+        planned = cases.split("これから加えるモデルケース")[1]
+        for published in ("初任給までの一人暮らしの準備", "育休から復職までの家計", "親と自分の家計を分けた準備"):
+            self.assertNotIn(published, planned)       # a case that is published is not announced as "coming"
+
+    def test_the_manuscript_check_never_leaves_a_planned_ad_place_on_the_screen(self):
+        import consult_articles  # the module sits next to release_build.py (put on sys.path by load_release_build)
+        slots = consult_articles.affiliate_slots()
+        self.assertGreaterEqual(len(slots), 4)
+        for _, text in slots:
+            self.assertNotIn(text[:12], "".join(self.page(s) for s in CONSULT_SLUGS))
 
 
 if __name__ == "__main__":

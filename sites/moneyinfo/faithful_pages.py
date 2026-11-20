@@ -43,11 +43,13 @@ EVENTS = [
 def home():
     events=''.join(f'<a class="event-link" href="events.html?event={key}">{art(box,"event-art")}<span class="event-copy"><strong>{name}</strong><small>{lead}</small></span>{arrow()}</a>' for key,name,lead,box in EVENTS)
     from case_articles import CASES
+    # the newest four (the consultation type) and the first two of the earlier model cases: two rows of three
+    HOME_CASES = [c for c in CASES if c.get('consult')] + [c for c in CASES if not c.get('consult')][:2]
     cases = "".join(
         f'<a class="case-item" href="{case["slug"]}.html">'
-        f'<img class="case-picture case-picture-raster" src="assets/{case["slug"]}.webp" width="1200" height="600" loading="lazy" alt="">'
+        f'<img class="case-picture case-picture-raster" src="assets/{case.get("image", case["slug"])}.webp" width="1200" height="600" loading="lazy" alt="">'
         f'<div class="case-copy"><span class="tag">{escape(case["tag"])}</span><h3>{escape(case["title"])}</h3></div>{arrow()}</a>'
-        for case in CASES[:3]
+        for case in HOME_CASES
     )
     tools=''
     for url,box,title,lead in [
