@@ -27,6 +27,20 @@ REDIRECTS: dict[str, str] = {
     "tag/22504c644b": "/tag/",
     "tag/48515e3974": "/tag/",
     "illust/christmas-pixel-wreath": "/series/christmas-pixel/",   # hidden after review
+    # Search Console "見つかりませんでした(404)", 2026-11-20 (404 went 26 -> 29): keyword pages that fell out of the list, pictures hidden after review, a touch page that is gone
+    "tag/eeaec52b38": "/tag/",
+    "tag/77ae8c8900": "/tag/",
+    "tag/796fca7f06": "/tag/",
+    "tag/7d72598db4": "/tag/",
+    "illust/paper-cut-family-life-neighbor-greeting": "/series/paper-cut-family-life/",
+    "illust/paper-cut-family-life-phone-call": "/series/paper-cut-family-life/",
+    "illust/paper-cut-family-life-carrying-box": "/series/paper-cut-family-life/",
+    "illust/wheelchair-accessibility-watching-sports": "/series/wheelchair-accessibility/",
+    "illust/world-colleagues-flat-11-cheek-troubled": "/series/world-colleagues-flat/",
+    "genre/season/pixel": "/genre/season/",
+    "illust/realistic-anima": "/genre/animals/",                   # a cut-off address that Google reports (the slug stops in the middle of a word)
+    "illust/winter-nature-p": "/genre/nature/",
+    "illust/nature-reality-": "/genre/nature/",
 }
 
 
