@@ -340,6 +340,30 @@
    "href_has": [
     "a8mat=4BGJFS+FXCMIA"
    ]
+  },
+  {
+   "id": "akamaru-bousai-trend",
+   "names": [
+    "あかまる防災"
+   ],
+   "sites": [
+    "trend"
+   ],
+   "href_has": [
+    "4BEL1J+AMTW5M"
+   ]
+  },
+  {
+   "id": "sture-trend",
+   "names": [
+    "スツーレ"
+   ],
+   "sites": [
+    "trend"
+   ],
+   "href_has": [
+    "4BEL1J+ATDNT6"
+   ]
   }
  ]
 }

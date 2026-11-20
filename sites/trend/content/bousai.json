@@ -1,259 +1,262 @@
 {
-  "updated": "2026-11-07",
-  "data_basis": "2026年11月7日現在",
-  "sources": [
-    "bousaicho"
-  ],
-  "path": "/bousai/",
-  "kind": "article",
-  "parent": "/",
-  "title": "防災グッズのチェックリスト、8項目で家の備えを確認しよう",
-  "h1": "防災グッズのチェックリスト、8項目で家の備えを確認しよう",
-  "crumb": "防災グッズのチェックリスト",
-  "primary_kw": "防災グッズのチェックリスト",
-  "intent": 4,
-  "description": "防災庁の呼びかけをもとに、水・食料・携帯トイレ・ライトなど防災グッズ8項目のチェックリストと、人数別の備蓄量の早見表で、家の備えを確かめます。足りないものは、まず3日分から。",
-  "answer": "防災庁は11月2日、家庭で水と食料を最低3日分、できれば1週間分備蓄するよう呼びかけました。",
-  "sections": [
-    {
-      "html": "<p class=\"eyecatch\"><img src=\"/assets/img/bousai-header.jpg\" width=\"1600\" alt=\"今日の話題 防災特集。携帯トイレ、凝固剤、防臭袋の絵と、携帯トイレの使い方などの見出し\" fetchpriority=\"high\"></p>"
-    },
-    {
-      "paras": [
-        "大きな災害では、ライフラインの復旧に1週間以上かかることがほとんどです。その間は、スーパーやコンビニでも食品が手に入りにくくなるおそれがあります。この機会に、家の防災グッズを8項目でチェックして、足りないものを備えましょう。"
-      ]
-    },
-    {
-      "h2": "3行まとめ",
-      "paras": [
-        "確認する防災グッズは、水、食料、携帯トイレ、ライト、電池と充電器、ラジオ、雨具と防水仕様の靴、救急用品の8項目です。",
-        "水は、飲み水と調理に使う分で、1人1日3リットルが必要です。水も食料も、最低3日分、できれば1週間分を備えましょう。",
-        "足りない防災グッズは、まず3日分を備えて、ふだんの買い物で少しずつ買い足していきましょう。"
-      ]
-    },
-    {
-      "h2": "水と食料は、何日分あればいい？",
-      "paras": [
-        "水は、飲み水と調理に使う分で、1人1日3リットルが必要です。湯せんや食器を洗う水は、これとは別に必要です。1人なら、3日分で9リットル、1週間分で21リットルになります。食料も、水と同じ日数分が必要です。",
-        "早見表は、1〜5人までの水、食料、携帯トイレの備蓄の目安です。"
-      ]
-    },
-    {
-      "table": {
-        "caption": "家族の人数ごとの、水・携帯トイレ・食事の備蓄の目安",
-        "cols": [
-          "人数",
-          "水 3日分(L)",
-          "水 7日分(L)",
-          "携帯トイレ 7日分 1日5回(回)",
-          "携帯トイレ 7日分 1日6回(回)",
-          "食事 3日分(食)",
-          "食事 7日分(食)"
-        ],
-        "num_cols": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ],
-        "rows": [
-          [
-            "1人",
-            "9",
-            "21",
-            "35",
-            "42",
-            "9",
-            "21"
-          ],
-          [
-            "2人",
-            "18",
-            "42",
-            "70",
-            "84",
-            "18",
-            "42"
-          ],
-          [
-            "3人",
-            "27",
-            "63",
-            "105",
-            "126",
-            "27",
-            "63"
-          ],
-          [
-            "4人",
-            "36",
-            "84",
-            "140",
-            "168",
-            "36",
-            "84"
-          ],
-          [
-            "5人",
-            "45",
-            "105",
-            "175",
-            "210",
-            "45",
-            "105"
-          ]
-        ]
-      }
-    },
-    {
-      "h2": "防災グッズ8項目と、必要な理由",
-      "paras": [
-        "停電や断水が続くと、困るのは水と食料だけではありません。トイレ、明かり、スマホの充電、けがの手当ても必要になります。そこで、政府広報オンラインの備えの一覧をもとに、困りやすいものを8項目にまとめました。雨具と防水仕様の靴は、当サイトが加えた項目です。",
-        "水は、最も重要な備蓄の1つです。ペットボトルの水に加えて、缶入りのお茶や清涼飲料水もあると便利です。",
-        "食料は、缶詰、レトルト食品、ごはん、麺類、日持ちする野菜が基本です。災害の直後は炭水化物ばかりになりやすいので、肉や魚の缶詰があると、タンパク質もとれます。大人2人で1週間分の例は、缶詰18缶、レトルト食品24個、米2キロ×2袋、カップ麺6個、パックご飯6個です。お湯を沸かしたり、レトルト食品を温めたりできるカセットコンロとボンベも、必要な防災グッズです。ボンベは、1人あたり1週間で約6本が目安です。"
-      ]
-    },
-    {
-      "html": "<p class=\"more\"><a href=\"/bousai-mizu-shokuryo/\">水と食料の保管と期限管理のコツを読む</a></p>"
-    },
-    {
-      "paras": [
-        "携帯トイレは、断水や停電でトイレが使えなくなったときのための防災グッズで、1日5から6回×人数×7日分が必要です。買うときの目安は、1箱に何回分入っているかです。必要な回数に足りる箱数を、そろえましょう。トイレットペーパーも、同じ日数分が必要です。4人家族なら、8ロール(30mタイプ)程度が目安です。水がなくても清潔を保てるウェットティッシュ、手の消毒液、スプレータイプの消臭剤も、いっしょにそろえておきましょう。"
-      ]
-    },
-    {
-      "html": "<p class=\"more\"><a href=\"/bousai-keitai-toilet/\">携帯トイレの使い方と、使用後の保管・処理を読む</a></p>"
-    },
-    {
-      "paras": [
-        "ライトは、停電の暗さに備える防災グッズです。部屋全体を明るくするには、ランタン型が向いています。持ち歩くなら、頭につけるヘッドライトが便利です。両手があくので、荷物を持ったり、子どもや高齢の家族の手を引いたりしながら動けます。電池は、家にある電池と同じ種類にそろえると、切れたときにすぐ入れ替えられます。明るさを切り替えられるタイプなら、移動のときは明るく、休むときは暗めにして、場面に合わせて使い分けられます。"
-      ]
-    },
-    {
-      "html": "<p class=\"more\"><a href=\"/bousai-light/\">防災用ライトの選び方と置き場所を読む</a></p>"
-    },
-    {
-      "paras": [
-        "電池と充電器は、停電中もスマホを使い続けるための防災グッズです。スマホは、家族への連絡や情報の確認に欠かせません。スマホをライト代わりにして電池を減らさないよう、ライトは別にそろえておきましょう。モバイルバッテリーは、使いたいときにすぐ使えるよう、ふだんから充電しておきましょう。外出中の災害に備えて、予備バッテリーとLEDライトをバッグに入れておきましょう。"
-      ]
-    },
-    {
-      "html": "<p class=\"more\"><a href=\"/bousai-denchi-juden/\">モバイルバッテリーの容量と電池の備蓄を読む</a></p>"
-    },
-    {
-      "paras": [
-        "ラジオは、スマホの電池を使わずに情報を得られる防災グッズです。スマホとは別に、1台あると役に立ちます。",
-        "雨具と防水仕様の靴は、雨の中を移動するときのための防災グッズです。傘は片手がふさがります。急いで避難するときに手がふさがっていると危ないですし、混み合う場所では、周りの人の迷惑にもなります。両手があくレインコートと、水を通さない防水仕様の靴が向いています。",
-        "救急用品は、けがの手当てに使う防災グッズです。清浄綿、救急絆創膏、サージカルテープ、三角巾、包帯、ガーゼ、脱脂綿、消毒液などをそろえましょう。ふだん飲んでいる薬は、災害時に手に入りにくくなることがあります。薬とお薬手帳は、必ず備えておきたい防災グッズのひとつです。"
-      ]
-    },
-    {
-      "html": "<div class=\"bz\"><p class=\"lead\">家族の人数と、いま家にある量で、備えの段階を確認できます。防災庁は、水と食料を最低3日分、できれば1週間分備えるよう案内しています。</p><div class=\"panel\"><div class=\"row\"><span class=\"fam\">家族の人数</span><select id=\"fam\"><option value=\"1\">1人</option><option value=\"2\">2人</option><option value=\"3\" selected>3人</option><option value=\"4\">4人</option><option value=\"5\">5人</option><option value=\"6\">6人</option></select><span class=\"overall-count\">そろっている項目 <span id=\"count\">5</span>/8</span><span class=\"chip mid-bg\" id=\"overall-chip\" aria-live=\"polite\">最低限そろっている</span></div><div class=\"segbar\" id=\"segbar\"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p class=\"note\">段階は、目安に届いた項目の数で変わります。5項目以上で「最低限そろっている」、8項目全部で「安心」です。</p></div><h2>まず備えるもの</h2><div class=\"grid\"><div class=\"card\"><img src=\"/assets/img/status-1-water.webp\" width=\"521\" height=\"529\" loading=\"lazy\" alt=\"水の備えのイラスト\"><h3>水</h3><p class=\"basis\">飲み水は、1人1日3リットルが目安です。</p><label>2リットルのペットボトル（本数）</label><input type=\"number\" id=\"water\" value=\"14\" min=\"0\" max=\"99\"><div class=\"gauge\"><div class=\"fill mid-bg\" id=\"water-fill\"></div></div><div class=\"ticks\"><span style=\"left:42.8%\">3日分</span><span style=\"left:97%\">1週間分</span></div><div class=\"stage mid\" id=\"water-stage\">3日分ある（約3.1日分）</div></div><div class=\"card\"><img src=\"/assets/img/status-2-food.webp\" width=\"525\" height=\"529\" loading=\"lazy\" alt=\"食料の備えのイラスト\"><h3>食料</h3><p class=\"basis\">最低3日分、できれば1週間分です。</p><label>食料の備え（日数分）</label><select id=\"food\"><option value=\"0\">0日分</option><option value=\"1\">1日分</option><option value=\"2\">2日分</option><option value=\"3\" selected>3日分</option><option value=\"4\">4日分</option><option value=\"5\">5日分</option><option value=\"6\">6日分</option><option value=\"7\">7日分以上</option></select><div class=\"gauge\"><div class=\"fill mid-bg\" id=\"food-fill\"></div></div><div class=\"ticks\"><span style=\"left:42.8%\">3日分</span><span style=\"left:97%\">1週間分</span></div><div class=\"stage mid\" id=\"food-stage\">3日分ある</div></div><div class=\"card\"><img src=\"/assets/img/status-3-toilet.webp\" width=\"526\" height=\"529\" loading=\"lazy\" alt=\"携帯トイレのイラスト\"><h3>携帯トイレ</h3><p class=\"basis\">断水のとき、水洗トイレの代わりに使います。</p><label>備えの状態</label><select class=\"chk\" id=\"toilet\"><option value=\"2\" selected>そろっている</option><option value=\"1\">一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill high-bg\" id=\"toilet-fill\"></div></div><div class=\"stage high\" id=\"toilet-stage\">そろっている</div></div><div class=\"card\"><img src=\"/assets/img/status-4-light.webp\" width=\"522\" height=\"529\" loading=\"lazy\" alt=\"ライトのイラスト\"><h3>ライト</h3><p class=\"basis\">停電のときに、手元を照らします。</p><label>備えの状態</label><select class=\"chk\" id=\"light\"><option value=\"2\" selected>そろっている</option><option value=\"1\">一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill high-bg\" id=\"light-fill\"></div></div><div class=\"stage high\" id=\"light-stage\">そろっている</div></div><div class=\"card\"><img src=\"/assets/img/status-5-battery.webp\" width=\"521\" height=\"520\" loading=\"lazy\" alt=\"電池と充電器のイラスト\"><h3>電池と充電器</h3><p class=\"basis\">ライトやラジオ、スマートフォンの電源です。</p><label>備えの状態</label><select class=\"chk\" id=\"battery\"><option value=\"2\">そろっている</option><option value=\"1\" selected>一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill mid-bg\" id=\"battery-fill\"></div></div><div class=\"stage mid\" id=\"battery-stage\">一部だけそろっている</div></div></div><h2>あると安心なもの</h2><div class=\"grid\"><div class=\"card\"><img src=\"/assets/img/status-6-radio.webp\" width=\"525\" height=\"520\" loading=\"lazy\" alt=\"ラジオのイラスト\"><h3>ラジオ</h3><p class=\"basis\">停電でも、電池で情報が聞けます。</p><label>備えの状態</label><select class=\"chk\" id=\"radio\"><option value=\"2\">そろっている</option><option value=\"1\">一部だけ</option><option value=\"0\" selected>まだ</option></select><div class=\"gauge\"><div class=\"fill low-bg\" id=\"radio-fill\"></div></div><div class=\"stage low\" id=\"radio-stage\">まだそろっていない</div></div><div class=\"card\"><img src=\"/assets/img/status-7-rain.webp\" width=\"526\" height=\"520\" loading=\"lazy\" alt=\"雨具と防水仕様の靴のイラスト\"><h3>雨具と防水仕様の靴</h3><p class=\"basis\">避難や片付けのときに使います。</p><label>備えの状態</label><select class=\"chk\" id=\"rain\"><option value=\"2\" selected>そろっている</option><option value=\"1\">一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill high-bg\" id=\"rain-fill\"></div></div><div class=\"stage high\" id=\"rain-stage\">そろっている</div></div><div class=\"card\"><img src=\"/assets/img/status-8-aid.webp\" width=\"522\" height=\"520\" loading=\"lazy\" alt=\"救急用品のイラスト\"><h3>救急用品</h3><p class=\"basis\">けがの手当てに使います。</p><label>備えの状態</label><select class=\"chk\" id=\"aid\"><option value=\"2\">そろっている</option><option value=\"1\" selected>一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill mid-bg\" id=\"aid-fill\"></div></div><div class=\"stage mid\" id=\"aid-stage\">一部だけそろっている</div></div></div><p class=\"foot\">水は、1人1日3リットルで計算します。3日分と1週間分が、段階の境目です。入力した内容がサイトに送られることはありません。</p><script>\nfunction cls(stage) { return stage === 0 ? \"low\" : (stage === 1 ? \"mid\" : \"high\"); }\nfunction setGauge(id, pct, stage) {\n  var fill = document.getElementById(id + \"-fill\");\n  fill.style.width = pct + \"%\";\n  fill.className = \"fill \" + cls(stage) + \"-bg\";\n  var st = document.getElementById(id + \"-stage\");\n  st.className = \"stage \" + cls(stage);\n}\nfunction daysStage(days) { return days >= 7 ? 2 : (days >= 3 ? 1 : 0); }\nfunction update() {\n  var fam = parseInt(document.getElementById(\"fam\").value, 10);\n  var bottles = parseFloat(document.getElementById(\"water\").value) || 0;\n  var wdays = bottles * 2 / (fam * 3);\n  var ws = daysStage(wdays);\n  setGauge(\"water\", Math.min(100, wdays / 7 * 100), ws);\n  var wlabel = ws === 2 ? \"1週間分ある\" : (ws === 1 ? \"3日分ある\" : \"3日分に届いていない\");\n  document.getElementById(\"water-stage\").textContent = wlabel + \"（約\" + (Math.floor(wdays * 10) / 10).toFixed(1) + \"日分）\";\n  var fdays = parseFloat(document.getElementById(\"food\").value);\n  var fs = daysStage(fdays);\n  setGauge(\"food\", Math.min(100, fdays / 7 * 100), fs);\n  document.getElementById(\"food-stage\").textContent = fs === 2 ? \"1週間分ある\" : (fs === 1 ? \"3日分ある\" : \"3日分に届いていない\");\n  var count = (ws >= 1 ? 1 : 0) + (fs >= 1 ? 1 : 0);\n  var chkLabels = [\"まだそろっていない\", \"一部だけそろっている\", \"そろっている\"];\n  [\"toilet\", \"light\", \"battery\", \"radio\", \"rain\", \"aid\"].forEach(function (id) {\n    var v = parseInt(document.getElementById(id).value, 10);\n    setGauge(id, v * 50, v);\n    document.getElementById(id + \"-stage\").textContent = chkLabels[v];\n    if (v === 2) count += 1;\n  });\n  document.getElementById(\"count\").textContent = count;\n  var overall = count >= 8 ? 2 : (count >= 5 ? 1 : 0);\n  var chip = document.getElementById(\"overall-chip\");\n  chip.textContent = overall === 2 ? \"安心\" : (overall === 1 ? \"最低限そろっている\" : \"まだ足りない\");\n  chip.className = \"chip \" + cls(overall) + \"-bg\";\n  var segs = document.getElementById(\"segbar\").children;\n  for (var i = 0; i < segs.length; i++) {\n    segs[i].className = i < count ? (\"on-\" + cls(overall)) : \"\";\n  }\n}\n[\"fam\", \"water\", \"food\", \"toilet\", \"light\", \"battery\", \"radio\", \"rain\", \"aid\"].forEach(function (id) {\n  document.getElementById(id).addEventListener(\"change\", update);\n  document.getElementById(id).addEventListener(\"input\", update);\n});\nupdate();\n</script></div>"
-    },
-    {
-      "h2": "足りない防災グッズを、まず3日分備える",
-      "paras": [
-        "足りない防災グッズがあれば、まずは3日分を備えましょう。水と食料は、ローリングストックで備えると続けやすくなります。ローリングストックは、ふだん食べているものを少し多めに買って蓄え、食べたら買い足していく方法です。蓄える、食べる、買い足す、を繰り返します。賞味期限の古いものから食べることで、期限切れが起きにくくなります。賞味期限は、食料を入れた箱のふたや側面など、いつでも目に入る場所に書いておきましょう。",
-        "利点は、ふだん食べ慣れたものを備えるので食べやすいことと、特別な買い物がいらないことです。弱点は、買い足しを忘れると備蓄が減ったままになることと、多めに買った分の保管場所が必要なことです。",
-        "乳幼児、高齢者、持病やアレルギーのある人がいる家は、それぞれに合った食品を、最低2週間分備えておきましょう。東日本大震災では、アレルギー対応食品を1か月以上手に入れられなかった人がいます。"
-      ]
-    },
-    {
-      "html": "<aside class=\"hack\"><strong>ライフハック</strong> 収納が少ないなら、分けて保管する</aside>"
-    },
-    {
-      "html": "<aside class=\"hack\">防災グッズは、玄関の隅、クローゼットの下の段、ベッドの下など、使っていない場所に分けて保管しましょう。1か所にまとめると、その部屋に入れないとき、すべて取り出せなくなります。分けておけば、どこかは取り出せます。</aside>"
-    },
-    {
-      "paras": [
-        "避難するときに持ち出す非常用バッグ（防災リュック・持ち出し袋）は、持てる重さを超えないようにしましょう。目安は、男性で約15キロ、女性で約10キロ、子どもと高齢者で約6キロです。",
-        "水と食料、携帯トイレ、ライトなどは、次のページで詳しく説明しています。"
-      ]
-    },
-    {
-      "html": "<ul class=\"links\"><li><a href=\"/bousai-mizu-shokuryo/\">水と食料の備蓄を続ける、保管と期限管理のコツ</a></li><li><a href=\"/bousai-keitai-toilet/\">携帯トイレの使い方と、使用後の保管・処理のしかた</a></li><li><a href=\"/bousai-light/\">防災用ライトの選び方</a></li><li><a href=\"/bousai-denchi-juden/\">防災用モバイルバッテリーの容量の目安と、電池の備蓄</a></li></ul>"
-    },
-    {
-      "h2": "3日分から1週間分へ、増やす順番",
-      "paras": [
-        "備えは、一度にそろえなくても進められます。順番は次のとおりです。"
-      ]
-    },
-    {
-      "html": "<ol><li>8項目のチェックで、足りないものを確認する</li><li>足りないものは、まず3日分をそろえる。水は1人9リットル、食事は1人9食が目安</li><li>ふだんの買い物でローリングストックを回し、古いものから食べて、食べた分を買い足す</li><li>3日分が回るようになったら、1週間分まで増やす。水は1人21リットル、食事は1人21食が目安</li><li>乳幼児、高齢者、持病やアレルギーがある家族がいる家は、合った食品を最低2週間分にする</li></ol>"
-    },
-    {
-      "paras": [
-        "避難するときに持ち出す非常用バッグは、持てる重さを超えないようにします。目安は、男性で約15キロ、女性で約10キロ、子どもと高齢者で約6キロです。家に置く備蓄と、持ち出す分は分けて考えます。"
-      ]
-    },
-    {
-      "h2": "まとめは、足りない防災グッズを、まず3日分備えること",
-      "paras": [
-        "このページのまとめです。8項目のチェックリストで、足りない防災グッズを把握しましょう。水は、1人1日3リットルが目安です。足りないものがあれば、まずは3日分を備えて、ふだんの買い物で少しずつ買い足していきましょう。"
-      ]
-    },
-    {
-      "h2": "防災グッズを探すなら",
-      "paras": [
-        "チェックリストの品は、検索ページから探せます。"
-      ]
-    },
-    {
-      "html": "<p>楽天市場の検索ページ</p><ul><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%2598%25B2%25E7%2581%25BD%25E3%2582%25BB%25E3%2583%2583%25E3%2583%2588%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「防災セット」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%2598%25B2%25E7%2581%25BD%25E7%2594%25A8%2520%25E6%2587%2590%25E4%25B8%25AD%25E9%259B%25BB%25E7%2581%25AF%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「防災用 懐中電灯」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%2598%25B2%25E7%2581%25BD%25E7%2594%25A8%2520%25E3%2583%25A2%25E3%2583%2590%25E3%2582%25A4%25E3%2583%25AB%25E3%2583%2590%25E3%2583%2583%25E3%2583%2586%25E3%2583%25AA%25E3%2583%25BC%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「防災用 モバイルバッテリー」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2590%25BA%25E5%25B8%25AF%25E3%2583%2588%25E3%2582%25A4%25E3%2583%25AC%2520%25E9%2598%25B2%25E7%2581%25BD%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「携帯トイレ 防災」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E4%25BF%259D%25E5%25AD%2598%25E6%25B0%25B4%2520%25E5%2582%2599%25E8%2593%2584%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「保存水 備蓄」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%259D%259E%25E5%25B8%25B8%25E9%25A3%259F%25205%25E5%25B9%25B4%25E4%25BF%259D%25E5%25AD%2598%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「非常食 5年保存」を探す</a>（PR）</li></ul><p>Amazonの検索ページ</p><ul><li><a href=\"https://www.amazon.co.jp/s?k=%E9%98%B2%E7%81%BD%E3%82%BB%E3%83%83%E3%83%88&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「防災セット」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E9%98%B2%E7%81%BD%E7%94%A8%20%E6%87%90%E4%B8%AD%E9%9B%BB%E7%81%AF&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「防災用 懐中電灯」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E9%98%B2%E7%81%BD%E7%94%A8%20%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「防災用 モバイルバッテリー」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E6%90%BA%E5%B8%AF%E3%83%88%E3%82%A4%E3%83%AC%20%E9%98%B2%E7%81%BD&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「携帯トイレ 防災」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E4%BF%9D%E5%AD%98%E6%B0%B4%20%E5%82%99%E8%93%84&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「保存水 備蓄」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E9%9D%9E%E5%B8%B8%E9%A3%9F%205%E5%B9%B4%E4%BF%9D%E5%AD%98&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「非常食 5年保存」を探す</a>（PR）</li></ul>"
-    }
-  ],
-  "related": [
-    {
-      "path": "/bousai-denchi-juden/",
-      "text": "防災用モバイルバッテリーの容量の目安と、電池の備蓄"
-    },
-    {
-      "path": "/bousai-keitai-toilet/",
-      "text": "携帯トイレの使い方と、使用後の保管・処理のしかた"
-    },
-    {
-      "path": "/bousai-light/",
-      "text": "防災用ライトの選び方"
-    },
-    {
-      "path": "/bousai-mizu-shokuryo/",
-      "text": "水と食料の備蓄を続ける、保管と期限管理のコツ"
-    },
-    {
-      "path": "/trend-fire-alarm/",
-      "text": "住宅用火災警報器の設置率は85.5％へ上昇。ただし見落とせない「10年目の交換・点検」の現実"
-    },
-    {
-      "path": "/trend-fire-prevention-week/",
-      "text": "秋の火災予防運動は11月15日まで｜この1週間で終わらせる、家の火の元の点検6つ"
-    },
-    {
-      "path": "/trend-typhoon32/",
-      "text": "台風32号(チャンパカ)の進路予報と、32年ぶりの発生"
-    },
-    {
-     "path": "/trend-bousaicho-katei-5/",
-     "text": "防災庁が示した家庭の備えは5つ！水は1人1日3リットルが目安"
-    },
-    {
-     "path": "/trend-suisai-hoken-fuutai/",
-     "text": "火災保険の水災補償、外した契約が約4割に！ 外す前に証券と浸水の想定を確認"
-    },
-    {
-     "path": "/trend-influenza-yobousesshu-hiyou/",
-     "text": "インフル予防接種は受ける人で費用が変わる　13歳未満は2回で12月中旬までが目安"
-    },
-    {
-     "path": "/trend-kuma-akita-chuuihou/",
-     "text": "秋田県のクマ出没注意報、11月30日まで延長　実・ごみ・戸締まりを確認しよう"
-    },
-    {
-     "path": "/trend-kansui-doro-unten-kanto-ame/",
-     "text": "冠水した道路は怖くても進んでしまう 今夜の関東は激しい雨に警戒"
-    }
-  ]
+ "updated": "2026-11-07",
+ "data_basis": "2026年11月7日現在",
+ "sources": [
+  "bousaicho"
+ ],
+ "path": "/bousai/",
+ "kind": "article",
+ "parent": "/",
+ "title": "防災グッズのチェックリスト、8項目で家の備えを確認しよう",
+ "h1": "防災グッズのチェックリスト、8項目で家の備えを確認しよう",
+ "crumb": "防災グッズのチェックリスト",
+ "primary_kw": "防災グッズのチェックリスト",
+ "intent": 4,
+ "description": "防災庁の呼びかけをもとに、水・食料・携帯トイレ・ライトなど防災グッズ8項目のチェックリストと、人数別の備蓄量の早見表で、家の備えを確かめます。足りないものは、まず3日分から。",
+ "answer": "防災庁は11月2日、家庭で水と食料を最低3日分、できれば1週間分備蓄するよう呼びかけました。",
+ "sections": [
+  {
+   "html": "<p class=\"eyecatch\"><img src=\"/assets/img/bousai-header.jpg\" width=\"1600\" alt=\"今日の話題 防災特集。携帯トイレ、凝固剤、防臭袋の絵と、携帯トイレの使い方などの見出し\" fetchpriority=\"high\"></p>"
+  },
+  {
+   "paras": [
+    "大きな災害では、ライフラインの復旧に1週間以上かかることがほとんどです。その間は、スーパーやコンビニでも食品が手に入りにくくなるおそれがあります。この機会に、家の防災グッズを8項目でチェックして、足りないものを備えましょう。"
+   ]
+  },
+  {
+   "h2": "3行まとめ",
+   "paras": [
+    "確認する防災グッズは、水、食料、携帯トイレ、ライト、電池と充電器、ラジオ、雨具と防水仕様の靴、救急用品の8項目です。",
+    "水は、飲み水と調理に使う分で、1人1日3リットルが必要です。水も食料も、最低3日分、できれば1週間分を備えましょう。",
+    "足りない防災グッズは、まず3日分を備えて、ふだんの買い物で少しずつ買い足していきましょう。"
+   ]
+  },
+  {
+   "h2": "水と食料は、何日分あればいい？",
+   "paras": [
+    "水は、飲み水と調理に使う分で、1人1日3リットルが必要です。湯せんや食器を洗う水は、これとは別に必要です。1人なら、3日分で9リットル、1週間分で21リットルになります。食料も、水と同じ日数分が必要です。",
+    "早見表は、1〜5人までの水、食料、携帯トイレの備蓄の目安です。"
+   ]
+  },
+  {
+   "table": {
+    "caption": "家族の人数ごとの、水・携帯トイレ・食事の備蓄の目安",
+    "cols": [
+     "人数",
+     "水 3日分(L)",
+     "水 7日分(L)",
+     "携帯トイレ 7日分 1日5回(回)",
+     "携帯トイレ 7日分 1日6回(回)",
+     "食事 3日分(食)",
+     "食事 7日分(食)"
+    ],
+    "num_cols": [
+     0,
+     1,
+     2,
+     3,
+     4,
+     5,
+     6
+    ],
+    "rows": [
+     [
+      "1人",
+      "9",
+      "21",
+      "35",
+      "42",
+      "9",
+      "21"
+     ],
+     [
+      "2人",
+      "18",
+      "42",
+      "70",
+      "84",
+      "18",
+      "42"
+     ],
+     [
+      "3人",
+      "27",
+      "63",
+      "105",
+      "126",
+      "27",
+      "63"
+     ],
+     [
+      "4人",
+      "36",
+      "84",
+      "140",
+      "168",
+      "36",
+      "84"
+     ],
+     [
+      "5人",
+      "45",
+      "105",
+      "175",
+      "210",
+      "45",
+      "105"
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "防災グッズ8項目と、必要な理由",
+   "paras": [
+    "停電や断水が続くと、困るのは水と食料だけではありません。トイレ、明かり、スマホの充電、けがの手当ても必要になります。そこで、政府広報オンラインの備えの一覧をもとに、困りやすいものを8項目にまとめました。雨具と防水仕様の靴は、当サイトが加えた項目です。",
+    "水は、最も重要な備蓄の1つです。ペットボトルの水に加えて、缶入りのお茶や清涼飲料水もあると便利です。",
+    "食料は、缶詰、レトルト食品、ごはん、麺類、日持ちする野菜が基本です。災害の直後は炭水化物ばかりになりやすいので、肉や魚の缶詰があると、タンパク質もとれます。大人2人で1週間分の例は、缶詰18缶、レトルト食品24個、米2キロ×2袋、カップ麺6個、パックご飯6個です。お湯を沸かしたり、レトルト食品を温めたりできるカセットコンロとボンベも、必要な防災グッズです。ボンベは、1人あたり1週間で約6本が目安です。"
+   ]
+  },
+  {
+   "html": "<p class=\"more\"><a href=\"/bousai-mizu-shokuryo/\">水と食料の保管と期限管理のコツを読む</a></p>"
+  },
+  {
+   "paras": [
+    "携帯トイレは、断水や停電でトイレが使えなくなったときのための防災グッズで、1日5から6回×人数×7日分が必要です。買うときの目安は、1箱に何回分入っているかです。必要な回数に足りる箱数を、そろえましょう。トイレットペーパーも、同じ日数分が必要です。4人家族なら、8ロール(30mタイプ)程度が目安です。水がなくても清潔を保てるウェットティッシュ、手の消毒液、スプレータイプの消臭剤も、いっしょにそろえておきましょう。"
+   ]
+  },
+  {
+   "html": "<p class=\"more\"><a href=\"/bousai-keitai-toilet/\">携帯トイレの使い方と、使用後の保管・処理を読む</a></p>"
+  },
+  {
+   "paras": [
+    "ライトは、停電の暗さに備える防災グッズです。部屋全体を明るくするには、ランタン型が向いています。持ち歩くなら、頭につけるヘッドライトが便利です。両手があくので、荷物を持ったり、子どもや高齢の家族の手を引いたりしながら動けます。電池は、家にある電池と同じ種類にそろえると、切れたときにすぐ入れ替えられます。明るさを切り替えられるタイプなら、移動のときは明るく、休むときは暗めにして、場面に合わせて使い分けられます。"
+   ]
+  },
+  {
+   "html": "<p class=\"more\"><a href=\"/bousai-light/\">防災用ライトの選び方と置き場所を読む</a></p>"
+  },
+  {
+   "paras": [
+    "電池と充電器は、停電中もスマホを使い続けるための防災グッズです。スマホは、家族への連絡や情報の確認に欠かせません。スマホをライト代わりにして電池を減らさないよう、ライトは別にそろえておきましょう。モバイルバッテリーは、使いたいときにすぐ使えるよう、ふだんから充電しておきましょう。外出中の災害に備えて、予備バッテリーとLEDライトをバッグに入れておきましょう。"
+   ]
+  },
+  {
+   "html": "<p class=\"more\"><a href=\"/bousai-denchi-juden/\">モバイルバッテリーの容量と電池の備蓄を読む</a></p>"
+  },
+  {
+   "paras": [
+    "ラジオは、スマホの電池を使わずに情報を得られる防災グッズです。スマホとは別に、1台あると役に立ちます。",
+    "雨具と防水仕様の靴は、雨の中を移動するときのための防災グッズです。傘は片手がふさがります。急いで避難するときに手がふさがっていると危ないですし、混み合う場所では、周りの人の迷惑にもなります。両手があくレインコートと、水を通さない防水仕様の靴が向いています。",
+    "救急用品は、けがの手当てに使う防災グッズです。清浄綿、救急絆創膏、サージカルテープ、三角巾、包帯、ガーゼ、脱脂綿、消毒液などをそろえましょう。ふだん飲んでいる薬は、災害時に手に入りにくくなることがあります。薬とお薬手帳は、必ず備えておきたい防災グッズのひとつです。"
+   ]
+  },
+  {
+   "html": "<div class=\"bz\"><p class=\"lead\">家族の人数と、いま家にある量で、備えの段階を確認できます。防災庁は、水と食料を最低3日分、できれば1週間分備えるよう案内しています。</p><div class=\"panel\"><div class=\"row\"><span class=\"fam\">家族の人数</span><select id=\"fam\"><option value=\"1\">1人</option><option value=\"2\">2人</option><option value=\"3\" selected>3人</option><option value=\"4\">4人</option><option value=\"5\">5人</option><option value=\"6\">6人</option></select><span class=\"overall-count\">そろっている項目 <span id=\"count\">5</span>/8</span><span class=\"chip mid-bg\" id=\"overall-chip\" aria-live=\"polite\">最低限そろっている</span></div><div class=\"segbar\" id=\"segbar\"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><p class=\"note\">段階は、目安に届いた項目の数で変わります。5項目以上で「最低限そろっている」、8項目全部で「安心」です。</p></div><h2>まず備えるもの</h2><div class=\"grid\"><div class=\"card\"><img src=\"/assets/img/status-1-water.webp\" width=\"521\" height=\"529\" loading=\"lazy\" alt=\"水の備えのイラスト\"><h3>水</h3><p class=\"basis\">飲み水は、1人1日3リットルが目安です。</p><label>2リットルのペットボトル（本数）</label><input type=\"number\" id=\"water\" value=\"14\" min=\"0\" max=\"99\"><div class=\"gauge\"><div class=\"fill mid-bg\" id=\"water-fill\"></div></div><div class=\"ticks\"><span style=\"left:42.8%\">3日分</span><span style=\"left:97%\">1週間分</span></div><div class=\"stage mid\" id=\"water-stage\">3日分ある（約3.1日分）</div></div><div class=\"card\"><img src=\"/assets/img/status-2-food.webp\" width=\"525\" height=\"529\" loading=\"lazy\" alt=\"食料の備えのイラスト\"><h3>食料</h3><p class=\"basis\">最低3日分、できれば1週間分です。</p><label>食料の備え（日数分）</label><select id=\"food\"><option value=\"0\">0日分</option><option value=\"1\">1日分</option><option value=\"2\">2日分</option><option value=\"3\" selected>3日分</option><option value=\"4\">4日分</option><option value=\"5\">5日分</option><option value=\"6\">6日分</option><option value=\"7\">7日分以上</option></select><div class=\"gauge\"><div class=\"fill mid-bg\" id=\"food-fill\"></div></div><div class=\"ticks\"><span style=\"left:42.8%\">3日分</span><span style=\"left:97%\">1週間分</span></div><div class=\"stage mid\" id=\"food-stage\">3日分ある</div></div><div class=\"card\"><img src=\"/assets/img/status-3-toilet.webp\" width=\"526\" height=\"529\" loading=\"lazy\" alt=\"携帯トイレのイラスト\"><h3>携帯トイレ</h3><p class=\"basis\">断水のとき、水洗トイレの代わりに使います。</p><label>備えの状態</label><select class=\"chk\" id=\"toilet\"><option value=\"2\" selected>そろっている</option><option value=\"1\">一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill high-bg\" id=\"toilet-fill\"></div></div><div class=\"stage high\" id=\"toilet-stage\">そろっている</div></div><div class=\"card\"><img src=\"/assets/img/status-4-light.webp\" width=\"522\" height=\"529\" loading=\"lazy\" alt=\"ライトのイラスト\"><h3>ライト</h3><p class=\"basis\">停電のときに、手元を照らします。</p><label>備えの状態</label><select class=\"chk\" id=\"light\"><option value=\"2\" selected>そろっている</option><option value=\"1\">一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill high-bg\" id=\"light-fill\"></div></div><div class=\"stage high\" id=\"light-stage\">そろっている</div></div><div class=\"card\"><img src=\"/assets/img/status-5-battery.webp\" width=\"521\" height=\"520\" loading=\"lazy\" alt=\"電池と充電器のイラスト\"><h3>電池と充電器</h3><p class=\"basis\">ライトやラジオ、スマートフォンの電源です。</p><label>備えの状態</label><select class=\"chk\" id=\"battery\"><option value=\"2\">そろっている</option><option value=\"1\" selected>一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill mid-bg\" id=\"battery-fill\"></div></div><div class=\"stage mid\" id=\"battery-stage\">一部だけそろっている</div></div></div><h2>あると安心なもの</h2><div class=\"grid\"><div class=\"card\"><img src=\"/assets/img/status-6-radio.webp\" width=\"525\" height=\"520\" loading=\"lazy\" alt=\"ラジオのイラスト\"><h3>ラジオ</h3><p class=\"basis\">停電でも、電池で情報が聞けます。</p><label>備えの状態</label><select class=\"chk\" id=\"radio\"><option value=\"2\">そろっている</option><option value=\"1\">一部だけ</option><option value=\"0\" selected>まだ</option></select><div class=\"gauge\"><div class=\"fill low-bg\" id=\"radio-fill\"></div></div><div class=\"stage low\" id=\"radio-stage\">まだそろっていない</div></div><div class=\"card\"><img src=\"/assets/img/status-7-rain.webp\" width=\"526\" height=\"520\" loading=\"lazy\" alt=\"雨具と防水仕様の靴のイラスト\"><h3>雨具と防水仕様の靴</h3><p class=\"basis\">避難や片付けのときに使います。</p><label>備えの状態</label><select class=\"chk\" id=\"rain\"><option value=\"2\" selected>そろっている</option><option value=\"1\">一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill high-bg\" id=\"rain-fill\"></div></div><div class=\"stage high\" id=\"rain-stage\">そろっている</div></div><div class=\"card\"><img src=\"/assets/img/status-8-aid.webp\" width=\"522\" height=\"520\" loading=\"lazy\" alt=\"救急用品のイラスト\"><h3>救急用品</h3><p class=\"basis\">けがの手当てに使います。</p><label>備えの状態</label><select class=\"chk\" id=\"aid\"><option value=\"2\">そろっている</option><option value=\"1\" selected>一部だけ</option><option value=\"0\">まだ</option></select><div class=\"gauge\"><div class=\"fill mid-bg\" id=\"aid-fill\"></div></div><div class=\"stage mid\" id=\"aid-stage\">一部だけそろっている</div></div></div><p class=\"foot\">水は、1人1日3リットルで計算します。3日分と1週間分が、段階の境目です。入力した内容がサイトに送られることはありません。</p><script>\nfunction cls(stage) { return stage === 0 ? \"low\" : (stage === 1 ? \"mid\" : \"high\"); }\nfunction setGauge(id, pct, stage) {\n  var fill = document.getElementById(id + \"-fill\");\n  fill.style.width = pct + \"%\";\n  fill.className = \"fill \" + cls(stage) + \"-bg\";\n  var st = document.getElementById(id + \"-stage\");\n  st.className = \"stage \" + cls(stage);\n}\nfunction daysStage(days) { return days >= 7 ? 2 : (days >= 3 ? 1 : 0); }\nfunction update() {\n  var fam = parseInt(document.getElementById(\"fam\").value, 10);\n  var bottles = parseFloat(document.getElementById(\"water\").value) || 0;\n  var wdays = bottles * 2 / (fam * 3);\n  var ws = daysStage(wdays);\n  setGauge(\"water\", Math.min(100, wdays / 7 * 100), ws);\n  var wlabel = ws === 2 ? \"1週間分ある\" : (ws === 1 ? \"3日分ある\" : \"3日分に届いていない\");\n  document.getElementById(\"water-stage\").textContent = wlabel + \"（約\" + (Math.floor(wdays * 10) / 10).toFixed(1) + \"日分）\";\n  var fdays = parseFloat(document.getElementById(\"food\").value);\n  var fs = daysStage(fdays);\n  setGauge(\"food\", Math.min(100, fdays / 7 * 100), fs);\n  document.getElementById(\"food-stage\").textContent = fs === 2 ? \"1週間分ある\" : (fs === 1 ? \"3日分ある\" : \"3日分に届いていない\");\n  var count = (ws >= 1 ? 1 : 0) + (fs >= 1 ? 1 : 0);\n  var chkLabels = [\"まだそろっていない\", \"一部だけそろっている\", \"そろっている\"];\n  [\"toilet\", \"light\", \"battery\", \"radio\", \"rain\", \"aid\"].forEach(function (id) {\n    var v = parseInt(document.getElementById(id).value, 10);\n    setGauge(id, v * 50, v);\n    document.getElementById(id + \"-stage\").textContent = chkLabels[v];\n    if (v === 2) count += 1;\n  });\n  document.getElementById(\"count\").textContent = count;\n  var overall = count >= 8 ? 2 : (count >= 5 ? 1 : 0);\n  var chip = document.getElementById(\"overall-chip\");\n  chip.textContent = overall === 2 ? \"安心\" : (overall === 1 ? \"最低限そろっている\" : \"まだ足りない\");\n  chip.className = \"chip \" + cls(overall) + \"-bg\";\n  var segs = document.getElementById(\"segbar\").children;\n  for (var i = 0; i < segs.length; i++) {\n    segs[i].className = i < count ? (\"on-\" + cls(overall)) : \"\";\n  }\n}\n[\"fam\", \"water\", \"food\", \"toilet\", \"light\", \"battery\", \"radio\", \"rain\", \"aid\"].forEach(function (id) {\n  document.getElementById(id).addEventListener(\"change\", update);\n  document.getElementById(id).addEventListener(\"input\", update);\n});\nupdate();\n</script></div>"
+  },
+  {
+   "h2": "足りない防災グッズを、まず3日分備える",
+   "paras": [
+    "足りない防災グッズがあれば、まずは3日分を備えましょう。水と食料は、ローリングストックで備えると続けやすくなります。ローリングストックは、ふだん食べているものを少し多めに買って蓄え、食べたら買い足していく方法です。蓄える、食べる、買い足す、を繰り返します。賞味期限の古いものから食べることで、期限切れが起きにくくなります。賞味期限は、食料を入れた箱のふたや側面など、いつでも目に入る場所に書いておきましょう。",
+    "利点は、ふだん食べ慣れたものを備えるので食べやすいことと、特別な買い物がいらないことです。弱点は、買い足しを忘れると備蓄が減ったままになることと、多めに買った分の保管場所が必要なことです。",
+    "乳幼児、高齢者、持病やアレルギーのある人がいる家は、それぞれに合った食品を、最低2週間分備えておきましょう。東日本大震災では、アレルギー対応食品を1か月以上手に入れられなかった人がいます。"
+   ]
+  },
+  {
+   "html": "<aside class=\"hack\"><strong>ライフハック</strong> 収納が少ないなら、分けて保管する</aside>"
+  },
+  {
+   "html": "<aside class=\"hack\">防災グッズは、玄関の隅、クローゼットの下の段、ベッドの下など、使っていない場所に分けて保管しましょう。1か所にまとめると、その部屋に入れないとき、すべて取り出せなくなります。分けておけば、どこかは取り出せます。</aside>"
+  },
+  {
+   "paras": [
+    "避難するときに持ち出す非常用バッグ（防災リュック・持ち出し袋）は、持てる重さを超えないようにしましょう。目安は、男性で約15キロ、女性で約10キロ、子どもと高齢者で約6キロです。",
+    "水と食料、携帯トイレ、ライトなどは、次のページで詳しく説明しています。"
+   ]
+  },
+  {
+   "html": "<ul class=\"links\"><li><a href=\"/bousai-mizu-shokuryo/\">水と食料の備蓄を続ける、保管と期限管理のコツ</a></li><li><a href=\"/bousai-keitai-toilet/\">携帯トイレの使い方と、使用後の保管・処理のしかた</a></li><li><a href=\"/bousai-light/\">防災用ライトの選び方</a></li><li><a href=\"/bousai-denchi-juden/\">防災用モバイルバッテリーの容量の目安と、電池の備蓄</a></li></ul>"
+  },
+  {
+   "h2": "3日分から1週間分へ、増やす順番",
+   "paras": [
+    "備えは、一度にそろえなくても進められます。順番は次のとおりです。"
+   ]
+  },
+  {
+   "html": "<ol><li>8項目のチェックで、足りないものを確認する</li><li>足りないものは、まず3日分をそろえる。水は1人9リットル、食事は1人9食が目安</li><li>ふだんの買い物でローリングストックを回し、古いものから食べて、食べた分を買い足す</li><li>3日分が回るようになったら、1週間分まで増やす。水は1人21リットル、食事は1人21食が目安</li><li>乳幼児、高齢者、持病やアレルギーがある家族がいる家は、合った食品を最低2週間分にする</li></ol>"
+  },
+  {
+   "paras": [
+    "避難するときに持ち出す非常用バッグは、持てる重さを超えないようにします。目安は、男性で約15キロ、女性で約10キロ、子どもと高齢者で約6キロです。家に置く備蓄と、持ち出す分は分けて考えます。"
+   ]
+  },
+  {
+   "h2": "まとめは、足りない防災グッズを、まず3日分備えること",
+   "paras": [
+    "このページのまとめです。8項目のチェックリストで、足りない防災グッズを把握しましょう。水は、1人1日3リットルが目安です。足りないものがあれば、まずは3日分を備えて、ふだんの買い物で少しずつ買い足していきましょう。"
+   ]
+  },
+  {
+   "h2": "防災グッズを探すなら",
+   "paras": [
+    "チェックリストの品は、検索ページから探せます。"
+   ]
+  },
+  {
+   "html": "<p>楽天市場の検索ページ</p><ul><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%2598%25B2%25E7%2581%25BD%25E3%2582%25BB%25E3%2583%2583%25E3%2583%2588%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「防災セット」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%2598%25B2%25E7%2581%25BD%25E7%2594%25A8%2520%25E6%2587%2590%25E4%25B8%25AD%25E9%259B%25BB%25E7%2581%25AF%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「防災用 懐中電灯」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%2598%25B2%25E7%2581%25BD%25E7%2594%25A8%2520%25E3%2583%25A2%25E3%2583%2590%25E3%2582%25A4%25E3%2583%25AB%25E3%2583%2590%25E3%2583%2583%25E3%2583%2586%25E3%2583%25AA%25E3%2583%25BC%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「防災用 モバイルバッテリー」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2590%25BA%25E5%25B8%25AF%25E3%2583%2588%25E3%2582%25A4%25E3%2583%25AC%2520%25E9%2598%25B2%25E7%2581%25BD%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「携帯トイレ 防災」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E4%25BF%259D%25E5%25AD%2598%25E6%25B0%25B4%2520%25E5%2582%2599%25E8%2593%2584%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「保存水 備蓄」を探す</a>（PR）</li><li><a href=\"https://hb.afl.rakuten.co.jp/hgc/583f273a.77c989b6.583f273b.0a6a5fff/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E9%259D%259E%25E5%25B8%25B8%25E9%25A3%259F%25205%25E5%25B9%25B4%25E4%25BF%259D%25E5%25AD%2598%2F\" rel=\"nofollow sponsored noopener\" target=\"_blank\">楽天市場で「非常食 5年保存」を探す</a>（PR）</li></ul><p>Amazonの検索ページ</p><ul><li><a href=\"https://www.amazon.co.jp/s?k=%E9%98%B2%E7%81%BD%E3%82%BB%E3%83%83%E3%83%88&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「防災セット」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E9%98%B2%E7%81%BD%E7%94%A8%20%E6%87%90%E4%B8%AD%E9%9B%BB%E7%81%AF&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「防災用 懐中電灯」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E9%98%B2%E7%81%BD%E7%94%A8%20%E3%83%A2%E3%83%90%E3%82%A4%E3%83%AB%E3%83%90%E3%83%83%E3%83%86%E3%83%AA%E3%83%BC&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「防災用 モバイルバッテリー」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E6%90%BA%E5%B8%AF%E3%83%88%E3%82%A4%E3%83%AC%20%E9%98%B2%E7%81%BD&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「携帯トイレ 防災」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E4%BF%9D%E5%AD%98%E6%B0%B4%20%E5%82%99%E8%93%84&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「保存水 備蓄」を探す</a>（PR）</li><li><a href=\"https://www.amazon.co.jp/s?k=%E9%9D%9E%E5%B8%B8%E9%A3%9F%205%E5%B9%B4%E4%BF%9D%E5%AD%98&amp;tag=amazonmacs-22\" rel=\"nofollow sponsored noopener\" target=\"_blank\">Amazonで「非常食 5年保存」を探す</a>（PR）</li></ul>"
+  },
+  {
+   "html": "<p>足りない防災グッズを一度にそろえたいときは、防災士が監修したセットや、普段使いできる防災グッズの専門ブランドも選べます。</p><p><a href=\"https://px.a8.net/svt/ejp?a8mat=4BEL1J+AMTW5M+5HQC+5YJRM\" rel=\"nofollow sponsored noopener\" target=\"_blank\">防災士監修の防災グッズ44点セット</a>（PR）<img border=\"0\" width=\"1\" height=\"1\" src=\"https://www19.a8.net/0.gif?a8mat=4BEL1J+AMTW5M+5HQC+5YJRM\" alt=\"\"></p><p><a href=\"https://px.a8.net/svt/ejp?a8mat=4BEL1J+ATDNT6+5VK4+5YRHE\" rel=\"nofollow sponsored noopener\" target=\"_blank\">【スツーレ】</a>（PR）<img border=\"0\" width=\"1\" height=\"1\" src=\"https://www18.a8.net/0.gif?a8mat=4BEL1J+ATDNT6+5VK4+5YRHE\" alt=\"\"></p>"
+  }
+ ],
+ "related": [
+  {
+   "path": "/bousai-denchi-juden/",
+   "text": "防災用モバイルバッテリーの容量の目安と、電池の備蓄"
+  },
+  {
+   "path": "/bousai-keitai-toilet/",
+   "text": "携帯トイレの使い方と、使用後の保管・処理のしかた"
+  },
+  {
+   "path": "/bousai-light/",
+   "text": "防災用ライトの選び方"
+  },
+  {
+   "path": "/bousai-mizu-shokuryo/",
+   "text": "水と食料の備蓄を続ける、保管と期限管理のコツ"
+  },
+  {
+   "path": "/trend-fire-alarm/",
+   "text": "住宅用火災警報器の設置率は85.5％へ上昇。ただし見落とせない「10年目の交換・点検」の現実"
+  },
+  {
+   "path": "/trend-fire-prevention-week/",
+   "text": "秋の火災予防運動は11月15日まで｜この1週間で終わらせる、家の火の元の点検6つ"
+  },
+  {
+   "path": "/trend-typhoon32/",
+   "text": "台風32号(チャンパカ)の進路予報と、32年ぶりの発生"
+  },
+  {
+   "path": "/trend-bousaicho-katei-5/",
+   "text": "防災庁が示した家庭の備えは5つ！水は1人1日3リットルが目安"
+  },
+  {
+   "path": "/trend-suisai-hoken-fuutai/",
+   "text": "火災保険の水災補償、外した契約が約4割に！ 外す前に証券と浸水の想定を確認"
+  },
+  {
+   "path": "/trend-influenza-yobousesshu-hiyou/",
+   "text": "インフル予防接種は受ける人で費用が変わる　13歳未満は2回で12月中旬までが目安"
+  },
+  {
+   "path": "/trend-kuma-akita-chuuihou/",
+   "text": "秋田県のクマ出没注意報、11月30日まで延長　実・ごみ・戸締まりを確認しよう"
+  },
+  {
+   "path": "/trend-kansui-doro-unten-kanto-ame/",
+   "text": "冠水した道路は怖くても進んでしまう 今夜の関東は激しい雨に警戒"
+  }
+ ]
 }
