@@ -176,7 +176,7 @@ class TestNengajoSimPage(unittest.TestCase):
         self.assertIn('<legend>宛名印刷</legend>', t)
         self.assertIn('<label class="opt" for="nsim-login">', t)
         # after the total-price table, before the next heading
-        self.assertLess(t.index("5,174円"), t.index("nsim-form"))
+        self.assertLess(t.index("6,392円"), t.index("nsim-form"))
         self.assertLess(t.index("nsim-form"), t.index("割引率だけ見ると損するワケ"))
         self.assertNotIn("この記事の表がそのまま使えます", t)
         self.assertIn("シミュレーターに入れて", t)
