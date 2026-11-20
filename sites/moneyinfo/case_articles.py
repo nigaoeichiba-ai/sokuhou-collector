@@ -194,6 +194,26 @@ def consult_article(case):
 <footer class="model-back"><h2>次に確認すること</h2><div class="related-grid">{related}</div><a href="cases.html#readable-cases">ほかのモデルケースを読む ›</a></footer></article></main>'''
 
 
+VC = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3788870&pid="
+# approved partnerships of this site (ValueCommerce site 3788870). Only the approved, designed places carry a link.
+ADS = {
+    "case-family-trip": (
+        {"pid": "892753631", "text": "国内の宿を探す",
+         "lead": "宿を別々に手配する場合は、日程と人数を決めてから、料金と取消条件を同じ基準で見比べます。条件を入れて探すには、"},
+    ),
+}
+
+
+def ad_html(slug):
+    ads = ADS.get(slug)
+    if not ads:
+        return ""
+    items = "".join(
+        f'<p>{escape(a["lead"])}<a href="{VC}{a["pid"]}" rel="nofollow sponsored noopener" target="_blank">{escape(a["text"])}</a>から探せます。</p>'
+        for a in ads)
+    return f'<aside class="ad-box" aria-label="広告"><p class="ad-label">PR（広告）</p>{items}</aside>'
+
+
 def article(case):
     if case.get("consult"):
         return consult_article(case)
@@ -222,5 +242,5 @@ def article(case):
 <figure class="model-hero"><img src="assets/{visual}.webp" alt="{escape(case["alt"], quote=True)}" width="1200" height="{396 if slug == 'article' else 600}"><figcaption>イメージです。</figcaption></figure>
 <section class="model-points"><h2>この記事の要点</h2><ul>{points}</ul><p>料金の確認日 {checked}</p></section>
 <nav class="guide-toc" aria-label="目次"><h2>目次</h2><ol>{toc}</ol></nav>
-{profile}{body}{quote}
+{profile}{body}{ad_html(slug)}{quote}
 <footer class="model-back"><h2>次に確認すること</h2><div class="related-grid">{related}</div><a href="cases.html#readable-cases">ほかのモデルケースを読む ›</a></footer></article></main>'''

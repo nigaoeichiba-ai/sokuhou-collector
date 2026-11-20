@@ -31,12 +31,25 @@ def load_release_build():
     return mod
 
 
+AD_PREFIX = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3788870&pid="
+
+
 def external_links(folder: Path) -> list[str]:
+    """Outside links that are not an approved advertisement of this site."""
     found = []
     for page in folder.rglob("*.html"):
         for href in re.findall(r'<a [^>]*href="(https?://[^"]+)"', page.read_text(encoding="utf-8")):
-            if not href.startswith(BASE):
+            if not href.startswith(BASE) and not href.startswith(AD_PREFIX):
                 found.append(f"{page.name}: {href}")
+    return found
+
+
+def ad_links(folder: Path) -> list[str]:
+    """Every advertisement anchor: [page: tag]."""
+    found = []
+    for page in folder.rglob("*.html"):
+        for tag in re.findall(r'<a [^>]*href="' + re.escape(AD_PREFIX) + r'[^"]*"[^>]*>[^<]*</a>', page.read_text(encoding="utf-8")):
+            found.append(f"{page.name}: {tag}")
     return found
 
 
@@ -95,6 +108,19 @@ class MoneyinfoBuildTest(unittest.TestCase):
 
     def test_no_ad_link_and_no_outside_link_before_a_partnership_exists(self):
         self.assertEqual(external_links(self.rel), [])
+
+    def test_the_only_advertisement_is_the_approved_one_with_pr_rel_target_and_a_word_as_text(self):
+        ads = ad_links(self.rel)
+        self.assertEqual(len(ads), 1, ads)
+        page, tag = ads[0].split(": ", 1)
+        self.assertEqual(page, "case-family-trip.html")
+        self.assertIn('rel="nofollow sponsored noopener"', tag)
+        self.assertIn('target="_blank"', tag)
+        self.assertIn("pid=892753631", tag)
+        text = re.sub(r"<[^>]+>", "", tag)
+        self.assertNotIn("http", text)
+        self.assertNotIn("JTB", text)                    # the advertiser's condition: no JTB wording of our own
+        self.assertIn("PR（広告）", (self.rel / "case-family-trip.html").read_text(encoding="utf-8"))
 
     def test_the_outside_link_check_finds_a_planted_link(self):
         copy = self.tmp / "planted"
