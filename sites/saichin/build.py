@@ -502,7 +502,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 <script type="application/json" id="data">{data}</script>"""
     return finish(layout(
         cfg, preview, path="/", title=f"{d['label']} 最低賃金の改定速報 都道府県別の新額と発効日",
-        description=f"{d['label']}の地域別最低賃金を、全国47都道府県の新しい時給と発効日で一覧にします。全国加重平均は{round(d['avg']):,}円です。",
+        description=f"{d['label']}の地域別最低賃金を、全国47都道府県の新しい時給と発効日で一覧にします。全国加重平均は{round(d['avg']):,}円。都道府県ごとの推移・ランキング・差額チェッカーもあります。",
         body=body,
     ), d)
 
@@ -546,7 +546,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 </nav>"""
     return finish(layout(
         cfg, preview, path=f"/{r['slug']}/",
-        title=f"{r['name']}の最低賃金推移 {r['long'][0]['label']}から{d['label']}までのグラフと一覧({yen(r['amount'])})",
+        title=f"{r['name']}の最低賃金 推移グラフと一覧 {r['long'][0]['label']}〜{d['label']}({yen(r['amount'])})",
         description=f"{r['name']}の最低賃金の推移を、{r['long'][0]['label']}から{r['long'][-1]['label']}まで{len(r['long'])}年度分、一覧表とグラフで掲載。{d['label']}は{yen(r['amount'])}(+{r['raise']}円)、発効日は{jp_date(r['effective_date'])}。上がり率・全国加重平均との差・順位も載せています。",
         body=body,
     ), d)
