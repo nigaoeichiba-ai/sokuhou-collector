@@ -393,7 +393,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         yr = table(["年度", "全国の死亡者数(人)"], [[fy_or_h(y) + ("(途中)" if y == cur else ""), n(nat[y][2])] for y in reversed([*years, cur])])
         extra = (f'<h2>全国の死亡者数の年度別の推移</h2>{yr}'
                  f'<p>死亡者数は、環境省の人身被害の統計(死亡者数の欄)の数字です。{len(zero)}道府県({"・".join(zero)})は、この{len(years)}年度に死亡者の記録がないため、表に載せていません。'
-                 f'事故の日付と場所は、各道府県のページの「熊(クマ)による死亡事故」で、環境省の一覧にある分を確認できます。全国の一覧と、月別・道府県別の集計は、<a href="/deaths/">熊(クマ)による死亡事故の一覧</a>で確認できます。</p>'
+                 f'事故の日付と場所は、各道府県のページの「熊(クマ)による死亡事故はあったか」で、環境省の一覧にある分を確認できます。全国の一覧と、月別・道府県別の集計は、<a href="/deaths/">熊(クマ)による死亡事故の一覧</a>で確認できます。</p>'
                  f'<p>人数の多い少ないは、山に入る人の数や、クマの生息する範囲にも左右されます。件数・人数の全体は<a href="/ranking/injuries/">人身被害ランキング</a>で確認できます。</p>'
                  + ('<p>時期ごとの違いは<a href="/research/">研究ノート</a>で読めます。</p>' if d.get("research") else ""))
     else:
@@ -608,7 +608,7 @@ def fatal_answer(d: dict, r: dict) -> str:
         stat_line = f"人身被害の統計(環境省・{esc(d['inj_as_of'].replace('R08年', '令和8年'))}まで)で、{fy_or_h(years[0])}以降に死亡者が出た年度は、{shown}{more}です。"
     else:
         stat_line = f"人身被害の統計(環境省・{esc(d['inj_as_of'].replace('R08年', '令和8年'))}まで)に、{fy_or_h(years[0])}以降の死亡者の記録はありません。"
-    return (f"<h2>{esc(name)}の熊(クマ)による死亡事故(環境省の資料)</h2>\n{first}\n<p>{stat_line}"
+    return (f"<h2>{esc(name)}で、熊(クマ)による死亡事故はあったか</h2>\n{first}\n<p>{stat_line}"
             f"環境省の資料は、公表までに時間がかかります。直近の事故は、{esc(name)}・警察・市町村の発表で確認してください。</p>\n")
 
 
