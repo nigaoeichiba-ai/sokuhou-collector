@@ -363,6 +363,27 @@ class Renewal(unittest.TestCase):
         # negative case: a page without the sentence is recognised
         self.assertNotIn('class="ed-own-dates"', self.pages["about/index.html"])
 
+    def test_round_pages_are_noindex_unless_they_already_show_in_google_and_the_parent_lists_them(self):
+        # Search Console (2026-11-20): 80 pages crawled-not-indexed; the round pages share the parent's copy (build rule ROUND_RE, kept ones from schedule/search-keep.json)
+        sm = re.findall(r"<loc>(.*?)</loc>", (self.out / "sitemap.xml").read_text(encoding="utf-8"))
+        robots = lambda rel: re.search(r'name="robots" content="([^"]*)"', self.pages[rel]).group(1)
+        for ex in ("toeic-20261219", "toeic-20270124", "eiken-2026-1", "eiken-2027-1", "boki-173", "fp1-gakka-20260524"):
+            self.assertEqual(robots(f"exams/{ex}/index.html"), "noindex,follow", ex)
+            self.assertNotIn(f"https://shiken-nittei.com/exams/{ex}/", sm, ex)
+        for ex in ("toeic-20261206", "eiken-2027-3"):          # shown in Google in the last 28 days: stay indexed
+            self.assertEqual(robots(f"exams/{ex}/index.html"), "index,follow", ex)
+            self.assertIn(f"https://shiken-nittei.com/exams/{ex}/", sm, ex)
+        for parent, child in (("toeic", "toeic-20261219"), ("eiken", "eiken-2026-1"), ("boki", "boki-173"), ("fp", "fp1-gakka-20260524")):
+            h = self.pages[f"exams/{parent}/index.html"]
+            self.assertIn('class="ed-rounds"', h, parent)           # the dates stay findable on the parent and the link (follow) stays
+            self.assertIn(f"/exams/{child}/", h, parent)
+        # the prefecture pages open with their own dates, so they differ from each other
+        lead = lambda rel: re.search(r'class="ed-own-dates">(.*?)</p>', self.pages[rel]).group(1)
+        self.assertNotEqual(lead("exams/koko-aomori/index.html"), lead("exams/koko-osaka/index.html"))
+        self.assertIn("最も早い出願の締切", lead("exams/koko-aomori/index.html"))
+        # negative case: a page that is not a round page is not noindex
+        self.assertEqual(robots("exams/gyosei/index.html"), "index,follow")
+
     def test_audit_items_h1_inbound_links_and_article_data(self):
         # SEO audit 2026-11-17: the h1 of the exam pages are not shared, the pages that were linked from one page only have more, the articles carry Article data
         h1s: dict[str, str] = {}

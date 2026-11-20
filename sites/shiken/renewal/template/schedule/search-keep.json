@@ -1,0 +1,5 @@
+{
+ "note": "Round pages (a TOEIC / Eiken / Boki / FP round) are noindex,follow because they share the parent's copy. A round page that already shows in Google (Search Console, last 28 days, impressions >= 1) stays indexed. Refresh this list from Search Console in the weekly SEO check.",
+ "checked": "2026-11-20",
+ "ids": ["toeic-20270314", "toeic-20261115", "toeic-20261206", "eiken-2027-3"]
+}

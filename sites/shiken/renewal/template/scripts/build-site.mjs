@@ -40,6 +40,9 @@ export async function buildSite(out){
  const pages=JSON.parse(result.stdout);
  const {document:shell}=parseHTML(pages[0].html);
  const legacy=await loadLegacy(root);
+ // round pages (one round of TOEIC / Eiken / Boki / FP) share the parent page's copy: noindex,follow, unless the page already shows in Google (schedule/search-keep.json, from Search Console).  The parent page lists every round with its dates and links to it.
+ const ROUND_RE=/^(toeic-\d{8}|eiken-\d{4}-\d|boki-\d{3}|fp1-gakka-\d{8})$/;
+ const keepIndexed=new Set(JSON.parse(await readFile(new URL('schedule/search-keep.json',root),'utf8')).ids);
  // ---- pages that are not made by the browser templates: the old articles and the site-wide pages -----------------------------
  const crumbsOf={};
  const wrap=(main,{pathname,title,description,noindex,h1,kind})=>{
@@ -61,6 +64,7 @@ export async function buildSite(out){
  for(const p of pages){
   const {document}=parseHTML(p.html);
   const title=p.title.includes(SITE_NAME)?p.title:p.title+'｜'+SITE_NAME;
+  {const exid=p.pathname.startsWith('/exams/')?p.pathname.split('/')[2]:'';if(ROUND_RE.test(exid)&&!keepIndexed.has(exid))p.noindex=true;}
   document.title=title;
   document.querySelector('meta[name=description]').setAttribute('content',p.description);
   document.querySelector('meta[name=robots]').setAttribute('content',p.noindex?'noindex,follow':'index,follow');

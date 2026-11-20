@@ -11,7 +11,11 @@ export function mountExam(id,params,c){
  const root=document.querySelector('#exam-page'),ownEvents=events.filter(e=>e.exam===id).sort((a,b)=>a.date.localeCompare(b.date));
  const eventLabel=e=>officialEventLabel(e)+(e.planned?'（予定）':'');
  // the page's own dates in the first view (2026-11-20): pages of the same kind (a prefecture, a round) no longer open with the same sentences; only for the pages whose copy is made from a shared pattern
- const ownLead=()=>{if(!meta.autoLead||!ownEvents.length)return '';const shown=ownEvents.slice(0,6).map(e=>eventLabel(e)+' '+formatDate(e.date,true)+(e.time?' '+e.time:''));return `<p class="ed-own-dates">${esc(exam.name+'（'+exam.edition+'）')}の主な日付は、${shown.map(esc).join('、')}${ownEvents.length>6?'、ほか':''}です。</p>`;};
+ // a parent page (TOEIC, Eiken, Boki, FP) lists its rounds with their dates and links to each (the round pages are noindex,follow; the dates stay findable on the parent)
+ const ROUND_RE=/^(toeic-\d{8}|eiken-\d{4}-\d|boki-\d{3}|fp1-gakka-\d{8})$/;
+ const roundsHtml=()=>{const rs=exams.filter(e=>e.family===exam.family&&e.id!==id&&ROUND_RE.test(e.id)&&!ROUND_RE.test(id));if(!rs.length)return '';return `<section class="ed-rounds"><div class="ed-section-title"><h2>${esc(exam.short)}の各回の日程</h2></div><ul>${rs.map(r=>{const ev=events.filter(x=>x.exam===r.id).sort((x,y)=>x.date.localeCompare(y.date)).slice(0,4).map(x=>eventLabel(x)+' '+formatDate(x.date,true)+(x.time?' '+x.time:''));return `<li><a href="#/exam/${r.id}">${esc(r.name+'（'+r.edition+'）')}</a>：${ev.map(esc).join('、')}</li>`;}).join('')}</ul></section>`;};
+ const ownLead=()=>{if(!meta.autoLead||!ownEvents.length)return '';if(id.startsWith('koko-')){const first=ty=>ownEvents.find(e=>e.type===ty),last=ty=>[...ownEvents].reverse().find(e=>e.type===ty),f=(e,w)=>e?`${w}が${formatDate(e.date,true)}(${esc(e.label)})`:'';const parts=[f(first('deadline'),'最も早い出願の締切'),f(first('exam'),'最も早い検査'),f(last('result'),'最後の結果発表')].filter(Boolean);return `<p class="ed-own-dates">${esc(exam.name+'（'+exam.edition+'）')}の日程は、${parts.join('、')}です。選抜の日程は全部で${ownEvents.length}件載せています。</p>`;}
+ const shown=ownEvents.slice(0,6).map(e=>eventLabel(e)+' '+formatDate(e.date,true)+(e.time?' '+e.time:''));return `<p class="ed-own-dates">${esc(exam.name+'（'+exam.edition+'）')}の主な日付は、${shown.map(esc).join('、')}${ownEvents.length>6?'、ほか':''}です。</p>`;};
  const dateText=e=>formatDate(e.date,true)+(e.time?' '+e.time+(e.type==='deadline'?'まで':''):'');
  const applyOpen=(()=>{const v=scheduleMeta[id];if(!v?.applyPage?.url)return false;const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
   if((v.availability?.suspensions||[]).some(x=>x.start<=today&&(!x.end||x.end>=today)))return false;
@@ -39,7 +43,7 @@ export function mountExam(id,params,c){
  </div><aside class="ed-sidebar"><div class="ed-adviser"><span class="ed-adviser-mark">ひとこと</span><h2>${meta.advice}</h2><p>${meta.adviceBody}</p></div><div class="ed-official-card"><h2>申し込むときは、主催者の最新の案内も</h2><p>このページの試験・受け方が、ご自身の申し込みと合っているか確かめてからお進みください。</p><label class="applied-label"><input type="checkbox" data-applied="${id}" ${state.applied.includes(id)?'checked':''}>申し込みを済ませた</label><p class="small-note">ご自身の確認用のチェックです。</p></div><div class="ed-focus"><h2>申し込み前の確認に</h2><ul>${meta.focus.map(t=>`<li>${t}</li>`).join('')}</ul></div><a class="ed-compare-link" href="#/guide/compare">ほかの試験も受ける予定の方へ<span>日程を並べて確認できます ›</span></a></aside></div>
  ${affiliateSection(groupFor(exam),key('pr'))}
  ${applySection}
- <section class="ed-other"><div class="ed-section-title"><h2>ほかの試験も見てみる</h2><a href="#/guide/decided">試験を探す ›</a></div><div>${exams.filter(e=>e.id!==id).map(e=>`<a href="#/exam/${e.id}"><span>${e.field}</span><strong>${e.short}</strong><b aria-hidden="true">›</b></a>`).join('')}</div></section>`;
+ ${roundsHtml()}<section class="ed-other"><div class="ed-section-title"><h2>ほかの試験も見てみる</h2><a href="#/guide/decided">試験を探す ›</a></div><div>${exams.filter(e=>e.id!==id).map(e=>`<a href="#/exam/${e.id}"><span>${e.field}</span><strong>${e.short}</strong><b aria-hidden="true">›</b></a>`).join('')}</div></section>`;
  const $=s=>root.querySelector(s);
  $('#exam-round-select')?.addEventListener('change',e=>location.hash='#/exam/'+e.target.value,{signal});
  const phaseChecks={

@@ -27,3 +27,6 @@
 ## 追記(同日2回目): SEO対応(クロール済み-未登録80件)
 - contact・privacy・corrections を noindex,follow・サイトマップ除外。主要な試験ページ11本の title/description に日付と検索語(日付は registry.json の確認済みの値)。
 ## 追記(同日3回目): 試験詳細ページの冒頭に、そのページの日付(registry.json から自動)を1文。/deadlines/ から看護師・宅建・介護福祉士の案内へのリンク。新しい数字は registry.json の値のみ。判定: テストとNG語ゲートが通ったので公開する。
+
+## 追記(同日4回目): 回別ページの noindex(Search Console の28日で表示1以上の回は除外=schedule/search-keep.json)、親ページに「各回の日程」、高校入試の県別ページの冒頭に registry から自動の1文
+- 新しい数字は registry.json の値だけ。NG語ゲート0件、tests 999件OK。判定: 公開する。
