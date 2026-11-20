@@ -261,7 +261,12 @@ class TrendTop(unittest.TestCase):
             if sec is None:
                 continue      # the desk's full-text rewrite (2026-11-10, the fire-alarm article) has no 3-line summary: its description is the first sentence of the body
             text = "".join(sec["paras"])
-            two = "".join(re.findall(r"[^。]+。", text)[:2])
+            sents = re.findall(r"[^。]+。", text)
+            two = "".join(sents[:2])
+            k = 2
+            while len(two) < 80 and k < len(sents) and len(two) + len(sents[k]) <= 120:   # a short pair is lengthened by the next sentence as written (2026-11-20)
+                two += sents[k]
+                k += 1
             self.assertIn(f'<meta name="description" content="{two}">', self.html(p["path"]), p["path"])
             self.assertIn(f'<meta property="og:description" content="{two}">', self.html(p["path"]), p["path"])
 

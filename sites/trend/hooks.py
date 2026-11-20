@@ -91,7 +91,12 @@ def first_sentences(p: dict, n: int = 2) -> str | None:
     if not text:
         return None
     out = re.findall(r"[^。]+。", text)
-    return "".join(out[:n]) or None
+    got = "".join(out[:n])
+    k = n
+    while len(got) < 80 and k < len(out) and len(got) + len(out[k]) <= 120:   # a short pair of sentences is lengthened by the next sentence as written (SEO audit 2026-11-20: five 44-50 character descriptions)
+        got += out[k]
+        k += 1
+    return got or None
 
 
 def three_lines(p: dict) -> str:
