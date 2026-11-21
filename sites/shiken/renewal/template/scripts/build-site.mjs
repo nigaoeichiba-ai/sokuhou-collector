@@ -41,7 +41,7 @@ export async function buildSite(out){
  const {document:shell}=parseHTML(pages[0].html);
  const legacy=await loadLegacy(root);
  // round pages (one round of TOEIC / Eiken / Boki / FP) share the parent page's copy: noindex,follow, unless the page already shows in Google (schedule/search-keep.json, from Search Console).  The parent page lists every round with its dates and links to it.
- const ROUND_RE=/^(toeic-\d{8}|eiken-\d{4}-\d|boki-\d{3}|fp1-gakka-\d{8})$/;
+ const ROUND_RE=/^(toeic-\d{8}|eiken-\d{4}-\d|boki-\d{3}|fp1-gakka-\d{8}|fp1-jafp-\d{4}|fp23-(?:jafp|kinzai)-\d{4})$/;
  const keepIndexed=new Set(JSON.parse(await readFile(new URL('schedule/search-keep.json',root),'utf8')).ids);
  // ---- pages that are not made by the browser templates: the old articles and the site-wide pages -----------------------------
  const crumbsOf={};

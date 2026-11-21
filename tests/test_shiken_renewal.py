@@ -367,7 +367,7 @@ class Renewal(unittest.TestCase):
         # Search Console (2026-11-20): 80 pages crawled-not-indexed; the round pages share the parent's copy (build rule ROUND_RE, kept ones from schedule/search-keep.json)
         sm = re.findall(r"<loc>(.*?)</loc>", (self.out / "sitemap.xml").read_text(encoding="utf-8"))
         robots = lambda rel: re.search(r'name="robots" content="([^"]*)"', self.pages[rel]).group(1)
-        for ex in ("toeic-20261219", "toeic-20270124", "eiken-2026-1", "eiken-2027-1", "boki-173", "fp1-gakka-20260524"):
+        for ex in ("toeic-20261219", "toeic-20270124", "eiken-2026-1", "eiken-2027-1", "boki-173", "fp1-gakka-20260524", "fp23-jafp-2027", "fp23-kinzai-2026", "fp1-jafp-2026"):
             self.assertEqual(robots(f"exams/{ex}/index.html"), "noindex,follow", ex)
             self.assertNotIn(f"https://shiken-nittei.com/exams/{ex}/", sm, ex)
         for ex in ("toeic-20261206", "eiken-2027-3"):          # shown in Google in the last 28 days: stay indexed
