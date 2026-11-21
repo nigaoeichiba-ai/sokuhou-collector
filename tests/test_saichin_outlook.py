@@ -34,6 +34,16 @@ class OutlookTest(SiteFixture):
             self.assertEqual(cells[0], f"+{raises[2]}円", slug)
             self.assertIn("令和9年度", html.split("(試算)</h2>", 1)[0][-80:], slug)
 
+    def test_the_1000_yen_answer_is_the_first_year_at_or_over_1000(self):
+        raw = _raw()
+        series, _ = all_series(raw, history_old.load())
+        for p in raw["prefectures"]:
+            html = self.page(build.SLUGS[p["name"]])
+            first = next((fy for fy in range(1977, 2027) if (series[p["name"]][fy] or 0) >= 1000), None)
+            m = re.search(r"いつから1,000円以上ですか</h3><p>(.*?)からです。この年度の額は([\d,]+)円", html)
+            self.assertIsNotNone(m, p["name"])
+            self.assertEqual(int(m.group(2).replace(",", "")), int(series[p["name"]][first]), p["name"])
+
     def test_the_page_says_it_is_not_the_real_decision(self):
         self.assertIn("実際の額ではありません", self.page("saitama"))
 

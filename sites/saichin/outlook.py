@@ -47,6 +47,23 @@ def _fy_label(fy: int) -> str:
     return "令和元年度" if fy == 2019 else f"令和{fy - 2018}年度"
 
 
+def first_1000(r: dict) -> dict | None:
+    """The first year of the series whose amount is 1,000 yen or more (None if it never was)."""
+    return next((e for e in _recent(r) if e["amount"] >= 1000), None)
+
+
+def faq_1000(r: dict, k) -> str:
+    """The question people type ("最低賃金 1000円 いつから"), answered from the prefecture's own series."""
+    e = first_1000(r)
+    if e is None:
+        return ""
+    name = k.esc(r["name"])
+    before = [x for x in _recent(r) if x["fy"] < e["fy"]]
+    prev = f"、その前の{k.esc(before[-1]['label'])}は{before[-1]['amount']:,.0f}円" if before else ""
+    return (f"<h3>{name}の最低賃金は、いつから1,000円以上ですか</h3>"
+            f"<p>{k.esc(e['label'])}からです。この年度の額は{e['amount']:,.0f}円{prev}でした。</p>")
+
+
 def section(d: dict, r: dict, k) -> str:
     sc = scenarios(r)
     if sc is None:
@@ -74,5 +91,6 @@ def section(d: dict, r: dict, k) -> str:
         f"<p>{cur}の{base:,}円と、直近3年度の引上げ額({raises})から計算した試算で、実際の額ではありません。</p>"
         '<div class="tablewrap"><table><thead><tr><th>計算のしかた</th><th>引上げ額</th><th>' + nxt + 'の額</th></tr></thead><tbody>'
         + rows + "</tbody>" + foot + "</table></div>"
+        + faq_1000(r, k)
         + work_pages.jobs_block(f"{name}の最低賃金{base:,}円より高い時給の仕事を探すときの例です。")
     )
