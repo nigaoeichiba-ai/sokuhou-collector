@@ -6770,6 +6770,171 @@
   "unchanged": 62,
   "units": 89
  },
+ "gift/mothers-day-mother/index.html": {
+  "accepted": [
+   {
+    "from": "あとでスマホから見返すなら、LINEの自分だけのトークか、自分宛てのメールに送れます。",
+    "kind": "para",
+    "to": "あとでスマホから見返すなら、LINEの自分だけのトークか自分宛てのメールに送れます。",
+    "why": "不要な読点を削除"
+   },
+   {
+    "from": "日傘は買い物や通勤の外出で使え、持ち手や重さを選べば毎日のバッグにも入れやすい実用品です。",
+    "kind": "item",
+    "to": "日傘は買い物や通勤に使えます。持ち手と重さを確かめれば、毎日のバッグに入れやすいものを選べます。",
+    "why": "一文一論点に分割"
+   },
+   {
+    "from": "母への母の日、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "母の日に贈る花・日傘・ストール",
+    "why": "曖昧な問いを具体化"
+   },
+   {
+    "from": "フルーツ入りのバウムクーヘン8個を1つずつ個包装にした詰め合わせです。お茶の時間に分けやすい品です。",
+    "kind": "para",
+    "to": "フルーツ入りのバウムクーヘン8個を1つずつ個包装した詰め合わせです。お茶の時間に分けやすい品です。",
+    "why": "語順を自然に修正"
+   }
+  ],
+  "date": "2026-11-21",
+  "deleted": [
+   "家事用品ばかりで感謝が伝わりにくい選び方"
+  ],
+  "diagnosis": [
+   "構成: 品物の理由と提案文が重複し、予算・配送・注意点が離れているため、選ぶ順序を追いにくくなっています。",
+   "見出し: 「喜ばれやすい理由」「こんな贈り方はどうでしょう」など、節の中身が分からない見出しがあります。",
+   "リズム: 一文に複数の場面を詰めた箇所があり、商品ごとの違いが埋もれています。"
+  ],
+  "failed": "",
+  "hash": "7515318c7d84",
+  "needs_check": [
+   {
+    "question": "文末が「離れて暮らしてい」で切れています。表示上の文字数制限による省略か、元データの欠落か確認してください。",
+    "text": "母の日に母へ贈るなら、感謝の言葉を花だけに任せず、母がその後どう楽しむかまで考えたいです。花とお菓子は家族で囲む時間に日傘やストールは外出の支度に役立ちます。届"
+   },
+   {
+    "question": "母向けのページで「家事を妻の役割として」となっています。妻向けページの文が混入していないか確認してください。",
+    "text": "家事用品だけを贈ると、家事を妻の役割として押しつけた印象になることがあります"
+   }
+  ],
+  "page": "gift/mothers-day-mother/index.html",
+  "rejected": [
+   {
+    "after": "母の日のプレゼントは、母が受け取ったあとにどう楽しむかまで考えて選びます。花やお菓子は家族で囲む時間に日傘やストールは外出の支度に役立ちます。感謝は品物だけに任",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['プレゼント']",
+     "condition removed (2 -> 0)"
+    ],
+    "text": "母の日に母へ贈るなら、感謝の言葉を花だけに任せず、母がその後どう楽しむかまで考えたいです。花とお菓子は家族で囲む時間に日"
+   },
+   {
+    "after": "母の日の調査結果をくわしく見る(データ室)",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日']"
+    ],
+    "text": "調査の数字をくわしく見る(データ室)"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品は見つかりませんでした。予算や種類を変えるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '種類']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから母の日に母へ贈る品を選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月21日 9:32時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "花とお菓子のセットは母の日らしく華やかで、届いた日の午後に家族でお茶を楽しめます。",
+    "problems": [
+     "added claim: 「お茶の時間を作れる」を「お茶を楽しめる」とし、楽しめるとの評価を足している"
+    ],
+    "text": "花とお菓子のセットは、母の日らしい華やかさがあり、届いた日の午後に家族でお茶の時間を作れます。"
+   },
+   {
+    "after": "ストールは冷房の効いた店内や春先の散歩でさっと羽織れます。服の色に合わせて選ぶ楽しみもあります。",
+    "problems": [
+     "condition dropped: 楽しみがある時期を示す「季節ごとに」が落ちている"
+    ],
+    "text": "ストールは冷房の効いた店内や春先の散歩でさっと羽織れ、服の色に合わせる楽しみも季節ごとにあります。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "after": "梅の実を感じるあらごし梅酒です。Amazon限定のギフトボックス付きで、お酒を飲む人への贈り物に向きます。",
+    "problems": [
+     "added claim: 贈れることを「贈り物に向く」という適性の断定に変えている"
+    ],
+    "text": "梅の実を感じるあらごし梅酒です。Amazon限定のギフトボックス付きでお酒を飲む人に贈れます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「母の日にみんなはいくらで何を…」〜「調査の数字をくわしく見る(デ…」の調査結果を導入の直後へ移し、予算や品物の傾向を見てから候補を選べる順にする。",
+   "「母の日当日は配送が混みやすい…」は花とお菓子の選び方から分け、配送時期と受け取り方の項目として調査結果のあとに置く。",
+   "「喜ばれやすい理由…」〜「ストールは冷房の効いた店内や…」の説明を「母への母の日、こんな贈り方は…」〜「楽天市場で「レディース スト…」の各提案へ統合し、同じ用途説明の重複をなくす。",
+   "「気をつけたいこと…」〜「家事用品ばかりで感謝が伝わり…」は商品一覧より前に置き、避けたい選び方を確認してから候補を絞れる順にする。"
+  ],
+  "unchanged": 69,
+  "units": 92
+ },
  "gift/mothers-day-wife/index.html": {
   "accepted": [
    {
@@ -7864,6 +8029,391 @@
    "「喜ばれやすい理由…」〜「酒器は相手がお酒を楽しむと分…」と「上司へのお歳暮、こんな贈り方…」〜「楽天市場で「海苔 詰め合わせ…」は内容が重なるため、菓子折り・コーヒー・名入れボールペン・海苔の説明を品ごとに一度ずつ載せる。"
   ],
   "unchanged": 63,
+  "units": 95
+ },
+ "gift/oseibo-father/index.html": {
+  "accepted": [
+   {
+    "from": "ハムは冷蔵か常温かを確認し、年末の冷蔵庫に入る箱サイズを選んで配送する。",
+    "kind": "item",
+    "to": "ハムは冷蔵品か常温品かを確認します。年末の冷蔵庫に入る箱サイズを選びます。",
+    "why": "一文一論点に分割"
+   },
+   {
+    "from": "父へのお歳暮、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "父へのお歳暮、品物別の候補",
+    "why": "曖昧な問いを具体化"
+   },
+   {
+    "from": "仕事納め後の朝や新聞を読む時間に使えて保管場所を取りにくい贈り物です。",
+    "kind": "para",
+    "to": "仕事納め後の朝や新聞を読む時間に楽しめます。保管場所を取りにくい贈り物です。",
+    "why": "論点を二文に分割"
+   },
+   {
+    "from": "正月前後の簡単な食事に添えられ、料理を増やさず一品感を出せる実用的な品です。",
+    "kind": "para",
+    "to": "正月前後の簡単な食事に添えられます。料理を増やさず一品を足せる実用的な品です。",
+    "why": "造語を普通の表現に"
+   },
+   {
+    "from": "冷凍品や生ものは相手の受け取り予定を確認してから送ります",
+    "kind": "item",
+    "to": "冷凍品や生ものは父の受け取り予定を確認してから送ります",
+    "why": "相手を続柄で明示"
+   },
+   {
+    "from": "お歳暮のあと年始のあいさつにはお年賀を持参します。時期の違いと間に合わなかったときの考え方を記事にしています。",
+    "kind": "para",
+    "to": "お歳暮のあと年始のあいさつにはお年賀を持参します。お歳暮との時期の違いと間に合わなかったときの考え方をまとめています。",
+    "why": "記事内容を具体化"
+   }
+  ],
+  "date": "2026-11-21",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 相場・時期・注意点より商品紹介が先に続き、短時間で決めたい読者が判断の基準をつかみにくい並びです。",
+   "構成: 「喜ばれやすい理由」と商品候補の説明に重複があり、理由3つ・選び方3つの型が前に出ています。",
+   "見出し: 「こんな贈り方」「どんなタイプ」のように、節の中身が見出しだけでは分からない箇所があります。",
+   "語: 「一品感」「この場面」「その人」など、具体的な品や相手に置き換えられる言葉が残っています。"
+  ],
+  "failed": "",
+  "hash": "3558ac33dcb1",
+  "needs_check": [
+   {
+    "question": "「人気の4点」とする根拠がランキングや販売データにあるか確認してください。",
+    "text": "父へ贈るお歳暮ギフト、種類の違う人気の4点"
+   },
+   {
+    "question": "「健康を心配させる言い方の商品」が、どの商品や表現を指すのか確認してください。",
+    "text": "健康を心配させる言い方の商品を選ぶことは避けます"
+   }
+  ],
+  "page": "gift/oseibo-father/index.html",
+  "rejected": [
+   {
+    "after": "価格・在庫は2026年11月21日 9:32時点の情報です。このサイトの掲載情報はよろこぶプレゼントの作成者が管理しています。価格や販売可能情報は変更される場合",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月21日 9:32時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "お歳暮を贈る日を忘れない(たいせつな日メモに登録)",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['歳暮']"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "after": "和菓子は賞味期限と個数を確認します。夫婦二人でも食べきれる量を選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['確認']"
+    ],
+    "text": "和菓子は賞味期限と個数を見て夫婦二人でも食べきれる量に調整して選ぶ。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品はありません。予算や種類を変えるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '種類']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから父へのお歳暮に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['歳暮']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "父へのお歳暮は正月前後に家で楽しめる食品が選びやすいです。ハムは食卓の一品に、和菓子はお茶の時間に、コーヒーは仕事納め後の朝に楽しめます。帰省できない年は、届い",
+    "problems": [
+     "condition dropped: 「年末の挨拶として贈る」という目的が落ちています"
+    ],
+    "text": "父へ年末の挨拶として贈るお歳暮は、正月前後に家で楽しめる食品が合わせやすいです。ハムは食卓の一品に、和菓子はお茶の時間に"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "迷ったときの次の一歩"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "導入の直後に「金額の目安 父へのお歳暮は、…」を置き、金額の目安を商品紹介より先に示します。",
+   "「お歳暮の早見表…」〜「お年賀はいつまでに渡す？ 松…」の時期・のしの案内と「気をつけたいこと…」〜「健康を心配させる言い方の商品…」の注意点を、商品候補の前へ移します。順序は「時期・金額・贈り方・注意点・商品選び」とします。",
+   "「喜ばれやすい理由…」〜「コーヒーは豆か粉かドリップバ…」の理由と選び方は「父へのお歳暮、こんな贈り方は…」〜「楽天市場で「佃煮 詰め合わせ…」の品物別候補と統合します。ハム・和菓子・コーヒーの説明を一か所にまとめると重複を減らせます。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」はAmazonの商品と検索欄のあとへ移し、ページの最後に行うこととして見せます。"
+  ],
+  "unchanged": 72,
+  "units": 95
+ },
+ "gift/oseibo-in-laws/index.html": {
+  "accepted": [
+   {
+    "from": "義父母へ贈るお歳暮ギフト、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "義父母へのお歳暮、種類別の4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "義父母へのお歳暮、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "義父母へのお歳暮 菓子折り・果物・タオル・日本茶",
+    "why": "曖昧な問いを品名に"
+   },
+   {
+    "from": "冬らしさがあり、食後やこたつの時間に家族で分けやすい手土産になります。",
+    "kind": "para",
+    "to": "みかんは冬らしさがあり、食後やこたつの時間に家族で分けやすい手土産です。",
+    "why": "品名を主語に"
+   },
+   {
+    "from": "時期・のし・金額を百貨店3社の案内を読み比べて1枚にまとめました。印刷できます。",
+    "kind": "para",
+    "to": "百貨店3社の案内から時期・のし・金額を1枚にまとめました。印刷できます。",
+    "why": "読み比べた対象を先に"
+   }
+  ],
+  "date": "2026-11-21",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 品物の説明が先に続き、読者が最初に知りたい時期・金額・渡し方が後半にあります。",
+   "構成: 品物を勧める理由が「喜ばれやすい理由」と個別提案で重複しています。",
+   "具体: 導入の「きちんと見える」「気遣い」より、食べきれる量や配送方法を前に出すと判断しやすくなります。",
+   "見出し: 「どんなタイプ？」「次の一歩」など、節の中身が分かりにくい見出しがあります。"
+  ],
+  "failed": "",
+  "hash": "e283e758c241",
+  "needs_check": [],
+  "page": "gift/oseibo-in-laws/index.html",
+  "rejected": [
+   {
+    "after": "義父母へのお歳暮は菓子折り、果物、タオルセットが選びやすい品です。家族で食べきれる量やしまいやすさも見て選びます。帰省の予定があるなら、持参か事前の配送かを配偶",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['家族', '事前']"
+    ],
+    "text": "義父母へのお歳暮は、年末の挨拶としてきちんと見えつつ、食べきれる量やしまいやすさまで考えると気遣いが伝わります。菓子折り"
+   },
+   {
+    "after": "義父母へのお歳暮は菓子折り、果物、タオルセットが選びやすい品です。家族で食べきれる量やしまいやすさまで見て選びます。帰省するなら、持参か事前の配送かを配偶者と決",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['家族']"
+    ],
+    "text": "義父母へのお歳暮は、年末の挨拶としてきちんと見えつつ、食べきれる量やしまいやすさまで考えると気遣いが伝わります。菓子折り"
+   },
+   {
+    "after": "3種類が贈りやすい理由",
+    "problems": [
+     "numbers differ: [] -> ['3']"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "菓子折りは年末に親戚が集まる家でお茶請けにできます。義父母がお菓子を用意する手間も減らせます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['用意', '手間']"
+    ],
+    "text": "菓子折りは年末に親戚が集まる家ならお茶請けに出せて、義父母の準備を少し助けられる品です。"
+   },
+   {
+    "after": "予算と種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "菓子折りは年末に親戚が集まる家のお茶請けに使えます。年末の挨拶にも向く品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['菓子折']"
+    ],
+    "text": "年末に親戚が集まる家でお茶請けに出せてきちんとした挨拶にも見えます。"
+   },
+   {
+    "after": "タオルセットは来客が増える年末年始に洗面所で使えます。食品を控えている家庭にも贈れます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['タオルセット']"
+    ],
+    "text": "来客が増える年末年始に洗面所で使え、食品を控えている家庭にも贈れます。"
+   },
+   {
+    "after": "日本茶は来客へのお茶出しにも義父母の休憩にも使えます。しまいやすい年末の挨拶品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['義父母']"
+    ],
+    "text": "来客のお茶出しにも夫婦の休憩にも使えてしまいやすい年末の挨拶品です。"
+   },
+   {
+    "after": "残り方と定番度で比べる",
+    "problems": [
+     "new claim: 定番"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "義父母について一言入力してください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['義父母']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "冷凍品や生ものは義父母の受け取り予定を確認してから送ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['義父母']"
+    ],
+    "text": "冷凍品や生ものは相手の受け取り予定を確認してから送ります"
+   },
+   {
+    "after": "お歳暮のあと年始の挨拶にはお年賀を持参します。お歳暮との時期の違いと間に合わなかったときの考え方をまとめました。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['挨拶']"
+    ],
+    "text": "お歳暮のあと年始のあいさつにはお年賀を持参します。時期の違いと間に合わなかったときの考え方を記事にしています。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "after": "菓子折りは義父母の家族人数に合わせ、硬すぎない焼き菓子や羊羹から選びます。",
+    "problems": [
+     "hedge removed: 「候補にする」が「選びます」という確定的な表現になった"
+    ],
+    "text": "菓子折りは義父母の家族人数を考え、硬すぎない焼き菓子や羊羹を候補にする。"
+   },
+   {
+    "after": "果物は傷みやすさを確かめ、すぐ食べきれる量か日持ちする品種を選びます。",
+    "problems": [
+     "condition dropped: 「受け取り後」という時点が落ちた"
+    ],
+    "text": "果物は傷みやすさを見て受け取り後すぐ食べる量か日持ちする品種かを選ぶ。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "条件で絞って比べる"
+   },
+   {
+    "after": "この条件に合う商品はありません。条件を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "added claim/hedge removed: 「見つからなかった」が「存在しない」という断定になった"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "迷ったときの次の一歩"
+   },
+   {
+    "after": "8種類の焼き菓子が20個入っています。個包装なので手土産にも家族への贈り物にも使えます。",
+    "problems": [
+     "added claim: 個包装であることを用途に使える理由として明示した"
+    ],
+    "text": "8種類の焼き菓子が20個入っています。個包装で手土産にも家族への贈り物にも使えます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "インテリア品は家のしつらえに関わるため好みを確かめます。",
+    "problems": [
+     "added claim/condition dropped: 好みを確かめるという行動と理由を足し、「踏み込みすぎる」という程度を落とした"
+    ],
+    "text": "家のしつらえに踏み込みすぎるインテリア品"
+   }
+  ],
+  "structure_suggestions": [
+   "「お歳暮の早見表…」〜「お年賀はいつまでに渡す？ 松…」を「義父母へのお歳暮は、年末の挨…」の直後へ移し、時期・のし・金額を品物選びより先に示します。",
+   "「喜ばれやすい理由…」〜「配送するなら、年末の外出予定…」と「義父母へのお歳暮、こんな贈り…」〜「楽天市場で「日本茶 詰め合わ…」は内容が重なるため、品物ごとの理由は「義父母へのお歳暮、こんな贈り…」〜「楽天市場で「日本茶 詰め合わ…」へ統合し、「選び方のポイント…」〜「配送するなら、年末の外出予定…」には家族人数・日持ち・配送日時の判断基準だけを残します。",
+   "「気をつけたいこと…」〜「家のしつらえに踏み込みすぎる…」は商品一覧の後ではなく、品物を選び始める「条件で絞って比べる…」の前へ移します。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は楽天市場とAmazonの商品を見たあとの行動なので、「羊羹…」の後へ移します。"
+  ],
+  "unchanged": 66,
   "units": 95
  },
  "gift/respect-for-aged-day-grandmother/index.html": {
