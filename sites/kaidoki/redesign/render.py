@@ -117,7 +117,7 @@ def sales_list() -> list[dict]:
                     "start": _iso(ev["start"], ev.get("start_t", ""), "00:00"), "end": _iso(ev["end"], ev.get("end_t", ""), "23:59"),
                     "start_t": bool(ev.get("start_t")), "end_t": bool(ev.get("end_t")), "href": GROUP_PAGE[ev["group"]],
                     "summary": ev.get("note") or ("主催者の公式ページで確認した日程です。" if ev.get("read") != "summary" else "公式ページの表示で確認した日程です。"),
-                    "tags": [f"確認日 {REVERIFIED.replace('-', '/')}"], "categories": ["electronics"]})
+                    "tags": [f"確認日 {ev.get('checked', REVERIFIED).replace('-', '/')}"], "categories": ["electronics"]})
     for name, mall, why in facts.UNANNOUNCED:
         mall_id = MALL_ID[mall]
         href = next(p for k, p in UNANNOUNCED_PAGE if name.startswith(k))

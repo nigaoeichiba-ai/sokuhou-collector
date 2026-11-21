@@ -68,7 +68,7 @@ def _t(t: str) -> str:
 def ev_item(ev: dict) -> dict:
     mall = MALL_OF[ev["mall"]]
     return {"id": ev["id"], "kind": "confirmed", "mall": mall, "title": ev["name"], "s": ev["start"], "e": ev["end"], "when": ev_span(ev), "note": ev.get("note", ""),
-            "basis": [], "src": SRC_OFFICIAL if ev.get("read") != "summary" else SRC_PAGE, "checked": REVERIFIED, "announce": "", "href": GROUP_PAGE[ev["group"]]}
+            "basis": [], "src": SRC_OFFICIAL if ev.get("read") != "summary" else SRC_PAGE, "checked": ev.get("checked", REVERIFIED), "announce": "", "href": GROUP_PAGE[ev["group"]]}
 
 
 def C(id, mall, title, s, e, when, href, note="", src=SRC_PAGE, checked=VERIFIED):

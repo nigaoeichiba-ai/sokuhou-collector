@@ -6,8 +6,12 @@ from __future__ import annotations
 from .common import CHECKED, d
 
 
-def E(id, mall, name, s, st, e, et, read="text", note="", group=""):
-    return {"id": id, "mall": mall, "name": name, "start": s, "start_t": st, "end": e, "end_t": et, "read": read, "note": note, "group": group or id.rsplit("-", 1)[0]}
+def E(id, mall, name, s, st, e, et, read="text", note="", group="", checked=""):
+    """checked: the day this row was read again (ISO). Empty = the default day of gen/common.py (REVERIFIED)."""
+    ev = {"id": id, "mall": mall, "name": name, "start": s, "start_t": st, "end": e, "end_t": et, "read": read, "note": note, "group": group or id.rsplit("-", 1)[0]}
+    if checked:
+        ev["checked"] = checked
+    return ev
 
 
 EVENTS = [
@@ -45,7 +49,7 @@ EVENTS = [
     E("ypp-2026-03", "Yahoo!ショッピング", "超PayPay祭 2026年3月", "2026-03-03", "12:00", "2026-03-22", "", group="ypp"),
     E("ypp-2026-06", "Yahoo!ショッピング", "超PayPay祭 2026年夏", "2026-06-26", "12:00", "2026-07-12", "", group="ypp"),
     E("ybaku-2026-09", "Yahoo!ショッピング", "爆買ウルトラSALE 2026年9月", "2026-08-26", "12:00", "2026-09-13", "", group="ybaku"),
-    E("ybf-2026", "Yahoo!ショッピング", "Yahoo!ショッピング ブラックフライデー 2026", "2026-11-22", "00:00", "2026-11-30", "01:59", note="公式は「11月29日(日)25:59まで」と表記", group="ybf"),
+    E("ybf-2026", "Yahoo!ショッピング", "Yahoo!ショッピング ブラックフライデー 2026", "2026-11-22", "00:00", "2026-11-30", "01:59", note="公式は「11月29日(日)25:59まで」と表記", group="ybf", checked="2026-11-22"),
 ]
 BY_ID = {e["id"]: e for e in EVENTS}
 

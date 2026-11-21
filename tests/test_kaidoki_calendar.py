@@ -169,6 +169,19 @@ class PageTest(unittest.TestCase):
         self.assertFalse(_weekday_problems([dict(bad, when="12月4日(金)20時ごろ")]))
 
 
+def row_day_problems(html: str) -> list[str]:
+    """The check day printed on the top page for a row must be the day of that row in the data (facts.EVENTS 'checked'), never one shared value."""
+    from sites.kaidoki.gen import facts
+    bad = []
+    for ev in facts.EVENTS:
+        if not ev.get("checked"):
+            continue
+        m = re.search(r'<article class="sale-(?:tile|block)"[^>]*>(?:(?!</article>).)*?%s(?:(?!</article>).)*</article>' % re.escape(ev["name"]), html, flags=re.S)
+        if m and "確認日 " + ev["checked"].replace("-", "/") not in m.group(0):
+            bad.append(f"{ev['id']}: the top page does not show the check day {ev['checked']} of the data")
+    return bad
+
+
 def home_problems(html: str, today: date) -> list[str]:
     """What the top page must agree with in the data: the check day of every tile, the entry to the calendars, the two weeks it lists."""
     bad = []
@@ -266,6 +279,18 @@ class HomeTest(unittest.TestCase):
         cut = re.sub(r'<li class="hs-slide.*?</li>', "", h, count=3, flags=re.S)
         self.assertTrue(home_problems(cut, self.TODAY))
         self.assertTrue(home_problems(h.replace("2026/11/12", "2026/11/03", 1), self.TODAY))
+
+
+    def test_top_check_day_comes_from_the_row_data(self):
+        h = self.pages["index.html"]
+        self.assertIn("Yahoo!ショッピング ブラックフライデー 2026", h, "the Yahoo! BF row is on the top page")
+        self.assertEqual(row_day_problems(h), [])
+
+    def test_negative_a_shared_check_day_on_a_row_is_caught(self):
+        h = self.pages["index.html"]
+        m = re.search(r'(<article class="sale-(?:tile|block)"(?:(?!</article>).)*?Yahoo!ショッピング ブラックフライデー 2026(?:(?!</article>).)*</article>)', h, flags=re.S)
+        self.assertTrue(m)
+        self.assertTrue(row_day_problems(h.replace(m.group(1), m.group(1).replace("確認日 2026/11/22", "確認日 2026/11/12"))))
 
     def test_negative_a_stale_top_page_is_caught(self):
         h = self.pages["index.html"]
