@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import industry_view, ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
+from sites.saichin import industry_view, ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, outlook, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sitekit import structured_data  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
@@ -528,7 +528,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <div class="stat"><span>全国での順位</span><b>47都道府県中 {r['rank']}位</b><span>同額は同じ順位とします</span></div>
 </div>
 {trend_pages.pref_trend(r, sys.modules[__name__], fixed_note)}
-{pref_story.figures_table(d, r, sys.modules[__name__])}{pref_story.compare_table(d, r, sys.modules[__name__])}{pref_story.story_block(d, r, sys.modules[__name__])}{analysis_pages.pref_block(d, r, sys.modules[__name__])}{industry_view.section(d, r, sys.modules[__name__]) if d.get("industry") else ""}<h2>{esc(r['name'])}の最低賃金は、月給・年収でいくらか</h2>
+{pref_story.figures_table(d, r, sys.modules[__name__])}{pref_story.compare_table(d, r, sys.modules[__name__])}{pref_story.story_block(d, r, sys.modules[__name__])}{outlook.section(d, r, sys.modules[__name__])}{analysis_pages.pref_block(d, r, sys.modules[__name__])}{industry_view.section(d, r, sys.modules[__name__]) if d.get("industry") else ""}<h2>{esc(r['name'])}の最低賃金は、月給・年収でいくらか</h2>
 {pref_story.monthly_table(d, r, sys.modules[__name__])}
 {earnings_table(r)}
 {wage_section(d, r) if d.get("wage") else ""}
