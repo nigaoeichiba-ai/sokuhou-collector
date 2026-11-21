@@ -162,4 +162,32 @@
 @media (max-width:360px){.guide-toc{padding:16px 14px}.guide-toc ol{padding-left:1.3em}.model-article .guide-toc a{line-height:1.5;font-size:.92rem;padding-block:4px}}
 .case-card-condition{font-size:13px;line-height:1.6;margin:2px 0 4px}.planned-list{margin:0;padding-left:1.3em;font-size:15px;line-height:1.9}
 .ad-box{margin:22px 0;padding:14px 18px;background:#fffaf0;border:1px solid #e3d3b5;border-radius:12px;font-size:15px;line-height:1.8}.ad-box p{margin:0}.ad-label{font-size:12px;font-weight:700;color:#766b59;margin-bottom:4px!important}
-.consult-hero{margin:18px 0 22px}.consult-hero img{display:block;width:100%;max-width:760px;height:auto;border-radius:10px}
+.consult-hero { margin: 18px 0 22px; }
+.consult-hero img { display: block; width: 100%; height: auto; border-radius: 10px; }
+.home-page .case-item > .case-picture-raster {
+  aspect-ratio: 2 / 1;
+  height: auto;
+  max-height: none;
+}
+.case-index-card img { aspect-ratio: 2 / 1; }
+.consult-section .budget-list {
+  padding: 0;
+  list-style: none;
+  border: 1px solid #e2cdb2;
+  border-radius: 12px;
+  background: #fffcf6;
+  overflow: hidden;
+}
+.budget-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  column-gap: .85rem;
+  align-items: baseline;
+  margin: 0;
+  padding: .48rem clamp(.72rem, 2vw, 1.3rem);
+  line-height: 1.55;
+}
+.budget-list li + li { border-top: 1px solid #eee2d0; }
+.budget-list .budget-summary { background: #f7efd9; font-weight: 700; }
+.budget-amount { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.budget-note { grid-column: 1 / -1; margin-top: .25rem; font-size: .91em; font-weight: 400; }

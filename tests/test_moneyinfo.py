@@ -230,13 +230,16 @@ class ConsultArticlesTest(unittest.TestCase):
             self.assertIn(f"{BASE}/{slug}.html", (self.rel / "sitemap.xml").read_text(encoding="utf-8"), slug)
             name = re.search(r'assets/(timeline-[a-z-]+\.webp)', html)
             self.assertTrue(name and (self.rel / "assets" / name[1]).exists(), slug)
-            self.assertTrue((self.rel / "assets" / f"card-{slug[5:]}.webp").exists(), slug)      # the card and share picture
+            self.assertTrue((self.rel / "assets" / f"hero-{slug[5:]}-card.webp").exists(), slug)
 
     def test_the_consultation_type_shows_a_budget_as_lists_not_as_a_run_of_numbers(self):
         for slug in ("case-first-living", "case-childbirth-leave", "case-parent-care"):
             html = self.page(slug)
             for heading in ("収入", "支出", "残りと資産"):
-                self.assertRegex(html, rf"<h3>[^<]*{heading}[^<]*</h3>\s*<ul>", (slug, heading))
+                self.assertRegex(html, rf'<h3>[^<]*{heading}[^<]*</h3>\s*<ul class="budget-list"', (slug, heading))
+            self.assertIn('class="budget-amount"', html, slug)
+            self.assertIn('class="budget-summary"', html, slug)
+            self.assertIn('class="budget-note"', html, slug)
 
     def test_no_forbidden_word_no_source_name_no_decimal_yen_and_no_hidden_ad_marker(self):
         for slug in CONSULT_SLUGS:
@@ -256,6 +259,8 @@ class ConsultArticlesTest(unittest.TestCase):
         for slug in CONSULT_SLUGS:
             self.assertIn(f'href="{slug}.html"', index, slug)
             self.assertIn(f'href="{slug}.html"', cases, slug)
+            for page in (index, cases):
+                self.assertIn(f'src="assets/hero-{slug[5:]}-card.webp"', page, slug)
         planned = cases.split("これから加えるモデルケース")[1]
         for published in ("初任給までの一人暮らしの準備", "育休から復職までの家計", "親と自分の家計を分けた準備"):
             self.assertNotIn(published, planned)       # a case that is published is not announced as "coming"
