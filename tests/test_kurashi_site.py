@@ -188,6 +188,32 @@ class CheckLedger(unittest.TestCase):
             checks.FETCH_LOG = old
 
 
+class StaleFailures(unittest.TestCase):
+    """A source that failed on 3 different days and was never read since is flagged (negative cases included)."""
+
+    def test_stale_failures(self):
+        from sites.kurashi.gen import checks
+        old = checks.FETCH_LOG
+        try:
+            f = lambda d: (d, "A", "x", "failed", "n")
+            checks.FETCH_LOG = [f("2026-11-15"), f("2026-11-16"), f("2026-11-17")]
+            self.assertEqual([w for w, _ in checks.stale_failures()], ["A"])      # 3 days
+            checks.FETCH_LOG = [f("2026-11-15"), f("2026-11-16")]
+            self.assertEqual(checks.stale_failures(), [])                         # 2 days: not yet
+            checks.FETCH_LOG = [f("2026-11-15"), f("2026-11-16"), ("2026-11-17", "A", "y", "ok", "n"), f("2026-11-18")]
+            self.assertEqual(checks.stale_failures(), [])                         # a later read closes the count
+            checks.FETCH_LOG = [f("2026-11-15"), f("2026-11-16"), ("2026-11-17", "A", "y", "top", "n"), f("2026-11-18")]
+            self.assertEqual(len(checks.stale_failures()), 1)                     # reading only the top page does not
+        finally:
+            checks.FETCH_LOG = old
+
+    def test_real_log_warns_not_fails(self):
+        import warnings
+        from sites.kurashi.gen import checks
+        for what, days in checks.stale_failures():
+            warnings.warn(f"kurashi: {what} は {len(days)}日取得できていない({', '.join(days)}):別の経路で読む", stacklevel=1)
+
+
 class CheckDayInBuiltPages(unittest.TestCase):
     """Every page of the ledger shows the ledger's day in the built HTML (the content pages and the guide pages differ in where they show it)."""
 

@@ -14,6 +14,9 @@ FIRST = "2026-11-03"
 
 # day -> the pages whose dates were compared with the sources that day
 CHECKED_ON = {
+    "2026-11-21": [
+        "/furusato/deadline/",                                # 総務省「税金の控除について」(新URL)の本文をChromeで読み、3月15日の申告・ワンストップ・控除の式を照合した
+    ],
     "2026-11-20": [
         "/nengajo/",                                          # 日本郵便の公式発表(8/31)のPDFをChrome(Google文書ビューア)で全文読んで照合した
         "/furusato/deadline/",                                # 総務省「税金の控除について」を全文読み、寄附年と3月15日の申告を照合した(変更届の1月10日は一次未取得のまま)
@@ -34,6 +37,10 @@ CHECKED_ON = {
 # (day, what, how, result, note); result is "ok" (the body was read), "top" (only the top page or a list was read: never counts as "no change") or "failed".
 # A later "ok" for the same what closes a "failed"; a "top" does not.
 FETCH_LOG = [
+    ("2026-11-21", "総務省 ふるさと納税 税金の控除について", "Chrome(新URL mechanism/deduction.html の本文)", "ok", "3月15日までの確定申告・ワンストップ・控除の式。サイトと一致(旧URL furusato/ は404)"),
+    ("2026-11-21", "マイナポータル 引越し手続(hikkoshi_top)", "Chrome(403のまま)・トップは開けた(引越しの案内に変更なし)・デジタル庁の手順ページ(2024-01-29の移転案内のみ)", "failed", "403。個別ページの本文は未取得。11/16 の別URLの本文は ok"),
+    ("2026-11-21", "法務省 戸籍・婚姻届の案内", "WebFetch(403)・Chrome(minji04.html は404)", "failed", "現行URLを未特定。次回は検索で現行URLを探す"),
+    ("2026-11-21", "日本郵便 ニュースリリース一覧", "WebFetch・Chrome(一覧の先頭は8/5の1件のみ表示)", "top", "年賀の新しい発表は見えず。一覧の読み込みが不完全"),
     ("2026-11-20", "日本郵便 2027年用年賀はがきの発行概要(2026-08-31発表のPDF)", "Chrome+Google文書ビューア", "ok", "販売11/2〜1/15・引受開始12/20・元日の目安12/27・1/3も配達。サイトと一致"),
     ("2026-11-20", "総務省 ふるさと納税 税金の控除について", "Chrome", "ok", "3月15日までの確定申告・ワンストップ・控除の式。サイトと一致"),
     ("2026-11-20", "マイナポータル 引越し手続(hikkoshi_top)", "WebFetch・Chrome", "failed", "403。入口からの再確認が必要"),
@@ -72,6 +79,18 @@ def open_failures() -> list[tuple]:
     for i, (day, what, how, res, note) in enumerate(FETCH_LOG):
         if res == "failed" and not any(r == "ok" and w == what and dd >= day for dd, w, _h, r, _n in FETCH_LOG[i + 1:]):
             out.append((day, what, how, note))
+    return out
+
+
+def stale_failures(min_days: int = 3) -> list[tuple]:
+    """sources that failed on min_days or more different days and were never read ('ok') since: they are not 'no change', the routine has to find another way"""
+    out = []
+    for what in dict.fromkeys(w for _d, w, _h, _r, _n in FETCH_LOG):
+        rows = sorted((d, r) for d, w, _h, r, _n in FETCH_LOG if w == what)
+        last_ok = max((d for d, r in rows if r == "ok"), default="")
+        days = sorted({d for d, r in rows if r == "failed" and d > last_ok})
+        if len(days) >= min_days:
+            out.append((what, days))
     return out
 
 
