@@ -1036,3 +1036,11 @@ img[src*="valuecommerce.com/servlet/gifbanner"] { position: absolute; width: 1px
 .changelog li { margin: .5em 0; padding-left: .75em; border-left: 2px solid var(--marker); line-height: 1.8; }
 .changelog time { display: block; font: 700 .72rem var(--num); letter-spacing: .08em; color: var(--muted); }
 .changelog .fix { display: inline-block; margin-right: .6em; padding: 0 .5em; border: 1px solid var(--marker); border-radius: 4px; font-size: .72rem; color: var(--ink2); }
+
+/* Rakuten motion widget (owner 2026-11-22): a block of its own, headed by a visible PR chip; no pop-up, no fixed bar */
+.rk-widget { margin: 28px auto; padding: 12px 0 14px; max-width: 340px; text-align: center; border-top: 1px solid var(--line, #e6dccf); border-bottom: 1px solid var(--line, #e6dccf); }
+.rk-pr { display: flex; align-items: center; justify-content: center; gap: .6em; margin: 0 0 8px; font-size: .86rem; color: var(--muted); }
+.rk-pr .pr-chip { font-size: .8rem; padding: 0 .8em; }
+.rk-box { min-height: 250px; max-width: 300px; margin: 0 auto; overflow: hidden; }
+.rk-box iframe { max-width: 100%; }
+@media print { .rk-widget { display: none !important; } }

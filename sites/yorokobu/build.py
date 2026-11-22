@@ -43,6 +43,7 @@ from sites.yorokobu import itemsserver  # noqa: E402
 from sites.yorokobu import minepage  # noqa: E402
 from sites.yorokobu import concierge as ccbot  # noqa: E402   (build.concierge is the search box of the gift pages)
 from sites.yorokobu.picking import in_tier, score, usable  # noqa: E402
+from sites.yorokobu import rakutenwidget  # noqa: E402
 from sites.yorokobu.tools import (calc_page, gacha_data, gacha_page, gacha_pool, gift_map, persona_page, quiz_page, taboo_page, tools_hub_page)  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 from sokuhou.sitekit import (BuildError, amazon_disclosure, asset_pages, crumbs, esc, layout, legal_pages,  # noqa: E402
@@ -267,9 +268,13 @@ def page(cfg, preview, **kw):
             kw["body"] = bar + kw["body"]
             sale_script = '<script src="/assets/sale.js" defer></script>'
             has_bar = True
-    if "pr-quiet" in kw.get("body", "") or has_bar:
+    had_rakuten = "rakuten.co.jp/" in kw.get("body", "")
+    widgeted = rakutenwidget.insert(kw.get("body", ""), kw.get("path", ""))   # the Rakuten motion widgets (owner 2026-11-22): every page, one common place
+    has_widget = widgeted != kw.get("body", "")
+    kw["body"] = widgeted
+    if "pr-quiet" in kw.get("body", "") or has_bar or has_widget:
         more = tuple(n for n, mark in (("バリューコマース(Yahoo!ショッピング)", "ck.jp.ap.valuecommerce.com/"), ("A8.net", "px.a8.net/")) if mark in kw["body"])
-        kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], "rakuten.co.jp/" in kw["body"] or amazon_links, more)
+        kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], had_rakuten or has_widget or amazon_links, more)
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
                               + ([("データ室", "/data/", "/data/")] if DATA_ON else [])}
