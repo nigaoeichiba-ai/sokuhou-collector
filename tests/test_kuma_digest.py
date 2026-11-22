@@ -1,7 +1,7 @@
 """Weekly digest of municipal sightings: counts come from the lists, truncated lists are left out, nothing after as-of."""
 import tempfile
 import unittest
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 from sites.kuma import build, digest
@@ -259,6 +259,22 @@ class MonthlyPagesTest(unittest.TestCase):
         self.assertIn("/monthly/</loc>", sitemap)
         self.assertNotIn("/monthly/2026-09/", sitemap)
         self.assertIn('content="noindex', self.read("monthly/2026-09/index.html"))
+
+    def test_every_week_page_links_to_the_month_pages_it_falls_in(self):
+        import re
+        weeks = sorted(f.parent.name for f in self.out.glob("digest/*-W*/index.html"))
+        self.assertTrue(weeks)
+        linked = 0
+        for k in weeks:
+            t = self.read(f"digest/{k}/index.html")
+            ws = digest.week_start(k)
+            want = {digest.month_key(d) for d in (ws, ws + timedelta(days=6)) if (self.out / f"monthly/{digest.month_key(d)}/index.html").exists()}
+            got = set(re.findall(r'href="/monthly/(\d{4}-\d{2})/"', t))
+            self.assertEqual(got, want, k)
+            for mk in got:
+                self.assertTrue((self.out / f"monthly/{mk}/index.html").exists())
+            linked += bool(got)
+        self.assertTrue(linked)                  # negative guard: the test must see at least one link, or it checks nothing
 
     def test_no_monthly_without_a_finished_month(self):
         from tests.test_kuma_build import CFG, raw_data

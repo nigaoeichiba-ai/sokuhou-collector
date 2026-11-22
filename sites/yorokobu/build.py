@@ -2025,6 +2025,21 @@ def travel_page(d: dict, cfg: dict, preview: bool) -> str:
         scene += f'<section class="g-sec"><h2>こんな場面で</h2><ul>{occ_links}</ul></section>'
     if thm_links:
         scene += f'<section class="g-sec"><h2>旅の準備の品を探す</h2><ul>{thm_links}</ul></section>'
+    tm = ""
+    for slug in TRAVEL_OCCASIONS:
+        e = c.get("travel_messages", {}).get(slug)
+        if not e or slug not in occ:
+            continue
+        sets = "".join(
+            f'<h3>{esc(s["to"])} <span class="tagx">{esc(STYLE_LABEL.get(s["style"], s["style"]))}</span></h3><ul class="msg-list">'
+            + "".join(f'<li><p class="msg-text">{esc(ln)}</p><button type="button" class="copy" data-copy hidden>コピー</button></li>' for ln in s["lines"]) + "</ul>"
+            for s in e["sets"])
+        close = "".join(f'<li><p class="msg-text">{esc(x)}</p><button type="button" class="copy" data-copy hidden>コピー</button></li>' for x in e["closing"])
+        more = f'<p><a href="/message/{slug}/">{esc(occ[slug]["name"])}のメッセージ例文集をもっと見る</a></p>' if slug in c.get("messages", {}) else ""
+        tm += (f'<h3 class="tm-occ">{esc(occ[slug]["name"])}に宿泊を贈るとき</h3><p>{esc(e["intro"])}</p>{sets}'
+               f'<h3>最後に添える一言</h3><ul class="msg-list">{close}</ul>{more}')
+    msg_sec = (f'<section class="g-sec"><h2>宿泊を贈るときの一言メッセージ例</h2>'
+               f'<p>気に入った文の「コピー」を押すと、そのまま貼りつけられます。相手との関係に合わせて、言葉を少し変えて使ってください。</p>{tm}</section>') if tm else ""
     body = f"""{head_band("sky", "", "旅行・宿泊を贈る", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("旅行・宿泊を贈る", None)])}</div>
 {pr_lead(cfg)}
@@ -2034,6 +2049,7 @@ def travel_page(d: dict, cfg: dict, preview: bool) -> str:
 <section class="g-sec"><h2>贈り方は3通り</h2>
 <div class="tablewrap"><table class="data"><tbody>{way_rows}</tbody></table></div></section>
 <section class="g-sec"><h2>渡す前に確かめること</h2><ul>{check}</ul></section>
+{msg_sec}
 {scene}
 <section class="g-sec"><h2>宿を探す</h2>
 <p>地域・日付・人数を入れて探せます。口コミと、キャンセルの条件を読んでから決めます。→ {rk}</p></section>

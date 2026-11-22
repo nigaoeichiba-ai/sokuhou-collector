@@ -1002,7 +1002,7 @@ def digest_hub(dig: dict, cfg: dict, preview: bool, has_monthly: bool = False) -
                 description="自治体が公表しているクマの目撃情報を、週ごとに数えて、前の週と比べています。", body=body)
 
 
-def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
+def digest_page(dig: dict, key: str, cfg: dict, preview: bool, months=()) -> str:
     cur, prev = dig["by_week"][key], dig["by_week"].get(digest.prev_key(key), {})
     tot, ptot, both = digest.common_total(dig, key)
     rows, notes = [], ""
@@ -1034,6 +1034,13 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
     ks = dig["weeks"]
     i = ks.index(key)
     links = ([f'<a href="/digest/{ks[i + 1]}/">前の週</a>'] if i + 1 < len(ks) else []) + ([f'<a href="/digest/{ks[i - 1]}/">次の週</a>'] if i > 0 else [])
+    ws = digest.week_start(key)
+    mks = []
+    for dd in (ws, ws + timedelta(days=6)):          # a week can straddle two months: link each month that has a page
+        mk = digest.month_key(dd)
+        if mk in months and mk not in mks:
+            mks.append(mk)
+    month_links = (f'<p>この週が入る月のまとめ: {" ・ ".join(f"""<a href="/monthly/{mk}/">{month_label(mk)}のクマの目撃情報</a>""" for mk in mks)}</p>') if mks else ""
     head = f"{week_range(key)}の週に、自治体が公表したクマの目撃は、取得できた{len(cur)}か所で、合計{n(sum(cur.values()))}件です。"
     if both:
         head += (f"前の週と同じ{len(both)}か所で比べると、{n(tot)}件で、前の週({n(ptot)}件)と同じです。" if tot == ptot
@@ -1045,6 +1052,7 @@ def digest_page(dig: dict, key: str, cfg: dict, preview: bool) -> str:
 <h2>記録のあった日と、多かった市町村</h2>
 <ul>{places}</ul>
 <p>{" ・ ".join(links)} ・ <a href="/digest/">週ごとのまとめの一覧</a></p>
+{month_links}
 <p class="notice">{DIGEST_NOTE}</p>
 {notes}<p class="notice credit">出典: 各自治体が公開している目撃情報を加工して作成。各自治体が作成したものではありません。取得日: {jp_date(dig['fetched_date'])}。</p>"""
     return page(cfg, preview, path=f"/digest/{key}/", title=f"{week_range(key)}のクマの目撃情報(週ごとのまとめ)",
@@ -1196,7 +1204,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         dig["fetched_date"] = d["fetched_date"]
         pages["digest/index.html"] = digest_hub(dig, cfg, preview, bool(mdig["months"]))
         for k in dig["weeks"]:
-            pages[f"digest/{k}/index.html"] = digest_page(dig, k, cfg, preview)
+            pages[f"digest/{k}/index.html"] = digest_page(dig, k, cfg, preview, set(mdig["months"]))
         thin_pages.update(f"digest/{k}/index.html" for k in indexing_mod.thin_weeks(dig["weeks"]))
     if mdig["months"]:
         mdig["fetched_date"] = d["fetched_date"]

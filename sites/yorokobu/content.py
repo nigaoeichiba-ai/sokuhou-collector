@@ -138,7 +138,7 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     messages = _load_messages(content_dir, occ)
     etiquette = _load_etiquette(content_dir, occ)
     amazon, amazon_checked = _load_amazon(content_dir, occ, rec)
-    return {"messages": messages, "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
+    return {"messages": messages, "travel_messages": _load_travel_messages(content_dir, occ), "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "guide_moves": guide_moves, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
             "stats": _load_stats(content_dir), "surveys": _load_surveys(content_dir), "ask": _load_ask(content_dir), "daily": _load_daily(content_dir), "features": _load_features(content_dir), "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
@@ -316,6 +316,22 @@ def _load_messages(content_dir: Path, occ: dict) -> dict:
             raise BuildError(f"duplicate messages for {m['occasion']}")
         for s in m["sets"]:
             _need(s, ("to", "style", "lines"), f"messages {m['occasion']} set")
+        out[m["occasion"]] = m
+    return out
+
+
+def _load_travel_messages(content_dir: Path, occ: dict) -> dict:
+    """Short card messages for giving a stay or a trip (travel_messages.json, optional): {occasion slug: entry}, the same shape as messages.json minus the manners."""
+    data = _optional(content_dir, "travel_messages.json")
+    out: dict = {}
+    for m in (data or {}).get("travel_messages", []):
+        _need(m, ("occasion", "intro", "sets", "closing"), f"travel_messages {m.get('occasion')}")
+        if m["occasion"] not in occ:
+            raise BuildError(f"travel_messages for unknown occasion {m['occasion']}")
+        if m["occasion"] in out:
+            raise BuildError(f"duplicate travel_messages for {m['occasion']}")
+        for s in m["sets"]:
+            _need(s, ("to", "style", "lines"), f"travel_messages {m['occasion']} set")
         out[m["occasion"]] = m
     return out
 
