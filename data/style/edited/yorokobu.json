@@ -8416,6 +8416,519 @@
   "unchanged": 66,
   "units": 95
  },
+ "gift/oseibo-mother/index.html": {
+  "accepted": [
+   {
+    "from": "母へ贈るお歳暮、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "母へのお歳暮、種類で選ぶ4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "ハムの詰め合わせは、サラダやサンドイッチに使えて、年末年始の献立を一品分助けてくれる品です。",
+    "kind": "item",
+    "to": "ハムの詰め合わせはサラダやサンドイッチに使えます。年末年始の献立に一品足せる品です。",
+    "why": "一文一論点に分割"
+   },
+   {
+    "from": "カフェインレスを含むコーヒーセットは、夜の片づけ後や読書の時間に選ぶ楽しみを添えられます。",
+    "kind": "item",
+    "to": "カフェインレスを含むコーヒーセットなら、夜の片づけ後や読書の時間にカフェインレスを選べます。",
+    "why": "抽象語を飲む場面に"
+   },
+   {
+    "from": "和菓子は小豆、栗、抹茶など母の好きな味を思い出し、詰め合わせ内容を確認する。",
+    "kind": "item",
+    "to": "和菓子は小豆、栗、抹茶など、母の好きな味が入っているか確認します。",
+    "why": "判断の手順を簡潔に"
+   },
+   {
+    "from": "コーヒーは濃さの好みを見て浅煎りや深煎りが偏りすぎないセットにする。",
+    "kind": "item",
+    "to": "コーヒーは濃さの好みを確かめ、浅煎りと深煎りがどちらかに偏りすぎないセットを選びます。",
+    "why": "好みと選択をつなぐ"
+   }
+  ],
+  "date": "2026-11-22",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 金額や時期より先に商品紹介が続き、ハム・和菓子・コーヒーを勧める理由も複数の節で重複しています。",
+   "見出し: 「人気」「どんなタイプ？」など、根拠や節の中身が分かりにくい言葉があります。",
+   "語: 「一品分助ける」「選ぶ楽しみを添える」などの抽象的な表現と、母のページで「父」とする誤りが残っています。"
+  ],
+  "failed": "",
+  "hash": "9e1ff7d53d62",
+  "needs_check": [],
+  "page": "gift/oseibo-mother/index.html",
+  "rejected": [
+   {
+    "after": "母へのお歳暮は年末の食事を助けるハムや来客に出しやすい和菓子、家事の合間に飲めるコーヒーが向いています。大掃除や買い出しで不在が増える時期なので配送日は早めに聞",
+    "problems": [
+     "numbers differ: ['一'] -> []",
+     "words added that the original does not have (information must not grow): ['配送日']"
+    ],
+    "text": "母へのお歳暮は年末の忙しさを少し軽くするものか、片づいた後に一息つけるものが向いています。ハムは料理の手間を減らし、和菓"
+   },
+   {
+    "after": "母へのお歳暮は年末の食事を助けるハムや来客に出しやすい和菓子、家事の合間に飲めるコーヒーが向いています。大掃除や買い出しで不在が増える時期なので配送日は早めに聞",
+    "problems": [
+     "numbers differ: ['一'] -> []"
+    ],
+    "text": "母へのお歳暮は年末の忙しさを少し軽くするものか、片づいた後に一息つけるものが向いています。ハムは料理の手間を減らし、和菓"
+   },
+   {
+    "after": "価格・在庫は2026年11月22日 8:39時点の情報です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格や販売可能情報は変更される場合があります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月22日 8:39時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "お歳暮を贈る日をたいせつな日メモに登録",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['歳暮']"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "after": "冷蔵品は母が在宅しやすい日と時間帯を聞いてから配送日を指定します。",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "冷蔵品を贈る場合は母が在宅しやすい日と時間帯を聞いてから配送指定する。"
+   },
+   {
+    "after": "予算や種類を選ぶと下の商品から条件に合うものだけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品は見つかりませんでした。予算の幅を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '幅']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "母へのお歳暮、4つの候補",
+    "problems": [
+     "numbers differ: [] -> ['4']"
+    ],
+    "text": "母へのお歳暮、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "カフェインレスなら、片づけが終わった後にも飲みやすく、家事の合間には好みの種類を選べます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['カフェインレス', '種類']"
+    ],
+    "text": "片づけが終わった後にも飲みやすく、家事の合間に選ぶ楽しみを添えられます。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから母へのお歳暮に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['歳暮']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "母の好きなもの、趣味、年齢などを一言で入力してください。条件に合う商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入力', '条件']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "家事用品だけでは感謝が伝わりにくいため、食べものや飲みものも候補に入れます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "家事用品ばかりで感謝が伝わりにくい選び方"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "選び方のポイント"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "冷凍品や生ものは母の受け取り予定を確認してから送ります",
+    "problems": [
+     "added claim/condition dropped: 受取人の条件が父から母に変更されている"
+    ],
+    "text": "冷凍品や生ものは父の受け取り予定を確認してから送ります"
+   }
+  ],
+  "structure_suggestions": [
+   "導入の後に「金額の目安 母へのお歳暮は、…」の金額、「お年賀の時期…」〜「お年賀はいつまでに渡す？ 松…」の時期、「冷蔵品を贈る場合は母が在宅し…」の配送指定を置き、読者が先に決めたい順に並べる。",
+   "「気をつけたいこと…」〜「家事用品ばかりで感謝が伝わり…」の注意点は商品一覧より前に移し、受け取り条件と避けたい選び方を確認してから商品を比べられる構成にする。",
+   "「喜ばれやすい理由…」〜「カフェインレスを含むコーヒー…」と「母へのお歳暮、こんな贈り方は…」〜「忙しい年末の昼食や夜食に温め…」は説明が重なるため、品ごとの理由を一方にまとめ、ハム・和菓子・コーヒーの同じ説明を繰り返さない。"
+  ],
+  "unchanged": 73,
+  "units": 96
+ },
+ "gift/promotion-boss/index.html": {
+  "accepted": [
+   {
+    "from": "あとでスマホから見返すなら、LINEの自分だけのトークか自分宛てのメールに送れます。",
+    "kind": "para",
+    "to": "あとでスマホから見返すなら、LINEの自分だけのトークや自分宛てのメールに送れます。",
+    "why": "助詞の重なりを直した"
+   },
+   {
+    "from": "上司への昇進祝いプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "上司への昇進祝い、種類の違う4点",
+    "why": "根拠のない人気を外した"
+   },
+   {
+    "from": "上司への昇進・栄転祝い、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "上司への昇進・栄転祝いの候補",
+    "why": "中身が分かる見出しにした"
+   }
+  ],
+  "date": "2026-11-22",
+  "deleted": [
+   "喜ばれやすい理由",
+   "菓子折りは会議後や朝礼後に部署で共有しやすく、昇進を職場全体で祝う穏やかな形にできます。",
+   "名入れペンは決裁書類や手帳で使えるため、新しい役職での仕事道具として長く手元に残ります。",
+   "酒器は日本酒や焼酎が好きな上司なら、自宅で一息つく時間に使える落ち着いた大人の記念品です。"
+  ],
+  "diagnosis": [
+   "構成: 「喜ばれやすい理由」の3項目が後半の商品候補と重なり、予算や注意点が商品一覧より後ろにあります。",
+   "具体: 冒頭の「礼儀が前に出る」「整える」など、判断や行動が見えにくい表現が残っています。",
+   "見出し: 「こんな贈り方はどうでしょう」「この提案はどんなタイプ？」は、節の中身を先に示していません。"
+  ],
+  "failed": "",
+  "hash": "d25bfcdf9934",
+  "needs_check": [],
+  "page": "gift/promotion-boss/index.html",
+  "rejected": [
+   {
+    "after": "上司への昇進祝いは個人の親しさより職場としての礼儀を優先します。部署で分けるなら菓子折り、記念品なら名入れペンや酒器が候補です。朝礼後や会議後に渡し、長く引き留",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['優先', '候補']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "上司への昇進祝いは個人の親しさより職場としての礼儀が前に出る場面です。菓子折りなら部署で分けやすく、名入れペンや酒器なら"
+   },
+   {
+    "after": "上司への昇進祝いは個人の親しさより職場としての礼儀を優先します。数人で相談して控えめな品を選ぶと渡しやすいです。部署で分けるなら菓子折り、記念品なら名入れペンや",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['優先', '候補']"
+    ],
+    "text": "上司への昇進祝いは個人の親しさより職場としての礼儀が前に出る場面です。菓子折りなら部署で分けやすく、名入れペンや酒器なら"
+   },
+   {
+    "after": "価格・在庫は2026年11月22日 8:39時点の情報です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格や在庫は変更される場合があります。購入には",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月22日 8:39時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "名入れペンは決裁書類や手帳で使え、新しい役職の仕事道具として贈れます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['名入', 'ペン']"
+    ],
+    "text": "決裁書類や手帳で使え、新しい役職での仕事道具として落ち着いて贈れます。"
+   },
+   {
+    "after": "日本酒や焼酎が好きな上司に贈る、自宅で使える記念品です。",
+    "problems": [
+     "numbers differ: ['一'] -> []",
+     "words added that the original does not have (information must not grow): ['上司']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "日本酒や焼酎が好きな方なら、自宅で一息つく時間に使える記念品になります。"
+   },
+   {
+    "after": "シングルモルトスコッチの定番でギフトボックス入りです。お酒を飲む上司への贈り物に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司', '贈']"
+    ],
+    "text": "シングルモルトスコッチの定番でギフトボックスに入っています。お酒を飲む人へ。"
+   },
+   {
+    "after": "メール、携帯番号、URLのいずれかで送れ、金額を選べます。相手の好みが分からないときの候補です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "メール、携帯番号、URLのいずれかで送れて金額を選べます。好みが分からない相手にも贈れます。"
+   },
+   {
+    "after": "上司の好きなものや趣味、年齢を入力すると近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "役職名を強調した品は上司が照れることがあります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司']"
+    ],
+    "text": "役職名を強調しすぎる品は本人が照れる場合があります"
+   },
+   {
+    "after": "衣類や香りの強い品は上司の好みを確認してから選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司', '好']"
+    ],
+    "text": "個人的すぎる衣類や香りの強い品を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   }
+  ],
+  "structure_suggestions": [
+   "「上司への昇進祝いは個人の親し…」の後を「条件で絞って比べる…」〜「この条件に合う商品は見つかり…」（予算）→「気をつけたいこと…」〜「個人的すぎる衣類や香りの強い…」（気をつけたいこと）→「選び方のポイント…」〜「名入れ品は役職名を入れず、名…」（選び方）→商品候補の順にすると、予算と注意点を確認してから選べます。",
+   "「上司への昇進・栄転祝い、こん…」〜「横は「食べて消える」から「ず…」の商品候補と比較図は続けて置き、「迷ったときの次の一歩…」以降を候補を選んだ後の行動としてまとめます。"
+  ],
+  "unchanged": 66,
+  "units": 89
+ },
+ "gift/respect-for-aged-day-father/index.html": {
+  "accepted": [
+   {
+    "from": "あとでスマホから見返すなら、LINEの自分だけのトークか自分宛てのメールに送れます。",
+    "kind": "para",
+    "to": "あとでスマホから見返すなら、LINEの自分だけのトークか、自分宛てのメールに送っておけます。",
+    "why": "操作を自然な言葉に"
+   },
+   {
+    "from": "父への敬老の日プレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "父への敬老の日プレゼント、種類の違う4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "和菓子は孫が訪ねた日の手土産にもなり、お茶を入れて一緒に食べる時間を作れます。会話も生まれます。",
+    "kind": "item",
+    "to": "和菓子は孫が訪ねた日の手土産になり、お茶を入れて一緒に食べれば会話のきっかけにもなります。",
+    "why": "二文の内容を統合"
+   },
+   {
+    "from": "湯呑みは食後のお茶や朝の白湯に使え、落ち着いた柄なら父の食卓に置いてもなじみます。毎朝使えます。",
+    "kind": "item",
+    "to": "湯呑みは食後のお茶や朝の白湯に使えます。落ち着いた柄なら父の食卓になじみ、毎朝手に取れます。",
+    "why": "文末の重なりを整理"
+   },
+   {
+    "from": "和菓子は父の好きな甘さを思い出し、羊羹、饅頭、どら焼きなど食べ慣れた種類から選ぶ。",
+    "kind": "item",
+    "to": "和菓子は父が好む甘さに合わせ、羊羹、饅頭、どら焼きなど食べ慣れた種類から選びます。",
+    "why": "選ぶ基準を明確に"
+   },
+   {
+    "from": "湯呑みは大きすぎない容量にし、熱いお茶を入れても持ちやすい厚みか確認する。",
+    "kind": "item",
+    "to": "湯呑みは大きすぎない容量を選び、熱いお茶を入れても持ちやすい厚みか確認します。",
+    "why": "文体をですます調に"
+   },
+   {
+    "from": "父への敬老の日、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "父への敬老の日に。和菓子・湯呑み・ひざ掛け・箸",
+    "why": "節の中身を見出しに"
+   },
+   {
+    "from": "食後のお茶や朝の白湯に使え、落ち着いた柄なら父の食卓にもなじみますよ。",
+    "kind": "para",
+    "to": "食後のお茶や朝の白湯に使え、落ち着いた柄なら父の食卓にもなじみます。",
+    "why": "禁止された語尾を削除"
+   },
+   {
+    "from": "抹茶を使った京都のお菓子が24本の個包装で入っています。お茶と一緒に分けられます。",
+    "kind": "para",
+    "to": "抹茶を使った京都のお菓子が、24本すべて個包装で入っています。お茶と一緒に分けられます。",
+    "why": "個包装の説明を明確に"
+   }
+  ],
+  "date": "2026-11-22",
+  "deleted": [
+   "この日を忘れない(たいせつな日メモに登録)"
+  ],
+  "diagnosis": [
+   "構成: 品ごとの利点が2か所で繰り返され、選び方と注意点も離れているため、読む順序が分かりにくくなっています。",
+   "語: 「自然」「ぴったり」「この場面」などの抽象的な表現があり、品名や使う場面を前に出す余地があります。",
+   "リズム: 箇条書きの末尾に短い補足を重ねた箇所があり、説明が途切れて聞こえます。"
+  ],
+  "failed": "",
+  "hash": "56eed774cba3",
+  "needs_check": [],
+  "page": "gift/respect-for-aged-day-father/index.html",
+  "rejected": [
+   {
+    "after": "父への敬老の日には和菓子、湯呑み、ひざ掛けが選びやすい品です。家での休憩や孫とのお茶の時間に使えます。年齢を強調せず、父の日とは違う家族みんなからの感謝として渡",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "父に敬老の日の贈り物をするなら、年齢を強く意識させるより、これからの時間を気持ちよく過ごしてほしいという形が自然です。和"
+   },
+   {
+    "after": "価格・在庫は2026年11月22日 8:39時点です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格や在庫は変わる場合があります。購入には、楽天市場",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月22日 8:39時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "ひざ掛けは読書やテレビを見る夜に使えます。軽くたためるものならソファ脇にも置きやすく、寒い夜の備えになります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['備']"
+    ],
+    "text": "ひざ掛けは読書やテレビを見る夜に使えて、軽くたためるものならソファ脇にも置きやすいです。冬支度です。"
+   },
+   {
+    "after": "ひざ掛けは洗濯表示とサイズを確認し、椅子でもソファでも使える大きさを選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['確認']"
+    ],
+    "text": "ひざ掛けは洗濯表示とサイズを見て椅子でもソファでも使える大きさにする。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "毎日の食事で使える箸なら、年齢を強く意識させずに家族からの気持ちを添えられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['意識']"
+    ],
+    "text": "毎日の食事で使いやすく、年齢を強く出さずに家族からの気持ちを添えられます。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから父への敬老の日に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['敬老', '日']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "フルーツ入りのバウムクーヘン8個を1つずつ個包装にした詰め合わせです。お茶の時間に分けやすい品です。",
+    "problems": [
+     "empty or unchanged"
+    ],
+    "text": "フルーツ入りのバウムクーヘン8個を1つずつ個包装にした詰め合わせです。お茶の時間に分けやすい品です。"
+   },
+   {
+    "after": "父の好きなもの趣味、年齢などを一言で入力すると近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "年寄り扱いと受け取られやすい説明や、介護を強く連想させる品は慎重に選びます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['連想']"
+    ],
+    "text": "年寄り扱いに聞こえる説明や介護色の強い品は慎重に選びます"
+   },
+   {
+    "after": "健康への心配を強調する商品説明は父を不安にさせるため避けます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['強調', '不安']"
+    ],
+    "text": "健康を心配させる言い方の商品を選ぶことは避けます"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   }
+  ],
+  "structure_suggestions": [
+   "「喜ばれやすい理由…」〜「ひざ掛けは読書やテレビを見る…」と「父への敬老の日、こんな贈り方…」〜「毎日の食事で使いやすく、年齢…」は内容が重なるため、品ごとに利点と選び方をまとめ、同じ使い方の説明は1回に統合する。",
+   "「選び方のポイント…」〜「ひざ掛けは洗濯表示とサイズを…」の直後に「気をつけたいこと…」〜「健康を心配させる言い方の商品…」を置き、選ぶ基準、避けたい表現、商品を比べる機能の順に並べる。",
+   "「この日を忘れない(たいせつな…」は「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」の「次の一歩」と重なるため削り、日付登録の案内は「贈る日を登録する 日にちを登…」にまとめる。"
+  ],
+  "unchanged": 68,
+  "units": 93
+ },
  "gift/respect-for-aged-day-grandmother/index.html": {
   "accepted": [
    {
