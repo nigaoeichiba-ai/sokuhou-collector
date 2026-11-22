@@ -114,6 +114,7 @@ class DataRoomTest(unittest.TestCase):
         problems = [p for p in sitecheck.check_dir(self.out, CFG["site_url"], skip=("lists",)) if "/data/" in p or "data/" in p]
         self.assertEqual(problems, [])
         main = self.read("data/price-bands/index.html").split("<main")[1].split("</main>")[0]
+        main = re.sub(r'<aside class="rk-widget".*?</aside>', "", main, flags=re.S)            # the Rakuten widget block (owner 2026-11-22) is the one script allowed; see test_yorokobu_rakuten_widget
         self.assertEqual(re.findall(r"<script(?![^>]*ld\+json)", main), [])                # structured data only: the charts need no script
 
     def test_budget_pages_exist_for_each_price_range_with_enough_products_and_are_linked_from_the_home_page(self):

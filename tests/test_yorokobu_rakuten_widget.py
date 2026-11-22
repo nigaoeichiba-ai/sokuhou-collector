@@ -61,6 +61,12 @@ class WidgetTest(unittest.TestCase):
             for b in BLOCK.findall(t):
                 self.assertNotRegex(b, r"https://(thumbnail|item)\.rakuten|<img")           # the widget draws its own products; none is written into our output
 
+    def test_a_script_outside_the_widget_block_is_still_found(self):
+        main = '<p>x</p>' + rw.block("lead") + '<script>alert(1)</script>'
+        rest = re.sub(r'<aside class="rk-widget".*?</aside>', "", main, flags=re.S)           # the way the data-room test strips the widget
+        self.assertEqual(len(re.findall(r"<script(?![^>]*ld\+json)", rest)), 1)
+        self.assertEqual(re.findall(r"<script(?![^>]*ld\+json)", re.sub(r'<aside class="rk-widget".*?</aside>', "", rw.block("end"), flags=re.S)), [])
+
     def test_insert_rules(self):
         body = '<h1>x</h1><p class="lead">a</p>' + "".join(f"<section><h2>s{i}</h2>" + "x" * 3000 + "</section>" for i in range(6))
         out = rw.insert(body, "/gift/a/")
