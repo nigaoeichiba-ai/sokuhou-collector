@@ -347,7 +347,7 @@
       "field": "公務員",
       "edition": "2027年度・春（院卒者／大卒程度）",
       "page": "https://www.jinji.go.jp/kouho_houdo/kisya/2603/2027nittei.html",
-      "description": "2026年3月5日時点の公表内容です。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
+      "description": "人事院の2027年試験の日程表(Google文書ビューアで確認、2026年11月22日)で、申込受付期間・第1次試験・合格発表の日付が公表されています。第2次試験の人物試験などは、総合職が4月5日〜23日、一般職が6月2日〜18日です。",
       "category": "qualification"
     },
     {
@@ -359,7 +359,7 @@
       "field": "公務員",
       "edition": "2027年度・大卒程度",
       "page": "https://www.jinji.go.jp/kouho_houdo/kisya/2603/2027nittei.html",
-      "description": "2026年3月5日時点の公表内容です。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
+      "description": "人事院の2027年試験の日程表(Google文書ビューアで確認、2026年11月22日)で、申込受付期間・第1次試験・合格発表の日付が公表されています。第2次試験の人物試験などは、総合職が4月5日〜23日、一般職が6月2日〜18日です。",
       "category": "qualification"
     },
     {
@@ -2952,7 +2952,7 @@
       "short": "国家総合職",
       "field": "公務員",
       "edition": "2027年度・春（院卒者／大卒程度）",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-22",
       "sourceTitle": "人事院｜2027年度から国家公務員試験の日程を変更します",
       "sourceUrl": "https://www.jinji.go.jp/kouho_houdo/kisya/2603/2027nittei.html",
       "sources": [
@@ -2962,23 +2962,23 @@
         }
       ],
       "application": [],
-      "applicationNote": "2027年1月下旬〜2月上旬（具体的な受付開始・締切日は未発表）",
+      "applicationNote": "2027年1月20日(水)〜2月8日(月)(インターネット)",
       "fields": {
-        "deadline": "unannounced",
+        "deadline": "published",
         "exam": "published",
-        "result": "unannounced"
+        "result": "published"
       },
       "fieldNotes": {
-        "deadline": "受付時期のみ公表。具体日は未発表。",
-        "exam": "第1次2月28日、第2次筆記3月21日。人物試験等は4月上旬〜下旬の時期のみ。",
-        "result": "第1次は3月中旬、最終は5月下旬。具体日は未発表。"
+        "deadline": "インターネット申込は1月20日(水)から2月8日(月)まで。",
+        "exam": "第1次2月28日、第2次筆記3月21日。人物試験等は4月5日(月)〜23日(金)。",
+        "result": "第1次は3月12日(金)、最終は5月25日(火)。"
       },
-      "notes": "2026年3月5日時点の公表内容です。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
+      "notes": "人事院の2027年試験の日程表(2026年11月22日に確認)で、申込受付期間・第1次試験・合格発表の日付が公表されています。",
       "procedureNotes": [
         "院卒者・大卒程度と試験区分によって、受験資格や二次試験の内容が異なります。まずはご自身が受ける区分を確認しましょう。",
-        "受付時期は1月下旬から2月上旬の予定です。具体的な受付日が公表されたら、締切を改めて確認してください。",
+        "インターネット申込は1月20日(水)から2月8日(月)までです。",
         "第1次は2月28日。第2次の筆記は3月21日ですが、教養区分は対象外です。",
-        "人物試験等は4月上旬から下旬、最終発表は5月下旬と案内されています。具体日が出るまでは予定に余裕をみておきましょう。"
+        "人物試験等は4月5日から23日、最終合格発表は5月25日です。教養区分は秋にも実施され、日程は2026年12月中旬に公表される予定です。"
       ],
       "family": "komuin-sogo",
       "scope": "国家公務員 総合職（春）・2027年度・春（院卒者／大卒程度）",
@@ -2995,7 +2995,7 @@
       "short": "国家一般職",
       "field": "公務員",
       "edition": "2027年度・大卒程度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-22",
       "sourceTitle": "人事院｜2027年度から国家公務員試験の日程を変更します",
       "sourceUrl": "https://www.jinji.go.jp/kouho_houdo/kisya/2603/2027nittei.html",
       "sources": [
@@ -3005,23 +3005,23 @@
         }
       ],
       "application": [],
-      "applicationNote": "2027年2月上旬〜3月上旬（具体的な受付開始・締切日は未発表）",
+      "applicationNote": "2027年2月1日(月)〜3月1日(月)(インターネット)",
       "fields": {
-        "deadline": "unannounced",
+        "deadline": "published",
         "exam": "published",
-        "result": "unannounced"
+        "result": "published"
       },
       "fieldNotes": {
-        "deadline": "受付時期のみ公表。具体日は未発表。",
-        "exam": "第1次5月2日。第2次は6月上旬〜中旬の時期のみ。",
-        "result": "第1次は5月下旬、最終は7月上旬。具体日は未発表。"
+        "deadline": "インターネット申込は2月1日(月)から3月1日(月)まで。",
+        "exam": "第1次5月2日。第2次(人物試験)は6月2日(水)〜18日(金)。",
+        "result": "第1次は5月26日(水)、最終は7月1日(木)。"
       },
-      "notes": "2026年3月5日時点の公表内容です。第1次試験日など一部の具体日は公表済みですが、申込期間と合格発表などは月内の時期のみの公表です。具体的な日程は2026年11月中旬を目処に公表予定との案内で、11月13日の確認では新しい具体日を確認できていません。",
+      "notes": "人事院の2027年試験の日程表(2026年11月22日に確認)で、申込受付期間・第1次試験・合格発表の日付が公表されています。",
       "procedureNotes": [
         "試験区分ごとに受験資格や出題内容が異なります。受けたい区分を選んで確認できます。",
-        "受付時期は2月上旬から3月上旬と案内されています。具体的な締切日は、公表後に改めて確認してください。",
-        "第1次試験は5月2日です。第1次合格発表は5月下旬の予定で、具体日は未発表です。",
-        "第2次は6月上旬から中旬、最終発表は7月上旬の予定です。官庁訪問などの案内も別に確認しておくと、その後の見通しを立てやすくなります。"
+        "インターネット申込は2月1日(月)から3月1日(月)までです。",
+        "第1次試験は5月2日で、第1次の合格発表は5月26日(水)です。",
+        "第2次(人物試験)は6月2日から18日、最終合格発表は7月1日です。官庁訪問などの案内も別に確認しておくと、その後の見通しを立てやすくなります。"
       ],
       "family": "komuin-ippan",
       "scope": "国家公務員 一般職（大卒程度）・2027年度・大卒程度",
@@ -8102,7 +8102,7 @@
       "label": "国家総合職（春）・第1次試験",
       "exam": "komuin-sogo",
       "sourceId": "catalog-komuin-sogo",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-22"
     },
     {
       "id": "komuin-sogo-second-written",
@@ -8112,7 +8112,35 @@
       "note": "教養区分を除きます。区分ごとの試験案内でご確認ください。",
       "exam": "komuin-sogo",
       "sourceId": "catalog-komuin-sogo",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-22"
+    },
+    {
+      "id": "komuin-sogo-apply",
+      "date": "2027-02-08",
+      "type": "deadline",
+      "label": "国家総合職（春）・インターネット申込受付の最終日",
+      "exam": "komuin-sogo",
+      "note": "受付は1月20日(水)からです。",
+      "sourceId": "catalog-komuin-sogo",
+      "checkedAt": "2026-11-22"
+    },
+    {
+      "id": "komuin-sogo-first-result",
+      "date": "2027-03-12",
+      "type": "result",
+      "label": "国家総合職（春）・第1次試験合格者発表",
+      "exam": "komuin-sogo",
+      "sourceId": "catalog-komuin-sogo",
+      "checkedAt": "2026-11-22"
+    },
+    {
+      "id": "komuin-sogo-final-result",
+      "date": "2027-05-25",
+      "type": "result",
+      "label": "国家総合職（春）・最終合格者発表",
+      "exam": "komuin-sogo",
+      "sourceId": "catalog-komuin-sogo",
+      "checkedAt": "2026-11-22"
     },
     {
       "id": "komuin-ippan-first",
@@ -8121,7 +8149,35 @@
       "label": "国家一般職（大卒程度）・第1次試験",
       "exam": "komuin-ippan",
       "sourceId": "catalog-komuin-ippan",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-22"
+    },
+    {
+      "id": "komuin-ippan-apply",
+      "date": "2027-03-01",
+      "type": "deadline",
+      "label": "国家一般職（大卒程度）・インターネット申込受付の最終日",
+      "exam": "komuin-ippan",
+      "note": "受付は2月1日(月)からです。",
+      "sourceId": "catalog-komuin-ippan",
+      "checkedAt": "2026-11-22"
+    },
+    {
+      "id": "komuin-ippan-first-result",
+      "date": "2027-05-26",
+      "type": "result",
+      "label": "国家一般職（大卒程度）・第1次試験合格者発表",
+      "exam": "komuin-ippan",
+      "sourceId": "catalog-komuin-ippan",
+      "checkedAt": "2026-11-22"
+    },
+    {
+      "id": "komuin-ippan-final-result",
+      "date": "2027-07-01",
+      "type": "result",
+      "label": "国家一般職（大卒程度）・最終合格者発表",
+      "exam": "komuin-ippan",
+      "sourceId": "catalog-komuin-ippan",
+      "checkedAt": "2026-11-22"
     },
     {
       "id": "kanken-2026-10-18-deadline-1",
