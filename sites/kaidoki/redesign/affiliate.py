@@ -61,7 +61,7 @@ MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).
 NO_LINK = {
-    "sonystore": "3つのASPに案件がない。楽天市場・Yahoo!・Amazonの公式ストアは、開いて確かめられなかった",
+    "sonystore": "3つのASPに案件がない(アクセストレードでも「ソニーストア」「SONY」「ソニー」を検索して該当なし、2026-11-23確認)。楽天市場・Yahoo!・Amazonの公式ストアは、開いて確かめられなかった",
     "lg": "3つのASPに案件がない。楽天市場・Yahoo!・Amazonの公式ストアは、開いて確かめられなかった",
     "hands": "3つのASPの調査表(2026-11-12)に載っていない。案件の有無を調べて、あれば申請する(未確認)",
     "joshin": "3つのASPの調査表(2026-11-12)に載っていない。案件の有無を調べて、あれば申請する(未確認)",
