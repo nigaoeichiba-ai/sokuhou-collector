@@ -18,6 +18,7 @@ from PIL import Image, ImageFilter
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import homepage  # noqa: E402
+import rakuten_widget  # noqa: E402
 import statuspanel  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
@@ -339,6 +340,8 @@ def post(pages: dict, content: list[dict], cfg: dict, spec: dict, site_dir: Path
             t = t.replace('<link rel="stylesheet"', '<script type="application/ld+json">' + json.dumps(org, ensure_ascii=False) + '</script>\n<link rel="stylesheet"', 1)
         if rel == "index.html":   # the top page: the approved prototype's design replaces the shared header, body, footer and stylesheet (owner instruction 2026-11-11)
             t = homepage.apply(t, p, content, spec, cfg, site_dir, slug_of, CARD_W, CARD_H, CAT_PATH, HOME_LATEST_N)
+        if rel == "index.html" or rel.startswith("cat/") or p:   # 楽天ウィジェット: トップ・カテゴリ・記事(オーナー指示 2026-11-22)
+            t = rakuten_widget.add(rel, t)
         pages[rel] = t
     if nengajo_sim_enabled(cfg):
         add_nengajo_sim(pages)
