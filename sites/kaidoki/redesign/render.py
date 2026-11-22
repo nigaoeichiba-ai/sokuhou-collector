@@ -20,7 +20,7 @@ from html import escape
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-from sites.kaidoki.redesign import affiliate, genres, schedule  # noqa: E402
+from sites.kaidoki.redesign import affiliate, genres, rakuten_widget, schedule  # noqa: E402
 SITE_DIR = HERE.parent
 JST = timezone(timedelta(hours=9))
 WD = "月火水木金土日"
@@ -765,6 +765,8 @@ def wrap(ctx: Ctx, path: str, head: str, breadcrumb: str, heading: str, body: st
         body = re.sub(r'<p class="credit">出典:.*?</p>', f'<p class="credit">{GENERAL}</p>', body, flags=re.S)
         if GENERAL not in body and ('class="cal-' in body or page_type in ("home", "mall", "genre", "product")):
             body += f'<p class="credit">{GENERAL}</p>'
+    if page_type != "404":          # owner 2026-11-22: Rakuten motion widget on every page (rakuten_widget.py)
+        body = rakuten_widget.inject(body)
     demo = ctx.set["demo"]
     bar = ""
     if demo:
