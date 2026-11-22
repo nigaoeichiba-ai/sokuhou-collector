@@ -121,12 +121,6 @@
      "link": "https://www.city.chichibu.lg.jp/item/29299.html#itemid29299",
      "summary": "",
      "title": "青少年野外活動センター特定猟具使用禁止区域(銃)の指定解除に伴う注意について"
-    },
-    {
-     "date": "2026-11-01",
-     "link": "https://www.city.chichibu.lg.jp/item/21099.html#itemid21099",
-     "summary": "",
-     "title": "下水道使用料を改定しました"
     }
    ],
    "name": "秩父市",
@@ -239,34 +233,34 @@
    "id": "c1f31b7fdc",
    "items": [
     {
-     "date": "2026-11-20",
-     "link": "https://www.city.hanno.lg.jp/kurashi_seikatsukankyo/koen/14270.html",
+     "date": "2026-11-23",
+     "link": "https://www.city.hanno.lg.jp/iryo_kenko_fukushi/iryo_kenko/kokorotokaradanokenkozukuri/1/sugoashi-event/11307.html",
      "summary": "",
-     "title": "流れ橋通行開始のお知らせについて"
+     "title": "スゴ足イベント 2027年1月19日(火曜日)、30日(土曜日)スゴ足のんびりウオーク1月"
     },
     {
-     "date": "2026-11-20",
-     "link": "https://www.city.hanno.lg.jp/soshikikarasagasu/tosikensetubu/ijikanrika/kouen/14269.html",
+     "date": "2026-11-23",
+     "link": "https://www.city.hanno.lg.jp/soshikikarasagasu/kenkohukusibu/hokencenter/11102.html",
      "summary": "",
-     "title": "流れ橋通行開始のお知らせについて"
+     "title": "スゴ足イベント 2027年1月19日(火曜日)、30日(土曜日)スゴ足のんびりウオーク1月"
     },
     {
-     "date": "2026-11-20",
+     "date": "2026-11-22",
      "link": "https://www.city.hanno.lg.jp/kanko_bunka_sports/kankojoho/12467.html",
      "summary": "",
      "title": "メタセコイア(アケボノスギ)紅葉情報"
     },
     {
-     "date": "2026-11-20",
+     "date": "2026-11-22",
      "link": "https://www.city.hanno.lg.jp/akebono/oshirase/10744.html",
      "summary": "",
      "title": "メタセコイア(アケボノスギ)紅葉情報"
     },
     {
      "date": "2026-11-20",
-     "link": "https://www.city.hanno.lg.jp/soshikikarasagasu/sogoseisakubu/hishokohoka/joho/14546.html",
+     "link": "https://www.city.hanno.lg.jp/soshikikarasagasu/tosikensetubu/ijikanrika/kouen/14269.html",
      "summary": "",
-     "title": "PHPの脆弱性に伴う停止していたホームページの一部機能再開について"
+     "title": "流れ橋通行開始のお知らせについて"
     }
    ],
    "name": "飯能市",
@@ -288,6 +282,12 @@
    "id": "7a6f5696ac",
    "items": [
     {
+     "date": "2026-11-22",
+     "link": "https://www.city.joetsu.niigata.jp/site/raininfo/",
+     "summary": "河川の氾濫の危険性が高まった場合は、市や気象台などから発表される情報に注意しましょう。",
+     "title": "大雨の情報に注意しましょう"
+    },
+    {
      "date": "2026-11-21",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/koho/koho-hp-suspend.html",
      "summary": "市ホームページの一部機能を停止します。",
@@ -304,12 +304,6 @@
      "link": "https://www.city.joetsu.niigata.jp/soshiki/kenkou/tyuikanki.html",
      "summary": "インフルエンザ等の感染対策を徹底するようお願いします。",
      "title": "インフルエンザ等の感染症にご注意を"
-    },
-    {
-     "date": "2026-11-20",
-     "link": "https://www.city.joetsu.niigata.jp/site/raininfo/",
-     "summary": "河川の氾濫の危険性が高まった場合は、市や気象台などから発表される情報に注意しましょう。",
-     "title": "大雨の情報に注意しましょう"
     },
     {
      "date": "2026-11-20",
@@ -387,6 +381,12 @@
    "feed": "https://www.city.joetsu.niigata.jp/rss/10/list14.xml",
    "id": "d2f7a64002",
    "items": [
+    {
+     "date": "2026-11-23",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/shakaikyouiku/shimingeinousai6.html",
+     "summary": "第55回記念上越市民芸能祭「越後よさこいフェスティバル2026」を開催します。",
+     "title": "第55回記念上越市民芸能祭「越後よさこいフェスティバル2026」"
+    },
     {
      "date": "2026-11-20",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/kubiki-ku/kubiki-ibennto-r8.html",
@@ -583,6 +583,12 @@
    "id": "13ff42458c",
    "items": [
     {
+     "date": "2026-11-22",
+     "link": "https://www.city.sakata.lg.jp/shisei/shicyou/koumunittei07.html",
+     "summary": "",
+     "title": "市長公務日程"
+    },
+    {
      "date": "2026-11-20",
      "link": "https://www.city.sakata.lg.jp/shisei/shiminsankasuishin/sakata-liqlid.html",
      "summary": "",
@@ -665,12 +671,6 @@
      "link": "https://www.city.sakata.lg.jp/jyutaku/jyutaku/jyutakushikin/reform.html",
      "summary": "",
      "title": "酒田市住宅リフォーム総合支援事業"
-    },
-    {
-     "date": "2026-11-16",
-     "link": "https://www.city.sakata.lg.jp/kenko/kenko/kakusyukouza/rinyusyoku.html",
-     "summary": "",
-     "title": "離乳食教室参加者募集"
     }
    ],
    "name": "酒田市",
@@ -682,6 +682,12 @@
    "feed": "https://www.city.sapporo.jp/new/shinchaku.xml",
    "id": "8ca186d80a",
    "items": [
+    {
+     "date": "2026-11-22",
+     "link": "https://www.city.sapporo.jp/kensetsu/dokan/senyo/senyonyusatu.html",
+     "summary": "",
+     "title": "道路占用入札のお知らせ"
+    },
     {
      "date": "2026-11-20",
      "link": "https://www.city.sapporo.jp/somu/koho/hodo/202611/1120.html",
@@ -765,12 +771,6 @@
      "link": "https://www.city.sapporo.jp/city/mayor/interview/index.html",
      "summary": "",
      "title": "次の市長記者会見は、11月24日(火曜日)14時00分~行います"
-    },
-    {
-     "date": "2026-11-16",
-     "link": "https://www.city.sapporo.jp/kankyo/souon/jieitai/jieitaiensyu.html",
-     "summary": "",
-     "title": "自衛隊演習の音について"
     }
    ],
    "name": "札幌市",
@@ -1394,6 +1394,12 @@
    "id": "bac993d813",
    "items": [
     {
+     "date": "2026-11-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/41035c/202611221730.html",
+     "summary": "",
+     "title": "福島県北塩原村(桧原湖周辺)の通行規制状況について"
+    },
+    {
      "date": "2026-11-13",
      "link": "https://www.pref.fukushima.lg.jp/sec/01125c/senko8-10.html",
      "summary": "",
@@ -1410,10 +1416,10 @@
    "id": "d02ea5db63",
    "items": [
     {
-     "date": "2026-11-21",
-     "link": "https://www.pref.fukushima.lg.jp/site/bousai/higaijokyosokuho.html",
+     "date": "2026-11-22",
+     "link": "https://www.pref.fukushima.lg.jp/sec/41035c/202611221730.html",
      "summary": "",
-     "title": "2026年11月20日 大雪による被害状況即報"
+     "title": "福島県北塩原村(桧原湖周辺)の通行規制状況について"
     },
     {
      "date": "2026-11-21",
@@ -2921,6 +2927,12 @@
     },
     {
      "date": "2026-11-20",
+     "link": "https://www.pref.niigata.lg.jp/sec/kouhou/chijikaiken20261119.html",
+     "summary": "令和8年11月19日に行われた新潟県知事定例記者会見の模様をご覧になれます。",
+     "title": "令和8年11月19日 新潟県知事 定例記者会見"
+    },
+    {
+     "date": "2026-11-20",
      "link": "https://www.pref.niigata.lg.jp/site/tokamachi-seibi/yuuryoukouji08.html",
      "summary": "令和8年度新潟県優良工事証当の交付式を行いました",
      "title": "【十日町】令和8年度新潟県優良工事(令和7年度完成工事)優良工事貢献企業証の交付式を行いました"
@@ -2936,12 +2948,6 @@
      "link": "https://www.pref.niigata.lg.jp/sec/kourei/niigata-caremana-kengakujissyu.html",
      "summary": "新潟県介護支援専門員実務研修「見学実習受入事業所説明会」について",
      "title": "新潟県介護支援専門員実務研修「見学実習受入事業所説明会」について"
-    },
-    {
-     "date": "2026-11-20",
-     "link": "https://www.pref.niigata.lg.jp/sec/gakko_kamo/20261119touyunyuusatsukekka.html",
-     "summary": "",
-     "title": "入札結果「暖房用白灯油購入単価契約」(入札日11月19日)加茂高等学校"
     }
    ],
    "name": "新潟県庁",
@@ -2970,6 +2976,18 @@
      "link": "https://www.pref.niigata.lg.jp/site/bunka/r8tourokuyuukei-toushin2.html",
      "summary": "令和8年11月20日(金曜日)に国の文化審議会が開催され、県内に所在する2件の建造物を登録有形文化財に登録するよう、文部科学大臣に答申しました。",
      "title": "登録有形文化財(建造物)に関する答申が出されました"
+    },
+    {
+     "date": "2026-11-20",
+     "link": "https://www.pref.niigata.lg.jp/sec/kouhou/chijikaiken20261119.html",
+     "summary": "令和8年11月19日に行われた新潟県知事定例記者会見の模様をご覧になれます。",
+     "title": "令和8年11月19日 新潟県知事 定例記者会見"
+    },
+    {
+     "date": "2026-11-20",
+     "link": "https://www.pref.niigata.lg.jp/sec/kouhou/chijikaiken.html",
+     "summary": "新潟県知事の記者会見の模様を動画とテキストでご覧になれます。",
+     "title": "知事 記者会見 (日程・一覧)"
     },
     {
      "date": "2026-11-20",
@@ -3030,18 +3048,6 @@
      "link": "https://www.pref.niigata.lg.jp/site/kokusai/jica202611.html",
      "summary": "",
      "title": "新潟県ゆかりのJICA海外協力隊員が笠鳥副知事を表敬訪問します"
-    },
-    {
-     "date": "2026-11-20",
-     "link": "https://www.pref.niigata.lg.jp/site/koyou/1356720261125.html",
-     "summary": "令和8年度新潟県卓越技能者「にいがたの名工」及び職業訓練・技能検定の功労者を表彰します。",
-     "title": "令和8年度新潟県職業能力開発促進大会において、新潟県卓越技能者「にいがたの名工」及び技能検定の功労者を表彰します"
-    },
-    {
-     "date": "2026-11-19",
-     "link": "https://www.pref.niigata.lg.jp/sec/nagaoka_nourin/zikosokuho.html",
-     "summary": "",
-     "title": "【長岡】県営湛水防除事業八丁潟地区第41次工事による 光伝送路設備の断線事故について (第1報:11月19日18時05分現在)"
     }
    ],
    "name": "新潟県庁",
@@ -4334,5 +4340,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-11-22T06:21:42.585910+09:00"
+ "fetched_at": "2026-11-23T06:22:05.929574+09:00"
 }
