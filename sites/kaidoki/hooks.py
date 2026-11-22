@@ -363,6 +363,23 @@ def _has_mall_link(html: str, mall: str) -> bool:
     return False
 
 
+# The Sony Store page is for buying at the Sony Store; for a reader who looks elsewhere, one box with the malls' own search pages (desk 2026-11-23: Sony Store has no programme at the three ASPs).
+SONY_SEARCH_PAGE = "kaden/sony-store/index.html"
+SONY_SEARCH_WORD = "ソニー製品"
+
+
+def add_sony_search_links(pages: dict, cfg: dict) -> dict:
+    html = pages.get(SONY_SEARCH_PAGE)
+    if not isinstance(html, str):
+        return pages
+    box = ("<h2>ソニーストア以外で探す場合</h2>" + chr(10)
+           + "<p>この表は、ソニーストアで買う場合の期限と条件です。ソニーストア以外のお店で探す人向けに、各モールの検索ページを置きます。価格や特典は、ソニーストアと同じとは限りません。</p>" + chr(10)
+           + affiliate_multi_block(_kaden_links(SONY_SEARCH_WORD), cfg))
+    cut = re.search(r'<div class="notice source-notice">|<p class="(?:stamp|credit)">', html)
+    pages[SONY_SEARCH_PAGE] = html[:cut.start()] + box + html[cut.start():] if cut else html.replace("</main>", box + "</main>", 1)
+    return pages
+
+
 def add_missing_mall_links(pages: dict, cfg: dict) -> dict:
     for rel, html in list(pages.items()):
         if not rel.endswith("index.html") or rel in NO_MALL_BOX or not isinstance(html, str) or "<main" not in html or "noindex" in html.split("</head>", 1)[0]:
@@ -408,7 +425,7 @@ def htaccess_extra(cfg: dict) -> str:
 def post(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
     from sites.kaidoki.redesign import render
     if render.enabled(cfg):          # the new design is built beside the current one (another output folder); the current build below is untouched
-        return add_shops(word_the_optout_link(add_missing_mall_links(render.apply(add_affiliate_links(pages, cfg), content, cfg, spec, site_dir), cfg)))      # the kit rebuilds the sections by h2: the shops' box goes in after it
+        return add_shops(word_the_optout_link(add_missing_mall_links(add_sony_search_links(render.apply(add_affiliate_links(pages, cfg), content, cfg, spec, site_dir), cfg), cfg)))      # the kit rebuilds the sections by h2: the shops' box goes in after it
     html = pages["index.html"]
     new, n = ICONS_OLD.subn(ICONS_NEW, html, count=1)
     assert n == 1, "kaidoki hooks: the icon links of the layout changed"

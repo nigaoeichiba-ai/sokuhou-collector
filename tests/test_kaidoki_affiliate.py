@@ -220,6 +220,20 @@ def unlinked_names(pages: dict) -> list[str]:
     return bad
 
 
+def _mall_links_problems(html: str) -> list[str]:
+    bad = []
+    for key, mark in (("rakuten", "hb.afl.rakuten.co.jp"), ("amazon", "amazonmacs-22"), ("yahoo", "valuecommerce.com/servlet/referral")):
+        links = [m for m in re.findall(r'<a [^>]*>', html) if mark in m]
+        if not links:
+            bad.append(f"no {key} affiliate link")
+        for a in links:
+            if "sponsored" not in a or "_blank" not in a:
+                bad.append(f"{key} link without rel/target")
+    if 'class="pr-chip"' not in html:
+        bad.append("no PR mark")
+    return bad
+
+
 class NamedAdvertiserTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -228,6 +242,17 @@ class NamedAdvertiserTest(unittest.TestCase):
     def test_every_named_affiliated_advertiser_has_its_link_with_its_name(self):
         self.assertEqual(unlinked_names(self.pages), [])
 
+    def test_sony_store_page_has_the_mall_search_links(self):
+        h = self.pages["kaden/sony-store/index.html"]
+        self.assertIn("ソニーストア以外で探す場合", h)
+        self.assertEqual(len(re.findall(r'hb\.afl\.rakuten\.co\.jp', h)), 1)
+        self.assertEqual(len(re.findall(r'amazon\.co\.jp/s\?k=[^"]*&amp;tag=amazonmacs-22|amazon\.co\.jp/s\?k=[^"]*&tag=amazonmacs-22', h)), 1)
+        self.assertEqual(_mall_links_problems(h), [])
+
+    def test_negative_sony_store_page_without_the_box_is_caught(self):
+        h = self.pages["kaden/sony-store/index.html"]
+        self.assertTrue(_mall_links_problems(re.sub(r'<a [^>]*hb\.afl\.rakuten[^>]*>', "<a>", h)))
+
     def test_negative_a_page_with_the_name_only_is_caught(self):
         for path, name in NAMED:
             stripped = {**self.pages, path: re.sub(r"<a [^>]*>[^<]*" + name + r"[^<]*(?:<img[^>]*>)?</a>(?:<img[^>]*>)?", name, self.pages[path])}
