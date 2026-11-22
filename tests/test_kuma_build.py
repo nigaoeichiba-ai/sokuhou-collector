@@ -572,9 +572,9 @@ class GoodsTest(unittest.TestCase):
         html = self.read("goods/index.html")
         self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", html)
         self.assertIn("https://www.amazon.co.jp/s?k=%E3%82%AF%E3%83%9E%E9%88%B4&amp;tag=amazonmacs-22", html)
-        self.assertEqual(html.count('target="_blank" rel="nofollow sponsored noopener">'), 14)  # six goods x two shops + the two A8 disaster-kit programmes
-        self.assertEqual(html.count("楽天市場で探す"), 6)
-        self.assertEqual(html.count("Amazonで探す"), 6)
+        self.assertEqual(html.count('target="_blank" rel="nofollow sponsored noopener">'), 18)  # eight goods x two shops + the two A8 disaster-kit programmes
+        self.assertEqual(html.count("楽天市場で探す"), 8)
+        self.assertEqual(html.count("Amazonで探す"), 8)
 
     def test_the_approved_a8_programmes_are_linked_on_the_goods_page_and_the_prepare_guide(self):
         """2026-11-13: あかまる防災 and スツーレ (media 005) - link text is words, a8mat on the href and the 1x1 image, PR, rel, target; a forgotten link fails."""
