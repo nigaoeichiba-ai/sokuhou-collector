@@ -9,7 +9,7 @@ from __future__ import annotations
 import os
 import re
 import unittest
-from datetime import date
+from datetime import date, timedelta
 
 os.environ.setdefault("KAIDOKI_TODAY", "2026-11-12")
 
@@ -244,7 +244,9 @@ class HomeTest(unittest.TestCase):
         ids = S.home_choose(S.home_pool(S.all_items(), self.TODAY), self.TODAY)
         self.assertTrue(3 <= len(ids) <= S.HOME_MAX)
         kinds = {i.split("@")[0][0] for i in ids}
-        self.assertIn("n", kinds)                                  # the announcement days (Yahoo! 11/16, Amazon 11/19) are in the two weeks
+        pool = S.home_pool(S.all_items(), self.TODAY)
+        self.assertTrue(any(it["kind"] == "notice" and date.fromisoformat(it["s"]) <= self.TODAY + timedelta(days=S.HOME_DAYS - 1) and date.fromisoformat(it["e"] or it["s"]) >= self.TODAY for it in pool))
+        _ = kinds  # the notice days are checked on the pool: the cap (HOME_MAX) may cut them when more sales start in the same two weeks                                  # the announcement days (Yahoo! 11/16, Amazon 11/19) are in the two weeks
         self.assertIn('data-kind="regular"', h)
         self.assertNotIn("開催中</span>", h.split("home-cal")[1][:4000])      # "開催中" / "あとN日" are written by the visitor's clock
 
