@@ -17,7 +17,7 @@ def coming_rows():
 def pages() -> list[dict]:
     up = upcoming()
     first = up[0] if up else None
-    lead = (f"最も近いのは、{first['mall']}の{first['name']}で、{ev_span(first)}です。" if first else "いま日程が発表されている大型セールはありません。")
+    lead = (f"{'いま開催中なのは' if phase(first) == 'now' else '最も近いのは'}、{first['mall']}の{first['name']}で、{ev_span(first)}です。" if first else "いま日程が発表されている大型セールはありません。")
     done = [e for e in sorted(EVENTS, key=lambda e: e["start"], reverse=True) if phase(e) == "done"][:10]
     cal = page(
         "/calendar/", "list", "/", "セール カレンダー", "セールカレンダー|楽天・Amazon・Yahoo!ショッピングの日程を日付順に",
