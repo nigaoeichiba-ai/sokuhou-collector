@@ -847,6 +847,31 @@ def a8_bousai_list() -> str:
     return f'<ul class="link-list">{rows}</ul>'
 
 
+# A8.net, media 005: 山・野外の装備と非常食(2026-11-22 に提携完了、窓口が発行したリンクコード。docs/office/A8_PROGRAMS.md)。リンク文字は広告主の名前。置く理由の1文をリンクの直前に出す。
+A8_OUTDOOR = [
+    {"program": "WAQ アウトドアストア", "text": "WAQ アウトドアストア", "a8mat": "4BGR94+A7CK42+3YN0+5YJRM",
+     "why": "山や野外の作業に出る日の装備を、アウトドア用品のお店でまとめて見られます。"},
+    {"program": "hinataストア", "text": "hinataストア", "a8mat": "4BGR94+AGA26Q+4U5Q+BX3J6",
+     "why": "キャンプや野外で使う道具を、セレクトショップで探せます。"},
+    {"program": "アルファー食品 安心米", "text": "安心米(アルファー食品)", "a8mat": "4BGR94+AKG3F6+50BY+5YJRM",
+     "why": "登山の行動食や、家に置いておく非常食に使える、保存のきくご飯です。"},
+    {"program": "スーパースポーツゼビオ", "text": "スーパースポーツゼビオ", "a8mat": "4BGR94+ALMYMQ+4ABU+5YJRM",
+     "why": "登山靴やウェアなど、山に入る日のスポーツ用品を、通販で見られます。"},
+    {"program": "アルペン スポーツデポ", "text": "アルペン・スポーツデポ", "a8mat": "4BGJFW+4V1JPU+3OSK+5YJRM",
+     "why": "ザックやレインウェアなど、登山・アウトドア用品を、通販で見られます。"},
+]
+A8_OUTDOOR_INTRO = "山や林に入る日の装備と、家に置く非常食を探すときの例です。商品の中身・価格は、販売ページでご確認ください。"
+
+
+def a8_outdoor_list() -> str:
+    rows = "".join(
+        f'<li><span class="a8-note">{esc(a["why"])}</span><br>'
+        f'<a href="https://px.a8.net/svt/ejp?a8mat={esc(a["a8mat"])}" target="_blank" rel="nofollow sponsored noopener">'
+        f'<span class="pr-note">PR</span>{esc(a["text"])}</a>'
+        f'<img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat={esc(a["a8mat"])}" alt=""></li>' for a in A8_OUTDOOR)
+    return f'<ul class="link-list">{rows}</ul>'
+
+
 # Slugs of the guides that carry a "tools to look for" box (2026-11-13, owner: affiliate links in natural places).  Only guides about equipment and preparation:
 # "encounter" (what to do when a bear is met) and "data" (how to read the numbers) get none.  Rows come from GOODS (search pages only, no product names or prices).
 GUIDE_GOODS_SLUGS = ("prepare", "spray", "home")
@@ -867,6 +892,8 @@ def guide_goods_box(slug: str, cfg: dict) -> str:
                        f'<span class="pr-note">PR</span>{esc(g["title"])}をAmazonで探す</a></li>')
     amazon = f'<ul class="link-list">{rows_a}</ul>' if rows_a else ""
     a8_box = (f'<h3>家の備えに: 防災グッズのセット</h3><p>{esc(A8_INTRO)}</p>{a8_bousai_list()}' if slug in ("prepare", "home") else "")
+    if slug == "prepare":
+        a8_box += f'<h3>山・野外に出る日の装備と非常食</h3><p>{esc(A8_OUTDOOR_INTRO)}</p>{a8_outdoor_list()}'
     return (f'<aside class="pr-guide-box"><h2><span class="pr-note">PR</span>この備えに使う道具を探す</h2>'
             f'<p>道具は、出会わないための対策の補助です。選ぶときの確認点は<a href="/goods/">クマ対策のグッズ</a>にまとめています。</p>'
             f'<ul class="link-list">{rows_r}</ul>{amazon}{a8_box}'
@@ -930,6 +957,10 @@ def goods_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>家の備え: 防災グッズのセット</h2>
 <p>{esc(A8_INTRO)}</p>
 {a8_bousai_list()}
+<p class="notice">このセクションのリンクは、広告(A8.net)です。リンク先で申し込み・購入されると、運営者に報酬が支払われることがあります。</p>
+<h2>山・野外に出る日の装備と非常食</h2>
+<p>{esc(A8_OUTDOOR_INTRO)}</p>
+{a8_outdoor_list()}
 <p class="notice">このセクションのリンクは、広告(A8.net)です。リンク先で申し込み・購入されると、運営者に報酬が支払われることがあります。</p>
 <p class="notice">クマの目撃や被害の通報は、お住まいの市町村、または警察(110番)へお願いします。製品の安全な使い方は、各製品の取扱説明書に従ってください。</p>"""
     return page(cfg, preview, path="/goods/", title="クマ対策のグッズ(PR) 音の出る道具・ライト・撃退スプレーの選び方",

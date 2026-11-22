@@ -572,9 +572,24 @@ class GoodsTest(unittest.TestCase):
         html = self.read("goods/index.html")
         self.assertIn("https://hb.afl.rakuten.co.jp/hgc/aaaa1111.bbbb2222.cccc3333.dddd4444/?pc=", html)
         self.assertIn("https://www.amazon.co.jp/s?k=%E3%82%AF%E3%83%9E%E9%88%B4&amp;tag=amazonmacs-22", html)
-        self.assertEqual(html.count('target="_blank" rel="nofollow sponsored noopener">'), 18)  # eight goods x two shops + the two A8 disaster-kit programmes
+        self.assertEqual(html.count('target="_blank" rel="nofollow sponsored noopener">'), 23)  # eight goods x two shops + the two A8 disaster-kit programmes + the five A8 outdoor programmes
         self.assertEqual(html.count("楽天市場で探す"), 8)
         self.assertEqual(html.count("Amazonで探す"), 8)
+
+    def test_the_a8_outdoor_programmes_are_linked_with_a_reason_before_each_link(self):
+        """2026-11-22: WAQ・hinata・安心米・ゼビオ・アルペン (media 005). Link text is a word, PR, rel, target, a reason sentence right before the link; on /goods/ and /guide/prepare/, not on the pages about deaths."""
+        guide = next(x for x in __import__("sites.kuma.content", fromlist=["x"]).GUIDES if x["slug"] == "prepare")
+        pages = {"goods": self.read("goods/index.html"), "prepare": build.guide_page(guide, self.cfg, False)}
+        self.assertEqual(len(build.A8_OUTDOOR), 5)
+        for name, html in pages.items():
+            for a in build.A8_OUTDOOR:
+                link = (f'<a href="https://px.a8.net/svt/ejp?a8mat={a["a8mat"]}" target="_blank" rel="nofollow sponsored noopener">'
+                        f'<span class="pr-note">PR</span>{a["text"]}</a>')
+                self.assertEqual(html.count(link), 1, (name, a["program"]))
+                self.assertIn(f'<span class="a8-note">{a["why"]}</span><br>{link}', html, (name, a["program"]))
+            self.assertEqual(re.findall(r">(https?://[^<]+)</a>", html), [], name)
+        negative = pages["goods"].replace(build.A8_OUTDOOR[0]["a8mat"], "")
+        self.assertNotIn(build.A8_OUTDOOR[0]["a8mat"], negative)
 
     def test_the_approved_a8_programmes_are_linked_on_the_goods_page_and_the_prepare_guide(self):
         """2026-11-13: あかまる防災 and スツーレ (media 005) - link text is words, a8mat on the href and the 1x1 image, PR, rel, target; a forgotten link fails."""
