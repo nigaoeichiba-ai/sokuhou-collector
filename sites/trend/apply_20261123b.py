@@ -64,3 +64,16 @@ if __name__ == "__main__":
         "企業の公式発表・キャンペーン案内（2026年11月20日時点）",
         ["trend-aupay-blackfriday", "trend-rakuten-blackfriday", "trend-newt-blackfriday"], cat)
     print("added", slug)
+
+
+def yahoo_bf():
+    slug = "trend-yahoo-blackfriday-2026"
+    cat = json.load(open(os.path.join(CONTENT, "trend-rakuten-blackfriday.json"), encoding="utf-8"))["category"]
+    image("card_YahooブラックフライデーBF.webp", slug)
+    add(slug, "記事最終稿_YahooブラックフライデーBF_2026-11-23.md", "card_YahooブラックフライデーBF.webp", "Yahoo!ショッピングのブラックフライデー", "Yahoo!ショッピング",
+        "Yahoo!ショッピングのブラックフライデーは、2026年11月22日0時から11月30日の1時59分まで、8日間の開催です。",
+        "Yahoo!ショッピングのブラックフライデーは11月22日0時から11月30日1時59分まで。PayPayポイントは最大23%と案内されていますが、条件を重ねたときの上限です。買う前に決めたいことを整理します。",
+        "期間は11月30日1時59分まで。最大23%は条件つきなので、買う物と払い方を先に決める",
+        "企業の発表資料（2026年11月）、業界メディアの報道（2026年11月5日）",
+        ["trend-rakuten-blackfriday", "trend-aupay-blackfriday", "trend-super-paypay-matsuri-scratch"], cat)
+    print("added", slug)
