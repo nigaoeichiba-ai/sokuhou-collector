@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 
-from sites.minna import facts, gate, itemguides, model, partners, printables, redirects, tips, wishes  # noqa: E402
+from sites.minna import facts, gate, itemguides, model, partners, printables, rakutenwidget, redirects, tips, wishes  # noqa: E402
 from sites.minna.catalog import CATEGORIES, build_catalog  # noqa: E402
 from sites.minna.setguides import set_guide_html  # noqa: E402
 from sites.minna.specials import MIN_ITEMS, SPECIALS  # noqa: E402
@@ -1959,6 +1959,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     for rel in thin:
         pages[rel] = noindex(pages[rel])
     drop_ads_from_noindex(pages)                                                 # a page that asks not to be indexed carries no ad tag either
+    rakutenwidget.add_to_pages(pages)                                            # Rakuten motion widget on every page (2026-11-22), after thin/noindex are decided so it cannot change them
     pages.update(standard_files({k: v for k, v in pages.items() if k not in thin}, cfg, preview, today.isoformat()))      # thin pages stay out of sitemap.xml
     if not preview:
         auto = redirects.auto_tag_redirects(redirects.published_tags(), {tag_url(t) for t in tags}, tag_url, lambda t: tagged(items, t),

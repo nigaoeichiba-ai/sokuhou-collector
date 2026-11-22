@@ -807,3 +807,9 @@ header.site nav a[aria-current] { background: var(--brand); color: var(--ink); }
 .pr-partner-body { margin: 0; overflow-wrap: anywhere; }
 .pr-partner-body img { max-width: 100%; height: auto; }
 .pr-top { margin: 0 0 16px; font-size: .86rem; color: var(--muted); }
+
+/* Rakuten motion widget (2026-11-22): PR label right above, a reserved box so the page does not jump, never fixed or overlaid */
+.rk-ad { margin: 36px auto; max-width: 360px; padding: 12px 10px 14px; background: var(--yellow-s); border: var(--line2); border-radius: 18px; text-align: center; }
+.rk-pr { display: flex; align-items: center; justify-content: center; gap: .6em; margin: 0 0 8px; font-size: .95rem; font-weight: 800; line-height: 1.4; }
+.rk-pr b { padding: 0 .7em; border-radius: 6px; background: var(--ink); color: var(--yellow); font-size: .95rem; font-weight: 900; letter-spacing: .08em; }
+.rk-box { display: flex; justify-content: center; min-height: 250px; max-width: 100%; overflow: hidden; }
