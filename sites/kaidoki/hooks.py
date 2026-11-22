@@ -259,12 +259,25 @@ AFF_LINKS = {
     "amazon/sale-calendar/index.html": (_A, "https://www.amazon.co.jp/gp/goldbox", "Amazonのセール会場のページを見る"),
 }
 _Y = "yahoo"
+
+
+def _kaden_links(word: str) -> list:
+    q = quote(word, safe="")
+    return [(_R, f"https://search.rakuten.co.jp/search/mall/{q}/", f"楽天市場で{word}を探す"),
+            (_A, f"https://www.amazon.co.jp/s?k={q}", f"Amazonで{word}を探す"),
+            (_Y, f"https://shopping.yahoo.co.jp/search?p={q}", f"Yahoo!ショッピングで{word}を探す")]
+
+
 # Pages of all three malls (and the Yahoo! page): one box, each mall's link on its own line (a mall's link never shares a line with another mall's); owner 2026-11-12.
 AFF_LINKS_MULTI = {
     "yahoo/index.html": [(_Y, "https://shopping.yahoo.co.jp/promotion/campaign/guide/", "Yahoo!ショッピングのキャンペーン案内のページを見る")],
     "black-friday/index.html": [(_R, "https://event.rakuten.co.jp/", "楽天市場のイベント一覧のページを見る"), (_A, "https://www.amazon.co.jp/blackfriday", "Amazonのブラックフライデーのページを見る"),
                                 (_Y, "https://shopping.yahoo.co.jp/promotion/campaign/guide/", "Yahoo!ショッピングのキャンペーン案内のページを見る")],
     "rakuten/index.html": [(_R, "https://event.rakuten.co.jp/", "楽天市場のイベント一覧のページを見る")],
+    # the next step of a reader of a maker's announcement: look at the models in the malls (the malls' own search pages; owner 2026-11-22 / the affiliate check of the desk)
+    "kaden/pc/index.html": _kaden_links("ノートパソコン"),
+    "kaden/eakon/index.html": _kaden_links("エアコン"),
+    "kaden/reizoko/index.html": _kaden_links("冷蔵庫"),
 }
 MALL_NAME = {_R: "楽天市場", _A: "Amazon", _Y: "Yahoo!ショッピング"}
 PROGRAMME = {_R: "楽天アフィリエイト", _A: "Amazonアソシエイト", _Y: "バリューコマース"}
@@ -276,7 +289,7 @@ def affiliate_url(mall: str, target: str, cfg: dict) -> str:
     if mall == _R:
         return f"https://hb.afl.rakuten.co.jp/hgc/{cfg['rakuten_affiliate_id']}/?pc={quote(target, safe='')}"      # the form of sokuhou/mallstore.affiliate_href
     if mall == _A:
-        return f"{target}?tag={cfg['amazon_tracking_id']}"          # the official URL and tag, nothing else
+        return f"{target}{'&' if '?' in target else '?'}tag={cfg['amazon_tracking_id']}"          # the official URL and tag, nothing else
     if mall == _Y:
         from sites.kaidoki.redesign import affiliate
         return affiliate.vc_href(affiliate.VC_PID["yahoo"], target)          # the MyLink of this site (ValueCommerce tool), see redesign/affiliate.py
@@ -304,7 +317,8 @@ def affiliate_multi_block(items: list, cfg: dict) -> str:
     note = "広告(" + "・".join(notes) + ")のリンクです。リンク先で購入されると、運営者に報酬が支払われることがあります。"
     if any(m == _A for m, _, _ in items):
         note += f"Amazonのアソシエイトとして、{cfg['amazon_disclosure_name'] if cfg.get('amazon_disclosure_name') else cfg['site_name']}は適格販売により収入を得ています。"
-    return (f'<aside class="aff-box"><span class="pr-chip">PR</span><div><p>条件と最新の日程は、各モールの公式のページで確かめておきましょう。</p>'
+    lead = "気になる型は、各モールの販売ページで、型番と販売元を見比べておきましょう。" if any("探す" in lb for _, _, lb in items) else "条件と最新の日程は、各モールの公式のページで確かめておきましょう。"
+    return (f'<aside class="aff-box"><span class="pr-chip">PR</span><div><p>{lead}</p>'
             f'{btns}<p class="aff-note">{note}</p></div></aside>\n')
 
 

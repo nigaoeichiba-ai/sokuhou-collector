@@ -169,6 +169,21 @@ class PageTest(unittest.TestCase):
         self.assertFalse(_weekday_problems([dict(bad, when="12月4日(金)20時ごろ")]))
 
 
+def kaden_aff_problems(html: str) -> list[str]:
+    """A page of the appliance announcements carries the three malls' affiliate links, each marked PR and nofollow sponsored, opening in a new tab."""
+    bad = []
+    for key, mark in (("rakuten", "hb.afl.rakuten.co.jp"), ("amazon", "amazonmacs-22"), ("yahoo", "valuecommerce.com/servlet/referral")):
+        links = [m for m in re.findall(r'<a [^>]*>', html) if mark in m]
+        if not links:
+            bad.append(f"no {key} affiliate link")
+        for a in links:
+            if "sponsored" not in a or "_blank" not in a:
+                bad.append(f"{key} link without rel/target: {a[:80]}")
+    if 'class="pr-chip"' not in html:
+        bad.append("no PR mark")
+    return bad
+
+
 def row_day_problems(html: str) -> list[str]:
     """The check day printed on the top page for a row must be the day of that row in the data (facts.EVENTS 'checked'), never one shared value."""
     from sites.kaidoki.gen import facts
@@ -280,6 +295,15 @@ class HomeTest(unittest.TestCase):
         self.assertTrue(home_problems(cut, self.TODAY))
         self.assertTrue(home_problems(h.replace("2026/11/12", "2026/11/03", 1), self.TODAY))
 
+
+    def test_kaden_pages_carry_the_affiliate_links(self):
+        for rel in ("kaden/pc/index.html", "kaden/eakon/index.html", "kaden/reizoko/index.html"):
+            self.assertEqual(kaden_aff_problems(self.pages[rel]), [], rel)
+
+    def test_negative_kaden_page_without_links_is_caught(self):
+        h = self.pages["kaden/pc/index.html"]
+        self.assertTrue(kaden_aff_problems(re.sub(r'<a [^>]*hb\.afl\.rakuten[^>]*>', "<a>", h)))
+        self.assertTrue(kaden_aff_problems(h.replace(" target=\"_blank\" rel=\"nofollow sponsored noopener\"", "")))
 
     def test_top_check_day_comes_from_the_row_data(self):
         h = self.pages["index.html"]
