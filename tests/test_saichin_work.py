@@ -206,7 +206,7 @@ class MonthlyGuideAffiliateTest(SiteFixture):
 class BothGuidesTest(SiteFixture):
     def test_only_the_two_approved_a8_programs_and_the_official_sources_are_linked_and_no_ai_wording(self):
         for slug in ("wall", "raise"):
-            page = self.read(f"guide/{slug}/index.html")
+            page = re.sub(r'<aside class="rk-ad".*?</aside>', "", self.read(f"guide/{slug}/index.html"), flags=re.S)   # the Rakuten widget (2026-11-22) is its own block
             for word in ("rakuten", "amazon", "valuecommerce", "Claude", "AIの支援", "自動作成"):
                 self.assertNotIn(word, page, (slug, word))
             hosts = set(re.findall(r'href="https?://([^/"]+)', page))

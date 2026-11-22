@@ -19,7 +19,7 @@ from pathlib import Path
 HERE = Path(__file__).parent
 sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/build.py` finds `sokuhou`
 
-from sites.saichin import industry_view, ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, outlook, pref_story, trend_pages, work_pages, wage as wagelib  # noqa: E402
+from sites.saichin import industry_view, ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, outlook, pref_story, rakuten_widget, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
 from sokuhou.sitekit import structured_data  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
@@ -300,6 +300,7 @@ def nav_html(path: str) -> str:
 
 def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str, body: str, scripts: bool = True, head_extra: str = "") -> str:
     base = cfg["site_url"].rstrip("/")
+    body = rakuten_widget.add(path, body, NO_ADS_PATHS)   # 楽天モーションウィジェット(リード直後・中ほど・関連の前。広告を出さないページには入れない)
     head_extra = head_extra + structured_data(cfg, path, body, head_extra)   # BreadcrumbList from the page's own breadcrumbs, WebSite on the home page
     name = esc(cfg["site_name"])
     robots = '<meta name="robots" content="noindex,nofollow">\n' if preview else ('<meta name="robots" content="noindex,follow">\n' if path in NOINDEX_PATHS else "")
@@ -604,7 +605,7 @@ def area_page(d: dict, slug: str, rname: str, shorts: list[str], cfg: dict, prev
 <h2>一覧表</h2>
 <div class="tablewrap"><table><thead><tr><th>都道府県</th><th>最低賃金</th><th>全国順位</th><th>引上げ額</th><th>発効日</th><th>月給の目安</th></tr></thead><tbody>{rows}</tbody>
 <tfoot><tr><td colspan="6">月給の目安は、最低賃金ちょうどで週40時間働いたときの額です(1年52週÷12か月。100円未満は四捨五入。手当・残業代を除く)。</td></tr></tfoot></table></div>
-{area_story.story_block(d, slug, rname, members, sys.modules[__name__])}{analysis_pages.region_block(d, rname, members, sys.modules[__name__])}<h2>ほかの地方</h2>
+{area_story.story_block(d, slug, rname, members, sys.modules[__name__])}{analysis_pages.region_block(d, rname, members, sys.modules[__name__])}{work_pages.region_jobs(rname, lo['name'], yen(lo['amount']))}<h2>ほかの地方</h2>
 <nav aria-label="ほかの地方"><ul class="pref-nav">{others}</ul></nav>
 <p class="notice">データの取得日: {jp_date(d['fetched_date'])}。{esc(SOURCE_LABEL)}をもとに作成しています。単純平均は、このサイトで計算した参考値です。</p>"""
     return finish(layout(cfg, preview, path=f"/area/{slug}/", title=f"{rname}の最低賃金一覧 {year} {kinds}は{yen(lo['amount'])}〜{yen(hi['amount'])}",

@@ -36,6 +36,9 @@ PR_TOP = '<p class="pr-note"><strong>PR</strong>このページには、広告(�
 PR_BLOCK = '<p class="pr-note"><strong>PR</strong>次のリンクは広告です。</p>\n'
 
 
+PR_DIV = PR_BLOCK.replace("<p ", "<div ").replace("</p>", "</div>")   # the same label for the prefecture/region job blocks (not prose; see seeker_block)
+
+
 def aff(program: str) -> str:
     """The program's link code exactly as A8 gave it, in our own wrapper; empty if the program has no code in content.AFFILIATE."""
     item = content.AFFILIATE.get(program)
@@ -45,6 +48,25 @@ def aff(program: str) -> str:
 def jobs_block(lead: str) -> str:
     """A short, labelled block of job-search links (the two approved programs that fit a page about hourly pay), after the article."""
     return f'{PR_BLOCK}<p><strong>求人を探す</strong>: {lead}</p>\n{aff("workstaff")}{aff("mamaworks")}'
+
+
+def seeker_block(heading: str, intro: str, where: str) -> str:
+    """「次の行動」の節(働く人向け): 判断材料(最低賃金・時給の比べ方)のあとに、提携済みの求人サイトを置く。リンクの直前に理由の1文を書く。
+    提携済み(content.AFFILIATE にコードがある)プログラムだけを出す。県名や地方名は文に入れ、リンクのコードには手を入れない。"""
+    # The sentences of this block sit in div.jobs-p, not p: they are the same frame on every prefecture page (a link introduction, not the page's own prose),
+    # and tests/saichin_overlap.py measures the prose (p, li, h2, h3) to see whether prefecture pages say different things.
+    nl = "\n"
+    return (f'<h2>{heading}</h2>{nl}<div class="jobs-p">{intro}</div>{nl}{PR_DIV}'
+            f'<div class="jobs-p"><strong>パート・アルバイトの求人</strong>: {where}で、主婦・主夫向けの短時間の仕事を探すときの例です。</div>{nl}{aff("mamaworks")}'
+            f'<div class="jobs-p"><strong>派遣・転職の求人</strong>: 派遣は、派遣先の事業場がある都道府県の最低賃金と比べます。職種の幅が広い派遣・転職の求人サイトの例です。</div>{nl}{aff("workstaff")}')
+
+
+def region_jobs(rname: str, low_name: str, low_text: str) -> str:
+    return seeker_block(
+        f"{rname}で求人を探すとき",
+        f"{rname}の最低賃金は、最も低い{low_name}の{low_text}から、県ごとに差があります。通える範囲の県の額を見比べてから、仕事を探します。"
+        f'<a href="/guide/raise/">時給の見方</a>も確かめておくと、求人を比べやすくなります。',
+        f"{rname}")
 
 
 def wall_rows(d: dict) -> list[dict]:
