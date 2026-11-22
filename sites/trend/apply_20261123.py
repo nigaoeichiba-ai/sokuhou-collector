@@ -197,7 +197,7 @@ def add_meiji():
         "credit": "企業の発表資料（2026年11月20日）",
         "path": f"/{slug}/", "top_lead": "明治が2026年11月20日、チーズ・バター・アイスクリーム・レトルトカレーの計65品の価格改定を発表しました。",
         "kind": "article", "parent": "/", "title": title, "h1": title, "category": "家計", "published": "2026-11-23", "seq": 130,
-        "crumb": "明治の値上げ", "X, "secondary_kw": ["明治 値上げ 2027 チーズ アイス"], "intent": 1,
+        "crumb": "明治の値上げ", "primary_kw": "明治", "secondary_kw": ["明治 値上げ 2027 チーズ アイス"], "intent": 1,
         "description": "明治が2027年1月1日出荷分からチーズ・バター・アイスなど65品を値上げ。レトルトカレーは2月1日出荷分から。品群ごとの開始日と改定率の目安、年内の買い置きの考え方をまとめます。",
         "answer": "値上げは1月1日出荷分から。年内は使い切れる量だけ買い足せば十分",
         "related": related, "sections": secs,
