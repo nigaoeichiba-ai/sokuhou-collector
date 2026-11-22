@@ -32,6 +32,7 @@ from sites.kuma import notices as notices_mod  # noqa: E402
 from sites.kuma import official as official_mod  # noqa: E402
 from sites.kuma import preffacts as preffacts_mod  # noqa: E402
 from sites.kuma import rankfacts as rankfacts_mod  # noqa: E402
+from sites.kuma import rakuten_widget as rakuten_widget_mod  # noqa: E402
 from sites.kuma import research as research_mod  # noqa: E402
 from sites.kuma import retired as retired_mod  # noqa: E402
 from sites.kuma import season as season_mod  # noqa: E402
@@ -803,6 +804,12 @@ GOODS = [
      "points": ["出会ってしまったときの「最終手段」です。まず、出会わないための対策が第一です。",
                 "クマ用で、撃退用のものを選びます。噴射距離・噴射時間などの性能表示を確認します(消費者庁)。環境省は、令和8年8月に、性能に係る推奨要件を公表しています。",
                 "このサイトは、製品の効果を保証しません。保管・持ち運び・航空機への持ち込み不可などの注意は、解説のページで確認してください。"]},
+    {"title": "登山・ハイキングの用品(ザック・ヘッドライト)", "query": "登山 リュック ヘッドライト", "guide": ("prepare", "山に入る前の備え"),
+     "points": ["山や林に入る日は、日の出から日没までの時間に収まる行程にして、予備の明かりを持つのが基本です(自治体の啓発資料にも、薄暗い時間を避ける呼びかけがあります)。",
+                "ザックの容量・背負い心地・防水を、商品ページで確認します。ヘッドライトは明るさと点灯時間を見ます。"]},
+    {"title": "防災セット・非常用の備え", "query": "防災セット 避難リュック", "guide": ("home", "家の周りに、クマを寄せつけない"),
+     "points": ["クマの出没で外に出にくい日や、停電・断水をともなう災害に備えて、家に置く備えです。",
+                "人数・日数に合う中身か、食料と水の消費期限、入れ替えのしやすさを、商品ページで確認します。"]},
     {"title": "ごみ・食べ物を、外に置かないための容器", "query": "密閉 ごみ容器 屋外", "guide": ("home", "家の周りに、クマを寄せつけない"),
      "points": ["生ごみ・果樹・農作物などが、クマを人里に引き寄せる要因になります(秋田県の資料)。",
                 "ふたが閉まり、においが漏れにくいか・固定できるかを、商品ページで確認します。"]},
@@ -843,6 +850,7 @@ def a8_bousai_list() -> str:
 # Slugs of the guides that carry a "tools to look for" box (2026-11-13, owner: affiliate links in natural places).  Only guides about equipment and preparation:
 # "encounter" (what to do when a bear is met) and "data" (how to read the numbers) get none.  Rows come from GOODS (search pages only, no product names or prices).
 GUIDE_GOODS_SLUGS = ("prepare", "spray", "home")
+NEXT_ACTION_ITEMS = ("クマ撃退スプレー", "クマ鈴・ベル", "登山・ハイキングの用品(ザック・ヘッドライト)")
 
 
 def guide_goods_box(slug: str, cfg: dict) -> str:
@@ -858,12 +866,47 @@ def guide_goods_box(slug: str, cfg: dict) -> str:
             rows_a += (f'<li><a href="{esc(amazon_url(cfg, g["query"]))}" target="_blank" rel="nofollow sponsored noopener">'
                        f'<span class="pr-note">PR</span>{esc(g["title"])}をAmazonで探す</a></li>')
     amazon = f'<ul class="link-list">{rows_a}</ul>' if rows_a else ""
-    a8_box = (f'<h3>家の備えに: 防災グッズのセット</h3><p>{esc(A8_INTRO)}</p>{a8_bousai_list()}' if slug == "prepare" else "")
+    a8_box = (f'<h3>家の備えに: 防災グッズのセット</h3><p>{esc(A8_INTRO)}</p>{a8_bousai_list()}' if slug in ("prepare", "home") else "")
     return (f'<aside class="pr-guide-box"><h2><span class="pr-note">PR</span>この備えに使う道具を探す</h2>'
             f'<p>道具は、出会わないための対策の補助です。選ぶときの確認点は<a href="/goods/">クマ対策のグッズ</a>にまとめています。</p>'
             f'<ul class="link-list">{rows_r}</ul>{amazon}{a8_box}'
             f'<p class="notice">このボックスには、広告(楽天アフィリエイト・Amazonアソシエイト{"・A8.net" if a8_box else ""})のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。</p>'
             f'{amazon_disclosure(cfg) if rows_a else ""}</aside>')
+
+
+def next_action_box(cfg: dict, reason: str, *, with_a8: bool = False) -> str:
+    """「次の行動」の節(PR)。リンクの直前に、置く理由を1文。道具の探し方の検索ページ(楽天・Amazon)だけで、商品名・価格は出さない。人身被害が主題のページには置かない。"""
+    if not cfg.get("rakuten_affiliate_id"):
+        return ""
+    rows_r, rows_a = "", ""
+    for g in (x for x in GOODS if x["title"] in NEXT_ACTION_ITEMS):
+        target = "https://search.rakuten.co.jp/search/mall/" + quote(g["query"], safe="") + "/"
+        rows_r += (f'<li><a href="{esc(rakuten_url(cfg, target))}" target="_blank" rel="nofollow sponsored noopener">'
+                   f'<span class="pr-note">PR</span>{esc(g["title"])}を楽天市場で探す</a></li>')
+        if cfg.get("amazon_tracking_id"):
+            rows_a += (f'<li><a href="{esc(amazon_url(cfg, g["query"]))}" target="_blank" rel="nofollow sponsored noopener">'
+                       f'<span class="pr-note">PR</span>{esc(g["title"])}をAmazonで探す</a></li>')
+    a8 = f'<h3>家に置く備え: 防災グッズのセット</h3><p>{esc(A8_INTRO)}</p>{a8_bousai_list()}' if with_a8 else ""
+    return (f'<aside class="pr-guide-box next-action"><h2><span class="pr-note">PR</span>次の行動: 出かける前に、道具をそろえる</h2>'
+            f'<p>{esc(reason)}選ぶときの確認点は<a href="/goods/">クマ対策のグッズ</a>にまとめています。</p>'
+            f'<ul class="link-list">{rows_r}</ul><ul class="link-list">{rows_a}</ul>{a8}'
+            f'<p class="notice">このボックスには、広告(楽天アフィリエイト・Amazonアソシエイト{"・A8.net" if with_a8 else ""})のリンクが含まれます。リンク先で購入されると、運営者に報酬が支払われることがあります。</p>'
+            f'{amazon_disclosure(cfg) if rows_a else ""}</aside>')
+
+
+NEXT_ACTION_PAGES = {
+    "ranking/sightings/index.html": ("出没の多い県の山や郊外へ出かける予定があるなら、出会わないための道具を、先にそろえておくと安心です。", True),
+    "ranking/change/index.html": ("去年より出没が増えている県へ出かけるときは、人の存在を知らせる道具と、日が暮れる前に戻る準備を、先に確かめておきたいところです。", False),
+    "season/index.html": ("出没が増える月に山歩きや野外の作業をするなら、音の出る道具と、薄暗くなっても使える明かりを、前もって用意しておくと安心です。", False),
+}
+
+
+def add_next_action(pages: dict, cfg: dict) -> None:
+    """The ranking and season pages end with a 「次の行動」 box (the pages about deaths and injuries never get one)."""
+    for rel, (reason, with_a8) in NEXT_ACTION_PAGES.items():
+        t = pages.get(rel)
+        if t and "</main>" in t and "next-action" not in t:
+            pages[rel] = t.replace("</main>", next_action_box(cfg, reason, with_a8=with_a8) + "</main>", 1)
 
 
 def goods_page(d: dict, cfg: dict, preview: bool) -> str:
@@ -1154,6 +1197,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
         input_note="",
         finish=lambda s: s))
     pages["about/index.html"] = pages["about/index.html"].replace("<h2>免責事項</h2>", about_mod.editorial_html(any_live) + "<h2>免責事項</h2>", 1)
+    add_next_action(pages, cfg)
     add_research_links(pages, d)
     pages.update(standard_files(pages, cfg, preview, max([d["fetched_date"]] + [src["fetched_date"] for src in d.get("live_prefs", [])])))   # the newest of the ministry and the municipal sources
     pages[".htaccess"] += retired_mod.htaccess_lines(pages)
@@ -1170,6 +1214,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     pages["sitemap.xml"] = lastmod_mod.apply(pages["sitemap.xml"], dates, cfg["site_url"].rstrip("/"))
     if static_changed:      # the stored hash is out of date: these pages get today's date until `build.py --update-lastmod` is run and the file committed
         print("lastmod: static pages whose text differs from sites/kuma/lastmod_static.json: " + ", ".join(static_changed), file=sys.stderr)
+    rakuten_widget_mod.add_all(pages)      # 楽天モーションウィジェット(オーナー指示 2026-11-22)。更新日の計算のあとに入れる(広告の有無で『文章が変わった』扱いにしない)
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
     return sorted(pages)
