@@ -8704,7 +8704,8 @@
    "by": "editor",
    "why": "好みと選択をつなぐ",
    "added": "2026-11-22",
-   "edit": true
+   "edit": true,
+   "in_source": true
   },
   {
    "from": "ハムの詰め合わせは、サラダやサンドイッチに使えて、年末年始の献立を一品分助けてくれる品です。",
@@ -8713,7 +8714,8 @@
    "by": "editor",
    "why": "一文一論点に分割",
    "added": "2026-11-22",
-   "edit": true
+   "edit": true,
+   "in_source": true
   },
   {
    "from": "上司への昇進・栄転祝い、こんな贈り方はどうでしょう",
@@ -8740,7 +8742,8 @@
    "by": "editor",
    "why": "二文の内容を統合",
    "added": "2026-11-22",
-   "edit": true
+   "edit": true,
+   "in_source": true
   },
   {
    "from": "和菓子は小豆、栗、抹茶など母の好きな味を思い出し、詰め合わせ内容を確認する。",
@@ -8749,7 +8752,8 @@
    "by": "editor",
    "why": "判断の手順を簡潔に",
    "added": "2026-11-22",
-   "edit": true
+   "edit": true,
+   "in_source": true
   },
   {
    "from": "和菓子は父の好きな甘さを思い出し、羊羹、饅頭、どら焼きなど食べ慣れた種類から選ぶ。",
@@ -8758,7 +8762,8 @@
    "by": "editor",
    "why": "選ぶ基準を明確に",
    "added": "2026-11-22",
-   "edit": true
+   "edit": true,
+   "in_source": true
   },
   {
    "from": "母へ贈るお歳暮、種類の違う人気の4点",
@@ -8776,7 +8781,8 @@
    "by": "editor",
    "why": "文体をですます調に",
    "added": "2026-11-22",
-   "edit": true
+   "edit": true,
+   "in_source": true
   },
   {
    "from": "湯呑みは食後のお茶や朝の白湯に使え、落ち着いた柄なら父の食卓に置いてもなじみます。毎朝使えます。",
@@ -8785,7 +8791,8 @@
    "by": "editor",
    "why": "文末の重なりを整理",
    "added": "2026-11-22",
-   "edit": true
+   "edit": true,
+   "in_source": true
   },
   {
    "from": "父への敬老の日、こんな贈り方はどうでしょう",
@@ -8812,7 +8819,8 @@
    "by": "editor",
    "why": "禁止された語尾を削除",
    "added": "2026-11-22",
-   "edit": true
+   "edit": true,
+   "in_source": true
   }
  ]
 }
