@@ -48,7 +48,7 @@ class WidgetTest(unittest.TestCase):
                 self.assertNotIn("<a ", b, path)                                           # no text link of ours inside the block (no product-name links)
                 self.assertNotIn("amazon", b.lower(), path)
                 self.assertNotIn("valuecommerce", b.lower(), path)
-                self.assertEqual(b.count("<script"), 2, path)                              # Rakuten's two scripts only
+                self.assertEqual(b.count("<script"), 1, path)                              # one inline script that writes Rakuten's two scripts (document.write)
             if "rk-widget" in t:
                 self.assertIn("pr-foot", t, path)                                          # the full advertising notice is at the foot
 
@@ -60,6 +60,28 @@ class WidgetTest(unittest.TestCase):
         for _, t in self.pages():
             for b in BLOCK.findall(t):
                 self.assertNotRegex(b, r"https://(thumbnail|item)\.rakuten|<img")           # the widget draws its own products; none is written into our output
+
+    def test_several_products_at_once_by_screen_width_and_link_type(self):
+        """2026-11-23: 728x200 / 468x160 (three side by side) and 200x600 (a column) by the width; the first one of a page stays 300x250 on a phone;
+        the first two follow the page (ctsmatch), the last is the ranking."""
+        lead, mid, end = rw.block("lead"), rw.block("mid"), rw.block("end")
+        for b in (lead, mid, end):
+            self.assertIn('"728x200"', b)
+            self.assertIn('"468x160"', b)
+            self.assertIn("window.innerWidth", b)
+            self.assertIn("document.write", b)
+            self.assertIn("xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js", b)
+            self.assertNotIn("<a ", b)
+        self.assertIn('"300x250")', lead)
+        self.assertNotIn('"200x600"', lead)
+        self.assertIn('"200x600")', mid)
+        self.assertIn('"200x600")', end)
+        self.assertIn('m="ctsmatch"', lead)
+        self.assertIn('m="ctsmatch"', mid)
+        self.assertIn('m="ranking"', end)
+        css = (build.HERE / "assets" / "style.css").read_text(encoding="utf-8")
+        for need in ("min-height: 200px", "min-height: 160px", "min-height: 250px", "min-height: 600px"):      # the height is kept before the widget is loaded
+            self.assertIn(need, css)
 
     def test_a_script_outside_the_widget_block_is_still_found(self):
         main = '<p>x</p>' + rw.block("lead") + '<script>alert(1)</script>'

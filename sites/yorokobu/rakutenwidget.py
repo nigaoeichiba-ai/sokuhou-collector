@@ -9,9 +9,12 @@ import re
 MAX_WIDGETS = 3
 AFFILIATE_ID = "0fbf5187.c5400194.0fbf5188.09a2b95f"
 WIDGET_JS = "https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js?20230106"
-CODE = ('<script type="text/javascript">rakuten_design="slide";rakuten_affiliateId="' + AFFILIATE_ID + '";rakuten_items="ctsmatch";rakuten_genreId="0";'
-        'rakuten_size="300x250";rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";'
-        'rakuten_recommend="on";rakuten_ts="1795331642284";</script><script type="text/javascript" src="' + WIDGET_JS + '"></script>')
+# 2026-11-23 (owner): a type that shows several products at once, chosen by the screen width when the page loads (the widget writes itself with document.write, so the size has to be
+# known before it is written).  PC (760px and wider): 728x200, three side by side; 520-759px: 468x160, three side by side; under 520px: 200x600, three in a column (the first one of a
+# page stays 300x250 there, so the first screen of a phone is not taken by an advertisement; plan: 480px, raised to 520 because a 468px widget is wider than the text column at 480-519).
+# The link type: the first and the second follow the page (ctsmatch), the last one (before the related links) is the popularity ranking.
+SIZES = {"lead": ("ctsmatch", "300x250"), "mid": ("ctsmatch", "200x600"), "end": ("ranking", "200x600")}
+CODE = r"""<script>(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,m="__M__",s=w>=760?"728x200":(w>=520?"468x160":"__N__");var c='<scr'+'ipt type="text/javascript">rakuten_design="slide";rakuten_affiliateId="__ID__";rakuten_items="'+m+'";rakuten_genreId="0";rakuten_size="'+s+'";rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";rakuten_recommend="on";rakuten_ts="1795398997582";</scr'+'ipt><scr'+'ipt type="text/javascript" src="__JS__"></scr'+'ipt>';document.write(c);})();</script>"""
 
 # pages with a form or a visitor's own list, and the error page: no widget
 SKIP_PATHS = frozenset({"/404.html", "/contact/", "/contact/thanks.html", "/ask/", "/dock/", "/memo/", "/history/", "/favorites/", "/list/"})
@@ -22,8 +25,9 @@ SECTION = re.compile(r"<section\b")
 
 
 def block(position: str) -> str:
+    m, narrow = SIZES[position]
     return ('<aside class="rk-widget" data-pos="' + position + '" aria-label="広告"><p class="rk-pr"><span class="pr-chip">PR</span>'
-            '<span class="rk-pr-text">楽天市場のおすすめ</span></p><div class="rk-box">' + CODE + '</div></aside>')
+            '<span class="rk-pr-text">楽天市場のおすすめ</span></p><div class="rk-box">' + CODE.replace("__M__", m).replace("__N__", narrow).replace("__ID__", AFFILIATE_ID).replace("__JS__", WIDGET_JS) + '</div></aside>')
 
 
 def eligible(path: str) -> bool:
