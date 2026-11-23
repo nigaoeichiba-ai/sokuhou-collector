@@ -49,6 +49,7 @@ export const config={
  'koko-1gatsu-shutsugan':{parent:'/nyushi/',art:'family',related:['ids:koko-yamagata,koko-tokyo,koko-hokkaido,koko-hiroshima'],pr:'koko'},
  'kasanaru-shiken-bi':{parent:'/yomimono/',art:'decided',related:['ids:eiken,fp,toeic-20270124,kyotsu-tsuishi-2027'],pr:'toeic'},
  'kanken-2027-nittei':{parent:'/yomimono/',art:'decided',related:['fam:kanken','ids:toeic-20270214,nurse'],live:{scope:'fam:kanken',types:['deadline','exam'],limit:8,heading:'漢検の日程'},pr:'kanken'},
+ 'kanto-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-tokyo,koko-kanagawa,koko-chiba,koko-saitama,koko-ibaraki,koko-tochigi,koko-gunma'],pr:'koko'},
  'kinki-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-shiga,koko-kyoto,koko-osaka,koko-hyogo,koko-nara,koko-wakayama'],pr:'koko'},
  'chugoku-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-tottori,koko-shimane,koko-okayama,koko-hiroshima,koko-yamaguchi'],pr:'koko'},
  'koko-tsuikensa-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-chiba,koko-okayama,koko-kumamoto,koko-hokkaido'],pr:'koko'},
@@ -106,7 +107,8 @@ export function legacyMain({slug,data,registry,today,prefix,legacy}){
  const parentTitle=PARENT_TITLE[c.parent];
  const crumbs=[['トップ','/']];if(parentTitle)crumbs.push([parentTitle,c.parent]);
  const bc=crumbs.map(([t,h])=>`<a href="${h}">${esc(t)}</a>`).join('<span aria-hidden="true">›</span>')+`<span aria-hidden="true">›</span><span aria-current="page">${esc(data.h1)}</span>`;
- const sections=data.sections.map(s=>`<section class="ed-section legacy-section">${s.h2?`<h2>${esc(s.h2)}</h2>`:''}${s.html}</section>`).join('');
+ const tok=h=>h.replace(/\{\{LEFT:(\d{4}-\d{2}-\d{2})\}\}/g,(m,d)=>{const n=Math.round((Date.parse(d+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000);return n>0?`締切まで、残り${n}日`:n===0?'締切は、きょうです':'締切は、過ぎています';}).replace(/\{\{TODAY\}\}/g,jpDate(today));
+ const sections=data.sections.map(s=>`<section class="ed-section legacy-section">${s.h2?`<h2>${esc(s.h2)}</h2>`:''}${tok(s.html)}</section>`).join('');
  const live=c.live?liveSection(registry,c.live,today):'';
  const list=c.list?listSection(registry,c.list):'';
  const articles=c.children?childrenSection(legacy,c.children,c.childrenHeading||'あわせて読みたい',slug):'';
