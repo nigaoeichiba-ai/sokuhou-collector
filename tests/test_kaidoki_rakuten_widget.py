@@ -39,14 +39,27 @@ class RakutenWidgetTest(unittest.TestCase):
                 self.assertIn('<span class="pr-chip">PR</span>', b, rel)
                 self.assertNotIn("<a ", b, rel)
                 self.assertNotIn("amazon", b.lower().replace("rakuten_widget", ""), rel)
-                scripts = re.findall(r'src="([^"]+)"', b)
-                self.assertEqual(scripts, ["https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js?20230106"], rel)
+                self.assertEqual(re.findall(r"https?://[^\"\s']+", b), [rw.SCRIPT_URL], rel)       # document.write form, only the widget script
+                self.assertEqual(b.count("<script>"), 1, rel)
+                self.assertIn("rakuten_items=\"'+m+'\"", b, rel)
+                self.assertIn('w>=760?"728x200":(w>=480?"468x160":', b, rel)
 
     def test_not_inside_a_table_or_before_the_lead(self):
         for rel, html in self.pages.items():
             for m in re.finditer('<aside class="rk-widget"', html):
                 before = html[:m.start()]
                 self.assertEqual(before.count("<table"), before.count("</table>"), f"{rel}: widget inside a table")
+
+    def test_types_and_sizes(self):
+        body = '<section class="content-block">a</section>' * 8 + '<h2>関連</h2><div class="article-links"></div><p class="credit">x</p>'
+        out = rw.inject(body)
+        blocks = BLOCK.findall(out)
+        self.assertEqual(len(blocks), 3)
+        self.assertIn('m="ctsmatch"', blocks[0]); self.assertIn('"300x250")', blocks[0])
+        self.assertIn('m="ctsmatch"', blocks[1]); self.assertIn('"200x600")', blocks[1])
+        self.assertIn('m="ranking"', blocks[2]); self.assertIn('"200x600")', blocks[2])
+        self.assertEqual(out.count("rakuten_size"), 3)
+        self.assertNotIn("__M__", out); self.assertNotIn("__MOBILE__", out)
 
     def test_inject_negative(self):
         body = '<section class="content-block">a</section>' * 3 + '<h2>関連</h2><div class="article-links"></div><p class="credit">x</p>'

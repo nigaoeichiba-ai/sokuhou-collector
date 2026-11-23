@@ -325,9 +325,13 @@ body{background:var(--p-paper)}
 .footer a,.footer .footer-links a{color:var(--p-gold-light);font-weight:700}
 .footer .brand-name{color:var(--p-gold);text-shadow:2px 2px 0 #000}
 .footer .brand small,.footer .copyright{color:var(--p-gold-light)}
-/* Rakuten motion widget (2026-11-22): own block, big PR above, no overlay, nothing fixed */
-.rk-widget{clear:both;max-width:340px;margin:28px auto;padding:12px 10px 14px;text-align:center;background:#fff8dc;border:3px solid var(--p-red,#c0141c);border-radius:12px;box-sizing:border-box}
+/* Rakuten motion widget (2026-11-23): several products at once; heights reserved per size (728x200 / 468x160 / 300x250 / 200x600), no overlay, nothing fixed */
+.rk-widget{clear:both;max-width:760px;margin:28px auto;padding:12px 10px 14px;text-align:center;background:#fff8dc;border:3px solid var(--p-red,#c0141c);border-radius:12px;box-sizing:border-box}
 .rk-widget .rk-pr{margin:0 0 8px;font-weight:800;font-size:15px;color:#3b2a00}
 .rk-widget .pr-chip{display:inline-block;margin-right:8px;font-size:16px;padding:4px 14px}
-.rk-widget .rk-frame{width:300px;max-width:100%;min-height:250px;margin:0 auto;overflow:hidden}
+.rk-widget .rk-frame{max-width:100%;margin:0 auto;overflow:hidden}
+.rk-widget .rk-m250{min-height:250px}
+.rk-widget .rk-m600{min-height:600px}
+@media (min-width:480px){.rk-widget .rk-frame{min-height:160px}}
+@media (min-width:760px){.rk-widget .rk-frame{min-height:200px}}
 @media (max-width:360px){.rk-widget{padding:10px 0 12px;border-width:2px;border-radius:8px}}
