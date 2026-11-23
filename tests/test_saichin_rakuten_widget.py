@@ -151,6 +151,15 @@ class EmployerLinks(SiteFixture):
             self.assertIn("a8mat=4BGR94+A07C2Y", t)
             self.assertEqual("a8mat=4BGR94+A3RXPM" in t, both)
 
+    def test_the_analysis_pages_on_raises_and_dates_have_them(self):
+        for slug, both in (("raises", True), ("dates", False)):
+            t = self.read(f"analysis/{slug}/index.html")
+            self.assertIn("事業主の方へ", t)
+            self.assertIn("a8mat=4BGR94+A07C2Y", t)
+            self.assertEqual("a8mat=4BGR94+A3RXPM" in t, both)
+        for slug in ("gap", "milestones", "ranks"):
+            self.assertNotIn("a8mat=4BGR94", self.read(f"analysis/{slug}/index.html"), slug)
+
     def test_nothing_is_shown_without_a_code(self):
         saved = content.AFFILIATE.pop("emeao"), content.AFFILIATE.pop("kyujin")
         try:

@@ -9,7 +9,7 @@ from sites.saichin.analysis import (
     THRESHOLDS, date_series, gap_series, milestone_rank, milestones, names, national_milestones, number_one_years,
     pref_facts, rank_table, raise_series, region_facts, short_label, top_bottom_means,
 )
-from sites.saichin import analysis_context
+from sites.saichin import analysis_context, work_pages
 from sites.saichin.long_history import yen_text
 
 INDEX = [
@@ -40,6 +40,18 @@ def _src(d: dict, k) -> str:
     return (f'<p class="notice">データの取得日: {k.jp_date(d["fetched_date"])}。{k.esc(k.SOURCE_LABEL)}の年度別の額と発効日から計算した数字です。'
             f'数字は<a href="/data/">CSV・JSON</a>でも取れます。引用するときは<a href="/cite/">引用のしかた</a>をご覧ください。'
             f'額が動いた背景は、法律と厚生労働省の公表に書いてあることだけを、各ページの「動いた背景」に載せています。物価や賃金全体の動きとの関係は、この分析では扱っていません。</p>')
+
+
+def _employer(slug: str) -> str:
+    """事業主向けの導線(A8 承認済み)。引上げ額・発効日のページだけ: 改定のたびに時給を計算し直す事業主に直結する。ほかの分析ページには、読者の行動に結びつかないため置かない。"""
+    if slug == "raises":
+        return work_pages.employer_block("事業主の方へ", "引上げ額は年度ごとに違い、改定のたびに、勤め先の全員の時給を新しい額と比べ直します。",
+                                        "改定後の額での給与の計算し直しを、外に任せるときの、給与計算代行会社の探し方の例です。",
+                                        "時給を上げて人を集めるときに、求人広告の出し方を比べる例です。")
+    if slug == "dates":
+        return work_pages.employer_block("事業主の方へ", "発効日は都道府県ごとに違います。勤め先がある都道府県の発効日から、新しい額で賃金を計算します。",
+                                        "発効日をまたぐ給与の計算を、外に任せるときの、給与計算代行会社の探し方の例です。")
+    return ""
 
 
 def _more(slug: str) -> str:
@@ -280,7 +292,7 @@ def raises_page(d: dict, k) -> dict:
 <li>引上げ額の大小の理由は、「動いた背景」に書いた範囲を超えては言えません。目安額や審議の内容は、厚生労働省の公表資料をご覧ください。</li>
 </ul>
 {analysis_context.SECTIONS["raises"](d, k)}
-{_more("raises")}
+{_employer("raises")}{_more("raises")}
 {_src(d, k)}"""
     return {"title": f"最低賃金の引上げ額の推移 年度別・都道府県別({rs[0]['label']}〜{last['label']})",
             "description": f"全国加重平均の最低賃金の引上げ額を、{rs[0]['label']}から{last['label']}まで年度別に比べました。最大は{peak['label']}の+{peak['avg_up']}円、{last['label']}は+{last['avg_up']}円です。",
@@ -319,7 +331,7 @@ def dates_page(d: dict, k) -> dict:
 <li>発効日が年度内(4月から翌年3月)に入らない日付は、一覧表の誤記とみて翌年に直しています。直したときは、その都道府県のページに注を付けています。</li>
 </ul>
 {analysis_context.SECTIONS["dates"](d, k)}
-{_more("dates")}
+{_employer("dates")}{_more("dates")}
 {_src(d, k)}"""
     return {"title": f"最低賃金の発効日の推移 どの県がいつ発効したか({ds[0]['label']}〜{last['label']})",
             "description": f"最低賃金の発効日が、年度ごとにどれだけ散らばったかを比べました。{last['label']}は発効日が10月1日までの都道府県が{last['by_oct1']}、最後は{names(last['last_rows'])}の{k.jp_date(last['last'].isoformat())}です。",
