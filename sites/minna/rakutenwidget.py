@@ -16,19 +16,25 @@ WIDGET_SRC = "https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js?20
 MAX_PER_PAGE = 3
 SKIP = {"404.html", "contact/thanks.html"}      # nothing to read there
 
-# the widget's own code (motion widget, page match, image + text, 300x250, rotation on, 2026-11-22)
-WIDGET_JS = (f'rakuten_design="slide";rakuten_affiliateId="{AFFILIATE_ID}";rakuten_items="ctsmatch";rakuten_genreId="0";rakuten_size="300x250";'
-             'rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";rakuten_recommend="on";'
-             'rakuten_ts="1795331642284";')
+# The widget picks its size from the screen width (2026-11-23, owner: show as many products as possible at once):
+#   760px and up = 728x200 (3 side by side), 480-759px = 468x160 (3 side by side), under 480px = 200x600 (3 stacked; the first one on a phone stays 300x250 so it does not fill the first screen).
+# Link type: the first and second = page match (ctsmatch), the last one (before the related section) = ranking.  The code is written with document.write, the form Rakuten's own tag uses.
+TS = "1795398997582"
+_JS = ("(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,m=\"%(m)s\",s=w>=760?\"728x200\":(w>=480?\"468x160\":\"%(small)s\");"
+       "var c='<scr'+'ipt type=\"text/javascript\">rakuten_design=\"slide\";rakuten_affiliateId=\"" + AFFILIATE_ID + "\";rakuten_items=\"'+m+'\";rakuten_genreId=\"0\";"
+       "rakuten_size=\"'+s+'\";rakuten_target=\"_blank\";rakuten_theme=\"gray\";rakuten_border=\"off\";rakuten_auto_mode=\"on\";rakuten_genre_title=\"off\";"
+       "rakuten_recommend=\"on\";rakuten_ts=\"" + TS + "\";</scr'+'ipt><scr'+'ipt type=\"text/javascript\" src=\"" + WIDGET_SRC + "\"></scr'+'ipt>';document.write(c);})();")
 
 MARK = 'class="rk-ad"'
 
 
-def widget_block(n: int) -> str:
-    label = "楽天市場のおすすめ" if n == 0 else "楽天市場でさがす"
+def widget_block(n: int, total: int = 3) -> str:
+    """n = position on the page (0 first), total = how many the page carries."""
+    last = total >= 2 and n == total - 1
+    js = _JS % {"m": "ranking" if last else "ctsmatch", "small": "300x250" if n == 0 else "200x600"}
+    label = "楽天市場のおすすめ" if n == 0 else ("楽天市場の人気ランキング" if last else "楽天市場でさがす")
     return (f'<aside class="rk-ad" aria-label="広告(楽天市場)"><p class="rk-pr"><b>PR</b><span>{label}</span></p>'
-            f'<div class="rk-box"><script type="text/javascript">{WIDGET_JS}</script>'
-            f'<script type="text/javascript" src="{WIDGET_SRC}"></script></div></aside>\n')
+            f'<div class="rk-box {"rk-a" if n == 0 else "rk-b"}"><script type="text/javascript">{js}</script></div></aside>' + chr(10))
 
 
 _TAG = re.compile(r"<!--.*?-->|<(/?)([a-zA-Z][a-zA-Z0-9]*)\b[^>]*>", re.S)
@@ -109,7 +115,7 @@ def add_widgets(html: str) -> str:
     out, last = [], 0
     for n, p in enumerate(pts):
         out.append(inner[last:p])
-        out.append(("\n" if inner[p - 1:p] != "\n" else "") + widget_block(n))
+        out.append(("\n" if inner[p - 1:p] != "\n" else "") + widget_block(n, len(pts)))
         last = p
     out.append(inner[last:])
     return html[:m.start(2)] + "".join(out) + html[m.end(2):]
