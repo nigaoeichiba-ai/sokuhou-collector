@@ -50,6 +50,7 @@ jobs:
         import re
         import tempfile
         import uuid
+        import time
 
         ROOT = Path(__file__).resolve().parent
 
@@ -67,10 +68,20 @@ jobs:
                     json.dump(value, stream, ensure_ascii=False, separators=(',', ':'))
                     stream.flush()
                     os.fsync(stream.fileno())
-                os.replace(temporary, path)
+                for attempt in range(20):
+                    try:
+                        os.replace(temporary, path)
+                        break
+                    except PermissionError:
+                        if attempt == 19:
+                            raise
+                        time.sleep(.05 * (attempt + 1))
             finally:
                 if os.path.exists(temporary):
-                    os.unlink(temporary)
+                    try:
+                        os.unlink(temporary)
+                    except PermissionError:
+                        pass  # A sync scanner may briefly hold the uncommitted temp file.
 
 
         class AcquisitionStore:
@@ -584,28 +595,117 @@ jobs:
 
         class QuietGate:
             """Give existing API jobs priority; unknown scheduler state means no call."""
-            def __init__(self):
+            # Reviewed source: only the yorokobu Fetch products step receives API
+            # credentials for acquisition. Gate merely checks their existence. Site is
+            # the first matrix dimension in this reviewed deployplan.py. New source
+            # cannot silently inherit this scheduling exception.
+            AUDITED_DEPLOY = {
+                '.github/workflows/deploy.yml': 'ffdbf8c62dc20d46aaa0702d982e116bbb42c6f8c73d458d328d9262a03d3735',
+                'sokuhou/deployplan.py': '5d11a802f581767742b2ef5bff1745ca7f853b68f871ecde6d787c2b32a148cc',
+            }
+            NON_API_SITES = {'saichin', 'kuma', 'minna', 'atomou', 'shiken', 'kurashi', 'trend', 'kaidoki'}
+            SELF_WORKFLOW = 'coordecatalog-acquisition.yml'
+
+            def __init__(self, *, request_json=None, repo_root='.', monotonic=None, wall_clock=None):
                 self.last = 0.0
                 self.idle = False
                 self.checks = 0
                 self.blocked = 0
+                self.request_json = request_json
+                self.repo_root = Path(repo_root)
+                self.clock = monotonic or time.monotonic
+                self.wall_clock = wall_clock or (lambda: datetime.now(timezone.utc))
+                self.audited_commits = {}
+
+            def _json(self, path):
+                if self.request_json:
+                    return self.request_json(path)
+                req = Request('https://api.github.com/repos/' + REPO + path,
+                              headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                                       'Accept': 'application/vnd.github+json', 'User-Agent': 'catalog-private-acquisition'})
+                with urlopen(req, timeout=15) as response:
+                    if int(response.headers.get('X-RateLimit-Remaining', '0')) < 100:
+                        raise ValueError('scheduler_budget_low')
+                    return json.load(response)
+
+            def _audited_deploy_source(self, run):
+                sha = run.get('head_sha', '')
+                if not isinstance(sha, str) or not re.fullmatch('[0-9a-f]{40}', sha):
+                    return False
+                if sha not in self.audited_commits:
+                    valid = True
+                    for path, expected in self.AUDITED_DEPLOY.items():
+                        data = self._json('/contents/' + path + '?ref=' + sha)
+                        if not isinstance(data, dict) or data.get('encoding') != 'base64':
+                            valid = False
+                            break
+                        content = base64.b64decode(data['content'], validate=False).replace(b'\r\n', b'\n')
+                        if hashlib.sha256(content).hexdigest() != expected:
+                            valid = False
+                            break
+                    self.audited_commits[sha] = valid
+                return self.audited_commits[sha]
+
+            def _deploy_busy(self, run, listing_status):
+                if listing_status == 'queued' or not self._audited_deploy_source(run):
+                    return True
+                run_id = run.get('id')
+                if type(run_id) is not int or run_id < 1:
+                    return True
+                data = self._json('/actions/runs/' + str(run_id) + '/jobs?filter=latest&per_page=100')
+                jobs = data.get('jobs') if isinstance(data, dict) else None
+                count = data.get('total_count') if isinstance(data, dict) else None
+                if not isinstance(jobs, list) or type(count) is not int or count != len(jobs) or count > 100:
+                    return True
+                plans = [job for job in jobs if job.get('name') == 'plan']
+                if len(plans) != 1 or plans[0].get('status') != 'completed':
+                    return True
+                # Before matrix expansion settles, a missing yorokobu job is not proof
+                # that it will never be created. Unknown/future scope stays blocked.
+                completed_at = plans[0].get('completed_at')
+                try:
+                    completed = datetime.fromisoformat(completed_at.replace('Z', '+00:00'))
+                    if completed.tzinfo is None or (self.wall_clock() - completed).total_seconds() < 10:
+                        return True
+                except (AttributeError, TypeError, ValueError):
+                    return True
+                matrix = [job for job in jobs if job.get('name') != 'plan']
+                if not matrix:
+                    return True
+                if plans[0].get('conclusion') != 'success':
+                    return any(job.get('status') != 'completed' for job in matrix)
+                for job in matrix:
+                    if job.get('status') == 'completed':
+                        continue
+                    name = job.get('name', '')
+                    match = re.match(r'^deploy \(([a-z][a-z0-9]*)(?:,|\))', name) if isinstance(name, str) else None
+                    if not match:
+                        return True
+                    site = match[1]
+                    if site in self.NON_API_SITES:
+                        continue
+                    if site != 'yorokobu':
+                        return True
+                    steps = job.get('steps')
+                    if not isinstance(steps, list):
+                        return True
+                    fetch = [step for step in steps if isinstance(step.get('name'), str) and step['name'].startswith('Fetch products (')]
+                    if len(fetch) != 1 or fetch[0].get('status') != 'completed':
+                        return True
+                    # A skipped or finished API step cannot later start in this job.
+                    # A rerun is a new job/run snapshot and is checked afresh.
+                return False
 
             def __call__(self):
-                if time.monotonic() - self.last < 1:
+                if self.checks and self.clock() - self.last < 1:
                     return self.idle
-                self.last = time.monotonic()
+                self.last = self.clock()
                 self.checks += 1
                 try:
                     own = int(os.environ['GITHUB_RUN_ID'])
                     # Include every known API consumer. Unknown state never grants idle.
                     for status in ('in_progress', 'queued'):
-                        req = Request('https://api.github.com/repos/' + REPO + '/actions/runs?status=' + status + '&per_page=100',
-                                      headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
-                                               'Accept': 'application/vnd.github+json', 'User-Agent': 'catalog-private-acquisition'})
-                        with urlopen(req, timeout=15) as response:
-                            if int(response.headers.get('X-RateLimit-Remaining', '0')) < 100:
-                                raise ValueError('scheduler_budget_low')
-                            data = json.load(response)
+                        data = self._json('/actions/runs?status=' + status + '&per_page=100')
                         if data.get('total_count', 1000) > 100:
                             raise ValueError('scheduler_list_incomplete')
                         for run in data.get('workflow_runs', []):
@@ -614,11 +714,23 @@ jobs:
                             path = run.get('path', '')
                             # The set is computed from the existing repository, read-only.
                             filename = path.split('@')[0].rsplit('/', 1)[-1]
-                            source = Path('.github/workflows') / filename
+                            if filename == self.SELF_WORKFLOW:
+                                if status == 'queued':
+                                    continue  # its independent workflow concurrency owns this queue
+                                self.blocked += 1
+                                self.idle = False
+                                return False
+                            if filename == 'deploy.yml':
+                                if self._deploy_busy(run, status):
+                                    self.blocked += 1
+                                    self.idle = False
+                                    return False
+                                continue
+                            source = self.repo_root / '.github/workflows' / filename
                             if not source.is_file():
                                 raise ValueError('unknown_running_workflow')
                             text = source.read_text(encoding='utf-8')
-                            if 'RAKUTEN_APP_ID' in text or filename in ('deploy.yml', 'mall-refresh.yml', 'daily.yml', 'frequent.yml'):
+                            if 'RAKUTEN_APP_ID' in text or filename in ('mall-refresh.yml', 'daily.yml', 'frequent.yml'):
                                 self.blocked += 1
                                 self.idle = False
                                 return False
