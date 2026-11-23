@@ -38,6 +38,24 @@ class GenericTextTest(unittest.TestCase):
         self.assertFalse(ok("ラベル ヘアアイロン 32mm サロン"))
         self.assertFalse(ok("ラベル 300ml"))
 
+    def test_every_idea_with_the_loose_word_label_has_a_not_list(self):
+        """「ラベル」 alone matches a drink bottle, a hair iron ... (seed-saving-garden, shared-fridge-labels, 2026-11-23): an idea that lists it takes a `not` list."""
+        for t in load("themes.json")["themes"]:
+            for i in t["ideas"]:
+                if "ラベル" in i["must"]:
+                    self.assertTrue(i.get("not"), t["slug"] + " / " + i["label"])
+                    for w in ("ml", "ビール", "ヘア"):
+                        self.assertIn(w, i["not"], t["slug"] + " / " + i["label"])
+
+    def test_goshuin_theme_has_no_confection_idea(self):
+        t = next(x for x in load("themes.json")["themes"] if x["slug"] == "goshuin-walk-kit")
+        self.assertNotIn("和三盆", [i["label"] for i in t["ideas"]])
+        for i in t["ideas"]:
+            self.assertNotEqual(i["type"], "食べもの・飲みもの", i["label"])
+        idea = next(i for i in t["ideas"] if i["label"] == "挟み紙")
+        self.assertTrue(relevance.fits_idea("御朱印用 挟み紙 和紙 50枚", idea["must"], idea["not"]))
+        self.assertFalse(relevance.fits_idea("和三盆 干菓子 和紙 小箱 28粒", idea["must"], idea["not"]))
+
 
 if __name__ == "__main__":
     unittest.main()
