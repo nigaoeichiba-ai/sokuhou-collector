@@ -712,7 +712,7 @@ class CapturesPagesTest(unittest.TestCase):
 
     def test_feed_announces_the_update_by_the_ministrys_date(self):
         feed = self.read("feed.xml")
-        self.assertIn("クマの許可捕獲数を、令和8年7月末まで更新しました(環境省)", feed)
+        self.assertIn("クマの許可捕獲数を、令和8年7月末まで更新しました", feed)
         self.assertIn("<updated>2026-09-09T00:00:00+09:00</updated>", feed)
 
     def test_the_site_checker_passes(self):

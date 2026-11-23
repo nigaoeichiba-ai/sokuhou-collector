@@ -519,7 +519,7 @@ def deaths_list_page(d: dict, cfg: dict, preview: bool) -> str:
     total_cases = cases[cur] + cases[done]
     total_people = people[cur] + people[done]
     body = f"""{crumbs([("全国", "/"), ("死亡事故の一覧", None)])}
-<h1>熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}(環境省)</h1>
+<h1>熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}</h1>
 <p class="lead">環境省が公表している死亡事故の一覧は、{fy_label(done)}が{n(cases[done])}件({n(people[done])}人)、{fy_label(cur)}が{n(cases[cur])}件({n(people[cur])}人)で、合わせて{n(total_cases)}件({n(total_people)}人)です。日付の新しい順に、場所とあわせて並べました。件数が多い道府県は、{top_text}の順です。</p>
 <div class="stats">{stat(fy_label(cur), f"{n(cases[cur])}件", f"{n(people[cur])}人・{jp_date(d['fatal'][cur]['as_of'])}現在", True)}{stat(fy_label(done), f"{n(cases[done])}件", f"{n(people[done])}人・{jp_date(d['fatal'][done]['as_of'])}現在")}</div>
 <h2>死亡事故の一覧(日付の新しい順)</h2>
@@ -531,7 +531,7 @@ def deaths_list_page(d: dict, cfg: dict, preview: bool) -> str:
 {table(["道府県", fy_label(done), fy_label(cur), "合計"], pref_rows)}
 <p>年度ごとの死亡者数の合計は<a href="/ranking/deaths/">死亡者数の都道府県別ランキング</a>(平成20年度から)に、緊急銃猟の実施状況は<a href="/emergency/">緊急銃猟のページ</a>で確認できます。道府県ごとの出没と人身被害は、表の道府県名から各ページへ進めます。山に入る前は<a href="/guide/prepare/">山に入る前の備え</a>を、出会ったときは<a href="/guide/encounter/">出会ったときの行動</a>をお読みください。</p>
 <p class="notice">{freshness(d)}</p>"""
-    return page(cfg, preview, path="/deaths/", title=f"熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}の日付と場所(環境省)",
+    return page(cfg, preview, path="/deaths/", title=f"熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}の日付と場所",
                 description=f"熊に襲われた死亡事故の一覧です。{fy_label(done)}{n(cases[done])}件、{fy_label(cur)}{n(cases[cur])}件の日付・場所・人数を、環境省の資料から新しい順に並べ、月別・道府県別に集計しました。", body=body)
 
 
@@ -638,7 +638,7 @@ def no_bear_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 <p>{esc(r['name'])}の外で山に入るときは、<a href="/guide/prepare/">山に入る前の備え</a>と、<a href="/guide/encounter/">出会ったときの行動</a>を、お読みください。ほかの都道府県は、<a href="/ranking/sightings/">出没件数のランキング</a>で確認できます。</p>
 {caution_box()}
 <p class="notice">{freshness(d)}</p>"""
-    return page(cfg, preview, path=f"/{r['slug']}/", title=f"{r['name']}にクマはいる?生息していないとされる根拠(環境省)と、近くの都県の出没",
+    return page(cfg, preview, path=f"/{r['slug']}/", title=f"{r['name']}にクマはいる?生息していないとされる根拠と、近くの都県の出没",
                 description=f"{r['name']}は、環境省の資料で、ツキノワグマの生息地から除かれている県です。出没件数の表に数値がない理由と、近くの都県の出没件数をまとめています。", body=body)
 
 
@@ -760,9 +760,9 @@ def feed_xml(d: dict, cfg: dict) -> str:
     emg = d["emergency"][cur]
     nat = d["national"]
     entries = [
-        (d["sight_updated"], f"sightings-{d['sight_updated']}", f"クマの出没件数を、{fy_label(cur)}の{d['latest_month']}月分まで更新しました(環境省)",
+        (d["sight_updated"], f"sightings-{d['sight_updated']}", f"クマの出没件数を、{fy_label(cur)}の{d['latest_month']}月分まで更新しました",
          f"{fy_label(cur)}の{month_range(d)}は、全国で{n(d['nat_ytd'][cur])}件です(前年度の同じ期間は{n(d['nat_ytd'][done])}件)。", "/trend/"),
-        (d["inj_updated"], f"injuries-{d['inj_updated']}", f"クマによる人身被害を、{d['inj_as_of'].replace('R08年', '令和8年')}まで更新しました(環境省)",
+        (d["inj_updated"], f"injuries-{d['inj_updated']}", f"クマによる人身被害を、{d['inj_as_of'].replace('R08年', '令和8年')}まで更新しました",
          f"{fy_label(cur)}は、{n(d['inj']['national'][cur][0])}件・{n(d['inj']['national'][cur][1])}人(うち死亡{n(d['inj']['national'][cur][2])}人)です。", "/ranking/injuries/"),
         (emg["updated"], f"emergency-{emg['updated']}", f"クマの緊急銃猟の実施状況を更新しました({fy_label(cur)}は{n(len(emg['cases']))}件)",
          f"最新は、{md(emg['cases'][-1]['date'])}の{emg['cases'][-1]['prefecture']}{emg['cases'][-1]['place']}です。", "/emergency/"),
@@ -772,7 +772,7 @@ def feed_xml(d: dict, cfg: dict) -> str:
                         "環境省のページに載っている、日付つきのお知らせです。", f"/news/#n-{x['date']}-{i}"))
     c = d.get("captures")
     if c:
-        entries.append((c["updated"], f"captures-{c['updated']}", f"クマの許可捕獲数を、{c['as_of_text']}まで更新しました(環境省)",
+        entries.append((c["updated"], f"captures-{c['updated']}", f"クマの許可捕獲数を、{c['as_of_text']}まで更新しました",
                         f"{fy_label(c['cur'])}は、{c['as_of_text']}までで全国{n(c['national'][c['cur']][0])}頭です(暫定値)。", "/ranking/captures/"))
     entries.sort(reverse=True)
     body = "".join(
