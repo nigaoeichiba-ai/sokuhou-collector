@@ -25,3 +25,9 @@ if __name__ == "__main__":
           ["trend-nozomi-zensekishitei", "trend-yakou-shinkansen-amaneseru", "trend-jal-timesale-2026"], cat,
           vc_url="")
     print("added", slug)
+    # the page is made and published on 11/24 (add() writes 11/23 as its default)
+    p = os.path.join(m.CONTENT, slug + ".json")
+    d = json.load(open(p, encoding="utf-8"))
+    d["published"] = d["updated"] = "2026-11-24"
+    d["data_basis"] = "2026年11月24日現在"
+    open(p, "w", encoding="utf-8", newline="").write(json.dumps(d, ensure_ascii=False, indent=1) + "\n")
