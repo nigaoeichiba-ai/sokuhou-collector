@@ -17,6 +17,13 @@ const AGAROOT={
  takken:{label:'アガルートアカデミー 宅建士試験の講座',code:'61Z82',px:'www16',text:'アガルートアカデミーの宅建士試験の講座'},
  sharoshi:{label:'アガルートアカデミー 社労士試験の講座',code:'60H7M',px:'www18',text:'アガルートアカデミーの社労士試験の講座',news:'2027年（令和9年度）に受ける方向けの講座として、「社労士試験 速習カリキュラム」が出ています。料金は税込217,800円の例です（2026年11月18日時点）。'}
 };
+// Itojuku (A8, program s00000011467001, approved 2026-11-23): text links of the A8 media console (site 資格・試験への道); a8mat = <this prefix> + the code of the material
+const A8_ITO='4BGJFT+ZQ78Y+2GHA+';
+const ITO={
+ sogo:{label:'伊藤塾 | 法律資格・公務員試験の講座',code:'5YJRM',px:'www16',text:'伊藤塾の講座一覧'},
+ gyosei:{label:'伊藤塾 | 行政書士試験の講座',code:'60H7M',px:'www19',text:'伊藤塾の行政書士試験の講座'},
+ komuin:{label:'伊藤塾 | 公務員試験の講座',code:'5ZEMQ',px:'www11',text:'伊藤塾の公務員試験の講座'}
+};
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export const rakutenUrl=word=>`https://hb.afl.rakuten.co.jp/hgc/${RAKUTEN_ID}/?pc=${encodeURIComponent('https://search.rakuten.co.jp/search/mall/'+encodeURIComponent(word)+'/')}`;
 export const amazonUrl=word=>`https://www.amazon.co.jp/s?k=${encodeURIComponent(word)}&tag=${AMAZON_TAG}`;
@@ -24,9 +31,9 @@ const REL='rel="nofollow sponsored noopener" target="_blank"';
 // group -> {name (in the heading), word (the search words), course (A8 course link: only for the exams a course page of the partner covers)}
 export const GROUPS={
  takken:{name:'宅建',word:'宅建 参考書',course:true,agaroot:'takken'},
- gyosei:{name:'行政書士',word:'行政書士 参考書',course:true,agaroot:'gyosei'},
- sharoshi:{name:'社会保険労務士',word:'社会保険労務士 テキスト',course:true,agaroot:'sharoshi'},
- shindanshi:{name:'中小企業診断士',word:'中小企業診断士 テキスト',course:true,agaroot:'sogo'},
+ gyosei:{name:'行政書士',word:'行政書士 参考書',course:true,agaroot:'gyosei',ito:'gyosei'},
+ sharoshi:{name:'社会保険労務士',word:'社会保険労務士 テキスト',course:true,agaroot:'sharoshi',ito:'sogo'},
+ shindanshi:{name:'中小企業診断士',word:'中小企業診断士 テキスト',course:true,agaroot:'sogo',ito:'sogo'},
  kaigo:{name:'介護福祉士',word:'介護福祉士 参考書'},
  nurse:{name:'看護師国家試験',word:'看護師国家試験 参考書'},
  kanri:{name:'管理業務主任者',word:'管理業務主任者 テキスト'},
@@ -36,7 +43,7 @@ export const GROUPS={
  eiken:{name:'英検',word:'英検 過去問'},
  toeic:{name:'TOEIC',word:'TOEIC 公式問題集'},
  kanken:{name:'漢検',word:'漢検 問題集'},
- komuin:{name:'公務員試験',word:'公務員試験 参考書',agaroot:'sogo'},
+ komuin:{name:'公務員試験',word:'公務員試験 参考書',agaroot:'sogo',ito:'komuin'},
  kyotsu:{name:'共通テスト',word:'共通テスト 過去問'},
  itpassport:{name:'ITパスポート',word:'ITパスポート 参考書'},
  fe:{name:'基本情報技術者',word:'基本情報技術者 参考書'},
@@ -66,6 +73,8 @@ export function affiliateSection(group,idPrefix='pr'){
  const A=g.link==='fp'?A8_FP:A8_COURSE;
  const course=g.course?`<p>${g.name}の講座をオンラインで探している方は、資格スクエアの講座ページを見てみてください。講座の内容や料金は、申し込む前に運営会社のページで確かめておきましょう。</p><p><a href="${A.href}" ${REL}>${A.label}</a><img border="0" width="1" height="1" src="${A.pixel}" alt=""></p>`:'';
  const ag=g.agaroot?AGAROOT[g.agaroot]:null;
+ const it=g.ito?ITO[g.ito]:null;
+ const itoHtml=it?`<p>講座を比べたい方は、${it.text}も選べます。法律資格と公務員試験を中心にしたスクールです。内容や料金は、申し込む前に運営会社のページで確かめておきましょう。</p><p><a href="https://px.a8.net/svt/ejp?a8mat=${A8_ITO}${it.code}" ${REL}>${it.label}</a><img border="0" width="1" height="1" src="https://${it.px}.a8.net/0.gif?a8mat=${A8_ITO}${it.code}" alt=""></p>`:'';
  const agaroot=ag?`<p>講座を比べたい方は、${ag.text}もあります。動画の講義とオリジナルのテキストで進める通信講座で、質問できるサービスも使えます。${ag.news?ag.news:''}内容や料金は、申し込む前に運営会社のページで確かめておきましょう。</p><p><a href="https://px.a8.net/svt/ejp?a8mat=${A8_AGAROOT}${ag.code}" ${REL}>${ag.label}</a><img border="0" width="1" height="1" src="https://${ag.px}.a8.net/0.gif?a8mat=${A8_AGAROOT}${ag.code}" alt=""></p>`:'';
- return `<section class="ed-pr" aria-labelledby="${idPrefix}-title"><div class="ed-section-title"><div><span class="ed-kicker">PR・広告</span><h2 id="${idPrefix}-title">【PR】${esc(g.name)}の${g.course||ag?'勉強を始めるなら':'参考書・問題集を探すなら'}</h2></div></div><p class="small-note">この項目には、広告（PR）が含まれます。リンク先の販売ページで購入されると、当サイトに紹介料が入ることがあります。</p>${course}${agaroot}${g.course||ag?'<h3>参考書・問題集を探すなら</h3>':''}<p>楽天市場では、<a href="${rakutenUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p><p>Amazonでも、<a href="${amazonUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p></section>`;
+ return `<section class="ed-pr" aria-labelledby="${idPrefix}-title"><div class="ed-section-title"><div><span class="ed-kicker">PR・広告</span><h2 id="${idPrefix}-title">【PR】${esc(g.name)}の${g.course||ag||it?'勉強を始めるなら':'参考書・問題集を探すなら'}</h2></div></div><p class="small-note">この項目には、広告（PR）が含まれます。リンク先の販売ページで購入されると、当サイトに紹介料が入ることがあります。</p>${course}${agaroot}${itoHtml}${g.course||ag||it?'<h3>参考書・問題集を探すなら</h3>':''}<p>楽天市場では、<a href="${rakutenUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p><p>Amazonでも、<a href="${amazonUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p></section>`;
 }
