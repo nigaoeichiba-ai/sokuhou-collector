@@ -344,10 +344,10 @@ h2::before { background:linear-gradient(var(--accent),#10b981); width:8px; borde
 .chart .bar { fill:var(--brand); opacity:.75; }
 .chart .bar.hot { opacity:1; }
 
-/* 楽天モーションウィジェット(300x250)。PR を真上に大きめに。固定・ポップアップなし。 */
-.rk-ad { margin:28px auto; max-width:340px; text-align:center; }
+/* 楽天モーションウィジェット(複数商品が並ぶ型。728x200 / 468x160 / 200x600、スマホの1つ目だけ 300x250)。PR を真上に大きめに。固定・ポップアップなし。 */
+.rk-ad { margin:28px auto; max-width:760px; text-align:center; }
 .rk-ad .rk-pr { margin:0 0 6px; font-size:1.05rem; font-weight:700; letter-spacing:.12em; color:var(--ink); }
-.rk-box { height:250px; overflow:hidden; display:flex; justify-content:center; }
-.rk-in { flex:none; width:300px; height:250px; }
-@media (max-width:339px) { .rk-box { height:213px; } .rk-in { transform:scale(.85); transform-origin:top center; } }
+.rk-box { display:flex; justify-content:center; overflow:hidden; max-width:100%; }
+.rk-in { flex:none; }
+@media (max-width:339px) { .rk-300x250 { transform:scale(.85); transform-origin:top center; margin-bottom:-37px; } }
 .jobs-p { margin:0 0 10px; line-height:1.9; }
