@@ -11,17 +11,17 @@ MARK = 'class="rk-ad"'
 MAX_PER_PAGE = 3
 MIDDLE_MIN_H2 = 6
 
-# 2026-11-23(オーナー指示): 複数商品が一度に並ぶ型。画面幅で切り替える(760px以上=728x200 横3枠、480〜759=468x160 横3枠、480未満=200x600 縦3枠)。
+# 2026-11-23(オーナー指示): 複数商品が一度に並ぶ型。画面幅で切り替える(800px以上=728x200 横3枠、540〜799=468x160 横3枠、540未満=200x600 縦3枠)。
 # スマホの1つ目(リード直後)だけ、最初の画面を埋めないよう300x250のまま。リンクタイプは、最後=ranking、ほか=ctsmatch。
 # 表示する型のスクリプトだけを document.write で出す(隠した型は読み込まない)。
-_JS = (r"""(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,m="%(m)s",s=w>=760?"728x200":(w>=480?"468x160":"%(small)s");"""
+_JS = (r"""(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,m="%(m)s",s=w>=800?"728x200":(w>=540?"468x160":"%(small)s");"""
        r"""var c='<scr'+'ipt type="text/javascript">rakuten_design="slide";rakuten_affiliateId="%(id)s";rakuten_items="'+m+'";rakuten_genreId="0";rakuten_size="'+s+'";"""
        r"""rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";rakuten_recommend="on";rakuten_ts="%(ts)s";</scr'+'ipt>"""
        r"""<scr'+'ipt type="text/javascript" src="https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js?20230106"></scr'+'ipt>';document.write(c);})();""")
 
 _STYLE = ('<style>.rk-ad{margin:28px auto;max-width:728px;text-align:center}.rk-ad .rk-pr{margin:0 0 6px;font-size:1.05rem;font-weight:700;letter-spacing:.12em;color:#444}'
           '.rk-box{display:flex;justify-content:center;overflow:hidden;height:600px}.rk-box.rk-first{height:250px}'
-          '@media(min-width:480px){.rk-box,.rk-box.rk-first{height:160px}}@media(min-width:760px){.rk-box,.rk-box.rk-first{height:200px}}'
+          '@media(min-width:540px){.rk-box,.rk-box.rk-first{height:160px}}@media(min-width:800px){.rk-box,.rk-box.rk-first{height:200px}}'
           '@media(max-width:339px){.rk-box.rk-first>div{transform:scale(.85);transform-origin:top center}.rk-box.rk-first{height:213px}}</style>')
 
 

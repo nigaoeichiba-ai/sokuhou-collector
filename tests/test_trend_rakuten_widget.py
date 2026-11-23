@@ -77,6 +77,11 @@ class WidgetTemplate(unittest.TestCase):
         self.assertIn("rk-first", blocks[0])
         self.assertNotIn("rk-first", blocks[1])
         self.assertNotIn("itemCode", t)
+        for b in blocks:                                                           # 2026-11-23: 本番の実測で、728は800px未満・468は540px未満の本文の枠(内寸)に収まらなかった
+            self.assertIn("w>=800?", b)
+            self.assertIn("w>=540?", b)
+        self.assertIn("min-width:800px", t)
+        self.assertIn("min-width:540px", t)
 
     def test_negative_single_slide_form_is_detected(self):
         self.assertTrue(multi_problems(rw.add("x/index.html", ARTICLE).replace("728x200", "300x250")))
