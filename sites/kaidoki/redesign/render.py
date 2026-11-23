@@ -605,11 +605,11 @@ def genre_extra(ctx: "Ctx", gid: str) -> str:
 
 # ------------------------------------------------------------------ the calendars (schedule.py has the data and the month grid)
 MALL_CAL_TEXT = {
-    "rakuten": ("楽天市場のセールカレンダー", "楽天市場の確定したセール日程と、スーパーSALE・ブラックフライデー・初売りの例年の時期の予想、5と0のつく日・ワンダフルデーの定例を、月ごとに見られます。",
+    "rakuten": ("楽天市場のセールカレンダー|お買い物マラソン・スーパーSALEの日程", "楽天市場の確定したセール日程と、スーパーSALE・ブラックフライデー・初売りの例年の時期の予想、5と0のつく日・ワンダフルデーの定例を、月ごとに見られます。",
                 "スーパーSALE、お買い物マラソン、ブラックフライデー、初売りと、5と0のつく日、ワンダフルデー。楽天市場の日程だけを並べています。"),
-    "amazon": ("Amazonのセールカレンダー", "Amazonのプライムデー・プライム感謝祭・ブラックフライデー・初売りなどの確定した日程と、例年の時期の予想を、月ごとに見られます。",
+    "amazon": ("Amazonのセールカレンダー|プライムデー・ブラックフライデーの日程", "Amazonのプライムデー・プライム感謝祭・ブラックフライデー・初売りなどの確定した日程と、例年の時期の予想を、月ごとに見られます。",
                "プライムデー、プライム感謝祭、ブラックフライデー、新生活セール、初売り。Amazonの日程だけを並べています。"),
-    "yahoo": ("Yahoo!ショッピングのセールカレンダー", "Yahoo!ショッピングの超PayPay祭・ブラックフライデーなどの確定した日程と、5のつく日・ファーストデイ・感謝デーなどの定例を、月ごとに見られます。",
+    "yahoo": ("Yahoo!ショッピングのセールカレンダー|超PayPay祭・5のつく日の日程", "Yahoo!ショッピングの超PayPay祭・ブラックフライデーなどの確定した日程と、5のつく日・ファーストデイ・感謝デーなどの定例を、月ごとに見られます。",
               "超PayPay祭、ブラックフライデー、5のつく日、ファーストデイ、ヤフショ感謝デー。Yahoo!ショッピングの日程だけを並べています。"),
 }
 
@@ -628,7 +628,7 @@ def cal_howto() -> str:
 
 
 def calendar_page_body(ctx: "Ctx") -> str:
-    cards = article_cards([{"href": schedule.CAL_PATH[m], "title": MALL_CAL_TEXT[m][0], "description": MALL_CAL_TEXT[m][2], "label": "モール別"} for m in schedule.MALLS])
+    cards = article_cards([{"href": schedule.CAL_PATH[m], "title": MALL_CAL_TEXT[m][0].split("|")[0], "description": MALL_CAL_TEXT[m][2], "label": "モール別"} for m in schedule.MALLS])
     return ('<div class="wrap page-content cal-wrap">' + notice("日付ごとに、楽天・Amazon・Yahoo!ショッピングと、そのほかの大手EC・ブランド直販EC・WEBサービスのセールを、1つのカレンダーに並べています。赤い●は確定、破線の◇は例年の予想です。") + cal_howto()
             + '<section class="content-block"><h2>これから開かれる企画</h2>' + schedule.upcoming_table(ctx.sched, None, ctx.at.date()) + "</section>"
             + '<section class="content-block"><h2>全ショップの月間カレンダー</h2>' + cal_block(ctx, None) + "</section>"
@@ -837,11 +837,11 @@ def apply(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
         head = re.sub(r'(<link rel="canonical" href=")[^"]*(">)', lambda m, u=url: m.group(1) + e(u) + m.group(2), head)
         head = re.sub(r'(<meta property="og:url" content=")[^"]*(">)', lambda m, u=url: m.group(1) + e(u) + m.group(2), head)
         head = re.sub(r'<script type="application/ld\+json">.*?</script>\n?', "", head, flags=re.S)
-        trail = [("トップ", "/"), ("セールカレンダー", "/calendar/"), (title, None)] if path.startswith("/calendar/") else [("トップ", "/"), (title, None)]
+        trail = [("トップ", "/"), ("セールカレンダー", "/calendar/"), (title.split("|")[0], None)] if path.startswith("/calendar/") else [("トップ", "/"), (title.split("|")[0], None)]
         ld = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
             {"@type": "ListItem", "position": i + 1, "name": n, **({"item": cfg["site_url"].rstrip("/") + h} if h else {})} for i, (n, h) in enumerate(trail)]}
         head += '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
-        out[rel] = wrap(ctx, path, head, crumbs_html(trail), banner(label, e(title), desc), body_fn(ctx), spec.get("updated", ""), "kit")
+        out[rel] = wrap(ctx, path, head, crumbs_html(trail), banner(label, e(title.split("|")[0]), desc), body_fn(ctx), spec.get("updated", ""), "kit")
     for gid, g in genres.GENRES.items():
         if gid == "electronics":
             continue
