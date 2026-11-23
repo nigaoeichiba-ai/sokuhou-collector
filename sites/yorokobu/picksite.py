@@ -139,7 +139,8 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
                                          for i, (eid, e) in enumerate(shown, 1)]}, ensure_ascii=False)
     ld2 = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": h1, "datePublished": iso, "dateModified": iso, "inLanguage": "ja",
                       "author": {"@type": "Organization", "name": cfg["site_name"]}}, ensure_ascii=False)
-    body = f"""{B.head_band("yellow", "", esc(h1), day["lede"], single=True)}
+    lede = day["lede"].replace("20点", f"{total}点")   # the day's text says 20; a product the shop no longer lists is left out, so show the real count
+    body = f"""{B.head_band("yellow", "", esc(h1), lede, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", "/picks/"), (date_label(iso), None)])}</div>
 {B.pr_quiet(cfg)}
 <p class="pick-theme"><span class="eyebrow">Today's theme</span>{esc(day["theme"])}</p>
@@ -155,7 +156,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
 {f"<!-- left out of this page: {' '.join(left_out)} (not-found: the API did not return the item today; unavailable: it reports it as not for sale) -->" if left_out else ""}
 {nav}
 <script type="application/ld+json">{ld}</script><script type="application/ld+json">{ld2}</script>"""
-    return B.page(cfg, preview, path=day_path(iso), title=f"{h1}|{day['theme']} | {cfg['site_name']}", description=day["lede"][:110], body=body, og_image=B.og_for(f"picks/{iso}"))
+    return B.page(cfg, preview, path=day_path(iso), title=f"{h1}|{day['theme']} | {cfg['site_name']}", description=lede[:110], body=body, og_image=B.og_for(f"picks/{iso}"))
 
 
 def hub_page(d: dict, cfg: dict, preview: bool, days: list[dict]) -> str:
