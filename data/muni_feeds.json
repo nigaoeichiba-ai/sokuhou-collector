@@ -234,9 +234,15 @@
    "items": [
     {
      "date": "2026-11-23",
-     "link": "http://www.city.hanno.lg.jp/iryo_kenko_fukushi/iryo_kenko/kokorotokaradanokenkozukuri/1/sugoashi-event/8432.html",
+     "link": "https://www.city.hanno.lg.jp/akebono/oshirase/10744.html",
      "summary": "",
-     "title": "スゴ足イベント 2027年1月13日(水曜日)高麗神社へ初詣ウオーク"
+     "title": "メタセコイア(アケボノスギ)紅葉情報"
+    },
+    {
+     "date": "2026-11-23",
+     "link": "https://www.city.hanno.lg.jp/kanko_bunka_sports/kankojoho/12467.html",
+     "summary": "",
+     "title": "メタセコイア(アケボノスギ)紅葉情報"
     },
     {
      "date": "2026-11-23",
@@ -246,21 +252,15 @@
     },
     {
      "date": "2026-11-23",
-     "link": "https://www.city.hanno.lg.jp/soshikikarasagasu/kenkohukusibu/hokencenter/11102.html",
+     "link": "http://www.city.hanno.lg.jp/iryo_kenko_fukushi/iryo_kenko/kokorotokaradanokenkozukuri/1/sugoashi-event/8432.html",
      "summary": "",
-     "title": "スゴ足イベント 2027年1月19日(火曜日)、30日(土曜日)スゴ足のんびりウオーク1月"
+     "title": "スゴ足イベント 2027年1月13日(水曜日)高麗神社へ初詣ウオーク"
     },
     {
      "date": "2026-11-23",
-     "link": "https://www.city.hanno.lg.jp/iryo_kenko_fukushi/iryo_kenko/kokorotokaradanokenkozukuri/1/sugoashi-event/11307.html",
+     "link": "https://www.city.hanno.lg.jp/soshikikarasagasu/kenkohukusibu/hokencenter/11102.html",
      "summary": "",
      "title": "スゴ足イベント 2027年1月19日(火曜日)、30日(土曜日)スゴ足のんびりウオーク1月"
-    },
-    {
-     "date": "2026-11-22",
-     "link": "https://www.city.hanno.lg.jp/kanko_bunka_sports/kankojoho/12467.html",
-     "summary": "",
-     "title": "メタセコイア(アケボノスギ)紅葉情報"
     }
    ],
    "name": "飯能市",
@@ -382,6 +382,18 @@
    "id": "d2f7a64002",
    "items": [
     {
+     "date": "2026-11-24",
+     "link": "https://www.city.joetsu.niigata.jp/soshiki/bunka/marubun-event-information.html",
+     "summary": "上越市の文化・芸術に関する情報を紹介します。",
+     "title": "上越まるごと文化祭 文化・芸術情報発信サイト"
+    },
+    {
+     "date": "2026-11-23",
+     "link": "https://www.city.joetsu.niigata.jp/site/auren-plaza/gyouziyotei.html",
+     "summary": "高田城址公園オーレンプラザで行われる催し",
+     "title": "高田城址公園オーレンプラザ行事予定"
+    },
+    {
      "date": "2026-11-23",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/shakaikyouiku/shimingeinousai6.html",
      "summary": "第55回記念上越市民芸能祭「越後よさこいフェスティバル2026」を開催します。",
@@ -424,12 +436,6 @@
      "title": "男女共同参画推進センター講座"
     },
     {
-     "date": "2026-11-15",
-     "link": "https://www.city.joetsu.niigata.jp/site/auren-plaza/gyouziyotei.html",
-     "summary": "高田城址公園オーレンプラザで行われる催し",
-     "title": "高田城址公園オーレンプラザ行事予定"
-    },
-    {
      "date": "2026-11-12",
      "link": "https://www.city.joetsu.niigata.jp/soshiki/jinken/20261212.html",
      "summary": "県民一人一人が日常生活の様々な問題を人権という観点でとらえ直し、人権尊重の意識を高めていく契機として、映画上映会を開催します。また、上映後には、ゲストによる特別講演会も開催します。",
@@ -446,24 +452,6 @@
      "link": "https://www.city.joetsu.niigata.jp/soshiki/shakaikyouiku/shimingeinousai5.html",
      "summary": "第55回記念上越市民芸能祭「ハワイアンフラ フェスティバル2026」を開催します。",
      "title": "第55回記念上越市民芸能祭「ハワイアンフラ フェスティバル2026」"
-    },
-    {
-     "date": "2026-11-10",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/sanritu/kitamaebune-kyoudou.html",
-     "summary": "佐渡市及び上越市の周遊観光と小木直江津航路の利用促進を図るため、両市で実施している「日本遺産北前船カードラリー」の共同キャンペーンを実施しています。ぜひ、両市コンプリートカードを入手して、キャンペーンにお申し込みください。",
-     "title": "日本遺産北前船カードラリー 上越市・佐渡市共同キャンペーン"
-    },
-    {
-     "date": "2026-11-10",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/nougyoushinkou/cyokubaizyomatsuri.html",
-     "summary": "参加直売所のスタンプを集めて応募すると、参加直売所で使える商品券が当たる「秋のミニ上越直売所祭り」を開催します。",
-     "title": "秋のミニ上越直売所祭りを開催します"
-    },
-    {
-     "date": "2026-11-10",
-     "link": "https://www.city.joetsu.niigata.jp/site/museum/takada-castle-info.html",
-     "summary": "高田城三重櫓のイベント等お知らせ",
-     "title": "高田城三重櫓のライトアップと冬季開館"
     }
    ],
    "name": "上越市",
@@ -559,12 +547,6 @@
      "link": "https://www.city.otsu.lg.jp/d_news/77544.html",
      "summary": "",
      "title": "カード交付推進室 不正アクセスに伴うメールアドレス漏洩の可能性と一部サービスの停止について"
-    },
-    {
-     "date": "2026-11-02",
-     "link": "https://www.city.otsu.lg.jp/d_news/76988.html",
-     "summary": "",
-     "title": "大津市公式アプリ「ポケットおおつ」お買い物ポイントキャンペーンについて 第2弾開催中"
     }
    ],
    "name": "大津市",
@@ -1088,6 +1070,18 @@
    "id": "0909f1c174",
    "items": [
     {
+     "date": "2026-11-24",
+     "link": "https://www.pref.ehime.jp/page/128450.html",
+     "summary": "",
+     "title": "年末ジャンボ宝くじ等の発売に係る「幸運アンバサダー」の県庁訪問及び庁内販売会について"
+    },
+    {
+     "date": "2026-11-24",
+     "link": "https://www.pref.ehime.jp/page/128448.html",
+     "summary": "",
+     "title": "年末ジャンボ宝くじ、年末ジャンボミニの発売について"
+    },
+    {
      "date": "2026-11-20",
      "link": "https://www.pref.ehime.jp/page/164612.html",
      "summary": "",
@@ -1155,27 +1149,15 @@
     },
     {
      "date": "2026-11-20",
+     "link": "https://www.pref.ehime.jp/site/nyusatsu/164618.html",
+     "summary": "",
+     "title": "愛媛県美術館 コレクション展示磨き上げ業務に係る一般入札について"
+    },
+    {
+     "date": "2026-11-20",
      "link": "https://www.pref.ehime.jp/site/nyusatsu/2291.html",
      "summary": "",
      "title": "愛媛県公営企業管理局 入札・発注情報"
-    },
-    {
-     "date": "2026-11-20",
-     "link": "https://www.pref.ehime.jp/page/50998.html",
-     "summary": "",
-     "title": "豚熱(CSF)関連情報"
-    },
-    {
-     "date": "2026-11-20",
-     "link": "https://www.pref.ehime.jp/page/18004.html",
-     "summary": "",
-     "title": "愛媛県特定鳥獣適正管理検討委員会の開催について"
-    },
-    {
-     "date": "2026-11-19",
-     "link": "https://www.pref.ehime.jp/site/nanyo/2503.html",
-     "summary": "JR予土線の伊予宮野下駅、近永駅、松丸駅の駅前では、各駅持ち回りでマルシェを開催中です。次回はどの駅で開催されるか要チェック!",
-     "title": "予土線駅前マルシェ"
     }
    ],
    "name": "愛媛県庁",
@@ -1410,6 +1392,12 @@
    "id": "d02ea5db63",
    "items": [
     {
+     "date": "2026-11-23",
+     "link": "https://www.pref.fukushima.lg.jp/sec/41360a/insta.html",
+     "summary": "",
+     "title": "インスタグラム掲載記事の詳細はこちら"
+    },
+    {
      "date": "2026-11-22",
      "link": "https://www.pref.fukushima.lg.jp/sec/41035c/202611221730.html",
      "summary": "",
@@ -1492,12 +1480,6 @@
      "link": "https://www.pref.fukushima.lg.jp/sec/70057a/global2.html",
      "summary": "",
      "title": "ご寄附の状況"
-    },
-    {
-     "date": "2026-11-20",
-     "link": "https://www.pref.fukushima.lg.jp/sec/21045a/kuuki-kirei-zimusyotou-kennan.html",
-     "summary": "",
-     "title": "事業所等(県南) - 空気のきれいな施設認証施設"
     }
    ],
    "name": "福島県庁",
@@ -1509,6 +1491,12 @@
    "feed": "https://www.pref.fukushima.lg.jp/rss/10/list10.xml",
    "id": "5af5c7924f",
    "items": [
+    {
+     "date": "2026-11-24",
+     "link": "https://www.pref.fukushima.lg.jp/sec/21045e/syokuhinseikatueiseika-nyusatu.html",
+     "summary": "福島県食品生活衛生課で所管する入札情報についてお知らせします。",
+     "title": "食品生活衛生課入札情報"
+    },
     {
      "date": "2026-11-21",
      "link": "https://www.pref.fukushima.lg.jp/site/edu/nyusatu-syakyou2.html",
@@ -1592,12 +1580,6 @@
      "link": "https://www.pref.fukushima.lg.jp/sec/70013a/zaimu04.html",
      "summary": "",
      "title": "物品購入等に関する一般競争入札の公告について"
-    },
-    {
-     "date": "2026-11-19",
-     "link": "https://www.pref.fukushima.lg.jp/sec/36230a/8-keiyaku.html",
-     "summary": "令和8年度年度公共工事契約結果情報",
-     "title": "令和8年度公共工事契約結果情報"
     }
    ],
    "name": "福島県庁",
@@ -1947,12 +1929,6 @@
      "link": "https://www.pref.hokkaido.lg.jp/hf/iyk/kanngo/271234.html",
      "summary": "",
      "title": "令和8年度(2026年度)子育て看護職員等就業支援事業費補助金の交付申請について"
-    },
-    {
-     "date": "2026-11-02",
-     "link": "https://www.pref.hokkaido.lg.jp/kz/gxs/107905.html",
-     "summary": "",
-     "title": "令和 8 年度 省エネルギー設備導入支援事業費補助金"
     }
    ],
    "name": "北海道庁",
@@ -2144,94 +2120,10 @@
    "id": "69c49f27b9",
    "items": [
     {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0323400189.htm",
+     "date": "2026-11-24",
+     "link": "https://www.pref.mie.lg.jp/common/07/ci400012307.htm",
      "summary": "",
-     "title": "令和8年度沖縄「三重の塔」における戦没者慰霊式を開催しました"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0346200037.htm",
-     "summary": "",
-     "title": "第1回経済分野におけるジェンダーギャップ解消を図る条例(仮称)検討懇話会を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/SINGI/m0115600416.htm",
-     "summary": "",
-     "title": "令和8年度第1回三重県医療審議会を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0346200036.htm",
-     "summary": "",
-     "title": "令和8年度第2回三重県人口減少対策有識者会議を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0323000095.htm",
-     "summary": "",
-     "title": "令和8年度三重県災害派遣福祉チーム(三重県DWAT)資質向上研修を実施します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0003300104.htm",
-     "summary": "",
-     "title": "宮川流域振興調整会議を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0002700626.htm",
-     "summary": "",
-     "title": "令和8年夏季賞与の調査結果(三重県分)"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0360800150.htm",
-     "summary": "",
-     "title": "第5回「志摩まつり」で空飛ぶクルマコーナーを設置します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0046300428.htm",
-     "summary": "",
-     "title": "国の登録有形文化財(建造物)の新登録の答申が行われました"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0014300127.htm",
-     "summary": "",
-     "title": "令和8年度大規模地震時医療活動訓練を実施します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0006500106.htm",
-     "summary": "",
-     "title": "交通三愛運動推進本部(本部長 三重県紀北地域活性化局長)は、紀北町で「年末の交通安全県民運動出発式」を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0011500599.htm",
-     "summary": "",
-     "title": "外国人材の「適正雇用と定着」実践セミナーを開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0005300036.htm",
-     "summary": "",
-     "title": "三重県四日市庁舎でフードドライブを実施します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0030700687.htm",
-     "summary": "",
-     "title": "働き方改革アドバイザー派遣取組成果発表会及び働きやすい職場づくりセミナーを開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0022300077.htm",
-     "summary": "",
-     "title": "弾道ミサイルを想定した住民避難訓練を実施します"
+     "title": "過去3日間の更新はありません。詳しくは三重県新着・更新情報をご覧ください。"
     }
    ],
    "name": "三重県庁",
@@ -2244,94 +2136,10 @@
    "id": "b46d6a0d93",
    "items": [
     {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0014901181.htm",
+     "date": "2026-11-24",
+     "link": "https://www.pref.mie.lg.jp/TOPICS/2016010259_00364.htm",
      "summary": "",
-     "title": "集団かぜ・インフルエンザ発生予防のための情報提供(第44報)"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0323400189.htm",
-     "summary": "",
-     "title": "令和8年度沖縄「三重の塔」における戦没者慰霊式を開催しました"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0346200037.htm",
-     "summary": "",
-     "title": "第1回経済分野におけるジェンダーギャップ解消を図る条例(仮称)検討懇話会を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/SINGI/m0115600416.htm",
-     "summary": "",
-     "title": "令和8年度第1回三重県医療審議会を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0346200036.htm",
-     "summary": "",
-     "title": "令和8年度第2回三重県人口減少対策有識者会議を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0323000095.htm",
-     "summary": "",
-     "title": "令和8年度三重県災害派遣福祉チーム(三重県DWAT)資質向上研修を実施します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0004300328.htm",
-     "summary": "",
-     "title": "第29回三重県障がい者スポーツ大会(ボッチャ)を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0360800152.htm",
-     "summary": "",
-     "title": "メール送信による個人情報の流出について"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0004300327.htm",
-     "summary": "",
-     "title": "第29回三重県障がい者スポーツ大会(一般卓球)を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0003300104.htm",
-     "summary": "",
-     "title": "宮川流域振興調整会議を開催します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0002700626.htm",
-     "summary": "",
-     "title": "令和8年夏季賞与の調査結果(三重県分)"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0360800150.htm",
-     "summary": "",
-     "title": "第5回「志摩まつり」で空飛ぶクルマコーナーを設置します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0046300428.htm",
-     "summary": "",
-     "title": "国の登録有形文化財(建造物)の新登録の答申が行われました"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0014300127.htm",
-     "summary": "",
-     "title": "令和8年度大規模地震時医療活動訓練を実施します"
-    },
-    {
-     "date": "2026-11-21",
-     "link": "https://www.pref.mie.lg.jp/TOPICS/m0006500106.htm",
-     "summary": "",
-     "title": "交通三愛運動推進本部(本部長 三重県紀北地域活性化局長)は、紀北町で「年末の交通安全県民運動出発式」を開催します"
+     "title": "知事定例記者会見をインターネット中継します(11月25日)"
     }
    ],
    "name": "三重県庁",
@@ -3946,6 +3754,12 @@
    "id": "d30ebc39d1",
    "items": [
     {
+     "date": "2026-11-24",
+     "link": "https://www.pref.yamagata.jp/020024/2026_shingikai_press.html",
+     "summary": "",
+     "title": "第79回山形県固定資産評価審議会の開催について"
+    },
+    {
      "date": "2026-11-20",
      "link": "https://www.pref.yamagata.jp/020077/115touroku.html",
      "summary": "",
@@ -4028,12 +3842,6 @@
      "link": "https://www.pref.yamagata.jp/700026/20261119press.html",
      "summary": "",
      "title": "公立学校教職員の懲戒処分について"
-    },
-    {
-     "date": "2026-11-19",
-     "link": "https://www.pref.yamagata.jp/140036/kensanmai/20261119_tsuyahimekyuusyoku.html",
-     "summary": "",
-     "title": "県内一斉「つや姫」学校給食の実施について"
     }
    ],
    "name": "山形県庁",
@@ -4334,5 +4142,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-11-23T10:50:26.041504+09:00"
+ "fetched_at": "2026-11-24T06:22:44.378836+09:00"
 }
