@@ -43,8 +43,8 @@ EVENTS = [
 def home():
     events=''.join(f'<a class="event-link" href="events.html?event={key}">{art(box,"event-art")}<span class="event-copy"><strong>{name}</strong><small>{lead}</small></span>{arrow()}</a>' for key,name,lead,box in EVENTS)
     from case_articles import CASES
-    # the newest four (the consultation type) and the first two of the earlier model cases: two rows of three
-    HOME_CASES = [c for c in CASES if c.get('consult')] + [c for c in CASES if not c.get('consult')][:2]
+    # every model case is on the top page (nine cards: three rows of three); a new case is added to CASES and shows here
+    HOME_CASES = [c for c in CASES if c.get('consult')] + [c for c in CASES if not c.get('consult')]
     cases = "".join(
         f'<a class="case-item" href="{case["slug"]}.html">'
         f'<img class="case-picture case-picture-raster" src="assets/{case.get("image", case["slug"])}.webp" width="1200" height="600" loading="lazy" alt="">'

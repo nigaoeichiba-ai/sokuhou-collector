@@ -277,6 +277,18 @@ class ConsultArticlesTest(unittest.TestCase):
         self.assertIn("退職前後（制作予定）", coming)
         self.assertNotIn("planned-case\"", coming)                              # not cards any more
 
+    def test_every_model_case_is_linked_from_the_top_page(self):
+        index = self.page("index")
+        cases = self.page("cases")
+        for slug in sorted(set(re.findall(r'class="case-index-card"[^>]*href="([^"]+)\.html"', cases))):
+            self.assertIn(f'href="{slug}.html"', index, slug)       # the top page shows every case the list shows
+        self.assertIn('href="case-temporary-appliances.html"', index)
+
+    def test_the_childbirth_gap_is_the_rounded_real_difference(self):
+        text = visible_text(self.page("case-childbirth-leave"))
+        self.assertIn("差は月12万6千円ほど", text)                       # 460,900 - 335,000 = 125,900
+        self.assertNotIn("12万5千円ほど", text)
+
     def test_the_manuscript_check_never_leaves_a_planned_ad_place_on_the_screen(self):
         import consult_articles  # the module sits next to release_build.py (put on sys.path by load_release_build)
         slots = consult_articles.affiliate_slots()
