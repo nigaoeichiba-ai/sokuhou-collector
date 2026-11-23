@@ -121,7 +121,7 @@ class CitePageTest(unittest.TestCase):
         self.assertIn("比べられる2都道府県のうち、1都道府県は、1件も違いません", text.replace(" ", ""))
         self.assertRegex(text, r"宮城県 記録 5 5 同じ")                   # the same figure on both sides
         self.assertRegex(text, r"秋田県 記録 10 8 80%")
-        table = text.split("当サイト÷環境省", 1)[1].split("差が出る主な理由", 1)[0]
+        table = text.split("当サイト÷公的な表", 1)[1].split("差が出る主な理由", 1)[0]
         self.assertNotIn("福島県", table)                                  # nothing held for April-July: not compared
         self.assertNotIn("山口県", table)                                  # not in the ministry's table (None): not compared
         self.assertNotIn("大津市", table)                                  # a part of a prefecture: not compared

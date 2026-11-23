@@ -97,7 +97,7 @@ class OfficialPageTest(unittest.TestCase):
         row = re.search(r'<tr><td><a href="/chiba/">.*?</tr>', self.html, re.S).group(0)
         self.assertNotIn("出没がない", row)
         self.assertNotIn("出没がない", re.sub(r"「出没がない」という意味ではありません", "", self.text))
-        self.assertIn("「環境省の表に数値がありません」は、「出没がない」という意味ではありません", self.text)
+        self.assertIn("「公的な表に数値がありません」は、「出没がない」という意味ではありません", self.text)
 
     def test_what_this_site_shows_and_the_ministry_figure_per_prefecture(self):
         def row(slug):

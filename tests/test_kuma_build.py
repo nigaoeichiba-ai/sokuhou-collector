@@ -122,7 +122,7 @@ class KumaSiteTest(unittest.TestCase):
     def test_prefectures_without_figures_are_named_where_the_text_says_so(self):
         nodata = [r["name"] for r in self.d["rows"] if not r["has"]]
         self.assertEqual(nodata, ["北海道", "千葉県"])
-        self.assertIn("北海道と千葉県は、環境省の表に数値がありません", self.read("ranking/sightings/index.html"))
+        self.assertIn("北海道と千葉県は、公的な表に数値がありません", self.read("ranking/sightings/index.html"))
         self.assertIn("北海道と千葉県は、出没件数の欄が", self.read("guide/data/index.html"))
         self.assertIn("数値がありません(「-」)", self.read("chiba/index.html"))
 
@@ -218,7 +218,7 @@ class KumaSiteTest(unittest.TestCase):
         self.assertIn("クマ被害対策等関係情報のお知らせ(令和8年8月28日追加)", html)
         self.assertNotIn("https://www.env.go.jp/nature/choju/effort/effort12/kuma-oshirase-r080828.pdf", html)        # titles and dates only: no outbound link (owner 2026-11-15)
         self.assertEqual(html.count('rel="noopener" target="_blank">'), 0)
-        self.assertIn("環境省の最近のお知らせ", self.read("index.html"))
+        self.assertIn("国の最近のお知らせ", self.read("index.html"))
         self.assertLess(html.index("2026年8月28日"), html.index("2026年7月3日"))  # newest first
 
     def test_release_is_indexable_and_preview_is_not(self):
@@ -707,8 +707,8 @@ class CapturesPagesTest(unittest.TestCase):
         self.assertIn("令和7年度の許可捕獲数は、2,691頭(捕殺2,691頭・非捕殺0頭)で、36道府県中1位でした", akita)
         self.assertIn("令和8年度は、令和8年7月末までで252頭です", akita)
         kochi = self.read("kochi/index.html")
-        self.assertIn("環境省の許可捕獲数の表には、高知県は載っていません", kochi)
-        self.assertIn("環境省の許可捕獲数の表には、愛媛県は載っていません", self.read("ehime/index.html"))
+        self.assertIn("公的な許可捕獲数の表には、高知県は載っていません", kochi)
+        self.assertIn("公的な許可捕獲数の表には、愛媛県は載っていません", self.read("ehime/index.html"))
 
     def test_feed_announces_the_update_by_the_ministrys_date(self):
         feed = self.read("feed.xml")

@@ -33,6 +33,7 @@ from sites.kuma import official as official_mod  # noqa: E402
 from sites.kuma import preffacts as preffacts_mod  # noqa: E402
 from sites.kuma import rankfacts as rankfacts_mod  # noqa: E402
 from sites.kuma import originnames as originnames_mod  # noqa: E402
+from sites.kuma import sourcetext as sourcetext_mod  # noqa: E402
 from sites.kuma import rakuten_widget as rakuten_widget_mod  # noqa: E402
 from sites.kuma import research as research_mod  # noqa: E402
 from sites.kuma import retired as retired_mod  # noqa: E402
@@ -1255,6 +1256,7 @@ def render_site(raw: dict, cfg: dict, out: Path, release: bool = False, links: d
     if static_changed:      # the stored hash is out of date: these pages get today's date until `build.py --update-lastmod` is run and the file committed
         print("lastmod: static pages whose text differs from sites/kuma/lastmod_static.json: " + ", ".join(static_changed), file=sys.stderr)
     originnames_mod.scrub_all(pages)       # title・description・h1 から情報元の名前を外す(2026-11-23)。更新日の計算のあと
+    sourcetext_mod.scrub_all(pages)        # 本文・表に残る『環境省の表』型の出どころを一般的な言い方に(2026-11-23。ライセンス表記は残す)
     rakuten_widget_mod.add_all(pages)      # 楽天モーションウィジェット(オーナー指示 2026-11-22)。更新日の計算のあとに入れる(広告の有無で『文章が変わった』扱いにしない)
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
