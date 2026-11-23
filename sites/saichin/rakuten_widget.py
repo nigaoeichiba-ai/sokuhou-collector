@@ -1,7 +1,7 @@
 """楽天モーションウィジェットを、saichin の全ページ(広告を出さないページを除く)に共通で入れる(オーナー指示 2026-11-22。2026-11-23 に、複数商品が一度に並ぶ型へ変更。
 計画 docs/office/RAKUTEN_WIDGET_PLAN_2026-11-22.md の末尾「2026-11-23 変更」)。
-型は画面幅で切り替える(表示する型のスクリプトだけを document.write で出す): 760px以上=728x200(横3枠)、480〜759px=468x160(横3枠)、
-480px未満=200x600(縦3枠)。ただしスマホの1つ目(リード直後)は、最初の画面を広告で埋めないよう300x250のまま。
+型は画面幅で切り替える(表示する型のスクリプトだけを document.write で出す): 800px以上=728x200(横3枠)、540〜799px=468x160(横3枠)(本文の枠は画面幅-32px、スクロールバーでさらに狭くなるため。kaidoki と同じ切替幅)、
+540px未満=200x600(縦3枠)。ただしスマホの1つ目(リード直後)は、最初の画面を広告で埋めないよう300x250のまま。
 リンクタイプ: 1つ目・2つ目=ページマッチ(ctsmatch)、最後(関連の前)=人気ランキング(ranking)。
 置き場所: ①リード直後 ②本文の中ほど(h2が6つ以上の長いページだけ) ③最後・関連ページの前。1ページ最大3つ。『PR』を真上に大きめに出す。ポップアップ・固定の帯なし。
 商品情報はリポジトリにも出力にも保存しない(楽天のスクリプトが出す。アフィリエイトIDは公開されるタグ)。layout() が本文(body)に対して呼ぶ。
@@ -18,14 +18,14 @@ MIDDLE_MIN_H2 = 6
 EXTRA_SKIP = {"/about/", "/privacy/"}
 # 型(幅×高さ)と、確保する最小の高さ(読み込み後のずれを小さくする)
 HEIGHTS = {"728x200": 200, "468x160": 160, "200x600": 600, "300x250": 250}
-# 画面幅ごとの型: (760px以上, 480〜759px, 480px未満)
+# 画面幅ごとの型: (800px以上, 540〜799px, 540px未満)
 SIZES = {"first": ("728x200", "468x160", "300x250"), "middle": ("728x200", "468x160", "200x600"), "last": ("728x200", "468x160", "200x600")}
 ITEMS = {"first": "ctsmatch", "middle": "ctsmatch", "last": "ranking"}
 
 # 楽天の部品の呼び出しを、画面幅で選んだ型の1組だけ document.write で出す。タグを分けて書くのは、ブラウザが外側の script を早く閉じないため。
 _JS = (
     '<script type="text/javascript">(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,'
-    'm="%(item)s",s=w>=760?"%(wide)s":(w>=480?"%(mid)s":"%(narrow)s"),H=%(heights)s;'
+    'm="%(item)s",s=w>=800?"%(wide)s":(w>=540?"%(mid)s":"%(narrow)s"),H=%(heights)s;'
     "var c='<div class=\"rk-in rk-'+s+'\" style=\"min-height:'+H[s]+'px\"><scr'+'ipt type=\"text/javascript\">rakuten_design=\"slide\";rakuten_affiliateId=\"%(id)s\";"
     "rakuten_items=\"'+m+'\";rakuten_genreId=\"0\";rakuten_size=\"'+s+'\";rakuten_target=\"_blank\";rakuten_theme=\"gray\";rakuten_border=\"off\";"
     "rakuten_auto_mode=\"on\";rakuten_genre_title=\"off\";rakuten_recommend=\"on\";rakuten_ts=\"1795398997582\";</scr'+'ipt>"

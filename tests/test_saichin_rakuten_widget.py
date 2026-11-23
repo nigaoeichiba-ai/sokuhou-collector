@@ -60,19 +60,19 @@ class WidgetTemplate(unittest.TestCase):
         first, middle, last = (rw.widget_script(k) for k in ("first", "middle", "last"))
         for js in (first, middle, last):
             self.assertIn(rw.AFFILIATE_ID, js)
-            self.assertIn('"728x200"', js)                     # 760px and wider: three across
-            self.assertIn('"468x160"', js)                     # 480-759px: three across
+            self.assertIn('"728x200"', js)                     # 800px and wider: three across
+            self.assertIn('"468x160"', js)                     # 540-799px: three across
             self.assertIn("rakuten_widget.js", js)
             self.assertNotIn("popup", js.lower())
-        self.assertIn('?"728x200":(w>=480?"468x160":"300x250")', first)       # the first one on a phone stays small
-        self.assertIn('?"728x200":(w>=480?"468x160":"200x600")', middle)      # the others are three down
+        self.assertIn('?"728x200":(w>=540?"468x160":"300x250")', first)       # the first one on a phone stays small
+        self.assertIn('?"728x200":(w>=540?"468x160":"200x600")', middle)      # the others are three down
         self.assertIn('m="ctsmatch"', first)
         self.assertIn('m="ctsmatch"', middle)
         self.assertIn('m="ranking"', last)
 
     def test_types_are_assigned_by_position(self):
         t = rw.add("/x/", ARTICLE, set())
-        scripts = re.findall(r'm="(ctsmatch|ranking)",s=w>=760\?"728x200":\(w>=480\?"468x160":"(300x250|200x600)"', t)
+        scripts = re.findall(r'm="(ctsmatch|ranking)",s=w>=800\?"728x200":\(w>=540\?"468x160":"(300x250|200x600)"', t)
         self.assertEqual(scripts, [("ctsmatch", "300x250"), ("ctsmatch", "200x600"), ("ranking", "200x600")])
         two = rw.add("/x/", '<h1>題</h1><p class="lead">答え</p><h2>a</h2><p>x</p>', set())
         self.assertEqual(re.findall(r'm="(ctsmatch|ranking)"', two), ["ctsmatch", "ranking"])
