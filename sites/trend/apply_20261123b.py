@@ -60,7 +60,7 @@ if __name__ == "__main__":
     add(slug, "記事最終稿_超PayPay祭_2026-11-23.md", "card_超PayPay祭.webp", "超PayPay祭のスクラッチくじ", "超PayPay祭",
         "超PayPay祭のスクラッチくじは、2026年11月20日から12月27日まで。",
         "超PayPay祭のスクラッチくじは11月20日から12月27日まで。1回200円以上の決済で引け、当たる確率は払い方で変わります。条件と確率の早見表で、選び方を整理します。",
-        "200円以上の決済で引ける。必ず当たるのは店頭のタッチ決済など条件つき",
+        "200円以上の決済で引ける。必ず当たるのは条件を満たした対象の決済だけ",
         "企業の公式発表・キャンペーン案内（2026年11月20日時点）",
         ["trend-aupay-blackfriday", "trend-rakuten-blackfriday", "trend-newt-blackfriday"], cat)
     print("added", slug)
