@@ -234,9 +234,15 @@
    "items": [
     {
      "date": "2026-11-23",
-     "link": "https://www.city.hanno.lg.jp/iryo_kenko_fukushi/iryo_kenko/kokorotokaradanokenkozukuri/1/sugoashi-event/11307.html",
+     "link": "http://www.city.hanno.lg.jp/iryo_kenko_fukushi/iryo_kenko/kokorotokaradanokenkozukuri/1/sugoashi-event/8432.html",
      "summary": "",
-     "title": "スゴ足イベント 2027年1月19日(火曜日)、30日(土曜日)スゴ足のんびりウオーク1月"
+     "title": "スゴ足イベント 2027年1月13日(水曜日)高麗神社へ初詣ウオーク"
+    },
+    {
+     "date": "2026-11-23",
+     "link": "http://www.city.hanno.lg.jp/soshikikarasagasu/kenkohukusibu/hokencenter/7094.html",
+     "summary": "",
+     "title": "スゴ足イベント 2027年1月13日(水曜日)高麗神社へ初詣ウオーク"
     },
     {
      "date": "2026-11-23",
@@ -245,22 +251,16 @@
      "title": "スゴ足イベント 2027年1月19日(火曜日)、30日(土曜日)スゴ足のんびりウオーク1月"
     },
     {
+     "date": "2026-11-23",
+     "link": "https://www.city.hanno.lg.jp/iryo_kenko_fukushi/iryo_kenko/kokorotokaradanokenkozukuri/1/sugoashi-event/11307.html",
+     "summary": "",
+     "title": "スゴ足イベント 2027年1月19日(火曜日)、30日(土曜日)スゴ足のんびりウオーク1月"
+    },
+    {
      "date": "2026-11-22",
      "link": "https://www.city.hanno.lg.jp/kanko_bunka_sports/kankojoho/12467.html",
      "summary": "",
      "title": "メタセコイア(アケボノスギ)紅葉情報"
-    },
-    {
-     "date": "2026-11-22",
-     "link": "https://www.city.hanno.lg.jp/akebono/oshirase/10744.html",
-     "summary": "",
-     "title": "メタセコイア(アケボノスギ)紅葉情報"
-    },
-    {
-     "date": "2026-11-20",
-     "link": "https://www.city.hanno.lg.jp/soshikikarasagasu/tosikensetubu/ijikanrika/kouen/14269.html",
-     "summary": "",
-     "title": "流れ橋通行開始のお知らせについて"
     }
    ],
    "name": "飯能市",
@@ -464,12 +464,6 @@
      "link": "https://www.city.joetsu.niigata.jp/site/museum/takada-castle-info.html",
      "summary": "高田城三重櫓のイベント等お知らせ",
      "title": "高田城三重櫓のライトアップと冬季開館"
-    },
-    {
-     "date": "2026-11-09",
-     "link": "https://www.city.joetsu.niigata.jp/soshiki/bunka/raion-event.html",
-     "summary": "ライオン像のある館(旧直江津銀行)で行われるイベント情報をお知らせします",
-     "title": "ライオン像のある館(旧直江津銀行)のイベント"
     }
    ],
    "name": "上越市",
@@ -4340,5 +4334,5 @@
    "title": ""
   }
  ],
- "fetched_at": "2026-11-23T06:22:05.929574+09:00"
+ "fetched_at": "2026-11-23T10:50:26.041504+09:00"
 }
