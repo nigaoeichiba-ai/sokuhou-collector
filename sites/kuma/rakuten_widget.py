@@ -1,5 +1,5 @@
 """kuma: 楽天モーションウィジェット(300x250)を、広告を出すページすべてに共通で入れる(オーナー指示 2026-11-22。計画 docs/office/RAKUTEN_WIDGET_PLAN_2026-11-22.md)。
-2026-11-23: 1枠ずつ切り替わる型をやめ、画面幅で728x200・468x160・200x600(複数商品が並ぶ型)に切り替える。最後の1つはランキング、ほかはページマッチ(人身被害ページの1つはページマッチのまま)。
+2026-11-23: 1枠ずつ切り替わる型をやめ、画面幅で728x200(800px以上)・468x160(540〜799px)・200x600(複数商品が並ぶ型)に切り替える。最後の1つはランキング、ほかはページマッチ(人身被害ページの1つはページマッチのまま)。
 置き場所: ①リード直後(最初の本文ブロックの前) ②本文の中ほど(h2が6つ以上のページだけ) ③最後・関連の前。1ページ最大3つ。『PR』を真上に大きめに出す。ポップアップ・固定の帯は使わない。
 人身被害・死亡を主題にしたページ(題に 死亡・死者・人身・被害 などが入るページ)は、最初の画面には置かず、本文の最後に1つだけ。
 最初の節が死亡事故の節の都道府県ページは、リード直後には置かず、中ほどと最後だけ。広告を出さないページ(連絡先・プライバシー等・noindex)には出さない。
@@ -10,10 +10,10 @@ import re
 
 AFFILIATE_ID = "0fbf5187.c5400194.0fbf5188.09a2b95f"
 TS = "1795398997582"
-# 2026-11-23(オーナー指示): 1枠ずつ切り替わる300x250をやめ、複数商品が一度に並ぶ型にする。画面幅で型を切り替える: 760px以上=728x200(横3枠)、480〜759px=468x160(横3枠)、
-# 480px未満=200x600(縦3枠)。ただしスマホの1つ目(最初の画面に近い所)は300x250のまま。リンクタイプ: 1つ目・2つ目=ページマッチ(ctsmatch)、最後の1つ=ランキング(ranking)。
+# 2026-11-23(オーナー指示): 1枠ずつ切り替わる300x250をやめ、複数商品が一度に並ぶ型にする。画面幅で型を切り替える: 800px以上=728x200(横3枠)、540〜799px=468x160(横3枠)、
+# 540px未満=200x600(縦3枠)。ただしスマホの1つ目(最初の画面に近い所)は300x250のまま。リンクタイプ: 1つ目・2つ目=ページマッチ(ctsmatch)、最後の1つ=ランキング(ranking)。
 # 表示する型のスクリプトだけを document.write で出す(隠した型は読み込まない)。商品情報は保存しない(アフィリエイトIDは公開されるタグ)。
-_JS = r"""<script>(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,s=w>=760?"728x200":(w>=480?"468x160":"__MOBILE__"),h={"728x200":200,"468x160":160,"200x600":600,"300x250":250}[s],b=document.currentScript.parentNode;b.style.minHeight=h+"px";if(s=="300x250"){b.className+=" s250"}var c='<scr'+'ipt type="text/javascript">rakuten_design="slide";rakuten_affiliateId="__ID__";rakuten_items="__ITEMS__";rakuten_genreId="0";rakuten_size="'+s+'";rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";rakuten_recommend="on";rakuten_ts="__TS__";</scr'+'ipt><scr'+'ipt type="text/javascript" src="https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js?20230106"></scr'+'ipt>';document.write(c);})();</script>"""
+_JS = r"""<script>(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,s=w>=800?"728x200":(w>=540?"468x160":"__MOBILE__"),h={"728x200":200,"468x160":160,"200x600":600,"300x250":250}[s],b=document.currentScript.parentNode;b.style.minHeight=h+"px";if(s=="300x250"){b.className+=" s250"}var c='<scr'+'ipt type="text/javascript">rakuten_design="slide";rakuten_affiliateId="__ID__";rakuten_items="__ITEMS__";rakuten_genreId="0";rakuten_size="'+s+'";rakuten_target="_blank";rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";rakuten_recommend="on";rakuten_ts="__TS__";</scr'+'ipt><scr'+'ipt type="text/javascript" src="https://xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js?20230106"></scr'+'ipt>';document.write(c);})();</script>"""
 WIDGET_SCRIPT = _JS.replace("__ID__", AFFILIATE_ID).replace("__TS__", TS)
 MARK = 'class="rk-ad"'
 MAX_PER_PAGE = 3
@@ -33,7 +33,7 @@ _TAGS = re.compile(r"<[^>]+>")
 
 
 def block(first: bool, *, items: str = "ctsmatch", mobile: str = "300x250") -> str:
-    """One widget. items: 'ctsmatch' (page match) or 'ranking'; mobile: the size under 480px ('300x250' for the first one on a page, '200x600' for the others)."""
+    """One widget. items: 'ctsmatch' (page match) or 'ranking'; mobile: the size under 540px ('300x250' for the first one on a page, '200x600' for the others)."""
     script = WIDGET_SCRIPT.replace("__ITEMS__", items).replace("__MOBILE__", mobile)
     return (_STYLE if first else "") + f'<aside {MARK} aria-label="広告"><p class="rk-pr">PR</p><div class="rk-box">{script}</div></aside>'+chr(10)
 
