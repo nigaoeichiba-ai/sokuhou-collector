@@ -61,6 +61,17 @@ class RakutenWidgetTest(unittest.TestCase):
         self.assertEqual(out.count("rakuten_size"), 3)
         self.assertNotIn("__M__", out); self.assertNotIn("__MOBILE__", out)
 
+    def test_last_is_ranking_even_when_credit_is_above(self):
+        body = '<p class="credit">x</p>' + '<section class="content-block">a</section>' * 9
+        blocks = BLOCK.findall(rw.inject(body))
+        self.assertEqual(len(blocks), 3)
+        self.assertIn('m="ranking"', blocks[-1])
+
+    def test_pages_with_two_or_more_blocks_end_with_ranking(self):
+        for rel, html in self.pages.items():
+            if html.count('class="rk-widget"') >= 2:
+                self.assertIn('m="ranking"', BLOCK.findall(html)[-1], rel)
+
     def test_inject_negative(self):
         body = '<section class="content-block">a</section>' * 3 + '<h2>関連</h2><div class="article-links"></div><p class="credit">x</p>'
         out = rw.inject(body)

@@ -52,6 +52,8 @@ def inject(body: str) -> str:
         end = cands[-2]                       # the home page: before its second-last section
     else:
         end = tail
+    if end <= pos[-1][0]:                     # the credit line sits above the places already used: put the last block at the very end
+        end = len(body)
     pos.append((end, LAST))
     keep: list[tuple[int, tuple[str, str]]] = []
     for p, spec in pos:                       # in order, one block per place
