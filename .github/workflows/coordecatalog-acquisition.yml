@@ -1,13 +1,15 @@
-# Manual acquisition only. No website deploy, source-site mutation, artifacts or public product data.
+# Private product refresh only. Never deploys a website or changes source-site data.
 name: coordecatalog-acquisition
-run-name: Catalog acquisition ${{ inputs.request_id }}
+run-name: Catalog acquisition ${{ inputs.request_id || 'scheduled refresh' }}
 'on':
   workflow_dispatch:
     inputs:
       request_id:
-        description: Private request UUID only; no merchant data
-        required: true
+        description: Private request UUID; leave empty to refresh the configured registered catalog
+        required: false
         type: string
+  schedule:
+  - cron: 17 */6 * * *
 permissions:
   contents: read
   actions: read
@@ -17,7 +19,7 @@ concurrency:
 jobs:
   acquire:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 40
     env:
       REQUEST_ID: ${{ inputs.request_id }}
       GH_TOKEN: ${{ github.token }}
@@ -34,7 +36,7 @@ jobs:
     - uses: actions/setup-python@v6
       with:
         python-version: '3.13'
-    - name: Acquire into independent private namespace only
+    - name: Refresh only the independent private catalog data
       run: |
         set -eu
         umask 077
@@ -510,6 +512,214 @@ jobs:
             main()
 
         CATALOG_PY
+        cat > "$RUNNER_TEMP/catalog-code/variant_reader.py" <<'CATALOG_PY'
+        """Strict registered Rakuten merchant identity and selected-variant reader.
+
+        This module has no network access. A product-level availability is never used
+        as a selected variant's stock, and a shop manage number is never an API item ID.
+        """
+        from __future__ import annotations
+
+        from html import unescape
+        from html.parser import HTMLParser
+        from urllib.parse import urlsplit
+        import json
+        import math
+        import re
+        import unicodedata
+
+        MAX_BODY = 3_000_000
+
+
+        class VariantError(ValueError):
+            pass
+
+
+        def canonical_product_url(value):
+            if not isinstance(value, str):
+                return None
+            try:
+                p = urlsplit(value)
+                if (p.scheme != 'https' or p.hostname != 'item.rakuten.co.jp'
+                        or p.username is not None or p.password is not None or p.port is not None
+                        or p.query or p.fragment):
+                    return None
+                parts = p.path.strip('/').split('/')
+                if len(parts) != 2 or any(x in ('.', '..') or not re.fullmatch(r'[A-Za-z0-9_.-]+', x) for x in parts):
+                    return None
+                return 'https://item.rakuten.co.jp/' + '/'.join(parts) + '/'
+            except ValueError:
+                return None
+
+
+        class CanonicalParser(HTMLParser):
+            def __init__(self):
+                super().__init__(); self.urls = []
+
+            def handle_starttag(self, tag, attrs):
+                if tag.lower() != 'link':
+                    return
+                attrs = dict(attrs)
+                if 'canonical' in (attrs.get('rel') or '').lower().split() and attrs.get('href'):
+                    self.urls.append(attrs['href'])
+
+
+        def extract_item(body):
+            if not isinstance(body, bytes) or len(body) > MAX_BODY:
+                raise VariantError('response_too_large')
+            match = re.search(rb'<script\b[^>]*\bid=["\']item-page-app-data["\'][^>]*>(.*?)</script>', body, re.S | re.I)
+            if not match:
+                raise VariantError('merchant_data_absent')
+            data = None
+            for encoding in ('utf-8', 'euc-jp', 'cp932'):
+                try:
+                    data = json.loads(match.group(1).decode(encoding)); break
+                except (ValueError, UnicodeError):
+                    pass
+            if not isinstance(data, dict):
+                raise VariantError('merchant_data_invalid')
+            info = data.get('newApi', {}).get('itemInfoSku') or data.get('api', {}).get('data', {}).get('itemInfoSku')
+            if not isinstance(info, dict):
+                raise VariantError('merchant_data_invalid')
+            parser = CanonicalParser()
+            parser.feed(body.decode('latin-1'))
+            canonicals = {canonical_product_url(unescape(url)) for url in parser.urls}
+            canonical = next(iter(canonicals)) if len(canonicals) == 1 else None
+            return info, canonical
+
+
+        def _integer(value):
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
+                return None
+            if value < 0 or value > 10_000_000_000 or not math.isfinite(value) or value != int(value):
+                return None
+            return int(value)
+
+
+        def _stock(purchase):
+            if not isinstance(purchase, dict):
+                return None, None
+            quantity = _integer(purchase.get('quantity'))
+            condition = purchase.get('stockCondition')
+            if condition == 'sold-out':
+                return False, quantity
+            if quantity is not None:
+                return quantity > 0, quantity
+            return None, None
+
+
+        def normalized_options(values):
+            if not isinstance(values, list) or any(not isinstance(v, str) for v in values):
+                raise VariantError('selectors_invalid')
+            normalized = []
+            for value in values:
+                value = unicodedata.normalize('NFKC', value).strip().casefold()
+                value = re.sub(r'^(?:サイズ|size|カラー|color|色)\s*:\s*', '', value)
+                value = re.sub(r'\s+', '', value)
+                normalized.append(value)
+            return sorted(normalized)
+
+
+        def parse_merchant_sku(body, variant_id):
+            """Compatibility parser, including the merchant's explicit single-SKU form."""
+            info, _ = extract_item(body)
+            return _parse_sku_info(info, variant_id)
+
+
+        def _parse_sku_info(info, variant_id):
+            if variant_id is None:
+                return {'variant_found': False, 'product_available': not info.get('hideItem', False)}
+            wanted = str(variant_id)
+            skus = info.get('sku') or []
+            if not isinstance(skus, list):
+                raise VariantError('sku_structure_invalid')
+            matches = [v for v in skus if isinstance(v, dict) and str(v.get('variantId')) == wanted]
+            if matches:
+                if any(v != matches[0] for v in matches[1:]):
+                    raise VariantError('duplicate_variant_conflict')
+                sku = matches[0]
+                rows = info.get('purchaseInfo', {}).get('sku') or []
+                if not isinstance(rows, list):
+                    raise VariantError('purchase_structure_invalid')
+                purchase_rows = [v for v in rows if isinstance(v, dict) and str(v.get('variantId')) == wanted]
+                if purchase_rows and any(v != purchase_rows[0] for v in purchase_rows[1:]):
+                    raise VariantError('duplicate_purchase_conflict')
+                purchase = purchase_rows[0].get('newPurchaseSku') or {} if purchase_rows else {}
+                price = _integer(sku.get('taxIncludedPrice'))
+                selectors = sku.get('selectorValues') or []
+                kind = 'sku_array'
+            elif not skus and info.get('variantId') is not None and str(info['variantId']) == wanted:
+                # An explicit provider variantId, not a guessed manageNumber fallback.
+                if info.get('variantSelectors'):
+                    raise VariantError('single_variant_has_unresolved_selectors')
+                purchase_info = info.get('purchaseInfo') or {}
+                purchase = purchase_info.get('newPurchaseSku') or {}
+                price_fields = purchase_info.get('purchaseBySellType', {}).get('normalPurchase', {}).get('price') or {}
+                price = _integer(price_fields.get('minPrice'))
+                maximum = _integer(price_fields.get('maxPrice'))
+                if maximum is not None and price != maximum:
+                    price = None
+                selectors = []
+                kind = 'explicit_single_variant'
+            else:
+                return {'variant_found': False, 'product_available': not info.get('hideItem', False)}
+            normalized_options(selectors)
+            available, quantity = _stock(purchase)
+            return {'variant_found': True, 'price_jpy': price, 'available': available,
+                    'stock_quantity': quantity, 'selected_options': selectors, 'variant_structure': kind,
+                    'delivery_text_raw': purchase.get('deliveryMessage', ''),
+                    'provider_product_name_raw': info.get('title', '')}
+
+
+        def verify_registered_variant(body, offer, checked_at):
+            """Return only identity-bound observations, with independently dated facts."""
+            result = {'id': offer.get('offer_id', offer.get('id')), 'product_url': offer.get('product_url'),
+                      'api_item_code': offer.get('api_item_code'), 'variant_id': offer.get('variant_id'),
+                      'registered_options': offer.get('selected_options') or [], 'observed_options': [],
+                      'identity_verified': False, 'price_jpy': None, 'available': None,
+                      'checked_at': checked_at, 'price_checked_at': None, 'stock_checked_at': None,
+                      'status': 'unconfirmed', 'quote_kind': 'snapshot', 'stock_scope': 'unconfirmed',
+                      'source': 'merchant_registered_variant'}
+            try:
+                url = canonical_product_url(offer.get('product_url'))
+                if not url:
+                    raise VariantError('registered_url_invalid')
+                info, canonical = extract_item(body)
+                if canonical != url:
+                    raise VariantError('canonical_mismatch')
+                shop, manage = urlsplit(url).path.strip('/').split('/')
+                if str(info.get('manageNumber', '')).casefold() != manage.casefold():
+                    raise VariantError('manage_number_mismatch')
+                item_id = info.get('itemId')
+                if not str(item_id).isdigit() or offer.get('api_item_code') != shop + ':' + str(item_id):
+                    raise VariantError('api_item_code_mismatch')
+                actual = _parse_sku_info(info, offer.get('variant_id'))
+                if not actual.get('variant_found'):
+                    raise VariantError('selected_variant_absent')
+                result['observed_options'] = actual.get('selected_options') or []
+                if result['registered_options'] and normalized_options(result['registered_options']) != normalized_options(result['observed_options']):
+                    raise VariantError('selected_options_mismatch')
+                price = actual.get('price_jpy'); available = actual.get('available')
+                result.update(identity_verified=True, price_jpy=price, available=available,
+                              stock_quantity=actual.get('stock_quantity'), stock_scope='selected_variant',
+                              variant_structure=actual.get('variant_structure'))
+                if price is not None:
+                    result['price_checked_at'] = checked_at
+                if isinstance(available, bool):
+                    result['stock_checked_at'] = checked_at
+                if price is not None and isinstance(available, bool):
+                    result.update(status='live_variant', quote_kind='live_variant')
+                elif price is not None:
+                    result.update(status='variant_price_confirmed', quote_kind='live_variant')
+                elif isinstance(available, bool):
+                    result.update(status='variant_stock_confirmed', quote_kind='live_variant')
+                else:
+                    result['status'] = 'variant_values_unknown'
+            except (VariantError, TypeError, KeyError, ValueError) as error:
+                result['status'] = str(error) if isinstance(error, VariantError) else 'merchant_data_invalid'
+            return result
+
+        CATALOG_PY
         cat > "$RUNNER_TEMP/catalog-code/runner.py" <<'CATALOG_PY'
         """Manual, isolated acquisition in the existing provider execution environment.
 
@@ -968,4 +1178,228 @@ jobs:
             main()
 
         CATALOG_PY
-        PYTHONPATH="$RUNNER_TEMP/catalog-code:$GITHUB_WORKSPACE" python "$RUNNER_TEMP/catalog-code/runner.py"
+        cat > "$RUNNER_TEMP/catalog-code/scheduled_runner.py" <<'CATALOG_PY'
+        """Six-hour private refresh. Never writes a website or the source site's data."""
+        from pathlib import Path
+        from datetime import datetime, timezone
+        from urllib.parse import urlsplit
+        from urllib.request import Request, build_opener, HTTPRedirectHandler
+        import copy, hashlib, json, re, subprocess, tempfile, time, uuid
+
+        from runner import PrivateChannel, QuietGate, ExistingProviderAdapter, execute, now, NAMESPACE
+        from acquisition_worker import validate_plan
+        from variant_reader import MAX_BODY, VariantError, canonical_product_url, verify_registered_variant
+
+
+        def fingerprint(plan):
+            return hashlib.sha256(json.dumps(plan, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+
+
+        def stamp(value):
+            try:
+                d=datetime.fromisoformat(value.replace('Z','+00:00'))
+                return d if d.tzinfo else None
+            except (AttributeError,TypeError,ValueError):
+                return None
+
+
+        class ScheduledChannel(PrivateChannel):
+            def schedule_read(self, name):
+                if name not in ('config','checkpoint','latest'):
+                    raise ValueError('invalid_schedule_path')
+                command='p="$HOME/'+NAMESPACE+'/schedule/'+name+'.json"; [ -f "$p" ] || exit 44; cat "$p"'
+                r=subprocess.run(self.base+[command],capture_output=True,timeout=30)
+                if r.returncode==44:return None
+                if r.returncode or not r.stdout or len(r.stdout)>8_000_000:raise ValueError('schedule_read_failed')
+                return json.loads(r.stdout)
+
+            def schedule_write(self,name,value):
+                if name not in ('checkpoint','latest','status'):raise ValueError('invalid_schedule_path')
+                body=json.dumps(value,ensure_ascii=False,separators=(',',':')).encode()
+                if len(body)>8_000_000:raise ValueError('schedule_result_too_large')
+                command=('umask 077; d="$HOME/'+NAMESPACE+'/schedule"; [ ! -L "$d" ] || exit 18; mkdir -p "$d"; '
+                         't="$d/.'+name+'.$$"; cat > "$t" && chmod 600 "$t" && mv "$t" "$d/'+name+'.json"')
+                r=subprocess.run(self.base+[command],input=body,capture_output=True,timeout=30)
+                if r.returncode:raise ValueError('schedule_write_failed')
+
+
+        class ProductCycle:
+            def __init__(self,channel,bundle,checkpoint):
+                self.channel=channel;self.bundle=bundle;self.checkpoint=checkpoint
+
+            def read(self,request_id,area):
+                if request_id!=self.checkpoint['cycle_id']:raise ValueError('cycle_identity_mismatch')
+                return self.bundle if area=='requests' else self.checkpoint.get('product_result')
+
+            def write(self,request_id,result):
+                if request_id!=self.checkpoint['cycle_id']:raise ValueError('cycle_identity_mismatch')
+                self.checkpoint['product_result']=copy.deepcopy(result)
+                self.channel.schedule_write('checkpoint',self.checkpoint)
+
+
+        class FixedRedirect(HTTPRedirectHandler):
+            def __init__(self,url):super().__init__();self.host=urlsplit(url).hostname
+            def redirect_request(self,req,fp,code,msg,headers,newurl):
+                u=urlsplit(newurl)
+                if u.scheme!='https' or u.hostname!=self.host or u.username or u.password or u.port:
+                    raise VariantError('redirect_rejected')
+                return super().redirect_request(req,fp,code,msg,headers,newurl)
+
+
+        def fetch_merchant(url,allowed):
+            if url not in allowed or canonical_product_url(url)!=url:raise VariantError('unregistered_url')
+            deadline=time.monotonic()+15
+            opener=build_opener(FixedRedirect(url))
+            req=Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; CoordeCatalogPrivateCheck/1.0)',
+                                     'Accept':'text/html,application/xhtml+xml'})
+            with opener.open(req,timeout=15) as response:
+                size=response.headers.get('Content-Length','')
+                if size.isdigit() and int(size)>MAX_BODY:raise VariantError('response_too_large')
+                chunks=[];total=0
+                while True:
+                    remaining=deadline-time.monotonic()
+                    if remaining<=0:raise TimeoutError('deadline')
+                    sock=getattr(getattr(getattr(response,'fp',None),'raw',None),'_sock',None)
+                    if sock is not None:sock.settimeout(remaining)
+                    block=response.read(min(65536,MAX_BODY+1-total))
+                    if not block:break
+                    chunks.append(block);total+=len(block)
+                    if total>MAX_BODY:raise VariantError('response_too_large')
+                return b''.join(chunks)
+
+
+        def offer_specs(plan):
+            return {oid:{'id':oid,**spec} for oid,spec in plan['offers'].items()}
+
+
+        def retained(row,offer):
+            if not isinstance(row,dict):return None
+            q=row if row.get('identity_verified') is True else row.get('last_confirmed')
+            if not isinstance(q,dict) or q.get('identity_verified') is not True:return None
+            if any(q.get(k)!=offer.get(k) for k in ['id','product_url','api_item_code','variant_id']):return None
+            if q.get('registered_options')!=offer.get('selected_options',[]):return None
+            return copy.deepcopy(q)
+
+
+        def unconfirmed(offer,checked,previous):
+            q={'id':offer['id'],'product_url':offer['product_url'],'api_item_code':offer['api_item_code'],
+               'variant_id':offer['variant_id'],'registered_options':offer.get('selected_options') or [],
+               'observed_options':[],'identity_verified':False,'price_jpy':None,'available':None,
+               'checked_at':checked,'price_checked_at':None,'stock_checked_at':None,'status':'merchant_confirmation_failed',
+               'quote_kind':'snapshot','stock_scope':'unconfirmed','source':'merchant_registered_variant'}
+            old=retained(previous,offer)
+            if old:q['last_confirmed']=old
+            return q
+
+
+        def validate_config(config):
+            if (not isinstance(config,dict) or set(config)!={'version','enabled','request_id','plan_sha256','interval_hours','website_sync_enabled'}
+                    or config['version']!=1 or type(config['enabled']) is not bool or config['interval_hours']!=6
+                    or config['website_sync_enabled'] is not False
+                    or not re.fullmatch('[0-9a-f]{32}',str(config['request_id']))
+                    or not re.fullmatch('[0-9a-f]{64}',str(config['plan_sha256']))):
+                raise ValueError('invalid_schedule_config')
+            return config
+
+
+        def run_schedule(channel,gate,client,directory,*,clock=time.monotonic,sleep=time.sleep,
+                         fetch=fetch_merchant,api_execute=execute,deadline_seconds=900,force=False):
+            config=validate_config(channel.schedule_read('config'))
+            if not config['enabled']:return {'status':'disabled','publication':False}
+            seed=channel.read(config['request_id'],'requests')
+            if not isinstance(seed,dict) or seed.get('request_id')!=config['request_id']:raise ValueError('invalid_seed_request')
+            plan=seed.get('plan');validate_plan(plan)
+            if plan.get('purpose')!='registered_catalog' or not plan['offers'] or fingerprint(plan)!=config['plan_sha256']:
+                raise ValueError('schedule_plan_mismatch')
+            latest=channel.schedule_read('latest')
+            if latest and latest.get('plan_sha256')==config['plan_sha256'] and latest.get('status')=='complete':
+                date=stamp(latest.get('finished_at'))
+                if not date or date>datetime.now(timezone.utc):raise ValueError('invalid_schedule_date')
+                if not force and (datetime.now(timezone.utc)-date).total_seconds()<6*3600:
+                    return {'status':'already_fresh','publication':False}
+            checkpoint=channel.schedule_read('checkpoint')
+            if checkpoint and checkpoint.get('plan_sha256')==config['plan_sha256'] and checkpoint.get('status')=='paused_source_busy_or_unverified':
+                if not re.fullmatch('[0-9a-f]{32}',str(checkpoint.get('cycle_id'))):raise ValueError('invalid_cycle_identity')
+                checkpoint=copy.deepcopy(checkpoint)
+            else:
+                checkpoint={'version':1,'cycle_id':uuid.uuid4().hex,'plan_sha256':config['plan_sha256'],
+                            'status':'running','started_at':now(),'registered_quotes':{'version':1,'offers':{}},
+                            'merchant_urls_completed':[],'publication':False,'yorokobu_modified':False,'website_uploaded':False}
+            cid=checkpoint['cycle_id'];bundle={'request_id':cid,'plan':plan,'created_at':seed['created_at']}
+            checkpoint['status']='running'
+            result=api_execute(ProductCycle(channel,bundle,checkpoint),cid,gate,client,directory,deadline_seconds=deadline_seconds)
+            checkpoint['product_result']=result
+            if result['status']!='complete':
+                checkpoint['status']=result['status'];channel.schedule_write('checkpoint',checkpoint)
+                channel.schedule_write('status',{'status':result['status'],'actual_calls':result['actual_calls'],
+                                                'updated_at':now(),'publication':False})
+                return {'status':result['status'],'actual_calls':result['actual_calls'],'publication':False}
+            offers=offer_specs(plan);grouped={}
+            for oid,o in offers.items():
+                if canonical_product_url(o['product_url'])!=o['product_url']:raise ValueError('invalid_registered_url')
+                grouped.setdefault(o['product_url'],[]).append(o)
+            completed=checkpoint.get('merchant_urls_completed',[])
+            quotes=checkpoint.get('registered_quotes',{}).get('offers',{})
+            if (not isinstance(completed,list) or len(completed)!=len(set(completed)) or not set(completed).issubset(grouped)
+                    or not isinstance(quotes,dict) or set(quotes)!={o['id'] for url in completed for o in grouped[url]}):
+                raise ValueError('invalid_merchant_checkpoint')
+            # Existing facts are only fallback facts, retaining their original dates.
+            old_quotes=(latest or {}).get('registered_quotes',{}).get('offers',{})
+            deadline=clock()+deadline_seconds;last=None;network_calls=0
+            for url,variants in grouped.items():
+                if url in completed:continue
+                while clock()<deadline and not gate():sleep(15)
+                if clock()>=deadline:
+                    checkpoint['status']='paused_source_busy_or_unverified';channel.schedule_write('checkpoint',checkpoint)
+                    return {'status':checkpoint['status'],'actual_calls':result['actual_calls'],'merchant_urls_checked':len(completed),'publication':False}
+                if last is not None:sleep(max(0,1.6-(clock()-last)))
+                while clock()<deadline and not gate():sleep(15)
+                if clock()>=deadline:
+                    checkpoint['status']='paused_source_busy_or_unverified';channel.schedule_write('checkpoint',checkpoint)
+                    return {'status':checkpoint['status'],'actual_calls':result['actual_calls'],'merchant_urls_checked':len(completed),'publication':False}
+                last=clock();checked=now();network_calls+=1
+                try:
+                    body=fetch(url,set(grouped))
+                    for offer in variants:
+                        q=verify_registered_variant(body,offer,checked)
+                        if q.get('status')!='live_variant':
+                            q=unconfirmed(offer,checked,old_quotes.get(offer['id']))
+                        quotes[offer['id']]=q
+                except Exception:
+                    for offer in variants:quotes[offer['id']]=unconfirmed(offer,checked,old_quotes.get(offer['id']))
+                completed.append(url)
+                checkpoint['registered_quotes']={'version':1,'checked_at':checked,'offers':quotes}
+                checkpoint['merchant_urls_completed']=completed
+                channel.schedule_write('checkpoint',checkpoint)
+            if set(quotes)!=set(offers):raise ValueError('incomplete_merchant_confirmation')
+            finished=now();checkpoint.update(status='complete',finished_at=finished,
+                seed_request_id=config['request_id'],merchant_network_calls=network_calls)
+            checkpoint['registered_quotes'].update(complete=True,checked_at=finished,registered_offers=len(offers))
+            channel.schedule_write('latest',checkpoint);channel.schedule_write('checkpoint',checkpoint)
+            safe={'status':'complete','actual_calls':result['actual_calls'],'registered_offers':len(offers),
+                  'selected_SKUs_confirmed':sum(q.get('status')=='live_variant' for q in quotes.values()),
+                  'merchant_products':len(completed),'publication':False,'website_uploaded':False}
+            channel.schedule_write('status',{**safe,'updated_at':finished})
+            return safe
+
+
+        def main():
+            with tempfile.TemporaryDirectory(prefix='catalog-scheduled-refresh-') as directory:
+                try:
+                    channel=ScheduledChannel(directory)
+                    result=run_schedule(channel,QuietGate(),ExistingProviderAdapter(),directory)
+                    print(json.dumps(result))
+                except Exception:
+                    print('scheduled_refresh_failed_without_website_or_source_changes')
+                    raise SystemExit(1) from None
+
+
+        if __name__=='__main__':main()
+
+        CATALOG_PY
+        export PYTHONPATH="$RUNNER_TEMP/catalog-code:$GITHUB_WORKSPACE"
+        if [ -n "$REQUEST_ID" ]; then
+         python "$RUNNER_TEMP/catalog-code/runner.py"
+        else
+         python "$RUNNER_TEMP/catalog-code/scheduled_runner.py"
+        fi
