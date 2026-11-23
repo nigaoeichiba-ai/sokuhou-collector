@@ -77,7 +77,26 @@ class WidgetTemplate(unittest.TestCase):
 
     def test_no_product_data_in_the_snippet(self):
         self.assertNotIn("itemCode", rw.WIDGET_SCRIPT)
-        self.assertIn('rakuten_size="300x250"', rw.WIDGET_SCRIPT)
+        for size in ("728x200", "468x160"):
+            self.assertIn(size, rw.WIDGET_SCRIPT)
+        self.assertNotIn("__", rw.block(True))
+
+    def test_types_by_position(self):
+        """2026-11-23: the last widget is the ranking, the others are page match; the first one is 300x250 on a phone, the others 200x600; a page about deaths keeps page match."""
+        t = rw.add("x/index.html", page(h2s=[f"節{i}" for i in range(7)]))
+        blocks = BLOCK_RE.findall(t)
+        self.assertEqual(len(blocks), 3)
+        self.assertEqual([('rakuten_items="ranking"' in b) for b in blocks], [False, False, True])
+        self.assertEqual([('"468x160":"200x600")' in b) for b in blocks], [False, True, True])
+        self.assertIn('"468x160":"300x250")', blocks[0])
+        harm = BLOCK_RE.findall(rw.add("deaths/index.html", page(h1="熊による死亡事故の一覧", h2s=["一覧"])))
+        self.assertEqual(len(harm), 1)
+        self.assertNotIn('rakuten_items="ranking"', harm[0])
+        self.assertIn('"468x160":"200x600")', harm[0])
+
+    def test_no_single_slot_rotating_size_is_left(self):
+        t = rw.add("x/index.html", page())
+        self.assertNotIn('rakuten_size="300x250";', t)      # the fixed rotating type is gone: the size is chosen by the screen width
 
 
 @unittest.skipUnless(HAVE_PYPDF, "pypdf is not installed")
