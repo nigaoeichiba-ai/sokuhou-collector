@@ -204,7 +204,7 @@ jobs:
                 if code:
                     seen_codes[code] = url
                     key = 'code:' + code
-                    params = {'itemCode': code, 'hits': 1}
+                    params = {'itemCode': code, 'hits': 1, 'availability': 0}
                 else:
                     shop, manage = urlsplit(url).path.strip('/').split('/')
                     # This is a candidate search, NOT a guessed numeric platform code.
@@ -353,7 +353,7 @@ jobs:
                     code = request.get('expected_item_code')
                     params = request.get('params', {})
                     if code:
-                        if not CODE.fullmatch(code) or params != {'itemCode': code, 'hits': 1}:
+                        if not CODE.fullmatch(code) or params not in ({'itemCode': code, 'hits': 1}, {'itemCode': code, 'hits': 1, 'availability': 0}):
                             raise ValueError('Registered code request mismatch')
                     else:
                         checked = make_search_plan(params)['requests'][0]['params']
