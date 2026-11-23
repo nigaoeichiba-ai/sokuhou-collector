@@ -18,7 +18,8 @@ JS = SIM / "nengajo-sim.js"
 
 SALE = "2026-11-16T15:00:00+09:00"      # 確認日の午後(早割は4社とも適用中。おたより本舗は表から外した)
 LATER = "2026-11-20T15:00:00+09:00"     # Rakpo の締切後・年賀状スクエアの46%OFFの最中
-AFTER = "2026-11-24T10:00:00+09:00"     # 年賀状スクエア・挨拶状・Rakpo の締切後(しまうまは11/30まで)
+AFTER = "2026-11-24T10:00:00+09:00"     # 挨拶状・Rakpo の締切後。年賀状スクエアは45%OFF(11/27 23:59まで)、しまうまは11/30まで
+LATE = "2026-11-28T10:00:00+09:00"      # 年賀状スクエアの45%OFFも終了(しまうまは11/30まで)
 
 
 def runtime() -> list[str]:
@@ -71,29 +72,35 @@ class TestNengajoSimCalc(unittest.TestCase):
 
     def test_after_the_deadlines_normal_prices(self):
         r = by_id(compute([mk(30, now=AFTER)])[0])
-        self.assertEqual(r["square"]["min"], 7113 + 2550)
-        self.assertEqual(r["aisatsu"]["min"], 7370 + 2550 + 759 + 330)
+        self.assertEqual(r["square"]["min"], 3912 + 2550)                                    # 45% OFF (11/24-11/27 23:59): official 21-30 sheets 3,912 yen
+        self.assertEqual((r["square"]["saleRate"], r["square"]["saleLabel"]), ("45%OFF", "11月27日(金)23:59"))
+        self.assertEqual(r["aisatsu"]["min"], 7370 + 2550 + 759 + 330)                       # 11,009 yen: no discount until the next one is on the official page
         self.assertEqual(r["rakpo"]["min"], 6200 + 2400 + 825)
         self.assertEqual(r["shimauma"]["min"], 6570)                                         # 12% OFF until 11/30
-        self.assertFalse(r["square"]["onSale"])
+        self.assertTrue(r["square"]["onSale"])
+        self.assertFalse(r["aisatsu"]["onSale"])
         self.assertTrue(r["shimauma"]["onSale"])
+        self.assertEqual(compute([mk(30, now=AFTER)])[0]["cheapest"], "square")              # 6,462 < shimauma 6,570
+        late_r = by_id(compute([mk(30, now=LATE)])[0])
+        self.assertEqual((late_r["square"]["onSale"], late_r["square"]["min"]), (False, 7113 + 2550))
         late = by_id(compute([mk(30, now="2026-12-01T00:00:00+09:00")])[0])["shimauma"]
         self.assertEqual((late["onSale"], late["min"]), (False, 140 * 30 + 2550 + 330))      # unit 165 -> 15% off = 140
 
     def test_deadline_edges_in_jst(self):
         c = [mk(30, now=t) for t in ("2026-11-17T01:59:00+09:00", "2026-11-17T02:00:00+09:00", "2026-11-18T23:59:30+09:00", "2026-11-19T00:00:00+09:00",
                                       "2026-11-19T12:59:00+09:00", "2026-11-19T13:00:00+09:00", "2026-11-23T23:59:00+09:00", "2026-11-24T00:00:00+09:00",
-                                      "2026-11-30T12:59:00+09:00", "2026-11-30T13:00:00+09:00")]
+                                      "2026-11-27T23:59:00+09:00", "2026-11-28T00:00:00+09:00", "2026-11-30T12:59:00+09:00", "2026-11-30T13:00:00+09:00")]
         g = [by_id(x) for x in compute(c)]
         T, F = True, False
-        self.assertEqual([x["rakpo"]["onSale"] for x in g], [T, F, F, F, F, F, F, F, F, F])
-        self.assertEqual([x["square"]["onSale"] for x in g], [T, T, T, T, T, T, T, F, F, F])
-        self.assertEqual([x["aisatsu"]["onSale"] for x in g], [T, T, T, T, T, T, T, F, F, F])
-        self.assertEqual([x["shimauma"]["onSale"] for x in g], [T] * 9 + [F])
+        self.assertEqual([x["rakpo"]["onSale"] for x in g], [T, F, F, F, F, F, F, F, F, F, F, F])
+        self.assertEqual([x["square"]["onSale"] for x in g], [T, T, T, T, T, T, T, T, T, F, F, F])
+        self.assertEqual([x["aisatsu"]["onSale"] for x in g], [T, T, T, T, T, T, T, F, F, F, F, F])
+        self.assertEqual([x["shimauma"]["onSale"] for x in g], [T] * 11 + [F])
+        self.assertEqual([x["square"]["saleRate"] for x in g][6:9], ["46%OFF", "45%OFF", "45%OFF"])   # the 46% sale ends 11/23 23:59, the 45% one starts 11/24 0:00
 
     def test_quantities_between_published_steps(self):
         r = by_id(compute([mk(35)])[0])
-        self.assertEqual(r["square"]["min"], 4159 + 85 * 35 )          # band 31-40
+        self.assertEqual(r["square"]["min"], 4159 + 85 * 35 )          # band 31-40 (46% OFF, before 11/24)
         self.assertFalse(r["aisatsu"]["estimate"])                     # 35 is in the official 5-step table
         self.assertEqual(r["aisatsu"]["print"], 4801)
         self.assertTrue(r["rakpo"]["estimate"])                        # rounded up to the 40-sheet price
@@ -126,6 +133,11 @@ class TestNengajoSimCalc(unittest.TestCase):
     def test_negative_a_broken_number_is_caught(self):
         """数字を1つ壊した複製で、同じ検算が落ちること(検算が何も見ていない、を防ぐ)。"""
         src = JS.read_text(encoding="utf-8")
+        for old, new in (("3912", "3913"),):
+            with tempfile.TemporaryDirectory() as d:
+                bad = Path(d) / "bad45.js"
+                bad.write_text(src.replace(old, new), encoding="utf-8")
+                self.assertNotEqual(by_id(compute([mk(30, now=AFTER)], js=bad)[0])["square"]["min"], 6462, old)
         for old, new in (("3842", "3843"), ("[30, 7370, 4422]", "[30, 7370, 4423]"), ("[30, 6200, 2790]", "[30, 6200, 2791]")):
             if old not in src:
                 continue    # the number is not literally in the file (5174 is computed); the next one covers it
@@ -168,7 +180,7 @@ class TestNengajoSimPage(unittest.TestCase):
         self.assertIn('<legend>宛名印刷</legend>', t)
         self.assertIn('<label class="opt" for="nsim-login">', t)
         # after the total-price table, before the next heading
-        self.assertLess(t.index("6,392円"), t.index("nsim-form"))
+        self.assertLess(t.index("6,462円"), t.index("nsim-form"))
         self.assertLess(t.index("nsim-form"), t.index("割引率だけ見ると損するワケ"))
         self.assertNotIn("この記事の表がそのまま使えます", t)
         self.assertIn("シミュレーターに入れて", t)
@@ -188,7 +200,7 @@ class TestNengajoSimPage(unittest.TestCase):
             self.assertIn(name, block)
         # no link to a company's price page (owner 2026-11-15, D26): the only link out of the block is the ad
         self.assertEqual(re.findall(r'<a [^>]*href="https?://([^/"]+)', block), ["px.a8.net"])
-        self.assertIn("2026年11月19日", block)
+        self.assertIn("2026年11月24日", block)
         self.assertNotRegex(block, r"<ol[^>]*>\s*</ol>")     # sitecheck refuses an empty list
 
 
