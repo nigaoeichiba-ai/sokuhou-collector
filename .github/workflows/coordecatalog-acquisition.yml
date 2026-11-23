@@ -786,6 +786,100 @@ jobs:
                     raise AcquisitionError('http_' + match[1] if match else 'provider_request_failed') from None
 
 
+        def validate_resume(prior, plan, request_id, fingerprint):
+            """Resume only a coherent successful prefix stopped for source priority."""
+            def reject():
+                raise ValueError('invalid_resume_state')
+
+            if (not isinstance(prior, dict) or prior.get('status') != 'paused_source_busy_or_unverified'
+                    or prior.get('version') != 1 or prior.get('request_id') != request_id
+                    or prior.get('plan_sha256') != fingerprint or prior.get('planned_calls') != plan['planned_calls']
+                    or prior.get('publication') is not False or prior.get('yorokobu_modified') is not False
+                    or not re.fullmatch('[0-9a-f]{32}', str(prior.get('run_id', '')))):
+                reject()
+            for field in ('started_at', 'finished_at'):
+                try:
+                    stamp = datetime.fromisoformat(prior[field].replace('Z', '+00:00'))
+                    if stamp.tzinfo is None:
+                        reject()
+                except (KeyError, TypeError, ValueError, AttributeError):
+                    reject()
+            requests = prior.get('requests')
+            count = prior.get('actual_calls')
+            if (not isinstance(requests, list) or type(count) is not int or count != len(requests)
+                    or not 0 <= count < plan['planned_calls']):
+                reject()
+            offers, products, candidates = prior.get('offers'), prior.get('products'), prior.get('new_candidates')
+            if not isinstance(offers, dict) or set(offers) != set(plan['offers']) or not isinstance(products, dict) or not isinstance(candidates, list):
+                reject()
+            def product(row):
+                if (not isinstance(row, dict) or not re.fullmatch(r'[a-zA-Z0-9_-]+:[a-zA-Z0-9_.-]+', str(row.get('item_code', '')))
+                        or type(row.get('product_price_jpy')) is not int or row['product_price_jpy'] < 0
+                        or row.get('price_scope') != 'product_level_not_selected_SKU'
+                        or row.get('stock_scope') != 'product_level_not_selected_SKU'
+                        or row.get('selected_sku_confirmation') != 'not_confirmed_by_product_API'):
+                    reject()
+                from acquisition_worker import canonical_product
+                try:
+                    url = canonical_product(row['product_url'])
+                    stamp = datetime.fromisoformat(row['checked_at'].replace('Z', '+00:00'))
+                    if stamp.tzinfo is None or url != row['product_url'] or '/'+row['item_code'].split(':')[0]+'/' not in url:
+                        reject()
+                except (KeyError, TypeError, ValueError, AttributeError):
+                    reject()
+                return row['item_code']
+            for code, row in products.items():
+                if product(row) != code:
+                    reject()
+            completed_offers = {}
+            search_done = False
+            for ordinal, record in enumerate(requests):
+                spec = plan['requests'][ordinal]
+                if (not isinstance(record, dict) or type(record.get('ordinal')) is not int or record['ordinal'] != ordinal
+                        or type(record.get('matched_items')) is not int or record['matched_items'] < 0
+                        or not isinstance(record.get('response_file'), str) or not record['response_file']):
+                    reject()
+                state = record.get('status')
+                if spec['kind'] == 'registered':
+                    if state not in ('product_confirmed', 'not_found', 'ambiguous'):
+                        reject()
+                    if (state == 'product_confirmed' and record['matched_items'] != 1) or (state == 'not_found' and record['matched_items'] != 0) or (state == 'ambiguous' and record['matched_items'] < 2):
+                        reject()
+                    for oid in spec['offer_ids']:
+                        completed_offers[oid] = (state, spec)
+                elif state != 'candidates_received':
+                    reject()
+                else:
+                    search_done = True
+            referenced = set()
+            for oid, spec in plan['offers'].items():
+                offer = offers[oid]
+                if not isinstance(offer, dict) or {k:v for k,v in offer.items() if k not in ('status','product_quote')} != spec:
+                    reject()
+                state, request = completed_offers.get(oid, ('not_checked', None))
+                if offer.get('status') != state:
+                    reject()
+                if state == 'product_confirmed':
+                    quote = offer.get('product_quote');code = product(quote)
+                    if (quote['product_url'] != request['expected_product_url']
+                            or (request.get('expected_item_code') and code != request['expected_item_code'])
+                            or products.get(code) != quote):
+                        reject()
+                    referenced.add(code)
+                elif 'product_quote' in offer:
+                    reject()
+            if candidates and not search_done:
+                reject()
+            for row in candidates:
+                code = product(row)
+                if code not in products or products[code]['product_url'] != row['product_url']:
+                    reject()
+                referenced.add(code)
+            if set(products) != referenced:
+                reject()
+            return count
+
+
         def execute(channel, request_id, gate, client, directory, *, deadline_seconds=900):
             bundle = channel.read(request_id, 'requests')
             if not isinstance(bundle, dict) or set(bundle) != {'request_id', 'plan', 'created_at'} or bundle['request_id'] != request_id:
@@ -803,9 +897,16 @@ jobs:
                       'actual_calls': 0, 'products': {}, 'offers': {oid: {**v, 'status': 'not_checked'} for oid, v in plan['offers'].items()},
                       'requests': [], 'new_candidates': [], 'publication': False, 'yorokobu_modified': False,
                       'plan_sha256': fingerprint}
+            offset = 0
+            if prior is not None:
+                offset = validate_resume(prior, plan, request_id, fingerprint)
+                result = copy.deepcopy(prior)
+                result['status'] = 'running'
+                result.pop('finished_at', None)
+                result['resumed_at'] = now()
+                result['resume_count'] = int(result.get('resume_count', 0)) + 1
             channel.write(request_id, result)
             deadline = time.monotonic() + deadline_seconds
-            offset = 0
 
             class ProgressStore(AcquisitionStore):
                 def state(self, run_id, value):
