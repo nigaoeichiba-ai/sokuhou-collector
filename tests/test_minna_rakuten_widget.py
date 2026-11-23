@@ -54,7 +54,7 @@ class Widget(unittest.TestCase):
     def test_sizes_follow_the_screen_and_link_types_follow_the_position(self):
         first, second, third = (rw.widget_block(n, 3) for n in range(3))
         for b in (first, second, third):
-            self.assertIn('s=w>=760?"728x200":(w>=480?"468x160":', b)             # PC: 3 across, tablet: 3 across
+            self.assertIn('s=w>=800?"728x200":(w>=540?"468x160":', b)             # PC: 3 across, tablet: 3 across
         self.assertIn('"300x250");', first)                                         # the first one on a phone stays small
         self.assertIn('"200x600");', second)
         self.assertIn('"200x600");', third)                                         # 3 stacked
@@ -69,8 +69,8 @@ class Widget(unittest.TestCase):
     def test_reserved_heights_match_the_sizes(self):
         css = (Path(__file__).resolve().parents[1] / "sites/minna/assets/style.css").read_text(encoding="utf-8")
         self.assertIn(".rk-box.rk-b { min-height: 600px; }", css)
-        self.assertIn("@media (min-width: 480px) { .rk-box, .rk-box.rk-b { min-height: 160px; } }", css)
-        self.assertIn("@media (min-width: 760px) { .rk-box, .rk-box.rk-b { min-height: 200px; } }", css)
+        self.assertIn("@media (min-width: 540px) { .rk-box, .rk-box.rk-b { min-height: 160px; } }", css)
+        self.assertIn("@media (min-width: 800px) { .rk-box, .rk-box.rk-b { min-height: 200px; } }", css)
 
     def test_add_to_pages_skips_404_and_non_html(self):
         pages = {"index.html": page(ILLUST), "404.html": page(ILLUST), "a.png": b"x", "sitemap.xml": "<x/>"}

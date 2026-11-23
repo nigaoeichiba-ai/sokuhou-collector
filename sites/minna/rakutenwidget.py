@@ -20,7 +20,7 @@ SKIP = {"404.html", "contact/thanks.html"}      # nothing to read there
 #   760px and up = 728x200 (3 side by side), 480-759px = 468x160 (3 side by side), under 480px = 200x600 (3 stacked; the first one on a phone stays 300x250 so it does not fill the first screen).
 # Link type: the first and second = page match (ctsmatch), the last one (before the related section) = ranking.  The code is written with document.write, the form Rakuten's own tag uses.
 TS = "1795398997582"
-_JS = ("(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,m=\"%(m)s\",s=w>=760?\"728x200\":(w>=480?\"468x160\":\"%(small)s\");"
+_JS = ("(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,m=\"%(m)s\",s=w>=800?\"728x200\":(w>=540?\"468x160\":\"%(small)s\");"
        "var c='<scr'+'ipt type=\"text/javascript\">rakuten_design=\"slide\";rakuten_affiliateId=\"" + AFFILIATE_ID + "\";rakuten_items=\"'+m+'\";rakuten_genreId=\"0\";"
        "rakuten_size=\"'+s+'\";rakuten_target=\"_blank\";rakuten_theme=\"gray\";rakuten_border=\"off\";rakuten_auto_mode=\"on\";rakuten_genre_title=\"off\";"
        "rakuten_recommend=\"on\";rakuten_ts=\"" + TS + "\";</scr'+'ipt><scr'+'ipt type=\"text/javascript\" src=\"" + WIDGET_SRC + "\"></scr'+'ipt>';document.write(c);})();")

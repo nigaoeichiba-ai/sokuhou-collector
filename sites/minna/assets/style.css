@@ -814,5 +814,5 @@ header.site nav a[aria-current] { background: var(--brand); color: var(--ink); }
 .rk-pr b { padding: 0 .7em; border-radius: 6px; background: var(--ink); color: var(--yellow); font-size: 1.05rem; font-weight: 900; letter-spacing: .08em; }
 .rk-box { display: flex; justify-content: center; max-width: 100%; overflow: hidden; min-height: 250px; }
 .rk-box.rk-b { min-height: 600px; }
-@media (min-width: 480px) { .rk-box, .rk-box.rk-b { min-height: 160px; } }
-@media (min-width: 760px) { .rk-box, .rk-box.rk-b { min-height: 200px; } }
+@media (min-width: 540px) { .rk-box, .rk-box.rk-b { min-height: 160px; } }
+@media (min-width: 800px) { .rk-box, .rk-box.rk-b { min-height: 200px; } }
