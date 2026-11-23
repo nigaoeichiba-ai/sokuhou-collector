@@ -68,6 +68,8 @@ class WidgetTest(unittest.TestCase):
         for b in (lead, mid, end):
             self.assertIn('"728x200"', b)
             self.assertIn('"468x160"', b)
+            self.assertIn("w>=800?", b)                                  # 728px needs a text column of 728px: 775px of window (768px gave 713px and cut the widget)
+            self.assertIn("w>=520?", b)
             self.assertIn("window.innerWidth", b)
             self.assertIn("document.write", b)
             self.assertIn("xml.affiliate.rakuten.co.jp/widget/js/rakuten_widget.js", b)
