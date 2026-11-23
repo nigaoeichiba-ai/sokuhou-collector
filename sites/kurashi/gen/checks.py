@@ -46,6 +46,8 @@ CHECKED_ON = {
 # (day, what, how, result, note); result is "ok" (the body was read), "top" (only the top page or a list was read: never counts as "no change") or "failed".
 # A later "ok" for the same what closes a "failed"; a "top" does not.
 FETCH_LOG = [
+    ("2026-11-23", "日本年金機構 お知らせ", "Chrome(トップページの本文)", "ok", "最新は10/30(障害年金の認定状況・年金請求書の審査)と10/9(令和8年分の国民年金保険料控除証明書の送付)。サイトの控除証明書の記述と矛盾なし"),
+    ("2026-11-23", "厚生労働省 介護・高齢者福祉", "Chrome(本文。/stf/newpage_00001.html は404)", "ok", "トピックスは統計の更新のみ(11/10)。介護の手続きに関わる制度変更は見当たらない"),
     ("2026-11-23", "国税庁 報道発表一覧", "WebFetch(一覧)", "top", "令和8年分の制度変更は7月の路線価のみ。一覧だけなので変更なしとはしない"),
     ("2026-11-23", "e-Tax お知らせ", "WebFetch(一覧)", "top", "法人向けの案内が中心。個人の確定申告の新しい案内は見当たらない(一覧のみ)"),
     ("2026-11-23", "日本年金機構 お知らせ", "WebFetch(日付つきの項目が取れない)", "failed", "メニューのみ。次回、別経路(検索・二次情報)で再実施"),
