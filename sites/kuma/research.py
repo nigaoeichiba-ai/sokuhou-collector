@@ -29,6 +29,7 @@ PREF_NOTES = ["injury-rate", "peak-month-type", "capture-vs-sightings", "big-yea
 LIVE_NOTES = ["concentration", "place-repeat", "first-sighting", "town-rank-stability", "same-town-streak", "hour-of-day", "record-days"]      # /live/<prefecture>/ pages
 SLUG = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 LINK = re.compile(r"\[\[([^\]|]+)\|(/[^\]\s]*)\]\]")
+SOURCE_NAME = re.compile(r"環境省")      # owner 2026-11-15/17: no agency or document name on screen; only the licence credit (credits, shown at the bottom) may name it. Say 「公的な表」「国の公表資料」 instead.
 BANNED = re.compile(r"必ず|絶対|100%|安全です|危険です|日本一|No\.1|ナンバーワン|最も危険|最も安全")
 MIN_LEAD, MAX_DESC = 40, 160
 
@@ -85,6 +86,16 @@ def problems(doc: dict, repo_root: Path | None = None) -> list[str]:
     texts = [doc["title"], doc["h1"], doc["description"], doc["lead"]] + doc["findings"] + doc["method"] + doc["caveats"]
     for s in doc["sections"]:
         texts += s.get("paragraphs", [])
+    extra: list[str] = [r.get("label", "") for r in doc.get("related", [])]
+    for s in doc["sections"]:
+        extra.append(s.get("h2", ""))
+        if s.get("table"):
+            extra += [s["table"].get("note", "")] + [str(h) for h in s["table"]["head"]] + [str(c) for r in s["table"]["rows"] for c in r]
+        if s.get("chart"):
+            extra += [s["chart"].get("title", ""), s["chart"].get("desc", "")]
+    for t in texts + extra:
+        if SOURCE_NAME.search(t):
+            out.append(f"source name on screen: {SOURCE_NAME.search(t).group(0)} (put it in credits only)")
     for t in texts:
         if BANNED.search(t):
             out.append(f"claim not allowed: {BANNED.search(t).group(0)}")
@@ -177,11 +188,11 @@ def hub_page(page, docs: list[dict], has_live: bool = True, has_digest: bool = T
             + ('週ごとの動きは<a href="/digest/">週ごとのまとめ</a>へ。' if has_digest else "ほかのデータは各ページへ。"))
     body = f"""{crumbs([("全国", "/"), ("研究ノート", None)])}
 <h1>熊(クマ)出没の研究ノート</h1>
-<p class="lead">このサイトが集めた自治体の目撃記録と、環境省の公表データを数えて、分かったことを書いています。時間帯、季節の進み、被害や捕獲との重なりなど、公式の一覧表だけでは見えない見方です。いま{len(docs)}本あります。</p>
+<p class="lead">このサイトが集めた自治体の目撃記録と、全国で公表されているデータを数えて、分かったことを書いています。時間帯、季節の進み、被害や捕獲との重なりなど、公式の一覧表だけでは見えない見方です。いま{len(docs)}本あります。</p>
 <ul class="link-list">{items}</ul>
 <p class="notice">どのノートにも、数え方と言えないことを書いています。件数の大小は、自治体ごとに数える対象が違うため、そのまま比べられません。{tail}</p>"""
     return page(path="/research/", title=f"熊(クマ)出没の研究ノート({len(docs)}本・自治体の記録を数えて分かったこと)",
-                description="自治体が公表している熊(クマ)の目撃記録と、環境省の公表データを数えて分かったこと。時間帯・季節の進み・被害や捕獲との重なりなど。数え方と限界つき。", body=body)
+                description="自治体が公表している熊(クマ)の目撃記録と、全国で公表されているデータを数えて分かったこと。時間帯・季節の進み・被害や捕獲との重なりなど。数え方と限界つき。", body=body)
 
 
 def home_block(docs: list[dict], limit: int = 3) -> str:

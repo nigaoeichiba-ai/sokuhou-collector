@@ -50,6 +50,30 @@ class ValidationTest(unittest.TestCase):
         self.assertTrue(any("credits" in p for p in bad(lambda d: d.__setitem__("credits", ["どこかのデータ"]))))
         self.assertTrue(any("findings" in p for p in bad(lambda d: d.__setitem__("findings", ["一つだけ。"]))))
 
+    def test_an_agency_name_on_screen_is_caught_but_the_licence_credit_may_name_it(self):
+        """Owner 2026-11-15/17: no source name on screen; only the credit line (the licence) may carry it."""
+        def bad(mutate):
+            d = sample()
+            mutate(d)
+            return [p for p in research.problems(d, ROOT) if "source name" in p]
+        self.assertTrue(bad(lambda d: d["sections"][0]["paragraphs"].append("環境省の表で数えました。")))
+        self.assertTrue(bad(lambda d: d["method"].append("環境省は、件数を公表しています。")))
+        self.assertTrue(bad(lambda d: d["sections"][1]["table"]["rows"][0].__setitem__(0, "環境省148件")))
+        self.assertTrue(bad(lambda d: d["sections"][1]["table"].__setitem__("note", "環境省の表の数字です。")))
+        self.assertTrue(bad(lambda d: d["sections"][0]["chart"].__setitem__("title", "環境省の表(件)")))
+        self.assertTrue(bad(lambda d: d.__setitem__("related", [{"label": "出没の減り方(環境省の表)", "href": "/research/x/"}])))
+        self.assertTrue(bad(lambda d: d.__setitem__("title", "環境省の表と合うか")))
+        self.assertEqual(bad(lambda d: d.__setitem__("credits", ["出典:環境省「クマに関する各種情報・取組」を加工して作成。環境省が作成したものではありません"])), [])
+
+    def test_no_published_note_names_an_agency_outside_its_credits(self):
+        for d in DOCS:
+            self.assertEqual([p for p in research.problems(d, ROOT) if "source name" in p], [], d["slug"])
+
+    def test_the_hub_page_does_not_name_an_agency(self):
+        src = Path(research.__file__).read_text(encoding="utf-8")
+        hub = src[src.index("def hub_page"):src.index("def home_block")]
+        self.assertNotIn("環境省", hub)
+
     def test_a_duplicate_slug_stops_the_build(self):
         with self.assertRaises(BuildError):
             research.check([sample(), sample()], ROOT)
