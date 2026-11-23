@@ -1,6 +1,6 @@
 """Rakuten motion widget (owner 2026-11-22, 2026-11-23; docs/office/RAKUTEN_WIDGET_PLAN_2026-11-22.md): at most three blocks per page, put in by wrap() for every page but the 404.
 
-2026-11-23: several products at once. By screen width: 760px and up = 728x200 (3 across), 480-759px = 468x160 (3 across), under 480px = 300x250 for the first block and
+2026-11-23: several products at once. By screen width: 800px and up = 728x200 (3 across), 540-799px = 468x160 (3 across), under 540px = 300x250 for the first block and
 200x600 (3 down) for the others. Only the size that is shown is loaded (document.write); the hidden sizes are never fetched.
 Link type: 1st and 2nd block = page match (ctsmatch), the last block (before the related articles) = ranking.
 Places: after the lead (before the 2nd content block), in the middle of a long page, and before the related-article list (or at the end).
@@ -15,11 +15,11 @@ TS = "1795398997582"
 
 _VARS = ('rakuten_design="slide";rakuten_affiliateId="' + AFFILIATE_ID + '";rakuten_items="\'+m+\'";rakuten_genreId="0";rakuten_size="\'+s+\'";rakuten_target="_blank";'
          'rakuten_theme="gray";rakuten_border="off";rakuten_auto_mode="on";rakuten_genre_title="off";rakuten_recommend="on";rakuten_ts="' + TS + '";')
-SCRIPT_TMPL = ('<script>(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,m="__M__",s=w>=760?"728x200":(w>=480?"468x160":"__MOBILE__");'
+SCRIPT_TMPL = ('<script>(function(){var w=window.innerWidth||document.documentElement.clientWidth||375,m="__M__",s=w>=800?"728x200":(w>=540?"468x160":"__MOBILE__");'
                "var c='<scr'+'ipt type=\"text/javascript\">" + _VARS + "</scr'+'ipt><scr'+'ipt type=\"text/javascript\" src=\"" + SCRIPT_URL + "\"></scr'+'ipt>';"
                "document.write(c);})();</script>")
 
-# (link type, size under 480px) for the first / a middle / the last block
+# (link type, size under 540px) for the first / a middle / the last block
 FIRST = ("ctsmatch", "300x250")
 MIDDLE = ("ctsmatch", "200x600")
 LAST = ("ranking", "200x600")

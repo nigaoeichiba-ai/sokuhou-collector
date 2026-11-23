@@ -42,7 +42,7 @@ class RakutenWidgetTest(unittest.TestCase):
                 self.assertEqual(re.findall(r"https?://[^\"\s']+", b), [rw.SCRIPT_URL], rel)       # document.write form, only the widget script
                 self.assertEqual(b.count("<script>"), 1, rel)
                 self.assertIn("rakuten_items=\"'+m+'\"", b, rel)
-                self.assertIn('w>=760?"728x200":(w>=480?"468x160":', b, rel)
+                self.assertIn('w>=800?"728x200":(w>=540?"468x160":', b, rel)
 
     def test_not_inside_a_table_or_before_the_lead(self):
         for rel, html in self.pages.items():

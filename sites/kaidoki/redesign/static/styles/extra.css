@@ -332,6 +332,6 @@ body{background:var(--p-paper)}
 .rk-widget .rk-frame{max-width:100%;margin:0 auto;overflow:hidden}
 .rk-widget .rk-m250{min-height:250px}
 .rk-widget .rk-m600{min-height:600px}
-@media (min-width:480px){.rk-widget .rk-frame{min-height:160px}}
-@media (min-width:760px){.rk-widget .rk-frame{min-height:200px}}
+@media (min-width:540px){.rk-widget .rk-frame{min-height:160px}}
+@media (min-width:800px){.rk-widget .rk-frame{min-height:200px}}
 @media (max-width:360px){.rk-widget{padding:10px 0 12px;border-width:2px;border-radius:8px}}
