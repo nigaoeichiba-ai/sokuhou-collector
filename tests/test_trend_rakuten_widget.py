@@ -62,9 +62,28 @@ class WidgetTemplate(unittest.TestCase):
         fixed = rw.add("x/index.html", ARTICLE).replace('class="rk-ad"', 'class="rk-ad" style="position:fixed;bottom:0"')
         self.assertTrue(widget_problems("x", fixed))
 
-    def test_no_product_data_in_the_snippet(self):
-        self.assertNotIn("itemCode", rw.WIDGET_SCRIPT)
-        self.assertIn("rakuten_size=\"300x250\"", rw.WIDGET_SCRIPT)
+    def test_multi_product_form(self):
+        t = rw.add("x/index.html", ARTICLE)
+        blocks = BLOCK_RE.findall(t)
+        kinds = [re.search(r'm="(\w+)"', b).group(1) for b in blocks]
+        self.assertEqual(kinds, ["ctsmatch", "ctsmatch", "ranking"])               # the last one (before the related articles) is the ranking
+        for b in blocks:
+            for size in ("728x200", "468x160"):
+                self.assertIn(size, b)
+            self.assertNotIn("1795331642284", b)
+        self.assertIn('"300x250"', blocks[0])                                      # the lead one stays small on a phone
+        self.assertNotIn('"300x250"', blocks[1])
+        self.assertIn('"200x600"', blocks[1])
+        self.assertIn("rk-first", blocks[0])
+        self.assertNotIn("rk-first", blocks[1])
+        self.assertNotIn("itemCode", t)
+
+    def test_negative_single_slide_form_is_detected(self):
+        self.assertTrue(multi_problems(rw.add("x/index.html", ARTICLE).replace("728x200", "300x250")))
+
+
+def multi_problems(t: str) -> list[str]:
+    return [f"728x200 が無い" for b in BLOCK_RE.findall(t) if "728x200" not in b]
 
 
 class RealBuild(unittest.TestCase):
@@ -76,6 +95,7 @@ class RealBuild(unittest.TestCase):
                 t = (out / rel).read_text(encoding="utf-8")
                 self.assertGreaterEqual(t.count('class="rk-ad"'), 2, rel)
                 self.assertEqual(widget_problems(rel, t), [], rel)
+                self.assertEqual(multi_problems(t), [], rel)
             for rel in ("about/index.html", "privacy/index.html", "contact/index.html", "404.html"):
                 self.assertNotIn('class="rk-ad"', (out / rel).read_text(encoding="utf-8"), rel)
             for f in out.rglob("index.html"):
