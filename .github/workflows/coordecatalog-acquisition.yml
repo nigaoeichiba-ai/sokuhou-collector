@@ -603,6 +603,13 @@ jobs:
                 '.github/workflows/deploy.yml': 'ffdbf8c62dc20d46aaa0702d982e116bbb42c6f8c73d458d328d9262a03d3735',
                 'sokuhou/deployplan.py': '5d11a802f581767742b2ef5bff1745ca7f853b68f871ecde6d787c2b32a148cc',
             }
+            # Current checkout audit only: frequent has no provider credentials and
+            # invokes an empty collection group. This does not claim an unavailable
+            # historical run commit is identical. Future local changes fail closed.
+            AUDITED_FREQUENT = {
+                '.github/workflows/frequent.yml': '5a4963bbcfff515328327519fb07a850932f9cdcfdc38c5864d00b68dcd04a5b',
+                'sokuhou/run.py': '071564e36b0c653d87fb388bf3c2d72711bd42b015c0062115e345b19e95f40c',
+            }
             NON_API_SITES = {'saichin', 'kuma', 'minna', 'atomou', 'shiken', 'kurashi', 'trend', 'kaidoki'}
             SELF_WORKFLOW = 'coordecatalog-acquisition.yml'
 
@@ -628,13 +635,14 @@ jobs:
                         raise ValueError('scheduler_budget_low')
                     return json.load(response)
 
-            def _audited_deploy_source(self, run):
+            def _audited_source(self, run, expected_sources, scope):
                 sha = run.get('head_sha', '')
                 if not isinstance(sha, str) or not re.fullmatch('[0-9a-f]{40}', sha):
                     return False
-                if sha not in self.audited_commits:
+                cache_key = (scope, sha)
+                if cache_key not in self.audited_commits:
                     valid = True
-                    for path, expected in self.AUDITED_DEPLOY.items():
+                    for path, expected in expected_sources.items():
                         data = self._json('/contents/' + path + '?ref=' + sha)
                         if not isinstance(data, dict) or data.get('encoding') != 'base64':
                             valid = False
@@ -643,8 +651,24 @@ jobs:
                         if hashlib.sha256(content).hexdigest() != expected:
                             valid = False
                             break
-                    self.audited_commits[sha] = valid
-                return self.audited_commits[sha]
+                    self.audited_commits[cache_key] = valid
+                return self.audited_commits[cache_key]
+
+            def _audited_deploy_source(self, run):
+                return self._audited_source(run, self.AUDITED_DEPLOY, "deploy")
+
+            def _audited_local_frequent(self):
+                # Old scheduler entries may reference a deleted commit. Apply the same
+                # current-config audit used for other non-API workflows, strengthened
+                # here by exact pins for both the workflow and its executable entry.
+                for path, expected in self.AUDITED_FREQUENT.items():
+                    source = self.repo_root / path
+                    if not source.is_file():
+                        return False
+                    content = source.read_bytes().replace(b'\r\n', b'\n')
+                    if hashlib.sha256(content).hexdigest() != expected:
+                        return False
+                return True
 
             def _deploy_busy(self, run, listing_status):
                 if listing_status == 'queued' or not self._audited_deploy_source(run):
@@ -725,6 +749,10 @@ jobs:
                                     self.blocked += 1
                                     self.idle = False
                                     return False
+                                continue
+                            if filename == 'frequent.yml':
+                                if not self._audited_local_frequent():
+                                    raise ValueError('unverified_frequent_source')
                                 continue
                             source = self.repo_root / '.github/workflows' / filename
                             if not source.is_file():
