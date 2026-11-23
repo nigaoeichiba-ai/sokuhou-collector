@@ -709,7 +709,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool, links: dict) -> str:
 <ul class="pref-nav">{nav}</ul>
 <div class="next-box"><h2>次に見る</h2><ul><li><a href="/ranking/sightings/">{icon("chart")}出没件数ランキング</a></li><li><a href="/trend/">{icon("calendar")}月別の推移</a></li><li><a href="/season/">{icon("calendar")}何月に多いか(都道府県別)</a></li><li><a href="/emergency/">{icon("emergency")}緊急銃猟</a></li><li><a href="/guide/">{icon("guide")}クマへの対処法</a></li></ul></div>
 <p class="notice">{freshness(d)}</p>"""
-    return page(cfg, preview, scripts=True, path=f"/{r['slug']}/", title=f"{r['name']}の熊(クマ)出没・人身被害・死亡事故({fy_label(done)}・環境省の速報値)",
+    return page(cfg, preview, scripts=True, path=f"/{r['slug']}/", title=f"{r['name']}の熊(クマ)による死亡事故・出没件数・人身被害({fy_label(done)}・環境省の速報値)",
                 description=f"{fatal_summary(d, r)}出没件数(月別)、人身被害、緊急銃猟、公式の出没情報への案内もあります。環境省の速報値をもとにしています。", body=body)
 
 
