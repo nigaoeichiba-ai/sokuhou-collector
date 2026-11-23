@@ -9,7 +9,7 @@ run-name: Catalog acquisition ${{ inputs.request_id || 'scheduled refresh' }}
         required: false
         type: string
   schedule:
-  - cron: 17 */6 * * *
+  - cron: 17 * * * *
 permissions:
   contents: read
   actions: read
@@ -185,7 +185,8 @@ jobs:
 
         def make_registered_plan(root=ROOT):
             root = Path(root)
-            offers = load_js(root / 'runtime-data.js')['offers'] + load_js(root / 'appliance-data.js')['offers']
+            from daily_catalog import compose_catalog
+            offers = compose_catalog(root,load_js(root / 'runtime-data.js'))['offers'] + load_js(root / 'appliance-data.js')['offers']
             registry = json.loads((root / 'commerce-registration.json').read_text(encoding='utf-8')).get('offers', {})
             requests = {}
             selected = {}
@@ -1189,6 +1190,7 @@ jobs:
         from runner import PrivateChannel, QuietGate, ExistingProviderAdapter, execute, now, NAMESPACE
         from acquisition_worker import validate_plan
         from variant_reader import MAX_BODY, VariantError, canonical_product_url, verify_registered_variant
+        from schedule_plan import partition_plan, part_request_id, merge_results
 
 
         def fingerprint(plan):
@@ -1201,6 +1203,18 @@ jobs:
                 return d if d.tzinfo else None
             except (AttributeError,TypeError,ValueError):
                 return None
+
+
+        def still_fresh(result):
+            """Leave six hours of validity after completing a large refresh cycle."""
+            if not isinstance(result,dict):return True
+            dates=[product.get('checked_at') for product in result.get('products',{}).values()]
+            if not dates and result.get('actual_calls',0):dates=[result.get('finished_at') or result.get('updated_at')]
+            for value in dates:
+                date=stamp(value)
+                if not date or date>datetime.now(timezone.utc):raise ValueError('invalid_saved_fact_date')
+                if (datetime.now(timezone.utc)-date).total_seconds()>18*3600:return False
+            return True
 
 
         class ScheduledChannel(PrivateChannel):
@@ -1234,6 +1248,22 @@ jobs:
             def write(self,request_id,result):
                 if request_id!=self.checkpoint['cycle_id']:raise ValueError('cycle_identity_mismatch')
                 self.checkpoint['product_result']=copy.deepcopy(result)
+                self.channel.schedule_write('checkpoint',self.checkpoint)
+
+
+        class ProductPart:
+            def __init__(self,channel,plan,checkpoint,index,created_at):
+                self.channel=channel;self.plan=plan;self.checkpoint=checkpoint;self.index=index;self.created_at=created_at
+                self.rid=part_request_id(checkpoint['cycle_id'],index)
+
+            def read(self,request_id,area):
+                if request_id!=self.rid:raise ValueError('part_identity_mismatch')
+                if area=='requests':return {'request_id':self.rid,'plan':self.plan,'created_at':self.created_at}
+                return self.checkpoint.get('product_parts',{}).get(str(self.index))
+
+            def write(self,request_id,result):
+                if request_id!=self.rid:raise ValueError('part_identity_mismatch')
+                self.checkpoint.setdefault('product_parts',{})[str(self.index)]=copy.deepcopy(result)
                 self.channel.schedule_write('checkpoint',self.checkpoint)
 
 
@@ -1308,8 +1338,8 @@ jobs:
             if not config['enabled']:return {'status':'disabled','publication':False}
             seed=channel.read(config['request_id'],'requests')
             if not isinstance(seed,dict) or seed.get('request_id')!=config['request_id']:raise ValueError('invalid_seed_request')
-            plan=seed.get('plan');validate_plan(plan)
-            if plan.get('purpose')!='registered_catalog' or not plan['offers'] or fingerprint(plan)!=config['plan_sha256']:
+            plan=seed.get('plan');parts=partition_plan(plan)
+            if fingerprint(plan)!=config['plan_sha256']:
                 raise ValueError('schedule_plan_mismatch')
             latest=channel.schedule_read('latest')
             if latest and latest.get('plan_sha256')==config['plan_sha256'] and latest.get('status')=='complete':
@@ -1327,7 +1357,39 @@ jobs:
                             'merchant_urls_completed':[],'publication':False,'yorokobu_modified':False,'website_uploaded':False}
             cid=checkpoint['cycle_id'];bundle={'request_id':cid,'plan':plan,'created_at':seed['created_at']}
             checkpoint['status']='running'
-            result=api_execute(ProductCycle(channel,bundle,checkpoint),cid,gate,client,directory,deadline_seconds=deadline_seconds)
+            if not still_fresh(checkpoint.get('product_result')):
+                checkpoint.pop('product_result',None)
+            api_deadline=clock()+deadline_seconds
+            def budgeted_gate():
+                return clock()<api_deadline and gate()
+            if len(parts)==1:
+                result=api_execute(ProductCycle(channel,bundle,checkpoint),cid,budgeted_gate,client,directory,deadline_seconds=deadline_seconds)
+            else:
+                stored=checkpoint.get('product_parts',{})
+                if not isinstance(stored,dict) or any(k not in {str(i) for i in range(len(parts))} for k in stored):
+                    raise ValueError('invalid_part_checkpoint')
+                for key,record in list(stored.items()):
+                    if not still_fresh(record):del stored[key]
+                checkpoint['product_parts']=stored
+                for index,part in enumerate(parts):
+                    existing=stored.get(str(index))
+                    if existing and existing.get('status')=='complete':
+                        if existing.get('request_id')!=part_request_id(cid,index) or existing.get('plan_sha256')!=fingerprint(part):
+                            raise ValueError('invalid_completed_part')
+                        continue
+                    remaining=api_deadline-clock()
+                    if remaining<=0:
+                        checkpoint['status']='paused_source_busy_or_unverified';channel.schedule_write('checkpoint',checkpoint)
+                        return {'status':checkpoint['status'],'actual_calls':sum(r.get('actual_calls',0) for r in stored.values()),'publication':False}
+                    result=api_execute(ProductPart(channel,part,checkpoint,index,seed['created_at']),part_request_id(cid,index),
+                        budgeted_gate,client,Path(directory)/('part-'+str(index)),deadline_seconds=max(1,int(remaining)))
+                    stored=checkpoint['product_parts']
+                    if result['status']!='complete':
+                        checkpoint['status']=result['status'];channel.schedule_write('checkpoint',checkpoint)
+                        channel.schedule_write('status',{'status':result['status'],'actual_calls':sum(r.get('actual_calls',0) for r in stored.values()),
+                            'parts_completed':sum(r.get('status')=='complete' for r in stored.values()),'parts_total':len(parts),'updated_at':now(),'publication':False})
+                        return {'status':result['status'],'actual_calls':sum(r.get('actual_calls',0) for r in stored.values()),'publication':False}
+                result=merge_results(plan,parts,[stored[str(i)] for i in range(len(parts))],cid)
             checkpoint['product_result']=result
             if result['status']!='complete':
                 checkpoint['status']=result['status'];channel.schedule_write('checkpoint',checkpoint)
@@ -1343,6 +1405,12 @@ jobs:
             if (not isinstance(completed,list) or len(completed)!=len(set(completed)) or not set(completed).issubset(grouped)
                     or not isinstance(quotes,dict) or set(quotes)!={o['id'] for url in completed for o in grouped[url]}):
                 raise ValueError('invalid_merchant_checkpoint')
+            for url in list(completed):
+                observed=[stamp(quotes[o['id']].get('checked_at')) for o in grouped[url]]
+                if any(not d or d>datetime.now(timezone.utc) for d in observed):raise ValueError('invalid_saved_SKU_date')
+                if any((datetime.now(timezone.utc)-d).total_seconds()>18*3600 for d in observed):
+                    completed.remove(url)
+                    for o in grouped[url]:quotes.pop(o['id'],None)
             # Existing facts are only fallback facts, retaining their original dates.
             old_quotes=(latest or {}).get('registered_quotes',{}).get('offers',{})
             deadline=clock()+deadline_seconds;last=None;network_calls=0
@@ -1395,6 +1463,86 @@ jobs:
 
 
         if __name__=='__main__':main()
+
+        CATALOG_PY
+        cat > "$RUNNER_TEMP/catalog-code/schedule_plan.py" <<'CATALOG_PY'
+        """Bounded whole-catalog refresh plans, partitioned into existing75-call jobs."""
+        import copy,hashlib,json,re
+        from acquisition_worker import validate_plan
+
+        MAX_PRODUCTS=1000
+        MAX_OFFERS=4000
+        PART_SIZE=75
+
+
+        def fingerprint(plan):
+            return hashlib.sha256(json.dumps(plan,sort_keys=True,ensure_ascii=False).encode()).hexdigest()
+
+
+        def partition_plan(plan):
+            if (not isinstance(plan,dict) or plan.get('version')!=1 or plan.get('purpose')!='registered_catalog'
+                    or plan.get('publication') is not False or not isinstance(plan.get('requests'),list)
+                    or not isinstance(plan.get('offers'),dict) or not 1<=len(plan['offers'])<=MAX_OFFERS
+                    or not 1<=len(plan['requests'])<=MAX_PRODUCTS or plan.get('planned_calls')!=len(plan['requests'])):
+                raise ValueError('invalid_whole_catalog_plan')
+            if len(json.dumps(plan,ensure_ascii=False).encode())>1_900_000:raise ValueError('whole_catalog_plan_too_large')
+            forbidden={'applicationId','accessKey','authorization','token','password','secret'}
+            def visit(value):
+                if isinstance(value,dict):
+                    if forbidden.intersection(value):raise ValueError('authentication_in_plan')
+                    for v in value.values():visit(v)
+                elif isinstance(value,list):
+                    for v in value:visit(v)
+            visit(plan)
+            seen=set();parts=[];products=set()
+            for offset in range(0,len(plan['requests']),PART_SIZE):
+                requests=plan['requests'][offset:offset+PART_SIZE];ids=[]
+                for request in requests:
+                    if request.get('kind')!='registered':raise ValueError('scheduled_search_not_allowed')
+                    key=request.get('expected_item_code') or request.get('expected_product_url')
+                    if key in products:raise ValueError('duplicate_product_request')
+                    products.add(key)
+                    for oid in request.get('offer_ids',[]):
+                        if oid in seen:raise ValueError('duplicate_registered_offer')
+                        seen.add(oid);ids.append(oid)
+                if any(oid not in plan['offers'] for oid in ids):raise ValueError('unknown_registered_offer')
+                part=copy.deepcopy(plan);part['requests']=copy.deepcopy(requests)
+                part['offers']={oid:copy.deepcopy(plan['offers'][oid]) for oid in ids};part['planned_calls']=len(requests)
+                validate_plan(part);parts.append(part)
+            if seen!=set(plan['offers']):raise ValueError('orphan_registered_offer')
+            return parts
+
+
+        def part_request_id(cycle_id,index):
+            if not re.fullmatch('[0-9a-f]{32}',str(cycle_id)) or type(index) is not int or not 0<=index<14:
+                raise ValueError('invalid_part_identity')
+            return hashlib.sha256((cycle_id+':'+str(index)).encode()).hexdigest()[:32]
+
+
+        def merge_results(plan,parts,results,cycle_id):
+            if len(parts)!=len(results) or not parts:raise ValueError('incomplete_product_parts')
+            merged={'version':1,'request_id':cycle_id,'run_id':cycle_id,'status':'complete',
+                'planned_calls':plan['planned_calls'],'actual_calls':0,'products':{},'offers':{},'requests':[],
+                'new_candidates':[],'publication':False,'yorokobu_modified':False,'plan_sha256':fingerprint(plan)}
+            offset=0
+            for index,(part,result) in enumerate(zip(parts,results)):
+                if (not isinstance(result,dict) or result.get('status')!='complete'
+                        or result.get('request_id')!=part_request_id(cycle_id,index)
+                        or result.get('plan_sha256')!=fingerprint(part)
+                        or result.get('actual_calls')!=part['planned_calls']
+                        or set(result.get('offers',{}))!=set(part['offers'])
+                        or result.get('publication') is not False or result.get('yorokobu_modified') is not False):
+                    raise ValueError('invalid_product_part')
+                for code,product in result['products'].items():
+                    if code in merged['products']:raise ValueError('overlapping_product_parts')
+                    merged['products'][code]=copy.deepcopy(product)
+                merged['offers'].update(copy.deepcopy(result['offers']))
+                for r in result.get('requests',[]):merged['requests'].append({**r,'ordinal':offset+r['ordinal']})
+                merged['actual_calls']+=result['actual_calls'];offset+=part['planned_calls']
+            if set(merged['offers'])!=set(plan['offers']):raise ValueError('incomplete_merged_offers')
+            merged['started_at']=min(r['started_at'] for r in results)
+            merged['finished_at']=max(r['finished_at'] for r in results)
+            return merged
 
         CATALOG_PY
         export PYTHONPATH="$RUNNER_TEMP/catalog-code:$GITHUB_WORKSPACE"
