@@ -15,6 +15,7 @@ FIRST = "2026-11-03"
 # day -> the pages whose dates were compared with the sources that day
 CHECKED_ON = {
     "2026-11-23": [
+        "/nenmatsu-chosei/",                                  # 国税庁「年末調整がよくわかるページ(令和8年分)」の本文(変更点4項目)をChromeで再び読んで照合した
         "/furusato/deadline/", "/furusato/one-stop/",         # 総務省「税金の控除について」の本文(3月15日・5団体・控除の式)で照合した
         "/nengajo/",                                          # 日本郵便の2026-08-31発表(検索の公式PDF要約)で引受12/20・差出目安12/27・販売1/15・1/3配達を照合した
     ],
@@ -46,6 +47,7 @@ CHECKED_ON = {
 # (day, what, how, result, note); result is "ok" (the body was read), "top" (only the top page or a list was read: never counts as "no change") or "failed".
 # A later "ok" for the same what closes a "failed"; a "top" does not.
 FETCH_LOG = [
+    ("2026-11-23", "国税庁 年末調整がよくわかるページ(令和8年分)", "Chrome(本文。/gensen/nenmatsu/ は存在せず /gensen/nencho/index.htm)", "ok", "変更点4項目(基礎控除・給与所得控除の最低保障額・扶養親族等の所得要件・23歳未満の扶養親族の生命保険料控除の特例)。サイトと一致"),
     ("2026-11-23", "日本年金機構 お知らせ", "Chrome(トップページの本文)", "ok", "最新は10/30(障害年金の認定状況・年金請求書の審査)と10/9(令和8年分の国民年金保険料控除証明書の送付)。サイトの控除証明書の記述と矛盾なし"),
     ("2026-11-23", "厚生労働省 介護・高齢者福祉", "Chrome(本文。/stf/newpage_00001.html は404)", "ok", "トピックスは統計の更新のみ(11/10)。介護の手続きに関わる制度変更は見当たらない"),
     ("2026-11-23", "国税庁 報道発表一覧", "WebFetch(一覧)", "top", "令和8年分の制度変更は7月の路線価のみ。一覧だけなので変更なしとはしない"),
