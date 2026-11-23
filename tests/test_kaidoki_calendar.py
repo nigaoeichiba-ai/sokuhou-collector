@@ -316,7 +316,7 @@ class HomeTest(unittest.TestCase):
         h = self.pages["index.html"]
         m = re.search(r'(<article class="sale-(?:tile|block)"(?:(?!</article>).)*?Yahoo!ショッピング ブラックフライデー 2026(?:(?!</article>).)*</article>)', h, flags=re.S)
         self.assertTrue(m)
-        self.assertTrue(row_day_problems(h.replace(m.group(1), m.group(1).replace("確認日 2026/11/23", "確認日 2026/11/12"))))
+        self.assertTrue(row_day_problems(h.replace(m.group(1), m.group(1).replace("確認日 2026/11/24", "確認日 2026/11/12"))))
 
     def test_negative_a_stale_top_page_is_caught(self):
         h = self.pages["index.html"]
