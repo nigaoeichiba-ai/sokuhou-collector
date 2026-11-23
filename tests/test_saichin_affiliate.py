@@ -4,7 +4,8 @@ import unittest
 
 from tests.test_saichin_pages import SiteFixture
 
-A8_CODES = {"mamaworks": "4BEL1J+AAX4YY", "workstaff": "4BEL1J+AFOLT6", "coconala": "4BEL1J+AJ97FU"}
+A8_CODES = {"mamaworks": "4BEL1J+AAX4YY", "workstaff": "4BEL1J+AFOLT6", "coconala": "4BEL1J+AJ97FU",
+            "emeao": "4BGR94+A07C2Y", "kyujin": "4BGR94+A3RXPM"}
 # 求人・副業の導線を置いたページ(貼らない所の理由は、公開結果の表に書く)
 PLACES = {
     "guide/wall/index.html": ("mamaworks", "workstaff", "coconala"),
@@ -13,6 +14,8 @@ PLACES = {
     "guide/city/index.html": ("mamaworks", "workstaff"),
     "guide/calculate/index.html": ("mamaworks", "workstaff"),
     "check/index.html": ("mamaworks", "workstaff"),
+    "guide/below/index.html": ("emeao", "kyujin"),   # 雇う人向け(2026-11-23 承認)
+    "guide/excluded/index.html": ("emeao",),
 }
 
 
@@ -43,7 +46,7 @@ class AffiliateLinksTest(SiteFixture):
             html = self.read(rel)
             for p in programs:
                 self.assertIn(f"a8mat={A8_CODES[p]}", html, (rel, p))
-            self.assertIn('<p class="pr-note"><strong>PR</strong>', html, rel)
+            self.assertRegex(html, r'<(p|div) class="pr-note"><strong>PR</strong>', rel)
 
     def test_a_page_with_an_a8_link_says_pr(self):
         for rel in (r for r in self.files if r.endswith(".html")):

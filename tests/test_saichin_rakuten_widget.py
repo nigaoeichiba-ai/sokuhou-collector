@@ -111,5 +111,32 @@ class SeekerJobs(SiteFixture):
             content.AFFILIATE["workstaff"] = saved
 
 
+class EmployerLinks(SiteFixture):
+    def test_every_prefecture_page_has_the_employer_links_after_a_reason(self):
+        for r in self.d["rows"]:
+            t = self.read(f"{r['slug']}/index.html")
+            i = t.index(f"{r['name']}で人を雇う方へ")
+            for code, reason in (("4BGR94+A07C2Y", "給与計算を任せる"), ("4BGR94+A3RXPM", "求人を出す")):
+                j = t.index(reason, i)
+                self.assertLess(j, t.index(f"a8mat={code}", i), (r["slug"], code))      # the reason sentence comes first
+                self.assertEqual(t.count(f"a8mat={code}+"), 2, (r["slug"], code))        # the link and its 1x1 image
+            self.assertLess(t.index("a8mat=4BGR94+A3RXPM", i), t.index("<h2>関連ページ</h2>"))
+
+    def test_the_two_guides_have_them(self):
+        for slug, both in (("below", True), ("excluded", False)):
+            t = self.read(f"guide/{slug}/index.html")
+            self.assertIn("事業主の方へ", t)
+            self.assertIn("a8mat=4BGR94+A07C2Y", t)
+            self.assertEqual("a8mat=4BGR94+A3RXPM" in t, both)
+
+    def test_nothing_is_shown_without_a_code(self):
+        saved = content.AFFILIATE.pop("emeao"), content.AFFILIATE.pop("kyujin")
+        try:
+            self.assertEqual(work_pages.pref_employer("愛知県", "1,195円", "2026年10月1日"), "")
+            self.assertEqual(work_pages.GUIDE_EMPLOYER["below"](), "")
+        finally:
+            content.AFFILIATE["emeao"], content.AFFILIATE["kyujin"] = saved
+
+
 if __name__ == "__main__":
     unittest.main()

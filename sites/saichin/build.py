@@ -533,7 +533,7 @@ def pref_page(d: dict, r: dict, cfg: dict, preview: bool) -> str:
 {pref_story.monthly_table(d, r, sys.modules[__name__])}
 {earnings_table(r)}
 {wage_section(d, r) if d.get("wage") else ""}
-<h2>関連ページ</h2>
+{work_pages.pref_employer(r['name'], yen(r['amount']), jp_date(r['effective_date']))}<h2>関連ページ</h2>
 <nav class="related" aria-label="関連ページ">
 <h3>同じ地方({esc(r['region'])})の最低賃金</h3>
 <ul class="mini-list">{mate_html}</ul>
@@ -981,7 +981,7 @@ def guide_page(d: dict, g: dict, cfg: dict, preview: bool) -> str:
 {work_pages.PR_TOP if g.get('pr') else ''}<p class="lead">{esc(g['lead'])}</p>
 <img class="page-banner guide" src="/assets/img/guide-{g.get('image', g['slug'])}.webp" alt="" width="800" height="450">
 <article class="prose">{BODIES[g['slug']](d, sys.modules[__name__]) if g.get('dynamic') else g['body']}</article>
-{work_pages.jobs_block(esc(g['jobs'])) if g.get('jobs') else ''}<p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、公式の発表でご確認ください。</p>
+{work_pages.jobs_block(esc(g['jobs'])) if g.get('jobs') else ''}{work_pages.GUIDE_EMPLOYER[g['slug']]() if g['slug'] in work_pages.GUIDE_EMPLOYER else ''}<p class="notice">内容の確認日: {jp_date(g.get('verified', content.VERIFIED_AT))}。制度は改正されることがあります。最新の内容は、公式の発表でご確認ください。</p>
 <h2>ほかの解説</h2>
 <ul class="link-list">{others}</ul>
 {extra}"""

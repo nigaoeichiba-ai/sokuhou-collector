@@ -505,6 +505,17 @@ AFFILIATE = {
         "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AFOLT6+5WA8+5YRHE" target="_blank" rel="nofollow sponsored noopener">ワークスタッフナビ</a>\n'
                 '<img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=4BEL1J+AFOLT6+5WA8+5YRHE" alt="">',
     },
+    # 2026-11-23: approved (employers: payroll outsourcing and job advertising).  Text links of media 004 as A8 gave them (素材001 / 素材002), with the rel and target the site's rules require.
+    "emeao": {
+        "program": "EMEAO(給与計算代行)", "a8_program": "s00000012115030", "asset": "素材001",
+        "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BGR94+A07C2Y+2LHA+4YM976" target="_blank" rel="nofollow sponsored noopener">給与計算代行会社をまとめて探す</a>\n'
+                '<img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=4BGR94+A07C2Y+2LHA+4YM976" alt="">',
+    },
+    "kyujin": {
+        "program": "求人広告ドットコム", "a8_program": "s00000023673002", "asset": "素材002",
+        "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BGR94+A3RXPM+52NU+BX3J6" target="_blank" rel="nofollow sponsored noopener">求人広告ドットコム</a>\n'
+                '<img border="0" width="1" height="1" src="https://www13.a8.net/0.gif?a8mat=4BGR94+A3RXPM+52NU+BX3J6" alt="">',
+    },
     "coconala": {
         "program": "ココナラ", "a8_program": "s00000012624001", "asset": "素材001",
         "html": '<a href="https://px.a8.net/svt/ejp?a8mat=4BEL1J+AJ97FU+2PEO+5YJRM" target="_blank" rel="nofollow sponsored noopener">ココナラ</a>\n'

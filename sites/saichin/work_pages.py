@@ -69,6 +69,39 @@ def region_jobs(rname: str, low_name: str, low_text: str) -> str:
         f"{rname}")
 
 
+def employer_block(heading: str, intro: str, payroll: str = "", hiring: str = "") -> str:
+    """雇う人向けの「次の行動」の節。理由の1文(payroll / hiring)をリンクの直前に置く。コードのあるプログラムだけを出し、1つも出ないときは何も出さない。
+    文は div.jobs-p(県別ページで同じ型が並ぶため。seeker_block と同じ理由)。"""
+    nl = "\n"
+    items = []
+    if payroll and aff("emeao"):
+        items.append(f'<div class="jobs-p"><strong>給与計算を任せる</strong>: {payroll}</div>{nl}{aff("emeao")}')
+    if hiring and aff("kyujin"):
+        items.append(f'<div class="jobs-p"><strong>求人を出す</strong>: {hiring}</div>{nl}{aff("kyujin")}')
+    if not items:
+        return ""
+    return f'<h2>{heading}</h2>{nl}<div class="jobs-p">{intro}</div>{nl}{PR_DIV}' + "".join(items)
+
+
+PAYROLL_REASON = "改定後の額で全員の時給を計算し直す手間を減らしたいときの、給与計算代行会社の探し方の例です。"
+HIRING_REASON = "時給を上げて人を集めるときに、求人広告の出し方を比べる例です。"
+
+
+def pref_employer(name: str, amount_text: str, effective_text: str) -> str:
+    return employer_block(
+        f"{name}で人を雇う方へ",
+        f"{name}の最低賃金は{amount_text}で、{effective_text}から適用されます。時給がこの額を下回っていないかを、全員分確かめてください。",
+        PAYROLL_REASON, HIRING_REASON)
+
+
+GUIDE_EMPLOYER = {
+    "below": lambda: employer_block(
+        "事業主の方へ", "時給が最低賃金を下回っていたときは、改定後の額で賃金を計算し直して、差額を払います。", PAYROLL_REASON, HIRING_REASON),
+    "excluded": lambda: employer_block(
+        "事業主の方へ", "手当を除いて時給を比べる計算は、人数が多いほど手間がかかります。", "手当を除いた時給の計算を含めて、給与計算を外に任せる選択肢の例です。"),
+}
+
+
 def wall_rows(d: dict) -> list[dict]:
     out = []
     for r in sorted(d["rows"], key=lambda r: (-r["amount"], r["name"])):
