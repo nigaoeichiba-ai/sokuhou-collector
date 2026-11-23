@@ -1,0 +1,730 @@
+# Manual acquisition only. No website deploy, source-site mutation, artifacts or public product data.
+name: coordecatalog-acquisition
+run-name: Catalog acquisition ${{ inputs.request_id }}
+'on':
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: Private request UUID only; no merchant data
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: coordecatalog-acquisition
+  cancel-in-progress: false
+jobs:
+  acquire:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      REQUEST_ID: ${{ inputs.request_id }}
+      GH_TOKEN: ${{ github.token }}
+      RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+      RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
+      XSERVER_HOST: ${{ secrets.XSERVER_HOST }}
+      XSERVER_USER: ${{ secrets.XSERVER_USER }}
+      XSERVER_SSH_KEY: ${{ secrets.XSERVER_SSH_KEY }}
+      EXPECTED_SSH_HOST_KEY_SHA256: SHA256:D2AjNvvigSIbxkY1nM8gQ+cSif8adrNotxGXBu+gYNg
+    steps:
+    - uses: actions/checkout@v5
+      with:
+        persist-credentials: false
+    - uses: actions/setup-python@v6
+      with:
+        python-version: '3.13'
+    - name: Acquire into independent private namespace only
+      run: |
+        set -eu
+        umask 077
+        mkdir -p "$RUNNER_TEMP/catalog-code"
+        cat > "$RUNNER_TEMP/catalog-code/acquisition_store.py" <<'CATALOG_PY'
+        """Private acquisition records and an independent, non-destructive process lock."""
+        from __future__ import annotations
+        from contextlib import contextmanager
+        from datetime import datetime, timezone
+        from pathlib import Path
+        import json
+        import os
+        import re
+        import tempfile
+        import uuid
+
+        ROOT = Path(__file__).resolve().parent
+
+
+        def utcnow():
+            return datetime.now(timezone.utc).isoformat()
+
+
+        def atomic_json(path, value):
+            path = Path(path)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            handle, temporary = tempfile.mkstemp(prefix='.' + path.name + '-', dir=path.parent)
+            try:
+                with os.fdopen(handle, 'w', encoding='utf-8') as stream:
+                    json.dump(value, stream, ensure_ascii=False, separators=(',', ':'))
+                    stream.flush()
+                    os.fsync(stream.fileno())
+                os.replace(temporary, path)
+            finally:
+                if os.path.exists(temporary):
+                    os.unlink(temporary)
+
+
+        class AcquisitionStore:
+            def __init__(self, root=ROOT):
+                self.project = Path(root).resolve()
+                self.directory = self.project / '.private' / 'acquisition'
+
+            @contextmanager
+            def lock(self):
+                self.directory.mkdir(parents=True, exist_ok=True)
+                path = self.directory / 'worker.lock'
+                handle = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY, 0o600)
+                try:
+                    with os.fdopen(handle, 'w', encoding='utf-8') as stream:
+                        json.dump({'pid': os.getpid(), 'created_at': utcnow()}, stream)
+                    yield
+                finally:
+                    path.unlink(missing_ok=True)
+
+            def begin(self, plan):
+                run_id = uuid.uuid4().hex
+                path = self.directory / 'runs' / run_id
+                path.mkdir(parents=True, exist_ok=False)
+                atomic_json(path / 'request.json', plan)
+                return run_id
+
+            def run_path(self, run_id):
+                if not isinstance(run_id, str) or not re.fullmatch(r'[0-9a-f]{32}', run_id):
+                    raise ValueError('Invalid private run ID')
+                return self.directory / 'runs' / run_id
+
+            def response(self, run_id, ordinal, value):
+                if type(ordinal) is not int or not 0 <= ordinal < 200:
+                    raise ValueError('Invalid response index')
+                path = self.run_path(run_id) / ('response-' + str(ordinal).zfill(3) + '.json')
+                atomic_json(path, value)
+                return str(path.relative_to(self.directory))
+
+            def state(self, run_id, value):
+                atomic_json(self.run_path(run_id) / 'state.json', value)
+
+            def finish(self, run_id, value):
+                atomic_json(self.run_path(run_id) / 'result.json', value)
+                # A paused/failed run is inspectable but never replaces the last full run.
+                atomic_json(self.directory / 'latest-attempt.json', value)
+                if value['status'] == 'complete':
+                    atomic_json(self.directory / 'latest.json', value)
+
+
+        CATALOG_PY
+        cat > "$RUNNER_TEMP/catalog-code/acquisition_worker.py" <<'CATALOG_PY'
+        """Local/private Rakuten acquisition. No yorokobu mutation, public upload or retries.
+
+        Credentials must be supplied in an authorized acquisition application's execution
+        environment. An existing website's Referer is never silently borrowed. Product
+        responses never confirm a selected colour/size/SKU.
+        """
+        from __future__ import annotations
+        from datetime import datetime, timezone
+        from pathlib import Path
+        from urllib.error import HTTPError, URLError
+        from urllib.parse import urlencode, urlsplit
+        from urllib.request import Request, build_opener, HTTPRedirectHandler
+        import argparse
+        import json
+        import os
+        import re
+        import time
+
+        from acquisition_store import AcquisitionStore, utcnow
+
+        ROOT = Path(__file__).resolve().parent
+        API = 'https://openapi.rakuten.co.jp/ichibams/api/IchibaItem/Search/20260701'
+        CODE = re.compile(r'^[A-Za-z0-9_-]+:[0-9]+$')
+        OFFER = re.compile(r'^offer-[A-Za-z0-9_-]+$')
+        SAFE_SEARCH = {'keyword', 'shopCode', 'genreId', 'minPrice', 'maxPrice', 'sort', 'availability', 'imageFlag', 'hits', 'page'}
+
+
+        class AcquisitionError(Exception):
+            """A safe code only, never a credential-containing network exception."""
+
+
+        def canonical_product(value):
+            if not isinstance(value, str) or len(value) > 4000:
+                raise ValueError('Invalid product URL')
+            p = urlsplit(value)
+            if (p.scheme != 'https' or p.hostname != 'item.rakuten.co.jp' or p.username is not None
+                    or p.password is not None or p.port is not None
+                    or not re.fullmatch(r'/[A-Za-z0-9_-]+/[A-Za-z0-9_.-]+/?', p.path)
+                    or any(x in ('.', '..') for x in p.path.split('/'))):
+                raise ValueError('Invalid product URL')
+            return 'https://item.rakuten.co.jp' + p.path.rstrip('/') + '/'
+
+
+        def load_js(path):
+            s = Path(path).read_text(encoding='utf-8-sig')
+            return json.JSONDecoder().raw_decode(s[s.index('{', s.index('=')):])[0]
+
+
+        def make_registered_plan(root=ROOT):
+            root = Path(root)
+            offers = load_js(root / 'runtime-data.js')['offers'] + load_js(root / 'appliance-data.js')['offers']
+            registry = json.loads((root / 'commerce-registration.json').read_text(encoding='utf-8')).get('offers', {})
+            requests = {}
+            selected = {}
+            seen_codes = {}
+            for offer in offers:
+                oid = offer.get('offer_id', offer.get('id'))
+                if not isinstance(oid, str) or not OFFER.fullmatch(oid) or oid in selected:
+                    raise ValueError('Invalid or duplicate registered offer')
+                url = canonical_product(offer['product_url'])
+                code = offer.get('api_item_code')
+                record = registry.get(oid, {})
+                if not code and record.get('product_url') == offer['product_url']:
+                    code = record.get('api_item_code')
+                if code is not None and (not isinstance(code, str) or not CODE.fullmatch(code)):
+                    raise ValueError('Invalid registered item code')
+                if code and code in seen_codes and seen_codes[code] != url:
+                    raise ValueError('One item code maps to multiple products')
+                if code:
+                    seen_codes[code] = url
+                    key = 'code:' + code
+                    params = {'itemCode': code, 'hits': 1}
+                else:
+                    shop, manage = urlsplit(url).path.strip('/').split('/')
+                    # This is a candidate search, NOT a guessed numeric platform code.
+                    key = 'url:' + url
+                    params = {'shopCode': shop, 'keyword': manage[:128], 'hits': 30, 'page': 1}
+                request = requests.setdefault(key, {'kind': 'registered', 'params': params,
+                    'expected_item_code': code, 'expected_product_url': url, 'offer_ids': []})
+                request['offer_ids'].append(oid)
+                selected[oid] = {'product_url': url, 'api_item_code': code,
+                    'variant_id': offer.get('variant_id'), 'selected_options': offer.get('selected_options'),
+                    'selected_sku_confirmation': 'not_confirmed_by_product_API'}
+            return {'version': 1, 'purpose': 'registered_catalog', 'created_at': utcnow(),
+                'offers': selected, 'requests': list(requests.values()),
+                'planned_calls': len(requests), 'minimum_interval_seconds': 3,
+                'publication': False}
+
+
+        def make_search_plan(query):
+            if not isinstance(query, dict) or set(query) - SAFE_SEARCH:
+                raise ValueError('Unsupported search parameter')
+            params = dict(query)
+            keyword = params.get('keyword')
+            if not isinstance(keyword, str) or not 1 <= len(keyword.strip()) <= 128 or any(ord(c) < 32 for c in keyword):
+                raise ValueError('A bounded keyword is required')
+            params['keyword'] = keyword.strip()
+            for name, low, high, default in [('page', 1, 3, 1), ('hits', 1, 30, 30),
+                    ('minPrice', 0, 999999999, None), ('maxPrice', 0, 999999999, None),
+                    ('genreId', 0, 999999999, None), ('availability', 0, 1, None), ('imageFlag', 0, 1, None)]:
+                if name in params or default is not None:
+                    v = params.get(name, default)
+                    if type(v) is not int or not low <= v <= high:
+                        raise ValueError('Search bound invalid')
+                    params[name] = v
+            if params.get('minPrice', 0) > params.get('maxPrice', 999999999):
+                raise ValueError('Price range invalid')
+            if 'shopCode' in params and not re.fullmatch(r'[A-Za-z0-9_-]{1,100}', str(params['shopCode'])):
+                raise ValueError('Invalid shop')
+            if 'sort' in params and params['sort'] not in ('standard', '+itemPrice', '-itemPrice', '+reviewCount', '-reviewCount', '+reviewAverage', '-reviewAverage', '+updateTimestamp', '-updateTimestamp'):
+                raise ValueError('Invalid sort')
+            return {'version': 1, 'purpose': 'new_candidates', 'created_at': utcnow(), 'offers': {},
+                'requests': [{'kind': 'search', 'params': params, 'offer_ids': []}],
+                'planned_calls': 1, 'minimum_interval_seconds': 3, 'publication': False}
+
+
+        class RejectRedirect(HTTPRedirectHandler):
+            def redirect_request(self, *args, **kwargs):
+                raise AcquisitionError('redirect_rejected')
+
+
+        class EnvClient:
+            def __init__(self):
+                self.app = os.getenv('COORDE_ACQUISITION_APP_ID', '')
+                self.key = os.getenv('COORDE_ACQUISITION_ACCESS_KEY', '')
+                app_type = os.getenv('COORDE_ACQUISITION_APP_TYPE', '')
+                self.origin = os.getenv('COORDE_ACQUISITION_ORIGIN', '')
+                if not self.app or not self.key or os.getenv('COORDE_ACQUISITION_SCOPE_CONFIRMED') != '1':
+                    raise AcquisitionError('authorized_credentials_required')
+                if app_type == 'web':
+                    p = urlsplit(self.origin)
+                    if (p.scheme != 'https' or not p.hostname or p.username is not None or p.password is not None
+                            or p.query or p.fragment or p.path not in ('', '/')):
+                        raise AcquisitionError('registered_origin_required')
+                    self.origin = self.origin.rstrip('/')
+                elif app_type == 'backend':
+                    if os.getenv('COORDE_ACQUISITION_BACKEND_REGISTERED') != '1':
+                        raise AcquisitionError('registered_backend_required')
+                    self.origin = ''
+                else:
+                    raise AcquisitionError('application_type_required')
+                self.opener = build_opener(RejectRedirect())
+
+            def fetch(self, params):
+                if not isinstance(params, dict) or set(params) - (SAFE_SEARCH | {'itemCode'}):
+                    raise AcquisitionError('unsupported_request_parameters')
+                query = {'applicationId': self.app, 'format': 'json', 'formatVersion': 2, **params}
+                headers = {'accessKey': self.key, 'User-Agent': 'Coordecatalog-authorized-acquisition/1.0'}
+                if self.origin:
+                    headers.update(Origin=self.origin, Referer=self.origin + '/')
+                try:
+                    req = Request(API + '?' + urlencode(query), headers=headers)
+                    with self.opener.open(req, timeout=20) as response:
+                        raw = response.read(3_000_001)
+                    if not raw or len(raw) > 3_000_000:
+                        raise AcquisitionError('empty_or_oversized_response')
+                    data = json.loads(raw)
+                    if not isinstance(data, dict):
+                        raise AcquisitionError('invalid_response')
+                    return data
+                except HTTPError as error:
+                    # The response is inspected privately only for an explicit not-found.
+                    if error.code in (400, 404):
+                        raw = error.read(4096).decode('utf-8', 'replace')
+                        if error.code == 404 or 'not_found' in raw.lower():
+                            return {'Items': []}
+                    raise AcquisitionError('http_' + str(error.code)) from None
+                except (URLError, TimeoutError, OSError, ValueError):
+                    raise AcquisitionError('transport_or_json_error') from None
+
+
+        def normalize_row(raw, checked_at):
+            if not isinstance(raw, dict):
+                raise ValueError('Invalid item')
+            row = raw.get('Item', raw)
+            code = row.get('itemCode')
+            if not isinstance(code, str) or not CODE.fullmatch(code):
+                raise ValueError('Invalid returned code')
+            url = canonical_product(row.get('itemUrl'))
+            if urlsplit(url).path.strip('/').split('/')[0] != code.split(':')[0]:
+                raise ValueError('Returned code/shop mismatch')
+            price = row.get('itemPrice')
+            if type(price) is not int or price < 0:
+                raise ValueError('Invalid product price')
+            available = row.get('availability')
+            available = True if available in (1, '1') else False if available in (0, '0') else None
+            name = row.get('itemName')
+            if not isinstance(name, str) or not name.strip() or len(name) > 10000:
+                raise ValueError('Invalid product name')
+            images = row.get('mediumImageUrls') or row.get('smallImageUrls') or []
+            safe_images = []
+            if not isinstance(images, list):
+                raise ValueError('Invalid image list')
+            for image in images[:10]:
+                value = image.get('imageUrl') if isinstance(image, dict) else image
+                if not isinstance(value, str) or len(value) > 4000:
+                    continue
+                p = urlsplit(value)
+                if p.scheme == 'https' and p.hostname in {'thumbnail.image.rakuten.co.jp', 'image.rakuten.co.jp', 'shop.r10s.jp', 'tshop.r10s.jp', 'r.r10s.jp'} and p.username is None and p.password is None and p.port is None:
+                    safe_images.append({'imageUrl': value})
+            return {'item_code': code, 'product_url': url, 'provider_product_name_raw': name,
+                'product_price_jpy': price, 'product_available': available, 'checked_at': checked_at,
+                'price_scope': 'product_level_not_selected_SKU', 'stock_scope': 'product_level_not_selected_SKU',
+                'selected_sku_confirmation': 'not_confirmed_by_product_API',
+                'image_urls': safe_images,
+                'shop_name': row.get('shopName')}
+
+
+        def validate_plan(plan):
+            if not isinstance(plan, dict) or plan.get('version') != 1 or plan.get('publication') is not False:
+                raise ValueError('Invalid private plan')
+            requests = plan.get('requests')
+            if not isinstance(requests, list) or not 1 <= len(requests) <= 200 or plan.get('planned_calls') != len(requests):
+                raise ValueError('Invalid request count')
+            for request in requests:
+                if request.get('kind') == 'registered':
+                    url = canonical_product(request.get('expected_product_url'))
+                    code = request.get('expected_item_code')
+                    params = request.get('params', {})
+                    if code:
+                        if not CODE.fullmatch(code) or params != {'itemCode': code, 'hits': 1}:
+                            raise ValueError('Registered code request mismatch')
+                    else:
+                        checked = make_search_plan(params)['requests'][0]['params']
+                        if checked != params or params.get('shopCode') != urlsplit(url).path.strip('/').split('/')[0]:
+                            raise ValueError('Fallback search mismatch')
+                    if not request.get('offer_ids') or any(not OFFER.fullmatch(oid) or oid not in plan.get('offers', {}) for oid in request['offer_ids']):
+                        raise ValueError('Unknown offer in request')
+                    for oid in request['offer_ids']:
+                        if canonical_product(plan['offers'][oid]['product_url']) != url:
+                            raise ValueError('Offer/product mismatch')
+                elif request.get('kind') == 'search':
+                    make_search_plan(request.get('params'))
+                else:
+                    raise ValueError('Invalid request type')
+
+
+        def run_plan(plan, store, client, *, quiet_guard, max_calls=None, interval=3.0, clock=time.monotonic, sleep=time.sleep):
+            validate_plan(plan)
+            if interval < 3 or interval > 60:
+                raise ValueError('Acquisition interval must be3..60 seconds')
+            budget = plan['planned_calls'] if max_calls is None else max_calls
+            if type(budget) is not int or not 1 <= budget <= 200:
+                raise ValueError('Invalid API call budget')
+            def quiet():
+                try:
+                    return quiet_guard() is True
+                except Exception:
+                    return False
+            with store.lock():
+                run_id = store.begin(plan)
+                result = {'version': 1, 'run_id': run_id, 'started_at': utcnow(), 'status': 'running',
+                    'planned_calls': plan['planned_calls'], 'actual_calls': 0, 'products': {},
+                    'offers': {oid: {**spec, 'status': 'not_checked'} for oid, spec in plan['offers'].items()},
+                    'requests': [], 'new_candidates': [], 'publication': False, 'yorokobu_modified': False}
+                last = None
+                for ordinal, request in enumerate(plan['requests']):
+                    if result['actual_calls'] >= budget:
+                        result['status'] = 'paused_call_budget'
+                        break
+                    if not quiet():
+                        result['status'] = 'paused_source_busy_or_unverified'
+                        break
+                    if last is not None:
+                        wait = interval - (clock() - last)
+                        if wait > 0:
+                            sleep(wait)
+                    if not quiet():
+                        result['status'] = 'paused_source_busy_or_unverified'
+                        break
+                    last = clock()
+                    result['actual_calls'] += 1
+                    store.state(run_id, {'status': 'running', 'planned_calls': result['planned_calls'],
+                        'actual_calls': result['actual_calls'], 'request_index': ordinal, 'updated_at': utcnow()})
+                    try:
+                        response = client.fetch(dict(request['params']))
+                        if not isinstance(response, dict) or not response:
+                            raise AcquisitionError('empty_or_invalid_response')
+                        raw_rows = response.get('Items', response.get('items'))
+                        if not isinstance(raw_rows, list):
+                            raise AcquisitionError('missing_item_list')
+                        response_file = store.response(run_id, ordinal, response)
+                        checked_at = utcnow()
+                        try:
+                            rows = [normalize_row(x, checked_at) for x in raw_rows]
+                            unique = {}
+                            for row in rows:
+                                previous = unique.get(row['item_code'])
+                                if previous is not None and previous != row:
+                                    raise ValueError('Ambiguous duplicate item code')
+                                unique[row['item_code']] = row
+                        except (ValueError, TypeError):
+                            raise AcquisitionError('invalid_returned_product') from None
+                        if request['kind'] == 'registered':
+                            matches = [r for r in rows if r['product_url'] == request['expected_product_url']
+                                and (not request.get('expected_item_code') or r['item_code'] == request['expected_item_code'])]
+                            state = 'product_confirmed' if len(matches) == 1 else 'not_found' if not matches else 'ambiguous'
+                            for oid in request['offer_ids']:
+                                result['offers'][oid]['status'] = state
+                                if len(matches) == 1:
+                                    result['offers'][oid]['product_quote'] = matches[0]
+                            if len(matches) == 1:
+                                result['products'][matches[0]['item_code']] = matches[0]
+                        else:
+                            state = 'candidates_received'
+                            result['new_candidates'].extend(rows)
+                            for row in rows:
+                                result['products'][row['item_code']] = row
+                        result['requests'].append({'ordinal': ordinal, 'status': state, 'response_file': response_file,
+                            'matched_items': len(matches) if request['kind'] == 'registered' else len(rows)})
+                    except AcquisitionError as error:
+                        result['status'] = 'stopped_api_error'
+                        result['error_code'] = str(error) if re.fullmatch(r'[a-z0-9_]{1,80}', str(error)) else 'safe_acquisition_error'
+                        break
+                    except Exception:
+                        result['status'] = 'stopped_unexpected_error'
+                        result['error_code'] = 'safe_acquisition_error'
+                        break
+                if result['status'] == 'running':
+                    result['status'] = 'complete'
+                result['finished_at'] = utcnow()
+                store.state(run_id, {k: v for k, v in result.items() if k in ('status', 'planned_calls', 'actual_calls', 'finished_at', 'error_code')})
+                store.finish(run_id, result)
+                return result
+
+
+        def quiet_file_guard(path):
+            """External scheduler refreshes this private idle proof; it is never invented."""
+            path = Path(path)
+            def check():
+                try:
+                    if not path.is_file() or path.stat().st_size > 4096:
+                        return False
+                    proof = json.loads(path.read_text(encoding='utf-8'))
+                    stamp = datetime.fromisoformat(proof['checked_at'])
+                    if stamp.tzinfo is None:
+                        return False
+                    return proof.get('idle') is True and 0 <= (datetime.now(timezone.utc) - stamp).total_seconds() <= 30
+                except (OSError, ValueError, KeyError, TypeError):
+                    return False
+            return check
+
+
+        def main():
+            parser = argparse.ArgumentParser(description='Private acquisition; never uploads or edits yorokobu.')
+            actions = parser.add_mutually_exclusive_group(required=True)
+            actions.add_argument('--plan', action='store_true')
+            actions.add_argument('--run', action='store_true')
+            parser.add_argument('--request', type=Path)
+            parser.add_argument('--keyword')
+            parser.add_argument('--quiet-file', type=Path)
+            parser.add_argument('--max-calls', type=int)
+            args = parser.parse_args()
+            try:
+                plan = json.loads(args.request.read_text(encoding='utf-8')) if args.request else make_search_plan({'keyword': args.keyword}) if args.keyword else make_registered_plan()
+                validate_plan(plan)
+                store = AcquisitionStore()
+                if args.plan:
+                    from acquisition_store import atomic_json
+                    atomic_json(store.directory / 'request-plan.json', plan)
+                    print(json.dumps({'planned_calls': plan['planned_calls'], 'registered_offers': len(plan['offers']), 'network_calls': 0}))
+                    return
+                if not args.quiet_file:
+                    raise AcquisitionError('external_idle_proof_required')
+                result = run_plan(plan, store, EnvClient(), quiet_guard=quiet_file_guard(args.quiet_file), max_calls=args.max_calls)
+                print(json.dumps({k: result[k] for k in ('status', 'planned_calls', 'actual_calls', 'run_id')}))
+                if result['status'] != 'complete':
+                    raise SystemExit(2)
+            except (ValueError, OSError, AcquisitionError):
+                print('取得処理を開始・完了できませんでした。非公開の設定と処理記録をご確認ください。')
+                raise SystemExit(1)
+
+
+        if __name__ == '__main__':
+            main()
+
+        CATALOG_PY
+        cat > "$RUNNER_TEMP/catalog-code/runner.py" <<'CATALOG_PY'
+        """Manual, isolated acquisition in the existing provider execution environment.
+
+        Only a random queue ID is public. Plans/results go to a distinct private area.
+        Existing website files, feeds, workflows and jobs are never modified/cancelled.
+        """
+        from pathlib import Path
+        from datetime import datetime, timezone
+        import copy
+        import base64
+        import hashlib
+        import json
+        import os
+        import re
+        import subprocess
+        import sys
+        import tempfile
+        import time
+        import uuid
+        from urllib.request import Request, urlopen
+
+        from acquisition_worker import run_plan, validate_plan, AcquisitionError
+        from acquisition_store import AcquisitionStore
+        from sokuhou.rakuten import Client
+
+        NAMESPACE = 'coordecatalog-acquisition-private'
+        REPO = 'nigaoeichiba-ai/sokuhou-collector'
+
+
+        def now():
+            return datetime.now(timezone.utc).isoformat()
+
+
+        class PrivateChannel:
+            def __init__(self, directory):
+                self.directory = Path(directory)
+                host, user = os.environ.get('XSERVER_HOST', ''), os.environ.get('XSERVER_USER', '')
+                if not re.fullmatch(r'[A-Za-z0-9.-]{1,253}', host) or not re.fullmatch(r'[A-Za-z0-9_]{1,80}', user):
+                    raise ValueError('private_target_mismatch')
+                key = self.directory / 'key'
+                key.write_text(os.environ['XSERVER_SSH_KEY'].strip() + '\n', encoding='utf-8')
+                key.chmod(0o600)
+                known = self.directory / 'known_hosts'
+                scanned = subprocess.run(['ssh-keyscan', '-T', '10', '-p', '10022', '-t', 'ed25519', host],
+                                         capture_output=True, timeout=15)
+                trusted = []
+                for line in scanned.stdout.decode('ascii', 'replace').splitlines():
+                    fields = line.split()
+                    if len(fields) == 3 and fields[1] == 'ssh-ed25519':
+                        digest = 'SHA256:' + base64.b64encode(hashlib.sha256(base64.b64decode(fields[2])).digest()).decode().rstrip('=')
+                        if digest == os.environ['EXPECTED_SSH_HOST_KEY_SHA256']:
+                            trusted.append(line)
+                if not trusted:
+                    raise ValueError('private_host_key_mismatch')
+                known.write_text('\n'.join(trusted) + '\n', encoding='ascii')
+                self.base = ['ssh', '-i', str(key), '-p', '10022', '-oBatchMode=yes',
+                             '-oStrictHostKeyChecking=yes', '-oUserKnownHostsFile=' + str(known),
+                             '-oConnectTimeout=12', user + '@' + host]
+
+            def read(self, request_id, area):
+                if not re.fullmatch('[0-9a-f]{32}', request_id) or area not in ('requests', 'results'):
+                    raise ValueError('invalid_private_path')
+                command = 'p="$HOME/' + NAMESPACE + '/' + area + '/' + request_id + '.json"; [ -f "$p" ] || exit 44; cat "$p"'
+                response = subprocess.run(self.base + [command], capture_output=True, timeout=30)
+                if response.returncode == 44:
+                    return None
+                if response.returncode or not response.stdout or len(response.stdout) > 8_000_000:
+                    raise ValueError('private_read_failed')
+                return json.loads(response.stdout)
+
+            def write(self, request_id, value):
+                if not re.fullmatch('[0-9a-f]{32}', request_id):
+                    raise ValueError('invalid_private_path')
+                body = json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode('utf-8')
+                if len(body) > 8_000_000:
+                    raise ValueError('private_result_too_large')
+                command = ('umask 077; d="$HOME/' + NAMESPACE + '/results"; mkdir -p "$d"; '
+                           't="$d/.' + request_id + '.tmp"; cat > "$t" && mv "$t" "$d/' + request_id + '.json"')
+                result = subprocess.run(self.base + [command], input=body, capture_output=True, timeout=30)
+                if result.returncode:
+                    raise ValueError('private_write_failed')
+
+
+        class QuietGate:
+            """Give existing API jobs priority; unknown scheduler state means no call."""
+            def __init__(self):
+                self.last = 0.0
+                self.idle = False
+                self.checks = 0
+                self.blocked = 0
+
+            def __call__(self):
+                if time.monotonic() - self.last < 1:
+                    return self.idle
+                self.last = time.monotonic()
+                self.checks += 1
+                try:
+                    own = int(os.environ['GITHUB_RUN_ID'])
+                    # Include every known API consumer. Unknown state never grants idle.
+                    for status in ('in_progress', 'queued'):
+                        req = Request('https://api.github.com/repos/' + REPO + '/actions/runs?status=' + status + '&per_page=100',
+                                      headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                                               'Accept': 'application/vnd.github+json', 'User-Agent': 'catalog-private-acquisition'})
+                        with urlopen(req, timeout=15) as response:
+                            if int(response.headers.get('X-RateLimit-Remaining', '0')) < 100:
+                                raise ValueError('scheduler_budget_low')
+                            data = json.load(response)
+                        if data.get('total_count', 1000) > 100:
+                            raise ValueError('scheduler_list_incomplete')
+                        for run in data.get('workflow_runs', []):
+                            if run.get('id') == own:
+                                continue
+                            path = run.get('path', '')
+                            # The set is computed from the existing repository, read-only.
+                            filename = path.split('@')[0].rsplit('/', 1)[-1]
+                            source = Path('.github/workflows') / filename
+                            if not source.is_file():
+                                raise ValueError('unknown_running_workflow')
+                            text = source.read_text(encoding='utf-8')
+                            if 'RAKUTEN_APP_ID' in text or filename in ('deploy.yml', 'mall-refresh.yml', 'daily.yml', 'frequent.yml'):
+                                self.blocked += 1
+                                self.idle = False
+                                return False
+                    self.idle = True
+                except Exception:
+                    self.idle = False
+                return self.idle
+
+
+        class ExistingProviderAdapter:
+            def __init__(self):
+                cfg = json.loads(Path('sites/yorokobu/config.json').read_text(encoding='utf-8'))
+                # This runs INSIDE the existing acquisition application. Its registered
+                # configuration remains here; it is not copied into the catalog website.
+                origin = cfg['site_url'].rstrip('/') + '/'
+                self.client = Client(os.environ['RAKUTEN_APP_ID'], os.environ['RAKUTEN_ACCESS_KEY'],
+                                     referer=origin, affiliate_id=None, min_interval=3.0, retries=1)
+
+            def fetch(self, params):
+                try:
+                    return {'Items': self.client.search(**params)}
+                except Exception as error:
+                    # Never expose a provider exception or credential-bearing URL.
+                    match = re.search(r'\b(400|401|403|404|429|500|502|503|504)\b', str(error))
+                    raise AcquisitionError('http_' + match[1] if match else 'provider_request_failed') from None
+
+
+        def execute(channel, request_id, gate, client, directory, *, deadline_seconds=900):
+            bundle = channel.read(request_id, 'requests')
+            if not isinstance(bundle, dict) or set(bundle) != {'request_id', 'plan', 'created_at'} or bundle['request_id'] != request_id:
+                raise ValueError('request_identity_mismatch')
+            plan = bundle['plan']
+            validate_plan(plan)
+            if not 1 <= plan['planned_calls'] <= 75:
+                raise ValueError('request_budget_rejected')
+            fingerprint = hashlib.sha256(json.dumps(plan, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+            prior = channel.read(request_id, 'results')
+            if prior and prior.get('status') == 'complete' and prior.get('plan_sha256') == fingerprint:
+                return prior
+            result = {'version': 1, 'request_id': request_id, 'run_id': uuid.uuid4().hex,
+                      'started_at': now(), 'status': 'running', 'planned_calls': plan['planned_calls'],
+                      'actual_calls': 0, 'products': {}, 'offers': {oid: {**v, 'status': 'not_checked'} for oid, v in plan['offers'].items()},
+                      'requests': [], 'new_candidates': [], 'publication': False, 'yorokobu_modified': False,
+                      'plan_sha256': fingerprint}
+            channel.write(request_id, result)
+            deadline = time.monotonic() + deadline_seconds
+            offset = 0
+
+            class ProgressStore(AcquisitionStore):
+                def state(self, run_id, value):
+                    super().state(run_id, value)
+                    count = result['actual_calls'] + value.get('actual_calls', 0)
+                    if count and count % 10 == 0:
+                        progress = dict(result, actual_calls=count, updated_at=now())
+                        channel.write(request_id, progress)
+
+            while offset < plan['planned_calls'] and time.monotonic() < deadline:
+                if not gate():
+                    time.sleep(15)
+                    continue
+                part = copy.deepcopy(plan)
+                part['requests'] = part['requests'][offset:]
+                part['planned_calls'] = len(part['requests'])
+                piece = run_plan(part, ProgressStore(directory), client, quiet_guard=gate,
+                                 max_calls=part['planned_calls'], interval=3.0)
+                result['actual_calls'] += piece['actual_calls']
+                result['products'].update(piece['products'])
+                result['new_candidates'].extend(piece['new_candidates'])
+                for oid, offer in piece['offers'].items():
+                    if offer['status'] != 'not_checked':
+                        result['offers'][oid] = offer
+                for request in piece['requests']:
+                    result['requests'].append({**request, 'ordinal': offset + request['ordinal']})
+                offset += len(piece['requests'])
+                if piece['status'] == 'paused_source_busy_or_unverified':
+                    channel.write(request_id, result)
+                    continue
+                if piece['status'] != 'complete':
+                    result['status'] = piece['status']
+                    result['error_code'] = piece.get('error_code', 'safe_acquisition_error')
+                    break
+            if result['status'] == 'running':
+                result['status'] = 'complete' if offset == plan['planned_calls'] else 'paused_source_busy_or_unverified'
+            result['finished_at'] = now()
+            result['scheduler_checks'] = getattr(gate, 'checks', None)
+            result['source_busy_observations'] = getattr(gate, 'blocked', None)
+            channel.write(request_id, result)
+            return result
+
+
+        def main():
+            request_id = os.environ.get('REQUEST_ID', '')
+            if not re.fullmatch('[0-9a-f]{32}', request_id):
+                raise SystemExit('invalid_request_id')
+            with tempfile.TemporaryDirectory(prefix='catalog-acquisition-') as directory:
+                channel = PrivateChannel(directory)
+                try:
+                    result = execute(channel, request_id, QuietGate(), ExistingProviderAdapter(), directory)
+                    print(json.dumps({k: result[k] for k in ('status', 'planned_calls', 'actual_calls', 'publication', 'yorokobu_modified')}))
+                except Exception:
+                    print('acquisition_failed_without_public_or_source_changes')
+                    raise SystemExit(1) from None
+
+
+        if __name__ == '__main__':
+            main()
+
+        CATALOG_PY
+        PYTHONPATH="$RUNNER_TEMP/catalog-code:$GITHUB_WORKSPACE" python "$RUNNER_TEMP/catalog-code/runner.py"
