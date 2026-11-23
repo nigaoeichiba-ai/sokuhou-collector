@@ -14,6 +14,10 @@ FIRST = "2026-11-03"
 
 # day -> the pages whose dates were compared with the sources that day
 CHECKED_ON = {
+    "2026-11-23": [
+        "/furusato/deadline/", "/furusato/one-stop/",         # 総務省「税金の控除について」の本文(3月15日・5団体・控除の式)で照合した
+        "/nengajo/",                                          # 日本郵便の2026-08-31発表(検索の公式PDF要約)で引受12/20・差出目安12/27・販売1/15・1/3配達を照合した
+    ],
     "2026-11-22": [
         "/nenmatsu-chosei/",                                  # 国税庁「年末調整がよくわかるページ(令和8年分)」の本文で変更点4項目を照合した
         "/moving/", "/moving/tenshutsu/",                     # マイナポータル moving_oss.html の本文(転入は来庁・14日以内・対象外の条件)で照合した
@@ -42,6 +46,10 @@ CHECKED_ON = {
 # (day, what, how, result, note); result is "ok" (the body was read), "top" (only the top page or a list was read: never counts as "no change") or "failed".
 # A later "ok" for the same what closes a "failed"; a "top" does not.
 FETCH_LOG = [
+    ("2026-11-23", "総務省 ふるさと納税 税金の控除について", "Chrome(本文)", "ok", "3月15日までの確定申告・ワンストップは5団体以内・控除の式。サイトと一致"),
+    ("2026-11-23", "国税庁 確定申告特集", "Chrome(本文)", "ok", "まだ令和7年分(令和8年3月16日まで)の表示。令和8年分の特集は未公開で、サイトの記述に変更なし"),
+    ("2026-11-23", "日本郵便 2027年用年賀はがきの発行概要", "Chrome(PDFはテキスト取得不可)・検索で公式PDFの内容を確認", "ok", "引受12/20・元日の差出目安12/27・販売1/15・1/3も配達。サイトと一致"),
+    ("2026-11-23", "日本郵便 ニュースリリース一覧", "Chrome(先頭は8/5の1件のみ表示)", "top", "一覧の読み込みが不完全。年賀は上の発行概要で代替"),
     ("2026-11-22", "国税庁 年末調整がよくわかるページ(令和8年分)", "Chrome(本文)", "ok", "変更点4項目(基礎控除・給与所得控除の最低保障額・扶養親族等の所得要件・23歳未満の扶養親族の生命保険料控除の特例)。サイトと一致"),
     ("2026-11-22", "マイナポータル 引越し手続(hikkoshi_top)", "Chrome(moving_oss.html の本文)", "ok", "転出届と来庁予定の申請まで・転入は来庁・14日以内・対象外の条件。サイトと一致。hikkoshi_top 自体は別URLで代替"),
     ("2026-11-22", "法務省 戸籍・婚姻届の案内", "検索で現行URLを特定→Chrome(ONLINE/FAMILYREGISTER/5-1.html・5-2.html の本文)", "ok", "出生届は14日以内(国外3か月)・手数料なし。婚姻届は随時・成年の証人2名(押印は任意)。現行URLは /ONLINE/FAMILYREGISTER/"),
