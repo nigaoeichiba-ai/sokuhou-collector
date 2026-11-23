@@ -211,6 +211,18 @@ class PageTest(unittest.TestCase):
             self.assertNotIn('"@type": "Product"', html)
             self.assertIn('"@type": "Article"', html)
 
+    def test_a_rakuten_feature_with_the_amazon_notice_has_a_separate_amazon_search_link(self):
+        for f in self.c["features"]:
+            if not f["ref"].startswith("r"):
+                continue
+            html = self.read(f"pick/{f['slug']}/index.html")
+            if "Amazonアソシエイト" not in html:
+                continue
+            links = re.findall(r'<a href="(https://www\.amazon\.co\.jp/s\?k=[^"]+)" target="_blank" rel="nofollow sponsored noopener">', html)
+            self.assertEqual(len(links), 1, f"{f['slug']}: the notice names Amazon but there is no Amazon link")
+            self.assertIn("&amp;tag=", links[0].replace("&tag=", "&amp;tag=") if "&amp;" not in links[0] else links[0])
+            self.assertNotIn("amazon.co.jp", html.split('<section class="feat-top">')[1].split("</section>")[0], f"{f['slug']}: no Amazon link in the Rakuten top part")
+
     def test_the_numbers_of_the_charts_state_their_pool_and_their_source(self):
         from tests.yorokobu_data import rich_boyfriend
         items = with_musts(rich_boyfriend(json.loads((FIX / "items.json").read_text(encoding="utf-8"))), self.c)     # nine products of the kind 実用品: enough for a chart

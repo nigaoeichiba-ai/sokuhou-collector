@@ -335,6 +335,9 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     notice = '<p class="notice">この商品はいま販売ページで取り扱いがないと表示されています。下の「代わりの候補」をご覧ください。</p>' if unavailable else ""
     specs = "".join(f"<tr><th>{esc(r['k'])}</th><td>{esc(r['v'])}</td></tr>" for r in f["specs"])
     reading = "".join(f"<h3>{esc(r['h'])}</h3><p>{esc(r['p'])}</p>" for r in f["reading"])
+    amazon_part = ""                                                                  # Amazon's search link is its own part, apart from the Rakuten card (terms Article 8: a Rakuten part carries Rakuten's link only); text and a link, no price, no picture
+    if f["ref"].startswith("r") and live and live.get("name"):
+        amazon_part = B.amazon_more(cfg, B.amazon_query(live["name"]), "Amazonでも探す")
     faq = "".join(f"<details class='faq'><summary>{esc(q['q'])}</summary><p>{esc(q['a'])}</p></details>" for q in f["faq"])
     ev = "".join((f'<li><a href="{esc(e["url"])}" rel="noopener nofollow" target="_blank">{esc(e["label"])}</a></li>' if e.get("url") else f'<li>{esc(e["label"])}</li>') for e in f["evidence"])
     more = "".join(f'<li><a href="{path(o)}">{esc(o["title"])}</a></li>' for o in others[:6])
@@ -349,6 +352,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
 <section class="block"><div class="sec-head"><h2>合う相手と避けたい相手</h2></div><div class="cols feat-who"><div><h3>合う相手</h3>{_list(f["who"]["yes"], "feat-yes")}</div><div><h3>避けたい相手・場面</h3>{_list(f["who"]["no"], "feat-no")}</div></div></section>
 <section class="block"><div class="sec-head"><h2>仕様を一つずつ読む</h2></div><div class="tablewrap"><table class="feat-specs"><tbody>{specs}</tbody></table></div>
 <p class="sec-lead">仕様は商品ページとメーカーの公開情報で、{esc(f["verified"].replace("-", "年", 1).replace("-", "月", 1) + "日")}に確かめました。</p>{reading}</section>
+{amazon_part}
 <section class="block"><div class="sec-head"><h2>良い点と気になる点</h2></div><div class="cols"><div><h3>よい点</h3>{_list(f["good"], "feat-yes")}</div><div><h3>気になる点</h3>{_list(f["care"], "feat-no")}</div></div></section>
 {charts}
 <section class="block"><div class="sec-head"><h2>渡し方</h2></div><ol class="feat-give">{"".join(f"<li>{esc(x)}</li>" for x in f["give"])}</ol></section>
