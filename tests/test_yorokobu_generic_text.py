@@ -40,12 +40,19 @@ class GenericTextTest(unittest.TestCase):
 
     def test_every_idea_with_the_loose_word_label_has_a_not_list(self):
         """「ラベル」 alone matches a drink bottle, a hair iron ... (seed-saving-garden, shared-fridge-labels, 2026-11-23): an idea that lists it takes a `not` list."""
-        for t in load("themes.json")["themes"]:
+        from sites.yorokobu import content as ct
+        for t in ct.load()["themes"]:                       # as loaded: a theme that forgets the list gets the default one (content.LABEL_NOT)
             for i in t["ideas"]:
                 if "ラベル" in i["must"]:
                     self.assertTrue(i.get("not"), t["slug"] + " / " + i["label"])
                     for w in ("ml", "ビール", "ヘア"):
                         self.assertIn(w, i["not"], t["slug"] + " / " + i["label"])
+
+    def test_a_new_theme_with_the_loose_label_word_and_no_not_list_gets_the_default(self):
+        from sites.yorokobu import content as ct
+        self.assertIn("ml", ct.LABEL_NOT)
+        self.assertIn("ビール", ct.LABEL_NOT)
+        self.assertLessEqual(len(ct.LABEL_NOT), 12)
 
     def test_goshuin_theme_has_no_confection_idea(self):
         t = next(x for x in load("themes.json")["themes"] if x["slug"] == "goshuin-walk-kit")

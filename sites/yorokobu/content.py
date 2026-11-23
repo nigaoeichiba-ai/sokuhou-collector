@@ -226,6 +226,9 @@ def check_board(b: dict) -> None:
             raise BuildError(f"{where} chart {ch['id']}: more than 8 rows (the picture of a chart draws 8)")
 
 
+LABEL_NOT = ("ml", "kg", "ビール", "ワイン", "酒", "ボトル", "ヘア", "アイロン", "ブラシ", "シャンプー", "美容", "サロン")
+
+
 def check_must(idea: dict, where: str) -> None:
     """An idea's `must` (words of which a product title has to contain one) is a list of 1-12 short strings, when it is there."""
     n = idea.get("not")
@@ -493,6 +496,8 @@ def _load_themes(content_dir: Path, rec: dict, tiers: dict, group_slugs: set[str
                 raise BuildError(f"theme {t['slug']}: unknown tier {x}")
         for n, idea in enumerate(t["ideas"]):
             check_must(idea, f"theme {t['slug']}#{n}")
+            if "ラベル" in (idea.get("must") or []) and not idea.get("not"):
+                idea["not"] = list(LABEL_NOT)          # 「ラベル」 alone matches a drink bottle or a hair iron (2026-11-23): a new theme that forgets its `not` list gets this one
         t["key"] = f"theme-{t['slug']}"
         t["recipient"] = t.get("recipient") or None
         t.setdefault("avoid", [])
