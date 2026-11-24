@@ -132,7 +132,7 @@ def pages() -> list[dict]:
             S("並べて分かること", "2025年は、楽天が11月20日、Amazonが11月21日に始まっています。2026年は、楽天が11月19日、Yahoo!ショッピングが11月22日、Amazonが先行セールの11月27日です。始まりが近い日に集まるので、11月下旬は複数のセールが重なります。",
               "どのモールが安いかは、商品によって違います。このサイトは価格を扱わないので、判定はしません。重なる期間に、同じ物を複数のモールで探すかどうかは、自分で決めてください。"),
         ],
-        [R("/rakuten/black-friday/", "楽天ブラックフライデー"), R("/amazon/black-friday/", "Amazonのブラックフライデー"), R("/yahoo/", "Yahoo!ショッピングのセール")],
+        [R("/rakuten/black-friday/", "楽天ブラックフライデー"), R("/rakuten/black-friday/ending/", "楽天ブラックフライデー終了前に見る順番"), R("/amazon/black-friday/", "Amazonのブラックフライデー"), R("/yahoo/", "Yahoo!ショッピングのセール")],
         secondary=["ブラックフライデー 楽天 amazon どっち"], basis="各モールの発表(2024〜2026年)",
     )
     return [prime, early, bf, cal, yahoo, bfall]
