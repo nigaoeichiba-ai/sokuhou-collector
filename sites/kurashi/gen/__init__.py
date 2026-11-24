@@ -31,6 +31,8 @@ def all_pages() -> list[dict]:
     for p in pages:
         if p["path"] in shop_links.A8_SECTIONS:
             p["sections"].append(shop_links.a8_section(p["path"]))
+        if p["path"] in shop_links.AT_SECTIONS:
+            p["sections"].extend(shop_links.at_sections(p["path"]))
         if p["path"] in shop_links.SHOP_PAGES:
             p["sections"].append(shop_links.section(p["path"]))
     return pages

@@ -71,3 +71,23 @@ def a8_section(path: str) -> dict:
             f'<p><a href="https://px.a8.net/svt/ejp?a8mat={mat}" {REL}>{label}</a>\n'
             f'<img border="0" width="1" height="1" src="https://{host}.a8.net/0.gif?a8mat={mat}" alt=""></p>')
     return {"h2": h2, "paras": [intro], "html": html}
+
+
+# 2026-11-25: AccessTrade programmes of this site (media 1170205), joined 11/25.  href, rk and the 1x1 image are as issued (the terms forbid changing them);
+# the link words are the issued words.  Conditions: docs/office/A8_PROGRAMS.md (BIGLOBE: PR shown, no price unless the tax-included total, no copy of the official site).
+AT_REL = 'rel="nofollow sponsored noopener" referrerpolicy="no-referrer-when-downgrade" target="_blank"'
+AT_PORTA = ("引っ越し業者を手配するなら【PR】", "引っ越しの日が決まったら、業者の手配に進みます。サービスの内容と条件は、申し込み先の画面に書かれています。",
+            "0100q8vc00p2xp", "引っ越しポルタ")
+AT_BIGLOBE = ("引っ越し先のネット回線を申し込むなら【PR】", "光回線は申し込みから開通まで日数がかかることがあるので、引っ越し日が決まったら早めに手配します。対応する地域と料金も、申し込み先の画面に書かれています。",
+              "0100q7ix00p2xp", "【公式】BIGLOBE光プラス by auひかりプラス")
+AT_SECTIONS = {path: [AT_PORTA, AT_BIGLOBE] for path in ("/moving/", "/moving/tenshutsu/", "/month/3/", "/shin-seikatsu/")}
+
+
+def at_sections(path: str) -> list[dict]:
+    out = []
+    for h2, intro, rk, label in AT_SECTIONS[path]:
+        html = ('<p class="pr-note"><strong>【PR】</strong>このリンクは広告（アフィリエイト）です。</p>'
+                f'<p><a href="https://h.accesstrade.net/sp/cc?rk={rk}" {AT_REL}>{label}'
+                f'<img src="https://h.accesstrade.net/sp/rr?rk={rk}" width="1" height="1" border="0" alt=""></a></p>')
+        out.append({"h2": h2, "paras": [intro], "html": html})
+    return out

@@ -245,7 +245,7 @@ class Renewal(unittest.TestCase):
         self.assertEqual(shown_source_problems('<p>確認日：2026-11-13</p><a href="https://px.a8.net/svt/ejp?a8mat=A" rel="nofollow sponsored noopener" target="_blank">年賀状印刷</a>', "x/index.html"), [])
 
 
-AD_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "www.amazon.co.jp", "af.moshimo.com", "ck.jp.ap.valuecommerce.com", "adssettings.google.com", "www.aboutads.info")
+AD_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "www.amazon.co.jp", "af.moshimo.com", "ck.jp.ap.valuecommerce.com", "h.accesstrade.net", "adssettings.google.com", "www.aboutads.info")
 
 
 def shown_source_problems(html: str, rel: str) -> list[str]:

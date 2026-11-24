@@ -5,7 +5,7 @@ import json
 import unittest
 from pathlib import Path
 
-from sites.kurashi.gen.shop_links import SHOP_PAGES
+from sites.kurashi.gen.shop_links import AT_SECTIONS, SHOP_PAGES
 from tests.test_trend_affiliate import problems
 
 CONTENT = Path(__file__).resolve().parents[1] / "sites" / "kurashi" / "content"
@@ -65,6 +65,37 @@ class KurashiAffiliate(unittest.TestCase):
     def test_missing_link_is_caught(self):
         self.assertNotIn("hb.afl.rakuten.co.jp/hgc/", "<p>年賀状</p>")
         self.assertTrue(problems('<a href="https://hb.afl.rakuten.co.jp/hgc/I/?pc=x">https://hb.afl.rakuten.co.jp/</a>（PR）'))
+
+
+def at_problems(html: str, rk: str) -> list[str]:
+    """The AccessTrade link: PR, rel, target, the issued href and the 1x1 image with the same rk inside the link."""
+    import re
+    m = re.search(r'<a ([^>]*href="https://h\.accesstrade\.net/sp/cc\?rk=' + rk + r'"[^>]*)>(.*?)</a>', html, re.S)
+    if not m:
+        return ["no AccessTrade link"]
+    out = [f"{w} missing" for w in ("nofollow", "sponsored", "noopener", 'target="_blank"') if w not in m.group(1)]
+    if f'src="https://h.accesstrade.net/sp/rr?rk={rk}"' not in m.group(2):
+        out.append("pixel missing")
+    if "PR" not in html:
+        out.append("PR missing")
+    return out
+
+
+class KurashiAccessTrade(unittest.TestCase):
+    def test_moving_pages_carry_both_programmes(self):
+        for path, ads in AT_SECTIONS.items():
+            h = html_of(path)
+            for _h2, _intro, rk, _label in ads:
+                self.assertEqual(at_problems(h, rk), [], path)
+
+    def test_negative_cases_are_caught(self):
+        good = ('【PR】<a href="https://h.accesstrade.net/sp/cc?rk=x1" rel="nofollow sponsored noopener" target="_blank">名前'
+                '<img src="https://h.accesstrade.net/sp/rr?rk=x1" width="1" height="1" alt=""></a>')
+        self.assertEqual(at_problems(good, "x1"), [])
+        self.assertTrue(at_problems(good.replace("sponsored ", ""), "x1"))
+        self.assertTrue(at_problems(good.replace("rr?rk=x1", "rr?rk=x2"), "x1"))
+        self.assertTrue(at_problems(good.replace("【PR】", ""), "x1"))
+        self.assertTrue(at_problems("<p>なし</p>", "x1"))
 
 
 def stale_dates(site_updated: str, pages: dict) -> list[str]:
