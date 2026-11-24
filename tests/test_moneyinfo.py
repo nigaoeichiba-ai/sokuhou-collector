@@ -34,12 +34,15 @@ def load_release_build():
 AD_PREFIX = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3788870&pid="
 
 
+AT_PREFIX = "https://h.accesstrade.net/sp/cc?rk="
+
+
 def external_links(folder: Path) -> list[str]:
     """Outside links that are not an approved advertisement of this site."""
     found = []
     for page in folder.rglob("*.html"):
         for href in re.findall(r'<a [^>]*href="(https?://[^"]+)"', page.read_text(encoding="utf-8")):
-            if not href.startswith(BASE) and not href.startswith(AD_PREFIX):
+            if not href.startswith(BASE) and not href.startswith((AD_PREFIX, AT_PREFIX)):
                 found.append(f"{page.name}: {href}")
     return found
 
@@ -122,6 +125,22 @@ class MoneyinfoBuildTest(unittest.TestCase):
             self.assertNotIn("http", text)
             self.assertNotIn("JTB", text)                # the advertiser's condition: no JTB wording of our own
         self.assertIn("PR（広告）", (self.rel / "case-family-trip.html").read_text(encoding="utf-8"))
+
+    def test_the_accesstrade_ads_keep_the_issued_code_and_carry_pr_rel_target_and_the_pixel(self):
+        page = (self.rel / "case-first-living.html").read_text(encoding="utf-8")
+        found = []
+        for p in self.rel.rglob("*.html"):
+            found += [(p.name, m) for m in re.findall(r'<a [^>]*href="' + re.escape(AT_PREFIX) + r'[^"]*"[^>]*>.*?</a>', p.read_text(encoding="utf-8"))]
+        self.assertEqual([n for n, _ in found], ["case-first-living.html"] * 2, found)
+        for (_, tag), rk in zip(found, ("0100q8vc00p3as", "0100q7ix00p3as")):
+            self.assertIn(f'href="{AT_PREFIX}{rk}"', tag)
+            self.assertIn(f'<img src="https://h.accesstrade.net/sp/rr?rk={rk}" width="1" height="1" border="0" alt="">', tag)
+            for needle in ('rel="nofollow sponsored noopener"', 'target="_blank"', 'referrerpolicy="no-referrer-when-downgrade"'):
+                self.assertIn(needle, tag)
+            words = re.sub(r"<[^>]+>", "", tag)
+            self.assertNotIn("http", words)
+            self.assertNotIn("公式", words)            # the advertiser forbids looking official
+        self.assertEqual(page.count("PR（広告）"), 2)
 
     def test_the_outside_link_check_finds_a_planted_link(self):
         copy = self.tmp / "planted"

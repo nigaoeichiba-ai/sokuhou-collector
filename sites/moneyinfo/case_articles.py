@@ -191,7 +191,7 @@ def consult_article(case):
 <figure class="consult-hero"><img src="assets/{case["hero"]}.webp" alt="{escape(case["hero_alt"], quote=True)}" width="1536" height="768" fetchpriority="high"></figure>
 <section class="model-points"><h2>この記事の要点</h2><ul>{points}</ul><p>制度・金額の確認日 {checked}</p></section>
 <nav class="guide-toc" aria-label="目次"><h2>目次</h2><ol>{case["toc_html"]}</ol></nav>
-{case["body_html"]}
+{with_ads(case["slug"], case["body_html"])}
 <footer class="model-back"><h2>次に確認すること</h2><div class="related-grid">{related}</div><a href="cases.html#readable-cases">ほかのモデルケースを読む ›</a></footer></article></main>'''
 
 
@@ -214,6 +214,35 @@ def ad_html(slug):
         f'<li><a href="{VC}{a["pid"]}" rel="nofollow sponsored noopener" target="_blank">{escape(a["text"])}</a></li>' for a in ads)
     lead = "宿を別々に手配する場合は、日程と人数を決めてから、複数のサービスで料金と取消条件を同じ基準で見比べます。条件を入れて探すときは、次のリンクが使えます。"
     return f'<aside class="ad-box" aria-label="広告"><p class="ad-label">PR（広告）</p><p>{lead}</p><ul>{items}</ul></aside>'
+
+
+# AccessTrade (media 1170676). The issued href, rk and measurement image are never changed (the ASP forbids editing the code).
+# {slug: ((heading of the section the box closes, rk, reason sentence, link words), ...)}
+AT_ADS = {
+    "case-first-living": (
+        ("これから必要になるお金と時期", "0100q8vc00p3as",
+         "引っ越しの費用は、荷物の量と時期で変わります。物件が決まったら、早めに手配の方法と料金を確認してください。", "引っ越しポルタで引っ越しの手配を調べる"),
+        ("ご提案2", "0100q7ix00p3as",
+         "毎月の通信費には自宅のネット回線も入ります。光回線を引くときは、税込の月額総額と開通までの日数を、申し込みの前に確認してください。", "BIGLOBE光プラスの条件を確認する"),
+    ),
+}
+
+
+def at_box(rk, lead, text):
+    return (f'<aside class="ad-box" aria-label="広告"><p class="ad-label">PR（広告）</p><p>{escape(lead)}</p><p>'
+            f'<a href="https://h.accesstrade.net/sp/cc?rk={rk}" rel="nofollow sponsored noopener" referrerpolicy="no-referrer-when-downgrade" target="_blank">'
+            f'{escape(text)}<img src="https://h.accesstrade.net/sp/rr?rk={rk}" width="1" height="1" border="0" alt=""></a></p></aside>')
+
+
+def with_ads(slug, body):
+    """Close the designed section with its advertisement box; a missing section stops the build."""
+    for heading, rk, lead, text in AT_ADS.get(slug, ()):
+        start = body.find(f"<h2>{heading}")
+        end = body.find("</section>", start)
+        if start < 0 or end < 0:
+            raise ValueError(f"{slug}: no section for the advertisement: {heading}")
+        body = body[:end] + at_box(rk, lead, text) + body[end:]
+    return body
 
 
 def article(case):
