@@ -11252,6 +11252,171 @@
   "unchanged": 73,
   "units": 93
  },
+ "gift/thanks-in-laws/index.html": {
+  "accepted": [
+   {
+    "from": "義父母へお礼を贈る場面では、子どもの送迎を頼んだ後や滞在中に食事を用意してもらった後など、具体的な助けへの感謝が伝わる品が合います。菓子折りや果物は家族で分けられ、タオルセットは消耗品として気軽に受け取ってもらえます。訪問の最後ではなく、落ち着いた時に渡すと自然です。",
+    "kind": "para",
+    "to": "義父母へのお礼の品は、子どもの送迎を頼んだ後や滞在中に食事を用意してもらった後など、何へのお礼かが伝わるものを選びます。菓子折りや果物は家族で分けられ、タオルセットは消耗品として受け取ってもらえます。訪問の最後ではなく、話が落ち着いてから渡します。",
+    "why": "結論と渡し方を明確に"
+   },
+   {
+    "from": "義父母へのお礼ギフト、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "義父母へのお礼ギフト、種類の違う4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "菓子折りはお茶の時間に義父母と一緒に食べられ、手伝ってもらった話を改めて伝えやすい品です。",
+    "kind": "item",
+    "to": "菓子折りは義父母と一緒に食べながら、手伝ってもらったことへのお礼を改めて伝えられます。",
+    "why": "伝える内容を具体化"
+   },
+   {
+    "from": "タオルは白、グレー、淡い色など使う場所を選びにくい色にし、箱の大きさも持参しやすくする。",
+    "kind": "item",
+    "to": "タオルは白、グレー、淡い色など、使う場所を選びにくい色にします。箱は持参しやすい大きさを選びます。",
+    "why": "不自然な係り方を修正"
+   },
+   {
+    "from": "義父母へのちょっとしたお礼、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "義父母へのちょっとしたお礼 品別の贈り方",
+    "why": "曖昧な問いを具体化"
+   }
+  ],
+  "date": "2026-11-24",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 「理由」と「選び方」の定型に内容を当てはめた形で、品別の説明も重複しています。",
+   "具体: 「人気」「喜ばれやすい」「どうでしょう」など、根拠や中身が見出しから分からない語があります。",
+   "語: 「持参しやすいお礼」「休む時間を添える」など、物や行動がつかみにくい言い方が目立ちます。"
+  ],
+  "failed": "",
+  "hash": "c30ca8fe9a83",
+  "needs_check": [
+   {
+    "question": "末尾の「訪」は表示文字数による意図的な切り詰めか、原稿の欠落かを確認してください。",
+    "text": "義父母へお礼を贈る場面では、子どもの送迎を頼んだ後や滞在中に食事を用意してもらった後など、具体的な助けへの感謝が伝わる品が合います。菓子折りや果物は家族で分けら"
+   }
+  ],
+  "page": "gift/thanks-in-laws/index.html",
+  "rejected": [
+   {
+    "after": "季節の果物は持参するお礼の品に向きます。朝食や夕食後に出しやすく、子どもがいる場でも家族で分けられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['品']"
+    ],
+    "text": "季節の果物は夕食後や朝食に出しやすく、子どもがいる場でも家族で分けられる持参しやすいお礼です。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品は見つかりませんでした。予算の幅を広げるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '幅']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "入浴剤は送迎や食事の準備で疲れた義父母が、家でゆっくり休む時に使えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['入浴剤']"
+    ],
+    "text": "送迎や食事の準備で疲れた義父母に家でゆっくり休む時間を添えられます。"
+   },
+   {
+    "after": "提案を残り方と定番度で比べる",
+    "problems": [
+     "new claim: 定番"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月23日 9:01時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "タオルセットは洗面所や台所で使える消耗品です。食品の好みが分かれる時にも選びやすい品です。",
+    "problems": [
+     "added claim/hedge removed: 「分かれそう」が「分かれる」と断定され、「渡しやすい」が「選びやすい」に変わっています。"
+    ],
+    "text": "タオルセットは洗面所や台所で使える消耗品なので、食品の好みが分かれそうな時にも渡しやすいです。"
+   },
+   {
+    "after": "何へのお礼かを一言で伝えます。長話にせず『助かりました』と具体的に添えます。",
+    "problems": [
+     "condition dropped: 「渡す時」という条件が落ちています。"
+    ],
+    "text": "お礼の理由を一言で言えるようにし、渡す時は長話にせず『助かりました』と具体的に添える。"
+   },
+   {
+    "after": "手伝ってもらった話をしながら、義父母と一緒にお茶を楽しめます。",
+    "problems": [
+     "added claim/condition dropped: 「楽しめる」という効果が加わり、「ゆっくり」という条件が落ちています。"
+    ],
+    "text": "手伝ってもらった話をしながら、義父母と一緒にお茶の時間をゆっくり作れます。"
+   },
+   {
+    "after": "洗面所や台所で使える消耗品です。食品の好みが分かれる時にも選べます。",
+    "problems": [
+     "added claim: 「安心」が「選べる」という別の可能性に変わっています。"
+    ],
+    "text": "洗面所や台所で使える消耗品なので食品の好みが分かれる時にも安心です。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   },
+   {
+    "after": "インテリア品は家のしつらえに踏み込みすぎるため避けます。",
+    "problems": [
+     "added claim: 「踏み込みすぎるため避ける」という因果と推奨が加わっています。"
+    ],
+    "text": "家のしつらえに踏み込みすぎるインテリア品"
+   }
+  ],
+  "structure_suggestions": [
+   "「義父母へお礼を贈る場面では、…」の後は、予算を選ぶ「条件で絞って比べる…」〜「この条件に合う商品は見つかり…」、渡し方を扱う「選び方のポイント…」〜「タオルは白、グレー、淡い色な…」、避ける品を示す「気をつけたいこと…」〜「家のしつらえに踏み込みすぎる…」の順にすると、読者の判断順に近づきます。",
+   "「喜ばれやすい理由…」〜「タオルセットは洗面所や台所で…」と「義父母へのちょっとしたお礼、…」〜「楽天市場で「入浴剤 ギフトセ…」は品ごとの利点が重なるため、品別の贈り方として一つの節に統合できます。",
+   "「この提案はどんなタイプ？…」〜「横は「食べて消える」から「ず…」の比較図は、対象となる提案を読んだ直後に置く現在の位置を保つと参照しやすくなります。"
+  ],
+  "unchanged": 70,
+  "units": 92
+ },
  "gift/thanks-teacher/index.html": {
   "accepted": [
    {
@@ -11465,6 +11630,193 @@
   ],
   "unchanged": 55,
   "units": 85
+ },
+ "gift/wedding-gift-boss/index.html": {
+  "accepted": [
+   {
+    "from": "上司への結婚祝いプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "上司への結婚祝い、種類の違う4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "名入れ品は表記の漢字やローマ字を本人の名刺で確かめ、納期に余裕を持って注文する。",
+    "kind": "item",
+    "to": "名入れ品は漢字やローマ字の表記を本人の名刺で確かめ、納期に余裕を持って注文します。",
+    "why": "語順を自然に"
+   },
+   {
+    "from": "上司への結婚祝い、こんな贈り方はどうでしょう",
+    "kind": "heading",
+    "to": "上司への結婚祝いに贈る品",
+    "why": "節の中身を明確に"
+   }
+  ],
+  "date": "2026-11-24",
+  "deleted": [
+   "上司に結婚祝いを贈る場面では、礼を尽くしつつ、受け取る側が気をつかわない形に整えます。菓子折りは家庭で開けやすく、名入れペンは仕事道具として残せます。部署の代表が渡すなら、短いお祝いの言葉と紙袋まで用"
+  ],
+  "diagnosis": [
+   "構成: 金額・渡し方・注意点がページ内に分散し、理由3つ・選び方3つの固定枠が読み手の判断順を崩しています。",
+   "具体: 導入と商品説明に「礼を尽くす」「印象に整える」「落ち着いて形にする」が重なり、品物と使う場面がぼやけています。",
+   "見出し: 「人気」「こんな贈り方はどうでしょう」「どんなタイプ？」など、根拠や節の中身が分かりにくい表現があります。"
+  ],
+  "failed": "",
+  "hash": "da81727baf03",
+  "needs_check": [
+   {
+    "question": "「30,000〜50,000円」が個人・部署のどちらの相場か、根拠となる出典とともに確認してください。",
+    "text": "金額の目安 上司への結婚祝いは、30,000〜50,000円ほど。 のし・時期・注意点をまとめて見る"
+   }
+  ],
+  "page": "gift/wedding-gift-boss/index.html",
+  "rejected": [
+   {
+    "after": "上司への結婚祝いには、家庭で分けられる菓子折りや、仕事で使える名入れペンが選びやすい品です。部署で渡すなら、代表者がお祝いの言葉を添え、紙袋と一緒に渡します。酒",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['一緒']",
+     "condition removed (2 -> 1)"
+    ],
+    "text": "上司に結婚祝いを贈る場面では、礼を尽くしつつ、受け取る側が気をつかわない形に整えます。菓子折りは家庭で開けやすく、名入れ"
+   },
+   {
+    "after": "価格・在庫は2026年11月23日 9:01時点の情報です。このサイトの掲載情報はよろこぶプレゼントの作成者が管理しています。価格と在庫は変わることがあります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月23日 9:01時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成者"
+   },
+   {
+    "after": "菓子折りは配偶者や家族と分けられます。部署の代表が退勤前に渡す場合は持ち帰り用の紙袋も用意します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場合']"
+    ],
+    "text": "菓子折りは配偶者や家族と分けられ、部署の代表が退勤前に渡しても持ち帰れます。紙袋も用意できます。"
+   },
+   {
+    "after": "名入れペンは会議や署名の場で使えます。仕事でお世話になった上司への記念品としても残ります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司']"
+    ],
+    "text": "名入れペンは会議や署名の場で使えるため、仕事でお世話になった気持ちを落ち着いて表せます。記念にもなります。"
+   },
+   {
+    "after": "部署で贈る場合は会費と贈り主の範囲を先に決め、メモに残します。個人では高額な品を控えます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場合']"
+    ],
+    "text": "個人で高額にせず、部署で贈るなら会費と贈り主の範囲を先に決めてメモに残す。"
+   },
+   {
+    "after": "菓子折りは日持ちと個数に加え、配偶者や家族と分けやすい包装かを商品説明で確認します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['家族']"
+    ],
+    "text": "菓子折りは日持ち、個数、配偶者と分けやすい包装かを商品説明で確認する。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "菓子折りは家庭で分けやすく、部署の代表からも紙袋に入れて手渡せます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['菓子折', '紙袋', '手渡']"
+    ],
+    "text": "家庭で分けやすく、部署の代表からでも礼を尽くした印象に整えやすい贈り物です。"
+   },
+   {
+    "after": "名入れペンは会議や署名の場で使えます。仕事でお世話になった上司への記念品に向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ペン', '上司', '記念品']"
+    ],
+    "text": "会議や署名の場で使えるため、仕事でお世話になった感謝を落ち着いて形にできます。"
+   },
+   {
+    "after": "夫婦湯のみは自宅でお茶を飲むときに使えます。派手すぎず、二人への結婚祝いに向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['夫婦湯']"
+    ],
+    "text": "自宅のお茶時間に使えて、目上の方にも派手すぎず二人へのお祝いとして渡せます。"
+   },
+   {
+    "after": "飲酒の習慣が分かる上司には、晩酌や来客時に二人で使えるペア酒器が向きます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ペア']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "飲酒の習慣が分かる上司なら、晩酌や来客時に二人で使える記念品になります。"
+   },
+   {
+    "after": "声で音楽を再生したり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋で使う1台に向いています。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['再生']"
+    ],
+    "text": "声で音楽をかけたり、タイマーをセットしたりできるスマートスピーカーです。新しい部屋に置く1台として向いています。"
+   },
+   {
+    "after": "上司について一言入力してください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "割れる品や刃物は縁起を気にする上司には選びません。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['上司']"
+    ],
+    "text": "縁起が気になる相手には割れる品や刃物を避ける配慮もあります"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "after": "衣類や香りの強い品は好みが分かれるため、本人に確認してから選びます。",
+    "problems": [
+     "added claim: 元にない「好みが分かれるため」という理由が追加されています。"
+    ],
+    "text": "個人的すぎる衣類や香りの強い品を確認なしで贈らないようにします"
+   }
+  ],
+  "structure_suggestions": [
+   "「結婚祝いの早見表…」〜「結婚祝いの早見表(時期・金額…」を「金額の目安 上司への結婚祝い…」の後に移し、時期・金額・表書き・避けたい品を商品一覧より先に確認できる構成にする。",
+   "「気をつけたいこと…」〜「個人的すぎる衣類や香りの強い…」は商品の絞り込みより前に置き、注意点を確認してから候補を選べる順にする。",
+   "「喜ばれやすい理由…」〜「酒器は自宅での晩酌や来客時に…」と「上司への結婚祝い、こんな贈り…」〜「楽天市場で「ペア 酒器 セッ…」は品ごとの利点が重なるため、後者の商品候補に理由を集約する。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」を関連リンクの前へ移し、ページの本文を次にすること一つで終える。"
+  ],
+  "unchanged": 62,
+  "units": 87
  },
  "gift/white-day-colleague/index.html": {
   "accepted": [
@@ -19405,5 +19757,106 @@
   ],
   "unchanged": 550,
   "units": 273
+ },
+ "travel/index.html": {
+  "accepted": [
+   {
+    "from": "宿泊券や旅行のプレゼントに添える一言です。行き先や日にちは相手が決められる、という気持ちが伝わるように書くと、気軽に受け取ってもらえます。",
+    "kind": "para",
+    "to": "宿泊券や旅行のプレゼントに添える一言です。行き先や日にちは相手が決められると添えます。",
+    "why": "抽象的な効果を削る"
+   },
+   {
+    "from": "記念日に宿を贈るときの一言です。二人で過ごす時間をお祝いする言葉を選ぶと、旅の楽しみが増えます。",
+    "kind": "para",
+    "to": "記念日に宿を贈るときの一言です。二人で過ごす時間を祝う言葉を選びます。",
+    "why": "抽象的な効果を削る"
+   }
+  ],
+  "date": "2026-11-24",
+  "deleted": [
+   "宿に泊まる、旅に出る。そんな時間を贈る方法と、渡す前に決めておきたいことをまとめています。"
+  ],
+  "diagnosis": [
+   "構成: 導入が重複し、「贈り方は3通り」の中身がないため、最初に判断材料がそろいません。",
+   "構成: 宿を探す案内が長いメッセージ例の後にあり、短時間で決めたい読者の動線から外れています。",
+   "視点: 一部に「喜ばれます」「旅の楽しみが増えます」といった根拠のない評価があります。"
+  ],
+  "failed": "",
+  "hash": "ec089156cde3",
+  "needs_check": [
+   {
+    "question": "見出しにある「3通り」の本文が一覧から抜けていないか確認してください。",
+    "text": "贈り方は3通り"
+   }
+  ],
+  "page": "travel/index.html",
+  "rejected": [
+   {
+    "after": "旅行・宿泊のプレゼントは、行く日を相手が選べる宿泊券か、キャンセルしやすい予約にします。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['プレゼント', '相手', 'キャンセル', '予約']"
+    ],
+    "text": "宿に泊まる、旅に出る。そんな時間を贈る方法と、渡す前に決めておきたいことをまとめています。"
+   },
+   {
+    "after": "仕事や体調のほか、介護やペットの世話で旅行に出られるか。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['旅行']"
+    ],
+    "text": "相手が出かけられる状況か(仕事・体調・介護・ペットの世話)。"
+   },
+   {
+    "after": "紙で鉄道の旅程を立てる人への贈り物",
+    "problems": [
+     "a search phrase, title or name of a theme: not reworded (SEO, owner policy: no change without evidence)"
+    ],
+    "text": "鉄道の旅程を紙で組み立てる人への贈り物"
+   },
+   {
+    "after": "出張が多い人へ 荷造りの時間を短くする贈り物",
+    "problems": [
+     "a search phrase, title or name of a theme: not reworded (SEO, owner policy: no change without evidence)"
+    ],
+    "text": "出張が多い人へ 荷造りを短くする贈り物"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "結論: 日程を相手が決められる形にする"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "移動が長すぎないか。年配の方には、乗り換えの少ない近場が喜ばれます。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "人数。2人分を贈るのか、1人分なのか。誰と行くかを決めつけない渡し方にします。"
+   },
+   {
+    "after": "結婚記念日おめでとうございます。ささやかですが、お二人の旅を贈ります。",
+    "problems": [
+     "condition dropped: 二人で一緒に出かけるという条件が落ちている"
+    ],
+    "text": "結婚記念日おめでとうございます。お二人で出かける旅を、ささやかですが贈ります。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "こんな場面で"
+   }
+  ],
+  "structure_suggestions": [
+   "「贈り方は3通り…」の直後に3通りの贈り方を置き、その後に「渡す前に確かめること…」〜「人数。2人分を贈るのか、1人…」の確認事項を続けます。",
+   "「宿を探す…」〜「地域・日付・人数を入れて探せ…」の「宿を探す」は、「渡す前に確かめること…」〜「人数。2人分を贈るのか、1人…」の後、メッセージ例より前へ移します。"
+  ],
+  "unchanged": 47,
+  "units": 60
  }
 }
