@@ -373,7 +373,7 @@ def add_sony_search_links(pages: dict, cfg: dict) -> dict:
     if not isinstance(html, str):
         return pages
     box = ("<h2>ソニーストア以外で探す場合</h2>" + chr(10)
-           + "<p>この表は、ソニーストアで買う場合の期限と条件です。ソニーストア以外のお店で探す人向けに、各モールの検索ページを置きます。価格や特典は、ソニーストアと同じとは限りません。</p>" + chr(10)
+           + "<p>この表は、ソニーストアで買う場合の期限と条件です。ソニーストア以外のお店で探す人向けに、各モールの検索ページも載せています。価格や特典は、ソニーストアと同じとは限りません。</p>" + chr(10)
            + affiliate_multi_block(_kaden_links(SONY_SEARCH_WORD), cfg))
     cut = re.search(r'<div class="notice source-notice">|<p class="(?:stamp|credit)">', html)
     pages[SONY_SEARCH_PAGE] = html[:cut.start()] + box + html[cut.start():] if cut else html.replace("</main>", box + "</main>", 1)
