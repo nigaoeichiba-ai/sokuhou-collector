@@ -544,7 +544,7 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
 
 def brand_block(it: dict, at: datetime) -> str:
     """A shop's own sale (a schedule.py entry) in the sale-date block: ribbon, name, the dates as the shop's page gives them, the one-line note, the check day, the affiliate links of the shop."""
-    st = "開催中" if schedule.covers(it, at.date()) else ("開催予定" if schedule.d(it["s"]) > at.date() else "終了")
+    st = "終了" if schedule.over(it, at.date()) else ("開催中" if schedule.covers(it, at.date()) else ("開催予定" if schedule.d(it["s"]) > at.date() else "終了"))
     soon = "" if st == "開催中" else " soon"
     name = schedule.ENT[it["mall"]][0]
     checked = it["checked"].replace("-", "/") if it.get("checked") else ""
@@ -560,7 +560,7 @@ def genre_sale_items(ctx: "Ctx", gid: str) -> tuple[list[dict], list[dict]]:
     """(the malls' sales that are open or coming, the genre's shops' own sales that are open or coming): the malls' sales belong to every genre."""
     at = ctx.at
     malls = [s for s in ctx.sales if state(s, at) != "終了"][:4]
-    brands = [it for it in ctx.sched if it["kind"] == "confirmed" and it["mall"] in genres.GENRES[gid]["brands"] and schedule.d(it["e"]) >= at.date()]
+    brands = [it for it in ctx.sched if it["kind"] == "confirmed" and it["mall"] in genres.GENRES[gid]["brands"] and not schedule.over(it, at.date())]
     brands.sort(key=lambda it: (it["s"], it["title"]))
     return malls, brands
 

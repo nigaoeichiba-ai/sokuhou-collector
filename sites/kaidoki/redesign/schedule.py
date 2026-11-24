@@ -12,8 +12,12 @@ from month to month, filters by mall and kind, and writes "開催中" / "あとN
 """
 from __future__ import annotations
 
+import re
+
+import os
+
 import json
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta, timezone
 from html import escape
 
 from sites.kaidoki.gen.common import CHECKED, REVERIFIED, hm, ev_span
@@ -63,6 +67,35 @@ def jpd(x, year=False) -> str:
 
 def _t(t: str) -> str:
     return hm(t) if t else ""
+
+
+def end_hm(it: dict) -> str:
+    """The hour a dated sale ends on its last day as 'HH:MM', read from the words shown ('…1時59分まで' -> '01:59'); '' when no hour is written (then the day alone decides)."""
+    if it.get("kind") not in ("confirmed", "notice"):
+        return ""
+    found = re.findall(r"(\d{1,2})時(?:(\d{1,2})分)?まで", it.get("when") or "")
+    if not found or int(found[-1][0]) > 23:
+        return ""
+    return f"{int(found[-1][0]):02d}:{int(found[-1][1] or 0):02d}"
+
+
+def now_hm() -> str | None:
+    """The hour of the build (JST); None when only KAIDOKI_TODAY is set (tests)."""
+    v = os.environ.get("KAIDOKI_NOW")
+    if v:
+        return datetime.fromisoformat(v).strftime("%H:%M")
+    if os.environ.get("KAIDOKI_TODAY"):
+        return None
+    return datetime.now(timezone(timedelta(hours=9))).strftime("%H:%M")
+
+
+def over(it: dict, today: date) -> bool:
+    """The sale has ended: its last day is past, or today is its last day and the hour written for the end is past."""
+    last = d(it.get("e") or it["s"])
+    if last != today:
+        return last < today
+    et, now = end_hm(it), now_hm()
+    return bool(et and now and now > et)
 
 
 def ev_item(ev: dict) -> dict:
@@ -373,7 +406,7 @@ def item_li(it: dict) -> str:
     mall_title = ENT[it["mall"]][0]
     dates = ""
     if it.get("s") and it["kind"] != "regular":
-        dates = f' data-s="{it["s"]}" data-e="{it["e"] or it["s"]}"'
+        dates = f' data-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-et="{end_hm(it)}"'
     extra = f'<p class="cal-note">{e(it["note"])}</p>' if it.get("note") else ""
     ann = f'<p class="cal-note">公式が発表を予定している日時は、{e(it["announce"])}です。</p>' if it.get("announce") else ""
     basis = ""
@@ -437,7 +470,7 @@ def upcoming_rows(items: list[dict], mall: str | None, today: date) -> list[dict
         if it["kind"] == "regular":
             continue
         if it.get("s"):
-            if d(it["e"] or it["s"]) < today:
+            if over(it, today):
                 continue
         elif not it.get("mo") or it["mo"] < f"{today.year}-{today.month:02d}":
             continue
@@ -523,7 +556,7 @@ def home_pool(items: list[dict], today: date) -> list[dict]:
         if it["kind"] == "regular":
             for x in [x for x in (it["days"] or []) if today <= d(x) <= hi][:3]:
                 pool.append(dict(it, id=f'{it["id"]}@{x}', rule=it["id"], s=x, e=x, when=f'{jpd(x)}、{it["when"]}'))
-        elif it.get("s") and "(終了日)" not in it["title"] and d(it["e"] or it["s"]) >= today and d(it["s"]) <= hi:      # an entry with only an end day is not a "coming" sale
+        elif it.get("s") and "(終了日)" not in it["title"] and not over(it, today) and d(it["s"]) <= hi:      # an entry with only an end day is not a "coming" sale
             pool.append(dict(it, rule=""))
     seg = {"mall": 0, "ec": 1, "brand": 1, "web": 1}
     pool.sort(key=lambda it: (0 if d(it["s"]) >= today else 1, it["s"], seg[ENT[it["mall"]][2]], KIND_ORDER[it["kind"]]))
@@ -535,7 +568,7 @@ def home_choose(pool: list[dict], today: date) -> list[str]:
     end = today + timedelta(days=HOME_DAYS - 1)
     out, seen = [], set()
     for it in pool:
-        if d(it["s"]) <= end and d(it["e"] or it["s"]) >= today:
+        if d(it["s"]) <= end and not over(it, today):
             if it["rule"]:
                 if it["rule"] in seen:
                     continue
@@ -549,7 +582,7 @@ def home_choose(pool: list[dict], today: date) -> list[str]:
 def home_li(it: dict, shown: bool) -> str:
     label, sym, _ = KINDS[it["kind"]]
     title = f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])
-    return (f'<li class="cal-item k-{it["kind"]}" data-kind="{it["kind"]}" data-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-rule="{e(it["rule"])}" data-id="{e(it["id"])}"{"" if shown else " hidden"}>'
+    return (f'<li class="cal-item k-{it["kind"]}" data-kind="{it["kind"]}" data-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-et="{end_hm(it)}" data-rule="{e(it["rule"])}" data-id="{e(it["id"])}"{"" if shown else " hidden"}>'
             f'<div class="cal-head"><span class="cal-badge k-{it["kind"]}">{sym} {e(label)}</span><span class="cal-mall">{e(ENT[it["mall"]][0])}</span><span class="cal-live" data-live></span></div>'
             f'<h4>{title}</h4><p class="cal-when">{e(it["when"])}</p>{AFF.lines(AFF.links_for(it))}</li>')
 
@@ -572,7 +605,7 @@ HOME_TABLE_DAYS, HOME_TABLE_MAX = 14, 16
 def home_table_items(items: list[dict], today: date) -> list[dict]:
     """The confirmed dates and the 'to be announced on' days that run or start in [today, today + 13], by start day (an entry with only an end day is left out, as in the two weeks' list)."""
     end = today + timedelta(days=HOME_TABLE_DAYS - 1)
-    rows = [it for it in items if it["kind"] in ("confirmed", "notice") and it.get("s") and "(終了日)" not in it["title"] and d(it["e"] or it["s"]) >= today and d(it["s"]) <= end]
+    rows = [it for it in items if it["kind"] in ("confirmed", "notice") and it.get("s") and "(終了日)" not in it["title"] and not over(it, today) and d(it["s"]) <= end]
     rows.sort(key=lambda it: ((0, it["s"]) if d(it["s"]) > today else (1, it["e"] or it["s"]), 0 if it["kind"] == "confirmed" else 1, it["title"]))      # the ones still to start by their start day, then the running ones by the day they end
     return rows
 
@@ -618,7 +651,7 @@ def hero_slides(items: list[dict], today: date) -> list[dict]:
             continue
         is_mall = ENT[it["mall"]][2] == "mall"
         if it["kind"] == "confirmed":
-            if "(終了日)" in it["title"] or d(it["e"]) < today:
+            if "(終了日)" in it["title"] or over(it, today):
                 continue
             if is_mall:
                 if d(it["s"]) <= today + timedelta(days=60):
@@ -652,7 +685,7 @@ def hero_card(it: dict, n: int, total: int) -> str:
         notes += f'<p class="cal-note">公式が発表を予定している日時は、{e(it["announce"])}です。</p>'
     if it.get("note") and it["kind"] != "expected":
         notes += f'<p class="cal-note">{e(it["note"])}</p>'
-    dates = f' data-s="{it["s"]}" data-e="{it["e"] or it["s"]}"' if it.get("s") else ""
+    dates = f' data-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-et="{end_hm(it)}"' if it.get("s") else ""
     more = f'<p class="hs-more"><a class="text-link" href="{e(it["href"])}">このセールのページを見る →</a></p>' if it["href"] else ""
     return (f'<li class="hs-slide cal-item k-{cls}" data-kind="{it["kind"]}" data-id="{e(it["id"])}"{dates} aria-roledescription="スライド" aria-label="{n} / {total}">'
             f'<div class="cal-head"><span class="cal-badge k-{cls}">{sym} {e(label)}</span><span class="cal-mall">{e(ENT[it["mall"]][0])}</span><span class="cal-seg">{e(SEGMENTS[ENT[it["mall"]][2]])}</span>'

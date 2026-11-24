@@ -6,6 +6,8 @@
   var MALL = {};
   function jstNow() { return new Date(Date.now() + 9 * 3600 * 1000); }
   function todayIso() { return jstNow().toISOString().slice(0, 10); }
+  /* a sale is over after its last day, and on that day once the hour written for the end is past ('01:59' -> from 02:00) */
+  function isOver(e, et) { var now = jstNow().toISOString(); var today = now.slice(0, 10); return e < today || (e === today && !!et && now.slice(11, 16) > et); }
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function iso(y, m, d) { return y + '-' + pad(m) + '-' + pad(d); }
   function dayNo(s) { var p = s.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]) / 86400000; }
@@ -90,7 +92,7 @@
   /* the slides of the top page: several cards at a time (3 / 2 / 1 by width), every 5.5 s, stopped by hover / focus / touch / the button, not started with reduced motion; without the script every card stands in a column */
   document.querySelectorAll('[data-slides]').forEach(function (root) {
     var track = root.querySelector('.hs-track'), today = todayIso(), n = dayNo(today);
-    Array.prototype.slice.call(track.children).forEach(function (li) { if (li.dataset.e && dayNo(li.dataset.e) < n) li.remove(); });      // a sale that ended on the visitor's clock
+    Array.prototype.slice.call(track.children).forEach(function (li) { if (li.dataset.e && isOver(li.dataset.e, li.dataset.et)) li.remove(); });      // a sale that ended on the visitor's clock
     var slides = Array.prototype.slice.call(track.children), timer = null, userStopped = false, hold = false;
     if (slides.length < 2) return;
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -135,7 +137,7 @@
   document.querySelectorAll('[data-fortnight]').forEach(function (box) {
     var days = +box.dataset.days, max = +box.dataset.max, today = todayIso(), n = dayNo(today), shown = 0, seen = {};
     box.querySelectorAll('.cal-item[data-s]').forEach(function (li) {
-      var s = li.dataset.s, e = li.dataset.e, rule = li.dataset.rule, ok = dayNo(s) <= n + days - 1 && dayNo(e) >= n && shown < max;
+      var s = li.dataset.s, e = li.dataset.e, rule = li.dataset.rule, ok = dayNo(s) <= n + days - 1 && !isOver(e, li.dataset.et) && shown < max;
       if (ok && rule) { if (seen[rule]) ok = false; else seen[rule] = true; }
       li.hidden = !ok; if (ok) shown++;
     });
@@ -149,7 +151,7 @@
       var el = li.querySelector('[data-live]'); if (!el) return;
       var s = li.dataset.s, e = li.dataset.e, k = li.dataset.kind, txt = '';
       if (k === 'notice') txt = s < today ? '発表の予定日は過ぎました' : s === today ? '本日' : 'あと' + (dayNo(s) - n) + '日';
-      else if (k === 'confirmed') txt = e < today ? '終了' : s <= today ? (e === today ? '本日が最終日' : '開催中') : '開始まであと' + (dayNo(s) - n) + '日';
+      else if (k === 'confirmed') txt = isOver(e, li.dataset.et) ? '終了' : s <= today ? (e === today ? '本日が最終日' : '開催中') : '開始まであと' + (dayNo(s) - n) + '日';
       else if (k === 'expected') txt = s < today ? '' : s === today ? '予想の日は本日' : '予想の日まであと' + (dayNo(s) - n) + '日';
       el.textContent = txt;
     });
