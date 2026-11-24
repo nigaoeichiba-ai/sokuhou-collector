@@ -22,6 +22,19 @@ def _today() -> date:
 TODAY = _today()
 
 
+def _now_t():
+    """The hour of the build as 'HH:MM' (JST), so a sale that ends at 1:59 is 'done' from 2:00 of its last day.  KAIDOKI_NOW fixes it; with only KAIDOKI_TODAY set (tests) the hour is unknown and the day alone decides."""
+    v = os.environ.get("KAIDOKI_NOW")
+    if v:
+        return v
+    if os.environ.get("KAIDOKI_TODAY"):
+        return None
+    return datetime.now(JST).strftime("%H:%M")
+
+
+NOW_T = _now_t()
+
+
 def d(s) -> date:
     return s if isinstance(s, date) and not isinstance(s, datetime) else date.fromisoformat(str(s)[:10])
 
@@ -67,11 +80,14 @@ def until(x) -> str:
 
 
 def phase(ev) -> str:
-    """before / now / done, by the day only (the hour is not used)."""
+    """before / now / done.  By the day, except on the last day: once the build hour is past the organiser's end hour (1:59 -> from 2:00) the sale is done."""
     if TODAY < d(ev["start"]):
         return "before"
-    if TODAY <= d(ev["end"]):
+    if TODAY < d(ev["end"]):
         return "now"
+    if TODAY == d(ev["end"]):
+        et = str(ev.get("end_t") or "")
+        return "done" if NOW_T and et and NOW_T > et else "now"
     return "done"
 
 
