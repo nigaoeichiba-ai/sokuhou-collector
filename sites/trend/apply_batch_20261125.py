@@ -28,7 +28,8 @@ ARTICLES = {
     "trend-ideco-kyoshutsu-2026": ("記事最終稿_iDeCo拠出限度額_2026-11-25.md", "card_iDeCo拠出限度額.webp", "iDeCoの上限の変更", "iDeCo", ["trend-nenmatsu-chosei-kaisei-fuyo62", "trend-kokuho-hokenryo-jougen-96", "trend-furusato-nozei-nenmatsu"], "trend-nenmatsu-chosei-kaisei-fuyo62"),
     "trend-tokyogas-denki-1201": ("記事最終稿_東京ガス電気12月改定_2026-11-25.md", "card_東京ガス電気12月改定.webp", "東京ガスの電気の改定", "東京ガス", ["trend-denki-gas-futan-keigen", "trend-heating-cost-2026", "trend-teiden-danbou"], "trend-denki-gas-futan-keigen"),
     "trend-ajinomoto-mayonnaise-nesage": ("記事最終稿_味の素マヨネーズ値上げ_2026-11-25.md", "card_味の素マヨネーズ値上げ.webp", "マヨネーズの値上げ", "マヨネーズ", ["trend-mercian-nesage-2027", "trend-ibonoito-nesage-2027", "trend-yakult-nesage"], "trend-mercian-nesage-2027"),
-    "trend-nenmatsu-9renkyu-2026": ("記事最終稿_年末年始9連休と年内の締め_2026-11-25.md", "card_年末年始9連休と年内の締め.webp", "年末年始の9連休", "9連休", ["trend-nenmatsu-shinkansen-hatsubai-2026", "trend-nenmatsu-chosei-shorui", "trend-furusato-nozei-nenmatsu"], "trend-nenmatsu-shinkansen-hatsubai-2026"),
+    "trend-nenmatsu-9renkyu-2026": ("記事最終稿_年末年始9連休と年内の締め_2026-11-25.md", "card_年末年始9連休.webp", "年末年始の9連休", "9連休", ["trend-nenmatsu-shinkansen-hatsubai-2026", "trend-nenmatsu-chosei-shorui", "trend-furusato-nozei-nenmatsu"], "trend-nenmatsu-shinkansen-hatsubai-2026"),
+    "trend-yorunoyo-2026": ("記事最終稿_ヨルノヨ2026_2026-11-25.md", "card_ヨルノヨ2026.webp", "ヨルノヨ2026の回り方", "ヨルノヨ", ["trend-christmas-market-2026-nyujoryo", "trend-usj-winter-kids-free", "trend-nenmatsu-shinkansen-hatsubai-2026"], "trend-christmas-market-2026-nyujoryo"),
     "trend-toyu-haitatsu-tentou-2026": ("記事最終稿_灯油配達と店頭_2026-11-25.md", "card_灯油配達と店頭.webp", "灯油の配達と店頭", "灯油", ["trend-heating-cost-2026", "trend-teiden-danbou", "trend-gasoline-hojo-2026"], "trend-heating-cost-2026"),
 }
 
