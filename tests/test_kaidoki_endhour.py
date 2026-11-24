@@ -15,7 +15,7 @@ def run(today, now=None):
     env = {**os.environ, "KAIDOKI_TODAY": today, "PYTHONIOENCODING": "utf-8"}
     env.pop("KAIDOKI_NOW", None)
     if now:
-        env["KAIDOKI_NOW"] = now
+        env["KAIDOKI_NOW"] = f"{today}T{now}"
     return subprocess.run(["python", "-c", CODE], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", env=env).stdout.strip()
 
 
@@ -34,6 +34,25 @@ class EndHourTest(unittest.TestCase):
 
     def test_with_only_the_day_the_old_rule_holds(self):
         self.assertEqual(run("2026-11-25"), "now 本日最終日")
+
+
+BUILD = ("from sites.kaidoki.gen import write; write()\nfrom sokuhou import newsite; from pathlib import Path\n"
+         "newsite.build_pages(Path('sites/kaidoki').resolve(), release=True, strict_seo=True); print('BUILD-OK')")
+
+
+class LaterDaysBuildTest(unittest.TestCase):
+    """The release build (strict SEO) must pass on later days too: on 2026-11-25 every deploy stopped because the ended page lost its main term, and in January the December deadline page would have gone thin."""
+
+    def test_the_release_build_passes_on_later_days(self):
+        try:
+            for day in ("2026-11-25", "2026-12-01", "2026-12-26", "2027-01-11"):
+                env = {**os.environ, "KAIDOKI_TODAY": day, "KAIDOKI_NOW": f"{day}T07:00", "PYTHONIOENCODING": "utf-8"}
+                r = subprocess.run(["python", "-c", BUILD], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", env=env)
+                self.assertIn("BUILD-OK", r.stdout, f"{day}: {(r.stdout + r.stderr)[-600:]}")
+        finally:        # leave the generated content as the other tests expect it
+            env = {**os.environ}
+            env.pop("KAIDOKI_NOW", None)
+            subprocess.run(["python", "-c", "from sites.kaidoki.gen import write; write()"], cwd=ROOT, capture_output=True, env=env)
 
 
 if __name__ == "__main__":

@@ -92,9 +92,13 @@ def pages() -> list[dict]:
         [R("/deadline/december/", "12月の年内最後の締切"), R("/calendar/", "セール日程の一覧"), R("/calc/", "実質価格の計算ツール"), R("/buytime/", "買い時のハブ")],
         intent=1, secondary=["年賀状 締切", "おせち 予約 締切", "ふるさと納税 年内 いつまで"], basis=f"各社の公式ページ({jp(TODAY)}時点)",
     )
-    dec_title = f"12月の締切{len(dec)}本" if dec else "12月の締切"
+    over_all = not dec
+    if over_all:
+        dec = DL.of_month(rows, 2026, 12)      # every December deadline has passed: the page keeps them (dates stay useful next year) instead of becoming empty
+    dec_title = (f"12月の締切{len(dec)}本" if not over_all else "12月の締切(終了分)") if dec else "12月の締切"
     dec_secs = [
-        S("日付順の一覧", f"12月に締切が来るものを、近い順に{len(dec)}本並べました。今日は{jp(TODAY)}です。残りの日数は、日付から計算しています。", table=table(dec, f"12月の年内最後の締切({len(dec)}本)")),
+        S("日付順の一覧", (f"12月に締切が来るものを、近い順に{len(dec)}本並べました。今日は{jp(TODAY)}です。残りの日数は、日付から計算しています。" if not over_all
+                      else f"2026年12月の締切{len(dec)}本は、{jp(TODAY)}の時点ですべて過ぎています。来年の予定を立てる手がかりとして、日付を残しています。"), table=table(dec, f"12月の年内最後の締切({len(dec)}本)")),
         S("締切のあと、どうするか", "", html=groups_html(dec)),
         S("締切の読み方", "同じ「締切」でも、種類で意味が違います。早割は値段が戻る日、キャンセル・変更期限は無料で取り消せる最後の日、受付終了は注文そのものができなくなる日です。",
           "公式が「25時59分」のように24時を超えて書く場合は、翌日の1時59分までのことです。店舗や商品によって締切が違うものは、一番早い日を載せず、公式ページで確かめられた代表の日だけを載せています。申し込む前に、商品のページで確かめておきましょう。"),
@@ -104,9 +108,10 @@ def pages() -> list[dict]:
             s.pop("paras")
     december = page(
         "/deadline/december/", "article", "/deadline/", "12月の締切", f"{dec_title}|年賀状・おせち・ふるさと納税など年内最後の期限",
-        "12月の締切" + (f"{len(dec)}本" if dec else "") + "(年内最後の期限)",
+        ("12月の締切" + (f"{len(dec)}本" if dec else "") + "(年内最後の期限)") if not over_all else "12月の締切の記録(2026年分は終了)",
         f"年賀状、おせち、クリスマスケーキ、ふるさと納税など、12月に締切が来る年内最後のものを日付順にまとめました。各社の公式ページで確かめた日付と、締切のあとの動き方を載せています。",
-        (f"12月の締切は{len(dec)}本です。最初は{dec[0]['title']}({DL.when_short(dec[0])})、最後は{dec[-1]['title']}({DL.when_short(dec[-1])})です。" if dec else lead),
+        ((f"12月の締切は{len(dec)}本です。最初は{dec[0]['title']}({DL.when_short(dec[0])})、最後は{dec[-1]['title']}({DL.when_short(dec[-1])})です。" if not over_all
+          else f"2026年12月の締切{len(dec)}本は、すべて過ぎています。以下は当時の日付の記録です。") if dec else lead),
         dec_secs, [R("/deadline/", "年内の締切カレンダー"), R("/calendar/", "セール日程の一覧"), R("/rakuten/", "楽天のセール")],
         intent=1, secondary=["年賀状 締切", "ふるさと納税 年内 いつまで", "おせち 予約 締切"], basis=f"各社の公式ページ({jp(TODAY)}時点)",
     )

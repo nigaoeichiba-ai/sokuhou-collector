@@ -23,10 +23,10 @@ TODAY = _today()
 
 
 def _now_t():
-    """The hour of the build as 'HH:MM' (JST), so a sale that ends at 1:59 is 'done' from 2:00 of its last day.  KAIDOKI_NOW fixes it; with only KAIDOKI_TODAY set (tests) the hour is unknown and the day alone decides."""
+    """The hour of the build as 'HH:MM' (JST), so a sale that ends at 1:59 is 'done' from 2:00 of its last day.  KAIDOKI_NOW (ISO date and time, the same variable hooks.py and render.py read) fixes it; with only KAIDOKI_TODAY set (tests) the hour is unknown and the day alone decides."""
     v = os.environ.get("KAIDOKI_NOW")
     if v:
-        return v
+        return datetime.fromisoformat(v).strftime("%H:%M")
     if os.environ.get("KAIDOKI_TODAY"):
         return None
     return datetime.now(JST).strftime("%H:%M")
