@@ -339,7 +339,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
     if f["ref"].startswith("r") and live and live.get("name"):
         amazon_part = B.amazon_more(cfg, B.amazon_query(live["name"]), "Amazonでも探す")
     faq = "".join(f"<details class='faq'><summary>{esc(q['q'])}</summary><p>{esc(q['a'])}</p></details>" for q in f["faq"])
-    ev = "".join((f'<li><a href="{esc(e["url"])}" rel="noopener nofollow" target="_blank">{esc(e["label"])}</a></li>' if e.get("url") else f'<li>{esc(e["label"])}</li>') for e in f["evidence"])
+    # evidence (labels and links) stays in the JSON as an internal record; it is never shown (owner D26, 2026-11-15: no source names or links on screen)
     more = "".join(f'<li><a href="{path(o)}">{esc(o["title"])}</a></li>' for o in others[:6])
     url_abs = cfg["site_url"].rstrip("/") + path(f)
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": f["title"], "datePublished": f["date"], "dateModified": f["verified"], "inLanguage": "ja",
@@ -362,7 +362,7 @@ def feature_page(d: dict, cfg: dict, preview: bool, f: dict, day: dict, entry: d
 <section class="block"><div class="sec-head"><h2>よくある質問</h2></div>{faq}</section>
 <section class="block feat-cta"><p class="more">{buy}{other_btn}<a class="btn btn-sub" href="/memo/">贈る日を登録する</a></p></section>
 {B.share_bar(cfg, path(f), f"{f['title']}: {f['catch']}", "このページをだれかに・自分に送る", hint=True)}
-<section class="block"><div class="sec-head"><h2>この記事について</h2></div><p class="notice">商品の仕様、メーカーなどの公開情報、当サイトが集めた商品のデータをもとに編集部が、贈り物としての選びやすさを読み解いています。価格・在庫は販売ページでご確認ください。</p><ul class="plain feat-ev">{ev}</ul></section>
+<section class="block"><div class="sec-head"><h2>この記事について</h2></div><p class="notice">商品の仕様、メーカーなどの公開情報、当サイトが集めた商品のデータをもとに編集部が、贈り物としての選びやすさを読み解いています。価格・在庫は販売ページでご確認ください。</p></section>
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの注目の商品</span></h2><ul class="plain">{more}</ul></section>' if more else ""}
 <script type="application/ld+json">{ld}</script>"""
     return B.page(cfg, preview, path=path(f), title=f"{f['title']} | {cfg['site_name']}", description=f["catch"] + " " + f["verdict"][0][:70], body=body, og_image=B.og_for(f"pick/{f['slug']}"),

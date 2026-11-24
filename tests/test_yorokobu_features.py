@@ -171,6 +171,19 @@ class CandidatesTest(unittest.TestCase):
         self.assertEqual(features.chart_report(self.d, {**f, "date": "1999-01-01"}), "no entry")
 
 
+ALLOWED_EXTERNAL_HOSTS = ("hb.afl.rakuten.co.jp", "www.amazon.co.jp", "af.moshimo.com", "webservice.rakuten.co.jp", "developers.rakuten.com", "line.me", "social-plugins.line.me", "twitter.com", "x.com", "twitter.com", "item.rakuten.co.jp", "www.rakuten.co.jp", "yorokobu-present.com")
+
+
+def external_hosts_not_allowed(html):
+    """Hosts of the external links that are not an affiliate, share or credit link."""
+    hosts = []
+    for h in re.findall(r'<a\s[^>]*?href="(https?://[^"]+)"', html):
+        host = h.split("/")[2]
+        if not any(host == a or host.endswith("." + a) for a in ALLOWED_EXTERNAL_HOSTS):
+            hosts.append(host)
+    return hosts
+
+
 class PageTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -199,6 +212,20 @@ class PageTest(unittest.TestCase):
             self.assertIn('class="pr-chip"', html)
             self.assertIn("hb.afl.rakuten.co.jp/hgc/AFF.ID/?pc=", html)
             self.assertIn(f"/assets/features/{f['slug']}/1.webp", html)
+
+    def test_a_feature_page_shows_no_source_name_or_link_only_affiliate_share_and_credit_links(self):
+        # owner D26 (2026-11-15): no source names or links on screen; the evidence stays in the JSON only
+        for f in self.c["features"]:
+            html = self.read(f"pick/{f['slug']}/index.html")
+            self.assertNotIn("feat-ev", html, f["slug"])
+            self.assertEqual(external_hosts_not_allowed(html), [], f["slug"])
+            for e in f["evidence"]:
+                if e.get("url"):
+                    self.assertNotIn(e["url"], html, f["slug"])
+
+    def test_the_external_link_check_catches_a_source_link(self):                     # negative example: the maker's page that lamy-safari showed on 2026-11-24
+        bad = '<a href="https://www.lamy.com/ja-ie/p/lamy-safari-4" rel="noopener nofollow" target="_blank">x</a><a href="https://hb.afl.rakuten.co.jp/hgc/AFF.ID/?pc=1">ok</a>'
+        self.assertEqual(external_hosts_not_allowed(bad), ["www.lamy.com"])
 
     def test_the_page_never_claims_a_use_or_shows_stars_as_its_own_review(self):
         for f in self.c["features"]:
