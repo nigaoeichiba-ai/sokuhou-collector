@@ -1,0 +1,94 @@
+{
+ "path": "/deadline/",
+ "kind": "hub",
+ "parent": "/",
+ "primary_kw": "年内の締切",
+ "secondary_kw": [
+  "年賀状 締切",
+  "おせち 予約 締切",
+  "ふるさと納税 年内 いつまで"
+ ],
+ "intent": 1,
+ "title": "年内の締切カレンダー|早割終了・キャンセル期限・受付終了を日付順に",
+ "h1": "年内の締切カレンダー(早割・キャンセル期限・受付終了)",
+ "description": "年賀状、おせち、クリスマスケーキ、ふるさと納税などの年内の締切を、早割終了・キャンセル期限・受付終了の3種に分けて日付順に並べました。公式ページで確かめた日付だけを載せています。",
+ "answer": "いちばん近い締切は、日本旅行 ブラックフライデーのクーポン(11月30日(月)14時59分、あと6日)です。",
+ "updated": "2026-11-24",
+ "sections": [
+  {
+   "h2": "これから来る締切を日付順に",
+   "paras": [
+    "2026年11月24日(火)の時点で、公式ページで確かめた年内の締切を、近い順に並べました。種類は「早割終了」「キャンセル・変更期限」「受付終了」の3つです。締切の日付は、各社の表記どおりの最後の時刻です。"
+   ],
+   "table": {
+    "caption": "年内の締切(これから3件)",
+    "cols": [
+     "締切",
+     "種類",
+     "内容",
+     "残り"
+    ],
+    "rows": [
+     [
+      "11月30日(月)14時59分",
+      "受付終了",
+      "日本旅行 ブラックフライデーのクーポン",
+      "あと6日"
+     ],
+     [
+      "12月7日(月)23時59分",
+      "受付終了",
+      "Amazon ブラックフライデー(本セール)",
+      "あと13日"
+     ],
+     [
+      "12月21日(月)1時59分",
+      "受付終了",
+      "Yahoo!ショッピング 12月の超PayPay祭",
+      "あと27日"
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "3つの種類のちがい",
+   "paras": [
+    "「早割終了」とは、早割の割引が付く、予約・注文の最後の日のことです。過ぎると値段が戻るので、買うと決めているなら、この日が実質の期限になります。",
+    "「キャンセル・変更期限」とは、無料で取り消しや変更ができる、最後の日のことです。過ぎるとキャンセル料や手数料がかかる場合があります。",
+    "「受付終了」とは、予約・注文そのものができなくなる日のことです。年内に受け取りたい物や、年内に済ませたい手続きの最終日にあたります。"
+   ]
+  },
+  {
+   "h2": "受付終了の締切",
+   "html": "<h3>旅行</h3><div class=\"dl-item\"><h3>日本旅行 ブラックフライデーのクーポン</h3><p><strong>2026年11月30日(月)14時59分まで(受付終了)</strong>・あと6日</p><p>国内の宿泊・JR+宿泊・飛行機+宿泊と海外ツアーのクーポンを取って予約できるのは、この日の14時59分までです。日本旅行の会員登録が必要で、予約上限に達すると早く終わります。</p><div class=\"aff-lines\"><p class=\"aff-line\"><span class=\"pr-chip\">PR</span><a href=\"//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3787704&amp;pid=892749530&amp;vc_url=https%3A%2F%2Fwww.nta.co.jp%2Fcpn%2Fcampaign%2Fblack-friday%2F\" target=\"_blank\" rel=\"nofollow sponsored noopener\">日本旅行のブラックフライデーのページを見る<img src=\"//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3787704&amp;pid=892749530\" height=\"1\" width=\"0\" border=\"0\" alt=\"\"></a></p></div><p class=\"stamp\">確認日 2026年11月16日(月)</p></div><h3>セール</h3><div class=\"dl-item\"><h3>Amazon ブラックフライデー(本セール)</h3><p><strong>2026年12月7日(月)23時59分まで(受付終了)</strong>・あと13日</p><p>本セールは11月30日0時から始まり、この日の23時59分に終わります。先行セールは11月27日から11月29日までです。</p><div class=\"aff-lines\"><p class=\"aff-line\"><span class=\"pr-chip\">PR</span><a href=\"https://www.amazon.co.jp/s?k=%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%95%E3%83%A9%E3%82%A4%E3%83%87%E3%83%BC&amp;tag=amazonmacs-22\" target=\"_blank\" rel=\"nofollow sponsored noopener\">Amazonでブラックフライデーを探す</a></p></div><p class=\"stamp\">確認日 2026年11月19日(木)</p></div><div class=\"dl-item\"><h3>Yahoo!ショッピング 12月の超PayPay祭</h3><p><strong>2026年12月21日(月)1時59分まで(受付終了)</strong>・あと27日</p><p>12月18日0時から始まり、公式の表記は12月20日(日)の25時59分まで(21日の1時59分)です。最大21%が戻る企画で、条件と上限があります。</p><div class=\"aff-lines\"><p class=\"aff-line\"><span class=\"pr-chip\">PR</span><a href=\"//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3787704&amp;pid=892746613&amp;vc_url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fpromotion%2Fcampaign%2Fguide%2F\" target=\"_blank\" rel=\"nofollow sponsored noopener\">Yahoo!ショッピングのお得ガイドを見る<img src=\"//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3787704&amp;pid=892746613\" height=\"1\" width=\"0\" border=\"0\" alt=\"\"></a></p></div><p class=\"stamp\">確認日 2026年11月16日(月)</p></div>"
+  },
+  {
+   "h2": "最終確認は公式で",
+   "paras": [
+    "最終的な日程は、各社の最新の案内でご確認ください。日程は変更されることがあります。"
+   ]
+  }
+ ],
+ "related": [
+  {
+   "path": "/deadline/december/",
+   "text": "12月の年内最後の締切"
+  },
+  {
+   "path": "/calendar/",
+   "text": "セール日程の一覧"
+  },
+  {
+   "path": "/calc/",
+   "text": "実質価格の計算ツール"
+  },
+  {
+   "path": "/buytime/",
+   "text": "買い時のハブ"
+  }
+ ],
+ "sources": [
+  "official"
+ ],
+ "data_basis": "各社の公式ページ(2026年11月24日(火)時点)"
+}

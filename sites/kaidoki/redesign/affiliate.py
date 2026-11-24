@@ -27,7 +27,7 @@ A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+
           "alpen": ("4BGJFW+4V1L9E+3OSK+5YJRM", "www15"), "oisix": ("4BGJFW+6PQ50I+3RK+2THJS3", "www15"),
           # read from the A8 tool (media 007, text materials) on 2026-11-15
           "muumuu": ("4BGJFW+5U65YA+348+1BNJ9E", "www16"), "mixhost": ("4BGJFW+6FLRQA+3JTE+5YJRM", "www10"), "lolipop": ("4BGJFW+30D1IA+348+5YZ76", "www14"),
-          "sakura": ("4BGJFW+30YH42+D8Y+62U36", "www15"), "happy": ("4BGOWL+1PBVSY+5MMG+5YZ76", "www13"), "stardomain": ("4BGJFW+5CWLEQ+1WTI+C0B9U", "www16"), "onamae": ("4BECH2+C50BFM+50+2HHVNM", "www12")}
+          "sakura": ("4BGJFW+30YH42+D8Y+62U36", "www15"), "happy": ("4BGOWL+1PBVSY+5MMG+5YZ76", "www13"), "stardomain": ("4BGJFW+5CWLEQ+1WTI+C0B9U", "www16"), "nenga": ("4BGH3G+CRMSF6+33J0+15OK2A", "www15"), "onamae": ("4BECH2+C50BFM+50+2HHVNM", "www12")}
 
 YAHOO_GUIDE = "https://shopping.yahoo.co.jp/promotion/campaign/guide/"
 RAKUTEN_EVENT = {"/rakuten/super-sale/": "https://event.rakuten.co.jp/campaign/supersale/", "/rakuten/marathon/": "https://event.rakuten.co.jp/campaign/point-up/marathon/",
@@ -56,7 +56,7 @@ ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomai
        "jalan": ("vc", "jalan", "https://www.jalan.net/theme/otoku_10days/"),      # じゃらんnet (VC programme 2021810, approved for this site 2026-11-20); MyLink code read from the VC tool 2026-11-20; only the programme's own domain
        "expedia": ("vctext", "expedia", ""), "lenovo": ("vctext", "lenovo", ""), "orbis": ("vctext", "orbis", "")}      # expedia: a VC free-text ad (material 2927839, its landing page is the Black Friday page), code read from the VC tool 2026-11-17      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
-ASP_NAME = {"orbis": "オルビス", "happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "jalan": "じゃらんnet", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com"}
+ASP_NAME = {"orbis": "オルビス", "happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "jalan": "じゃらんnet", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com", "nenga": "年賀状スクエア"}
 MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).

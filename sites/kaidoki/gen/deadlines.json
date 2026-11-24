@@ -1,0 +1,370 @@
+{
+ "_about": "year-end deadlines; basis = INTERNAL (the official page it was read on), never shown on a page",
+ "group_aff": {
+  "年賀状": [
+   {
+    "k": "a8",
+    "key": "nenga",
+    "label": "年賀状スクエアで注文する"
+   }
+  ],
+  "おせち": [
+   {
+    "k": "rakuten",
+    "url": "https://event.rakuten.co.jp/toshikoshi/",
+    "label": "楽天市場のおせち特集を見る"
+   },
+   {
+    "k": "yahoo",
+    "url": "https://shopping.yahoo.co.jp/search?p=%E3%81%8A%E3%81%9B%E3%81%A1",
+    "label": "Yahoo!ショッピングでおせちを探す"
+   },
+   {
+    "k": "vctext",
+    "key": "belluna",
+    "label": "ベルーナグルメのおせちを見る"
+   }
+  ],
+  "クリスマスケーキ": [
+   {
+    "k": "rakuten",
+    "url": "https://event.rakuten.co.jp/xmas/",
+    "label": "楽天市場のクリスマス特集を見る"
+   },
+   {
+    "k": "yahoo",
+    "url": "https://shopping.yahoo.co.jp/search?p=%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%9E%E3%82%B9%E3%82%B1%E3%83%BC%E3%82%AD",
+    "label": "Yahoo!ショッピングでクリスマスケーキを探す"
+   }
+  ],
+  "ふるさと納税": [
+   {
+    "k": "rakuten",
+    "url": "https://event.rakuten.co.jp/furusato/",
+    "label": "楽天ふるさと納税を見る"
+   },
+   {
+    "k": "yahoo",
+    "url": "https://furusato.shopping.yahoo.co.jp/",
+    "label": "Yahoo!ショッピングのふるさと納税を見る"
+   }
+  ],
+  "旅行": [
+   {
+    "k": "vc",
+    "key": "jalan",
+    "url": "https://www.jalan.net/theme/otoku_10days/",
+    "label": "じゃらんnetのお得な特集を見る"
+   }
+  ]
+ },
+ "rows": [
+  {
+   "id": "nenga-square-sale",
+   "kind": "early",
+   "group": "年賀状",
+   "title": "年賀状スクエアの期間限定セール",
+   "deadline": "2026-11-27T23:59",
+   "what": "年賀状の印刷を注文して割引を受けたいなら、この日の23時59分までです。運営はしまうまプリントです。注文から1時間を過ぎると印刷に進み、内容や枚数は変えられません。",
+   "checked": "2026-11-24",
+   "basis": "https://nenga.print-netsquare.com/ 「11月27日(金)23:59までとなります」(トップのお知らせ 11/24付)。キャンセル: /guide/member/ 注文後1時間以内。運営: /outline/profile/ (2026-11-24 確認)"
+  },
+  {
+   "id": "japanpost-nenga",
+   "kind": "close",
+   "group": "年賀状",
+   "title": "年賀状を元日に届けたいときの差出日の目安",
+   "deadline": "2026-12-27T23:59",
+   "what": "年賀状の引受は12月20日(日)に始まります。元日に届けるには、できるだけ12月27日(日)までに差し出すよう、日本郵便が案内しています。確実な保証ではなく、お願いの形の目安です。",
+   "checked": "2026-11-24",
+   "basis": "https://www.post.japanpost.jp/question/140.html 「2026年12月27日(日)までに差し出して」(2026-11-24 本番で確認)",
+   "notime": true
+  },
+  {
+   "id": "furusato-year-end",
+   "kind": "close",
+   "group": "ふるさと納税",
+   "title": "ふるさと納税の年内の寄附(今年の控除にする最後の日)",
+   "deadline": "2026-12-31T23:59",
+   "what": "今年の控除に数えるには、12月31日までに寄附を済ませる必要があります。クレジットカード払いは申込の確定が12月31日中、コンビニ払いなどは入金の確定が基準になるなど、扱いは寄附先のサイトで違います。申し込む前に、サイトの案内で時刻を確かめておきましょう。",
+   "checked": "2026-11-24",
+   "basis": "ふるさとチョイス https://www.furusato-tax.jp/newstopic/a/3838 「12月31日23:59までに決済完了」(2025年版の告知)、さとふる https://www.satofull.jp/static/year-end_new-year.php (2025年版)。2026年版の告知は未公開のため12/1ごろ再確認(確認できた範囲)",
+   "notime": true
+  },
+  {
+   "id": "furusato-onestop",
+   "kind": "close",
+   "group": "ふるさと納税",
+   "title": "ワンストップ特例の申請書の提出期限",
+   "deadline": "2027-01-10T23:59",
+   "what": "寄附をした年の翌年の1月10日が期限で、2026年分は2027年1月10日です。郵送は必着、オンライン申請は期限の日までに申請を終えます。寄附先が5自治体以内で、確定申告が要らない人が使えます。",
+   "checked": "2026-11-24",
+   "basis": "楽天ふるさと納税 https://event.rakuten.co.jp/furusato/guide/tax/ 「寄付した翌年の1月10日」、ふるなび https://furunavi.jp/Faq/Category/3/76 「翌年1月10日(必着)」(2026-11-24 確認。年を特定しない一般の記述)",
+   "notime": true
+  },
+  {
+   "id": "seven-osechi-early",
+   "kind": "early",
+   "group": "おせち",
+   "title": "セブン-イレブン おせちの早期予約(7NOWアプリ)",
+   "deadline": "2026-11-30T23:59",
+   "what": "7NOWアプリで早期予約すると、対象のおせちが10%引きになります。対象の商品は限られ、店頭での予約には付きません。",
+   "checked": "2026-11-24",
+   "basis": "https://www.sej.co.jp/products/osechi/ 「2026年11月30日(月)23:59までに早期予約」(2026-11-24 確認)"
+  },
+  {
+   "id": "seven-xmas-early",
+   "kind": "early",
+   "group": "クリスマスケーキ",
+   "title": "セブン-イレブン クリスマスケーキの早期予約(7NOWアプリ)",
+   "deadline": "2026-11-30T23:59",
+   "what": "7NOWアプリで早期予約すると、対象のケーキが10%引きになります。",
+   "checked": "2026-11-24",
+   "basis": "https://www.sej.co.jp/products/christmas.html 「11月30日(月)23:59までに早期予約」(2026-11-24 確認)"
+  },
+  {
+   "id": "seven-osechi-delivery",
+   "kind": "close",
+   "group": "おせち",
+   "title": "セブン-イレブン おせちの宅配の申し込み",
+   "deadline": "2026-12-12T23:59",
+   "what": "宅配で予約できるのは、この日までです。届くのは、冷凍が12月28日以降、冷蔵が12月30日以降に順次です。キャンセルは商品ごとの締切までで、同じ注文に複数の商品があると、最も早い締切を過ぎた時点で全部のキャンセルができなくなります。",
+   "checked": "2026-11-24",
+   "basis": "https://www.sej.co.jp/products/osechi/ FAQ 「2026年12月12日(土)まで」宅配(2026-11-24 確認。時刻の記載なし)",
+   "notime": true
+  },
+  {
+   "id": "seven-xmas-store-1",
+   "kind": "close",
+   "group": "クリスマスケーキ",
+   "title": "セブン-イレブン クリスマスケーキの店頭予約(12月19日〜23日受取分)",
+   "deadline": "2026-12-16T23:59",
+   "what": "店頭で予約する分の締切で、受け取りが12月19日(土)から23日(水)の分です。商品によっては、予定の数に達すると早く終わります。",
+   "checked": "2026-11-24",
+   "basis": "https://www.sej.co.jp/products/christmas.html 店頭・受取12/19〜12/23分は2026年12月16日(水)まで(2026-11-24 確認。時刻の記載なし)",
+   "notime": true
+  },
+  {
+   "id": "seven-xmas-store-2",
+   "kind": "close",
+   "group": "クリスマスケーキ",
+   "title": "セブン-イレブン クリスマスケーキの店頭予約(12月24日〜25日受取分)",
+   "deadline": "2026-12-19T23:59",
+   "what": "店頭で予約する分の締切で、受け取りが12月24日(木)と25日(金)の分です。商品によっては、予定の数に達すると早く終わります。",
+   "checked": "2026-11-24",
+   "basis": "https://www.sej.co.jp/products/christmas.html 店頭・受取12/24〜12/25分は12/19(土)まで(2026-11-24 確認。時刻の記載なし)",
+   "notime": true
+  },
+  {
+   "id": "seven-osechi-store",
+   "kind": "close",
+   "group": "おせち",
+   "title": "セブン-イレブン おせちの店頭予約",
+   "deadline": "2026-12-28T23:59",
+   "what": "店頭で予約して受け取る分の最後の日です。受け取りは12月30日(水)と31日(木)の店頭です。キャンセルは商品ごとの締切までで、過ぎると取り消せません。",
+   "checked": "2026-11-24",
+   "basis": "https://www.sej.co.jp/products/osechi/ 店頭予約・店頭受取は2026年12月28日(月)まで(2026-11-24 確認。時刻の記載なし)",
+   "notime": true
+  },
+  {
+   "id": "famima-osechi-early",
+   "kind": "early",
+   "group": "おせち",
+   "title": "ファミリーマート おせちの早割",
+   "deadline": "2026-11-30T09:00",
+   "what": "対象の15品は、早割が終わったあとの価格から10%引きになります。終わるのは午前9時で、ほかの店の23時59分より早いので、注意してください。",
+   "checked": "2026-11-24",
+   "basis": "https://www.family.co.jp/company/news_releases/2026/20260924_01.html 「11月30日(月)午前9時まで」(2026-11-24 確認)"
+  },
+  {
+   "id": "famima-xmas-early",
+   "kind": "early",
+   "group": "クリスマスケーキ",
+   "title": "ファミリーマート クリスマスケーキの早期予約",
+   "deadline": "2026-12-01T09:00",
+   "what": "早期予約の期間は12月1日(火)の午前9時までで、対象のケーキは割引の価格です。ファミマオンラインで予約すると、期間限定のファミマポイントが付きます。",
+   "checked": "2026-11-24",
+   "basis": "https://www.family.co.jp/company/news_releases/2026/20261105_01.html 「〜12月1日(火)9時00分」(2026-11-24 確認)"
+  },
+  {
+   "id": "famima-osechi-end",
+   "kind": "close",
+   "group": "おせち",
+   "title": "ファミリーマート おせちの予約",
+   "deadline": "2026-12-22T23:00",
+   "what": "予約できるのは、この日の23時までです。八百彦本店のおせちだけは、同じ日の9時に終わります。受け取りは店頭が12月31日(木)、宅配が12月29日(火)から31日(木)で、時間の指定はできません。沖縄県は対象外です。",
+   "checked": "2026-11-24",
+   "basis": "https://www.family.co.jp/company/news_releases/2026/20260924_01.html 「12月22日(火)午後11:00まで」(2026-11-24 確認)"
+  },
+  {
+   "id": "lawson-osechi-early",
+   "kind": "early",
+   "group": "おせち",
+   "title": "ローソン おせちの早期予約",
+   "deadline": "2026-12-10T23:59",
+   "what": "早い時期に店頭かアプリで予約すると、商品によって2,000円引きなどの特典が付きます。宅配は対象外です。割引の内容は、商品ごとに違います。",
+   "checked": "2026-11-24",
+   "basis": "https://www.lawson.co.jp/lab/campaign/osechi/lineup.html 「早期予約期限は12/10(木)まで」(2026-11-24 確認。時刻の記載なし)",
+   "notime": true
+  },
+  {
+   "id": "lawson-osechi-delivery",
+   "kind": "close",
+   "group": "おせち",
+   "title": "ローソン おせちの宅配の申し込み",
+   "deadline": "2026-12-10T23:59",
+   "what": "宅配で申し込めるのは、この日までです。お届けは12月30日(水)と31日(木)で、時間の指定はできません。伝票が発行される12月23日以降は、送り先を変えられません。",
+   "checked": "2026-11-24",
+   "basis": "https://www.lawson.co.jp/lab/campaign/osechi/delivery.html 「お申込み締切 2026/12/10(木)」(2026-11-24 確認。時刻の記載なし)",
+   "notime": true
+  },
+  {
+   "id": "lawson-osechi-store",
+   "kind": "close",
+   "group": "おせち",
+   "title": "ローソン おせちの店頭予約",
+   "deadline": "2026-12-25T18:00",
+   "what": "店頭で予約できるのは、この日の18時までです。受け取りは12月30日(水)と31日(木)の14時以降で、電話やWebでの申し込みはできません。締切のあとのキャンセルや変更もできません。アプリでの予約は12月23日(水)までです。",
+   "checked": "2026-11-24",
+   "basis": "https://www.lawson.co.jp/lab/campaign/osechi/reservation.html 「ご予約のお申込締切は各日の18:00」12/25(金)(2026-11-24 確認)"
+  },
+  {
+   "id": "lawson-xmas",
+   "kind": "close",
+   "group": "クリスマスケーキ",
+   "title": "ローソン クリスマスケーキの店頭予約",
+   "deadline": "2026-12-18T18:00",
+   "what": "店頭で予約できるのは、この日の18時までです。お渡しは12月19日(土)から25日(金)で、アプリでの予約は12月13日(日)までです。申込状況によっては、締切の前に終わることもあります。",
+   "checked": "2026-11-24",
+   "basis": "https://www.lawson.co.jp/company/news/detail/1532136_2504.html 「12月18日(金)18:00まで」(2026-11-24 確認)"
+  },
+  {
+   "id": "aeon-osechi-early",
+   "kind": "early",
+   "group": "おせち",
+   "title": "イオンネットスーパー おせちの早得",
+   "deadline": "2026-11-27T15:00",
+   "what": "ネットスーパーの予約期間は9月1日から12月22日までで、早得が終わるのはこの日の15時です。お届けは12月31日(木)で、東北・九州・沖縄とマックスバリュの各店は対象外です。",
+   "checked": "2026-11-24",
+   "basis": "https://shop.aeon.com/netsuper/osechi_gochisou 「11月27日(金)15:00まで」(2026-11-24 確認)"
+  },
+  {
+   "id": "aeon-xmas-early",
+   "kind": "early",
+   "group": "クリスマスケーキ",
+   "title": "イオンネットスーパー クリスマスケーキの早得",
+   "deadline": "2026-11-27T15:00",
+   "what": "早得の期間は10月2日から始まり、この日の15時に終わります。お届けは12月19日(土)から25日(金)です。",
+   "checked": "2026-11-24",
+   "basis": "https://shop.aeon.com/netsuper/christmas 「11月27日(金)15:00まで」(2026-11-24 確認)"
+  },
+  {
+   "id": "aeon-xmas-end",
+   "kind": "close",
+   "group": "クリスマスケーキ",
+   "title": "イオンネットスーパー クリスマスケーキの予約",
+   "deadline": "2026-12-17T15:00",
+   "what": "予約できるのは、この日の15時までです。お届けは12月19日(土)から25日(金)で、商品によって違います。数に限りがあります。",
+   "checked": "2026-11-24",
+   "basis": "https://shop.aeon.com/netsuper/christmas 「予約期間12月17日(木)15:00まで」(2026-11-24 確認)"
+  },
+  {
+   "id": "aeon-osechi-end",
+   "kind": "close",
+   "group": "おせち",
+   "title": "イオンネットスーパー おせちの予約",
+   "deadline": "2026-12-22T20:00",
+   "what": "ネットスーパーでおせちを予約できるのは、この日の20時までです。お届けは12月31日(木)です。",
+   "checked": "2026-11-24",
+   "basis": "https://shop.aeon.com/netsuper/osechi_gochisou 「12月22日(火)20:00まで」(2026-11-24 確認)"
+  },
+  {
+   "id": "belluna-osechi-early",
+   "kind": "early",
+   "group": "おせち",
+   "title": "ベルーナグルメ おせちの早割",
+   "deadline": "2026-11-30T21:00",
+   "what": "早割の対象は一部の商品です。基本のお届けは12月29日(火)で、電話で注文する場合は、この日までなら12月30日(水)も選べます。",
+   "checked": "2026-11-24",
+   "basis": "https://belluna-gourmet.com/pg/osechi.html 「2026年11月30日(月)21:00まで」(2026-11-24 確認)",
+   "aff": [
+    {
+     "k": "vctext",
+     "key": "belluna",
+     "label": "ベルーナグルメのおせちを見る"
+    }
+   ]
+  },
+  {
+   "id": "belluna-osechi-cancel",
+   "kind": "cancel",
+   "group": "おせち",
+   "title": "ベルーナグルメ おせちのキャンセル保証",
+   "deadline": "2026-11-30T21:00",
+   "what": "キャンセルの保証があるのは、この日の21時までです。それ以降は、キャンセルを控えるよう案内されています。",
+   "checked": "2026-11-24",
+   "basis": "https://belluna-gourmet.com/pg/osechi.html キャンセル保証は11/30(月)まで(2026-11-24 確認)"
+  },
+  {
+   "id": "belluna-osechi-end",
+   "kind": "close",
+   "group": "おせち",
+   "title": "ベルーナグルメ おせちの最終の受付",
+   "deadline": "2026-12-24T21:00",
+   "what": "おせちの最終の受付です。「おせち結」だけは、12月26日(土)の15時までです。沖縄県には配送できません。送料は無料で、クール代が別にかかります。",
+   "checked": "2026-11-24",
+   "basis": "https://belluna-gourmet.com/pg/osechi.html 「2026年12月24日(木)21:00まで」(2026-11-24 確認)"
+  },
+  {
+   "id": "amazon-bf-2026",
+   "kind": "close",
+   "group": "セール",
+   "title": "Amazon ブラックフライデーの本セール",
+   "deadline": "2026-12-07T23:59",
+   "what": "本セールは11月30日(月)の0時に始まり、この日の23時59分に終わります。先行セールは11月27日(金)から11月29日(日)までです。",
+   "checked": "2026-11-19",
+   "basis": "Amazonの発表(2026-11-19 窓口が確認。SALEカレンダーの日程データと同じ値)",
+   "aff": [
+    {
+     "k": "amazon_s",
+     "term": "ブラックフライデー"
+    }
+   ]
+  },
+  {
+   "id": "yahoo-ppf-2026-12",
+   "kind": "close",
+   "group": "セール",
+   "title": "Yahoo!ショッピング 12月の超PayPay祭",
+   "deadline": "2026-12-21T01:59",
+   "what": "12月18日(金)の0時に始まり、公式の表記は12月20日(日)の25時59分まで(21日の1時59分)です。最大21%が戻る企画で、条件と上限があります。",
+   "checked": "2026-11-16",
+   "basis": "https://shopping.yahoo.co.jp/promotion/campaign/guide/ バナー 12月18日(金)0:00〜12月20日(日)25:59 最大21% (2026-11-16 確認)",
+   "aff": [
+    {
+     "k": "yahoo",
+     "url": "https://shopping.yahoo.co.jp/promotion/campaign/guide/",
+     "label": "Yahoo!ショッピングのお得ガイドを見る"
+    }
+   ]
+  },
+  {
+   "id": "nta-bf-2026",
+   "kind": "close",
+   "group": "旅行",
+   "title": "日本旅行 ブラックフライデーのクーポン",
+   "deadline": "2026-11-30T14:59",
+   "what": "国内の宿泊・JR+宿泊・飛行機+宿泊と、海外ツアーのクーポンを取って予約できるのは、この日の14時59分までです。日本旅行の会員登録が必要で、予約の上限に達すると早く終わります。",
+   "checked": "2026-11-16",
+   "basis": "https://www.nta.co.jp/cpn/campaign/black-friday/ 配布期間 2026年11月16日(月)15:00〜11月30日(月)14:59 (2026-11-16 本番で確認)",
+   "aff": [
+    {
+     "k": "vc",
+     "key": "nta",
+     "url": "https://www.nta.co.jp/cpn/campaign/black-friday/",
+     "label": "日本旅行のブラックフライデーのページを見る"
+    }
+   ]
+  }
+ ]
+}

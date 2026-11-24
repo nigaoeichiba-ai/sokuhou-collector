@@ -33,7 +33,7 @@ class KaidokiTest(unittest.TestCase):
         cls.html = {k: v for k, v in cls.pages.items() if isinstance(v, str) and k.endswith(".html")}
 
     def test_thirty_pages_with_the_designed_mix(self):
-        kinds = [json.loads(p.read_text(encoding="utf-8"))["kind"] for p in sorted((SITE / "content").glob("*.json"))]
+        kinds = [json.loads(p.read_text(encoding="utf-8"))["kind"] for p in sorted((SITE / "content").glob("*.json")) if not p.name.startswith("deadline")]      # the 締切カレンダー corner (2 pages) was added later on top of the first thirty
         self.assertEqual(len(kinds), 30)
         deep = sum(k in ("analysis", "article") for k in kinds)
         self.assertGreaterEqual(deep, 10)

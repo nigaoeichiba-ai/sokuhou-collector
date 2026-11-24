@@ -17,9 +17,9 @@ SITE = Path(__file__).resolve().parents[1]
 
 
 def all_pages() -> list[dict]:
-    from . import pages_amazon, pages_calc, pages_kaden, pages_misc, pages_rakuten, pages_trust
+    from . import pages_amazon, pages_calc, pages_deadline, pages_kaden, pages_misc, pages_rakuten, pages_trust
     out = []
-    for m in (pages_misc, pages_calc, pages_trust, pages_rakuten, pages_amazon, pages_kaden):
+    for m in (pages_misc, pages_calc, pages_trust, pages_rakuten, pages_amazon, pages_kaden, pages_deadline):
         out += m.pages()
     from .extra import extra
     from .extra2 import extra2

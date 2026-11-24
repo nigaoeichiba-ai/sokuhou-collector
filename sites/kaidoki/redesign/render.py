@@ -276,7 +276,7 @@ def absolutize(html: str) -> str:
 
 
 NAV = [("セールカレンダー", "/calendar/", ("/calendar/",)), ("商品別の買い時", "/buytime/", ("/buytime/", "/randoseru/", "/what-to-buy/", *genres.GENRE_PREFIXES)),
-       ("モール・公式ストア", "/malls/", ("/malls/", "/rakuten/", "/amazon/", "/yahoo/")), ("実質価格を計算", "/calc/", ("/calc/",)),
+       ("モール・公式ストア", "/malls/", ("/malls/", "/rakuten/", "/amazon/", "/yahoo/")), ("締切カレンダー", "/deadline/", ("/deadline/",)), ("実質価格を計算", "/calc/", ("/calc/",)),
        ("調査・検証 ↗", "/articles/", ("/articles/", "/method/"))]
 
 
@@ -302,7 +302,7 @@ ICONS_NEW = ('<link rel="icon" href="/favicon.ico" sizes="any">\n<link rel="icon
 
 CARD_SKIP = ("カード", "分かります", "入口", "確かめて", "確かめます", "見ます", "置きます", "載せ", "並べ", "出ます", "決まります", "ご確認")
 LABELS = {"/calendar/": "日程を探す", "/buytime/": "ジャンルで探す", "/malls/": "モール別", "/rakuten/": "楽天市場", "/amazon/sale-calendar/": "Amazon", "/yahoo/": "Yahoo!ショッピング",
-          "/kaden/": "家電・デジタル", **{v["path"]: "ジャンル" for v in genres.GENRES.values() if v["path"] != "/kaden/"}, "/calc/": "実質価格の計算", "/method/": "調査方法", "/about/": "運営情報", "/privacy/": "プライバシー", "/contact/": "お問い合わせ",
+          "/kaden/": "家電・デジタル", **{v["path"]: "ジャンル" for v in genres.GENRES.values() if v["path"] != "/kaden/"}, "/calc/": "実質価格の計算", "/deadline/": "締切カレンダー", "/method/": "調査方法", "/about/": "運営情報", "/privacy/": "プライバシー", "/contact/": "お問い合わせ",
           "/corrections/": "訂正履歴", "/articles/": "調査・検証", "/black-friday/": "ブラックフライデー", "/randoseru/": "ランドセル", "/what-to-buy/": "買う物から探す"}
 PREFIX_LABELS = (("/rakuten/", "楽天市場"), ("/amazon/", "Amazon"), ("/kaden/", "家電・デジタル"), *((v["path"], v["crumb"]) for v in genres.GENRES.values() if v["path"] != "/kaden/"), ("/calc/", "実質価格の計算"), ("/yahoo/", "Yahoo!ショッピング"))
 

@@ -1,0 +1,83 @@
+{
+ "path": "/deadline/december/",
+ "kind": "article",
+ "parent": "/deadline/",
+ "primary_kw": "12月の締切",
+ "secondary_kw": [
+  "年賀状 締切",
+  "ふるさと納税 年内 いつまで",
+  "おせち 予約 締切"
+ ],
+ "intent": 1,
+ "title": "12月の締切2本|年賀状・おせち・ふるさと納税など年内最後の期限",
+ "h1": "12月の年内最後の締切2本",
+ "description": "年賀状、おせち、クリスマスケーキ、ふるさと納税など、12月に締切が来る年内最後のものを日付順にまとめました。各社の公式ページで確かめた日付と、締切のあとの動き方を載せています。",
+ "answer": "12月の締切は、いちばん近いAmazon ブラックフライデー(本セール)(12月7日(月)23時59分)から、いちばん遠いYahoo!ショッピング 12月の超PayPay祭(12月21日(月)1時59分)まで、2本です。",
+ "updated": "2026-11-24",
+ "sections": [
+  {
+   "h2": "日付順の一覧",
+   "paras": [
+    "12月に締切が来るものを、近い順に2本並べました。今日は2026年11月24日(火)です。残りの日数は、日付から計算しています。"
+   ],
+   "table": {
+    "caption": "12月の年内最後の締切(2本)",
+    "cols": [
+     "締切",
+     "種類",
+     "内容",
+     "残り"
+    ],
+    "rows": [
+     [
+      "12月7日(月)23時59分",
+      "受付終了",
+      "Amazon ブラックフライデー(本セール)",
+      "あと13日"
+     ],
+     [
+      "12月21日(月)1時59分",
+      "受付終了",
+      "Yahoo!ショッピング 12月の超PayPay祭",
+      "あと27日"
+     ]
+    ]
+   }
+  },
+  {
+   "h2": "締切のあと、どうするか",
+   "html": "<h3>セール</h3><div class=\"dl-item\"><h3>Amazon ブラックフライデー(本セール)</h3><p><strong>2026年12月7日(月)23時59分まで(受付終了)</strong>・あと13日</p><p>本セールは11月30日0時から始まり、この日の23時59分に終わります。先行セールは11月27日から11月29日までです。</p><div class=\"aff-lines\"><p class=\"aff-line\"><span class=\"pr-chip\">PR</span><a href=\"https://www.amazon.co.jp/s?k=%E3%83%96%E3%83%A9%E3%83%83%E3%82%AF%E3%83%95%E3%83%A9%E3%82%A4%E3%83%87%E3%83%BC&amp;tag=amazonmacs-22\" target=\"_blank\" rel=\"nofollow sponsored noopener\">Amazonでブラックフライデーを探す</a></p></div><p class=\"stamp\">確認日 2026年11月19日(木)</p></div><div class=\"dl-item\"><h3>Yahoo!ショッピング 12月の超PayPay祭</h3><p><strong>2026年12月21日(月)1時59分まで(受付終了)</strong>・あと27日</p><p>12月18日0時から始まり、公式の表記は12月20日(日)の25時59分まで(21日の1時59分)です。最大21%が戻る企画で、条件と上限があります。</p><div class=\"aff-lines\"><p class=\"aff-line\"><span class=\"pr-chip\">PR</span><a href=\"//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3787704&amp;pid=892746613&amp;vc_url=https%3A%2F%2Fshopping.yahoo.co.jp%2Fpromotion%2Fcampaign%2Fguide%2F\" target=\"_blank\" rel=\"nofollow sponsored noopener\">Yahoo!ショッピングのお得ガイドを見る<img src=\"//ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3787704&amp;pid=892746613\" height=\"1\" width=\"0\" border=\"0\" alt=\"\"></a></p></div><p class=\"stamp\">確認日 2026年11月16日(月)</p></div>"
+  },
+  {
+   "h2": "締切の読み方",
+   "paras": [
+    "同じ「締切」でも、種類で意味が違います。早割は値段が戻る日、キャンセル・変更期限は無料で取り消せる最後の日、受付終了は注文そのものができなくなる日です。",
+    "公式が「25時59分」のように24時を超えて書く場合は、翌日の1時59分までのことです。店舗や商品によって締切が違うものは、一番早い日を載せず、公式ページで確かめられた代表の日だけを載せています。申し込む前に、必ず商品のページで確かめてください。"
+   ]
+  },
+  {
+   "h2": "最終確認は公式で",
+   "paras": [
+    "最終的な日程は、各社の最新の案内でご確認ください。日程は変更されることがあります。"
+   ]
+  }
+ ],
+ "related": [
+  {
+   "path": "/deadline/",
+   "text": "年内の締切カレンダー"
+  },
+  {
+   "path": "/calendar/",
+   "text": "セール日程の一覧"
+  },
+  {
+   "path": "/rakuten/",
+   "text": "楽天のセール"
+  }
+ ],
+ "sources": [
+  "official"
+ ],
+ "data_basis": "各社の公式ページ(2026年11月24日(火)時点)"
+}
