@@ -20,6 +20,7 @@ from sites.kaidoki.gen import deadlines as DL  # noqa: E402
 from tests.test_kaidoki_redesign import build  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
+EMPTY_H3 = re.compile(r"<h3[^>]*>[^<]*</h3>\s*(?:<div[^>]*>)?\s*<h3")
 GROUPS = ("年賀状", "おせち", "クリスマスケーキ", "ふるさと納税", "福袋", "宅配", "旅行", "セール")
 
 
@@ -114,6 +115,14 @@ class DeadlinePageTest(unittest.TestCase):
         out = subprocess.run(["python", "-c", code], cwd=ROOT, capture_output=True, text=True, encoding="utf-8", env={**os.environ, "PYTHONIOENCODING": "utf-8"}).stdout
         subprocess.run(["python", "-c", "import os;os.environ['KAIDOKI_TODAY']='2026-11-24';from sites.kaidoki import gen;gen.write()"], cwd=ROOT, capture_output=True)
         self.assertIn("すぎた締切", out)
+
+    def test_no_group_heading_stands_empty_above_the_next_heading(self):
+        for p in ("/deadline/", "/deadline/december/"):
+            self.assertEqual(EMPTY_H3.findall(self.page(p)), [], p)
+
+    def test_negative_an_empty_group_heading_is_caught(self):
+        self.assertTrue(EMPTY_H3.findall('<h3>年賀状</h3><div class="dl-item"><h3>x</h3>'))
+        self.assertFalse(EMPTY_H3.findall('<h3>年賀状</h3><p>導入</p><div class="dl-item"><h3>x</h3>'))
 
     def test_negative_a_row_that_shows_its_basis_would_be_caught(self):
         h = self.page("/deadline/") + "https://www.nta.co.jp/cpn/campaign/black-friday/"

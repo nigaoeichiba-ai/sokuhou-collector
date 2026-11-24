@@ -11,6 +11,18 @@ from .kit import R, S, T, page
 GROUPS = ("年賀状", "おせち", "クリスマスケーキ", "ふるさと納税", "福袋", "宅配", "旅行", "セール")
 
 
+GROUP_LEAD = {
+    "年賀状": "年賀状には、印刷を注文する締切と、郵便で元日に届けるための差出日の目安があります。",
+    "おせち": "おせちは、店ごとに、早割・宅配・店頭受取の締切が分かれています。",
+    "クリスマスケーキ": "クリスマスケーキは、早期予約の締切と、受け取る日ごとの予約の締切が別です。",
+    "ふるさと納税": "ふるさと納税には、今年の控除にするための寄附の最終日と、手続きの期限があります。",
+    "福袋": "福袋の締切です。",
+    "宅配": "宅配の年内の受付の締切です。",
+    "旅行": "旅行は、クーポンの配布期間の終わりが締切です。",
+    "セール": "モールのセールは、終わる日時が締切です。",
+}
+
+
 def links_html(r: dict) -> str:
     from sites.kaidoki.redesign import affiliate as AFF
     links = AFF.product_links({"slug": "", "crumb": ""}, {"aff": r.get("aff", []), "name": ""})
@@ -36,7 +48,7 @@ def groups_html(rows: list[dict], group_links: bool = True) -> str:
     for g in GROUPS:
         items = [r for r in rows if r.get("group") == g]
         if items:
-            out += f"<h3>{escape(g)}</h3>" + "".join(item_html(r) for r in items)
+            out += f"<h3>{escape(g)}</h3><p>{escape(GROUP_LEAD[g])}</p>" + "".join(item_html(r) for r in items)
             if group_links and g in ga:
                 out += AFF.lines(AFF.product_links({"slug": "", "crumb": ""}, {"aff": ga[g], "name": ""}))
     return out
@@ -94,7 +106,7 @@ def pages() -> list[dict]:
         "/deadline/december/", "article", "/deadline/", "12月の締切", f"{dec_title}|年賀状・おせち・ふるさと納税など年内最後の期限",
         "12月の締切" + (f"{len(dec)}本" if dec else "") + "(年内最後の期限)",
         f"年賀状、おせち、クリスマスケーキ、ふるさと納税など、12月に締切が来る年内最後のものを日付順にまとめました。各社の公式ページで確かめた日付と、締切のあとの動き方を載せています。",
-        (f"12月の締切は、最も近い{dec[0]['title']}({DL.when_short(dec[0])})から、最も遠い{dec[-1]['title']}({DL.when_short(dec[-1])})まで、{len(dec)}本です。" if dec else lead),
+        (f"12月の締切は{len(dec)}本です。最初は{dec[0]['title']}({DL.when_short(dec[0])})、最後は{dec[-1]['title']}({DL.when_short(dec[-1])})です。" if dec else lead),
         dec_secs, [R("/deadline/", "年内の締切カレンダー"), R("/calendar/", "セール日程の一覧"), R("/rakuten/", "楽天のセール")],
         intent=1, secondary=["年賀状 締切", "ふるさと納税 年内 いつまで", "おせち 予約 締切"], basis=f"各社の公式ページ({jp(TODAY)}時点)",
     )
