@@ -34,6 +34,7 @@ export const GROUPS={
  gyosei:{name:'行政書士',word:'行政書士 参考書',course:true,agaroot:'gyosei',ito:'gyosei'},
  sharoshi:{name:'社会保険労務士',word:'社会保険労務士 テキスト',course:true,agaroot:'sharoshi',ito:'sogo'},
  shindanshi:{name:'中小企業診断士',word:'中小企業診断士 テキスト',course:true,agaroot:'sogo',ito:'sogo'},
+ shihoshoshi:{name:'司法書士',word:'司法書士 テキスト',agaroot:'sogo',ito:'sogo'},
  kaigo:{name:'介護福祉士',word:'介護福祉士 参考書'},
  nurse:{name:'看護師国家試験',word:'看護師国家試験 参考書'},
  kanri:{name:'管理業務主任者',word:'管理業務主任者 テキスト'},
