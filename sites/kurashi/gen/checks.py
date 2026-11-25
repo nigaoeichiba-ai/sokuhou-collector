@@ -12,8 +12,18 @@ from datetime import date
 
 FIRST = "2026-11-03"
 
+# the last day the National Tax Agency's special page for the 令和8年分 return was seen as not yet published (the page says so with this day)
+TOKUSHU_NOT_YET = "2026-11-25"
+
 # day -> the pages whose dates were compared with the sources that day
 CHECKED_ON = {
+    "2026-11-25": [
+        "/nenmatsu-chosei/",                                  # 国税庁「年末調整がよくわかるページ(令和8年分)」の本文で変更点4項目を照合した
+        "/nengajo/",                                          # 日本郵便 よくある質問(question/140)の本文で引受12/20・元日の差出目安12/27を照合した
+        "/furusato/deadline/", "/furusato/one-stop/",         # 総務省「税金の控除について」の本文で3月15日・5団体を照合した
+        "/moving/", "/moving/tenshutsu/",                     # マイナポータル moving_oss.html の本文(転入は来庁・14日以内・対象外の条件)で照合した
+        "/life/birth/",                                       # 法務省 出生届のページの本文(14日以内・国外3か月)で照合した
+    ],
     "2026-11-24": [
         "/nengajo/",                                          # 日本郵便の発表(検索の要約)とNHK等の二次情報で引受12/20・差出目安12/27・販売1/15を照合した
         "/nenmatsu-chosei/",                                  # 国税庁の令和8年度税制改正ページ(施行12/1)の要約と二次情報で変更点を照合した
@@ -51,6 +61,16 @@ CHECKED_ON = {
 # (day, what, how, result, note); result is "ok" (the body was read), "top" (only the top page or a list was read: never counts as "no change") or "failed".
 # A later "ok" for the same what closes a "failed"; a "top" does not.
 FETCH_LOG = [
+    ("2026-11-25", "国税庁 年末調整がよくわかるページ(令和8年分)", "Chrome(本文)", "ok", "変更点4項目。サイトと一致"),
+    ("2026-11-25", "日本郵便 年賀状の引受開始(よくある質問)", "Chrome(本文 question/140)", "ok", "引受12/20・元日の差出目安(できるだけ)12/27。サイトと一致"),
+    ("2026-11-25", "総務省 ふるさと納税 税金の控除について", "Chrome(本文)", "ok", "3月15日までの確定申告・ワンストップは5団体以内。サイトと一致"),
+    ("2026-11-25", "マイナポータル 引越し手続(hikkoshi_top)", "Chrome(myna.go.jp/html/moving_oss.html の本文)", "ok", "転入は来庁・14日以内・対象外の条件。サイトと一致"),
+    ("2026-11-25", "法務省 戸籍・婚姻届の案内", "Chrome(ONLINE/FAMILYREGISTER/5-1.html の本文。婚姻届は今回は読んでいない)", "ok", "出生届は14日以内(国外3か月)・手数料なし。サイトと一致"),
+    ("2026-11-25", "国税庁 確定申告特集", "Chrome(本文)", "ok", "まだ令和7年分(令和8年3月16日まで)の表示。令和8年分は未公開"),
+    ("2026-11-25", "日本年金機構 お知らせ", "Chrome(トップページのお知らせ)", "top", "控除証明書の送付などで、手続きの変更は見当たらない(一覧のみ)"),
+    ("2026-11-25", "厚生労働省 介護・高齢者福祉", "Chrome(トピックス一覧)", "top", "最新は11/18の基金の内示。一覧のみ"),
+    ("2026-11-25", "国税庁 報道発表一覧", "Chrome(一覧)", "top", "最新は10月分(法人税の実績など)。一覧のみ"),
+    ("2026-11-25", "e-Tax お知らせ", "Chrome(一覧と10/20の記事の本文)", "top", "令和9年1月の新機能は個人事業の開業手続で、このサイトの記述に影響なし"),
     ("2026-11-23", "国税庁 年末調整がよくわかるページ(令和8年分)", "Chrome(本文。/gensen/nenmatsu/ は存在せず /gensen/nencho/index.htm)", "ok", "変更点4項目(基礎控除・給与所得控除の最低保障額・扶養親族等の所得要件・23歳未満の扶養親族の生命保険料控除の特例)。サイトと一致"),
     ("2026-11-23", "日本年金機構 お知らせ", "Chrome(トップページの本文)", "ok", "最新は10/30(障害年金の認定状況・年金請求書の審査)と10/9(令和8年分の国民年金保険料控除証明書の送付)。サイトの控除証明書の記述と矛盾なし"),
     ("2026-11-23", "厚生労働省 介護・高齢者福祉", "Chrome(本文。/stf/newpage_00001.html は404)", "ok", "トピックスは統計の更新のみ(11/10)。介護の手続きに関わる制度変更は見当たらない"),

@@ -188,6 +188,28 @@ class CheckLedger(unittest.TestCase):
             checks.FETCH_LOG = old
 
 
+class TokushuNotYet(unittest.TestCase):
+    """The 'not yet published as of <day>' note on /kakutei-shinkoku/ follows the ledger; it is not a typed date."""
+
+    @staticmethod
+    def problem(page_text, day, log):
+        from sites.kurashi.gen import checks
+        read = max((d for d, w, _h, r, _n in log if w == "国税庁 確定申告特集" and r == "ok"), default="")
+        if day != read:
+            return f"the note day {day} is not the last read day {read}"
+        return "" if f"{checks.label(day)}時点で未掲載" in page_text else "the page does not show the ledger day"
+
+    def test_note_follows_the_ledger(self):
+        from sites.kurashi.gen import checks
+        text = (SITE / "content" / "kakutei-shinkoku.json").read_text(encoding="utf-8")
+        self.assertEqual(self.problem(text, checks.TOKUSHU_NOT_YET, checks.FETCH_LOG), "")
+
+    def test_negative_a_stale_note_is_caught(self):
+        log = [("2026-11-25", "国税庁 確定申告特集", "x", "ok", "n")]
+        self.assertTrue(self.problem("2026年11月3日時点で未掲載", "2026-11-03", log))
+        self.assertTrue(self.problem("2026年11月3日時点で未掲載", "2026-11-25", log))
+
+
 class StaleFailures(unittest.TestCase):
     """A source that failed on 3 different days and was never read since is flagged (negative cases included)."""
 

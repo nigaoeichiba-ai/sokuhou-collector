@@ -1,6 +1,7 @@
 """Tax and year-end pages: year-end adjustment, furusato nozei (3), new-year cards, the holidays, the filing (4), medical expenses."""
 from __future__ import annotations
 
+from . import checks
 from .common import CHECKED, TODAY_MD, TODAY_YMD, a, d, days, jp, md, page, para_html, plus, rel, row_link, weeks, wd
 from .pages_hub import (CLOSED_FROM, CLOSED_TO, KAKUTEI_END, KAKUTEI_PREV_END, KAKUTEI_START, NENGA_NEW_YEAR, NENGA_OLD_END, NENGA_OLD_START, NENGA_SALE,
                         NENGA_SALE_END, NENGA_START, ONESTOP_CHANGE, REFUND_START, YEAR_END)
@@ -256,7 +257,7 @@ def nenmatsu_nenshi() -> dict:
 def kakutei() -> dict:
     prev = [
         ["令和7年分(2026年に申告)", f"{jp(d(2026, 2, 16))}〜{jp(KAKUTEI_PREV_END)}", "3月15日が日曜のため、期限は3月16日(月)"],
-        ["令和8年分(2027年に申告)", f"{jp(KAKUTEI_START)}〜{jp(KAKUTEI_END)}", "法律上の原則の期間。国税庁の令和8年分の特集ページは、2026年11月3日時点で未掲載"],
+        ["令和8年分(2027年に申告)", f"{jp(KAKUTEI_START)}〜{jp(KAKUTEI_END)}", f"法律上の原則の期間。国税庁の令和8年分の特集ページは、{checks.label(checks.TOKUSHU_NOT_YET)}時点で未掲載"],
     ]
     return page(
         "/kakutei-shinkoku/", "article", "/",
@@ -382,7 +383,7 @@ def kanpu() -> dict:
                 f"還付申告書は、確定申告の期間とは関係なく、その年の翌年1月1日から5年間出せます。令和8年分の期間は{jp(REFUND_START)}から、{jp(d(2031, 12, 31))}までです。"],
              "table": {"caption": "還付申告の対象になる主な場合(給与所得者)", "cols": ["場合", "適用する制度"], "rows": ex}},
             {"h2": f"年分ごとの期限({TODAY_YMD}時点)", "paras": [
-                f"還付申告の期限は、年分ごとに5年先の12月31日です。確認した2026年11月3日の時点で、令和2年分は期限が過ぎています。令和3年分の期限は{jp(d(2026, 12, 31))}で、あと{days(d(2026, 12, 31))}日です。",
+                f"還付申告の期限は、年分ごとに5年先の12月31日です。令和2年分は、2025年12月31日で期限が過ぎました。令和3年分の期限は{jp(d(2026, 12, 31))}で、あと{days(d(2026, 12, 31))}日です。",
                 "医療費控除やふるさと納税を出し忘れていた年があるときは、この表で期限が残っているかを確認します。"],
              "table": {"caption": "還付申告の期限(年分ごと)", "cols": ["年分", "出せる最初の日", "出せる最後の日", f"{TODAY_MD}から"], "num_cols": [3],
                        "rows": [[f"令和{n}年分", jp(d(2018 + n + 1, 1, 1)), jp(d(2018 + n + 5, 12, 31)), rel(d(2018 + n + 5, 12, 31), "期限が過ぎた")] for n in range(2, 9)]}},
