@@ -51,13 +51,14 @@ STORES = {
     "zoff": [("rakuten", "https://www.rakuten.co.jp/zoff/")],
     "kojima": [("rakuten", "https://www.rakuten.co.jp/r-kojima/")],
     "toysrus": [("rakuten", "https://www.rakuten.co.jp/toysrus/")],
+    "jins": [("rakuten", "https://www.rakuten.co.jp/jins/")],
     "zozo": [("yahoo","https://store.shopping.yahoo.co.jp/zozo/")],
     "sharp": [("amazon_s", "シャープ")],
     "google": [("amazon_s", "Google Pixel")],
     "playstation": [("amazon_s", "PlayStation")],
 }
 # The shops of an ASP programme that is already ours (the programme's own landing page).
-ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", ""), "stardomain": ("a8", "stardomain", ""), "nta": ("vc", "nta", "https://www.nta.co.jp/cpn/campaign/black-friday/"),
+ASP = {"muumuu": ("a8", "muumuu", ""), "dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", ""), "stardomain": ("a8", "stardomain", ""), "nta": ("vc", "nta", "https://www.nta.co.jp/cpn/campaign/black-friday/"),
        "jalan": ("vc", "jalan", "https://www.jalan.net/theme/otoku_10days/"),      # じゃらんnet (VC programme 2021810, approved for this site 2026-11-20); MyLink code read from the VC tool 2026-11-20; only the programme's own domain
        "expedia": ("vctext", "expedia", ""), "his": ("vc", "his", "https://www.his-j.com/"), "colorfulbox": ("a8", "colorfulbox", ""), "lenovo": ("vctext", "lenovo", ""), "orbis": ("vctext", "orbis", "")}      # expedia: a VC free-text ad (material 2927839, its landing page is the Black Friday page), code read from the VC tool 2026-11-17      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
@@ -95,6 +96,14 @@ NO_LINK = {
     "tsuruha": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
     "greenbeans": "A8.net に申請して審査中(2026-11-25)。承認されるまで広告は置かない",
     "shiseido": "直営ストアの案件は VC・A8の保存一覧・アクセストレードで見つからない(2026-11-25 窓口が確認)",
+    "omsystem": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
+    "owndays": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
+    "mistore": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
+    "takashimaya": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
+    "akachan": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
+    "mitsuioutlet": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
+    "lalaport": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
+    "premiumoutlets": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
 }
 
@@ -167,7 +176,7 @@ def links_for(it: dict) -> list[dict]:
     return out
 
 
-STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
+STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)", "c-jins-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
 STORE_LABEL = {"yamada": "ヤマダデンキ"}      # the mall stores are the company's (ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店), not the web shop the calendar entry names
 ENT_NAME: dict[str, str] = {}      # filled by schedule.py (id -> name) so the labels name the shop
 
