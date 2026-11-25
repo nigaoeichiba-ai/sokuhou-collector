@@ -2002,7 +2002,7 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "2026年度の申込・試験は終了しています。郵送とインターネットの期限は別です。試験の一部免除対象者は13:10〜15:00。",
+      "notes": "2026年度の合格発表は11月25日にありました。合格点は50問中33点、合格率は18.6%(受験者246,440人、合格者45,847人)です。郵送とインターネットの期限は別でした。試験の一部免除対象者は13:10〜15:00。",
       "future": {
         "name": "宅建試験",
         "edition": "2027年度",
@@ -2010,7 +2010,7 @@
         "sourceId": "takken",
         "note": "確認日時点で公表されているのは2026年度のみです。2027年度の試験日・申込期間・合格発表日は未発表として扱い、予想日は載せていません。"
       },
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-25",
       "field": "不動産",
       "category": "qualification"
     },
@@ -6929,7 +6929,7 @@
       "label": "郵送申込締切",
       "note": "簡易書留・当日消印有効",
       "sourceId": "takken",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-25"
     },
     {
       "id": "takken-online-deadline",
@@ -6939,7 +6939,7 @@
       "type": "deadline",
       "label": "ネット申込締切",
       "sourceId": "takken",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-25"
     },
     {
       "id": "takken-exam",
@@ -6951,7 +6951,7 @@
       "label": "試験日",
       "note": "一部免除対象者は13:10開始。着席時刻は受験案内で確認",
       "sourceId": "takken",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-25"
     },
     {
       "id": "takken-result",
@@ -6959,9 +6959,10 @@
       "date": "2026-11-25",
       "time": "09:30",
       "type": "result",
-      "label": "合格発表",
+      "label": "合格発表(合格点33点・合格率18.6%)",
       "sourceId": "takkenMain",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-25",
+      "note": "合格点は50問中33問以上(登録講習修了者は45問中28問以上)。合格者45,847人です。"
     },
     {
       "id": "toeic-deadline",
