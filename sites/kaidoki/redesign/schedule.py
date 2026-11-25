@@ -30,7 +30,7 @@ REGULAR_TO = date(2027, 6, 30)                   # ... and up to this day (a cam
 VERIFIED = REVERIFIED                             # the day the entries below were read again (gen/common.py: one value for the top page, the tiles and the calendars)
 
 MALLS = {"rakuten": ("楽天市場", "楽"), "amazon": ("Amazon", "A"), "yahoo": ("Yahoo!ショッピング", "Y")}      # the three malls: each has its own calendar page
-SEGMENTS = {"mall": "大型モール", "ec": "そのほか大手EC", "brand": "ブランド直販EC", "web": "WEBサービス"}
+SEGMENTS = {"mall": "大型モール", "ec": "そのほか大手EC", "brand": "ブランド直販EC", "store": "実店舗の企画", "web": "WEBサービス"}
 # every shop the calendar lists: id -> (name, one letter for the grid, segment).  A shop is listed only when a sale of it is confirmed (the malls: or expected).
 ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "mall"), "yahoo": ("Yahoo!ショッピング", "Y", "mall"),
        "yamada": ("ヤマダウェブコム", "ヤ", "ec"), "nitori": ("ニトリ", "ニ", "brand"), "dyson": ("ダイソン", "ダ", "brand"), "playstation": ("PlayStation公式", "P", "brand"),
@@ -38,7 +38,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
        "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "hands": ("ハンズ", "ハ", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "edion": ("エディオン", "エ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "expedia": ("エクスペディア", "旅", "web"), "yodobashi": ("ヨドバシ.com", "橋", "ec"), "bic": ("ビックカメラ", "ビ", "ec"), "gu": ("GU", "U", "brand"), "yokado": ("イトーヨーカドー", "ヨ", "ec"), "donki": ("ドン・キホーテ", "ド", "ec"), "seiyu": ("西友", "西", "ec"), "aeon": ("イオン", "イ", "ec"), "nikon": ("ニコン", "コ", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
        "stardomain": ("スタードメイン", "ス", "web"), "nta": ("日本旅行", "日", "web"), "jalan": ("じゃらんnet", "ら", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand"), "lenovo": ("Lenovo公式オンラインストア", "ボ", "brand"), "orbis": ("オルビス", "オ", "brand"),
-       "yogibo": ("Yogibo", "ぎ", "brand"), "gap": ("Gap", "ギ", "brand"), "zoff": ("Zoff", "ゾ", "brand"), "welcia": ("ウエルシアグループ", "ウ", "ec"), "tsuruha": ("ツルハグループ", "ツ", "ec")}
+       "yogibo": ("Yogibo", "ぎ", "brand"), "gap": ("Gap", "ギ", "brand"), "zoff": ("Zoff", "ゾ", "brand"), "welcia": ("ウエルシアグループ", "ウ", "store"), "tsuruha": ("ツルハグループ", "ツ", "store")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
@@ -217,11 +217,15 @@ EXTRA_CONFIRMED += [
     C("c-yodobashi-food-bf", "yodobashi", "ヨドバシ.com 食品ブラックフライデーセール", "2026-11-20", "2026-12-06", _span("2026-11-20", "2026-12-06"), "", src=SRC_OFFICIAL, note="対象の食品・飲料・お酒が期間限定の特価です。"),
     C("c-edion-point", "edion", "エディオンネットショップ ポイント還元キャンペーン(終了日)", "2026-12-03", "2026-12-03", f"{jpd('2026-12-03')}まで(開始日は確認していません)", "", src=SRC_OFFICIAL, note="当社指定の商品が対象です。", checked="2026-11-25"),
     C("c-yodobashi-stock", "yodobashi", "ヨドバシ.com 文房具・ファッション 在庫限りの特価(終了日)", "2026-11-30", "2026-11-30", f"{jpd('2026-11-30')}まで(開始日は確認していません)", "", src=SRC_PAGE),
-    C("c-yogibo-bf", "yogibo", "Yogibo ブラックフライデー", "2026-11-13", "2026-11-30", _span("2026-11-13", "2026-11-30"), "", src=PRESS2, checked="2026-11-25"),
+    C("c-yogibo-bf", "yogibo", "Yogibo ブラックフライデー", "2026-11-13", "2026-11-30", f"実店舗と公式オンラインストアは{jpd('2026-11-13', True)}から{jpd('2026-11-30')}まで", "", src=SRC_OFFICIAL, checked="2026-11-25",
+      note="公式オンラインストアは11月13日(金)0時から11月30日(月)23時59分までです。下のリンクの楽天市場店は別のクーポン企画で、期間は11月19日(木)から11月30日(月)までです。"),
     C("c-gap-bf", "gap", "Gap ブラックフライデー 2026", "2026-11-19", "2026-11-30", _span("2026-11-19", "2026-11-30"), "", src=PRESS2, checked="2026-11-25"),
-    C("c-zoff-bf", "zoff", "Zoff BLACK FRIDAY", "2026-11-12", "2026-12-03", _span("2026-11-12", "2026-12-03"), "", src=PRESS2, checked="2026-11-25"),
-    C("c-welcia-bf", "welcia", "ウエルシアグループ BLACKFRIDAYキャンペーン", "2026-10-05", "2026-12-06", _span("2026-10-05", "2026-12-06"), "", src=PRESS2, checked="2026-11-25"),
-    C("c-tsuruha-bf", "tsuruha", "ツルハグループ ブラックフライデー", "2026-10-01", "2026-11-30", _span("2026-10-01", "2026-11-30"), "", src=PRESS2, checked="2026-11-25"),
+    C("c-zoff-bf", "zoff", "Zoff BLACK FRIDAY", "2026-11-11", "2026-12-03", f"全国の店舗は{jpd('2026-11-12', True)}から{jpd('2026-12-03')}まで", "", src=SRC_OFFICIAL, checked="2026-11-25",
+      note="一部の店舗は期間が異なります。公式オンラインストアは11月11日(水)11時から12月3日(木)23時59分までです。下のリンクは楽天市場店で、この日程と特典が当てはまるかは発表にありません。"),
+    C("c-welcia-bf", "welcia", "ウエルシアグループ BLACKFRIDAYキャンペーン", "2026-10-05", "2026-12-06", _span("2026-10-05", "2026-12-06"), "", src=PRESS2, checked="2026-11-25",
+      note="店頭での購入が対象の企画です。"),
+    C("c-tsuruha-bf", "tsuruha", "ツルハグループ ブラックフライデー", "2026-10-01", "2026-11-30", f"対象の購入期間は{jpd('2026-10-01', True)}から{jpd('2026-11-30')}まで", "", src=SRC_OFFICIAL, checked="2026-11-25",
+      note="対象店舗での購入が対象です。ネット購入は対象外です。エントリーの締め切りは11月30日(月)23時59分です。"),
     C("c-bic-bf", "bic", "ビックカメラ ブラックフライデー", "2026-11-13", "2026-11-30", _span("2026-11-13", "2026-11-30"), "", src=PRESS2, note="全店とビックカメラ.comの企画です。まとめ買い割は11月23日(月)までです。", checked="2026-11-23"),
     C("c-expedia-flight", "expedia", "エクスペディア 航空券の予約でOneKeyCashプレゼント(終了日)", "2026-11-25", "2026-11-25", f"{jpd('2026-11-25')}まで(開始日は確認していません)", "", src="広告主(エクスペディア)の案内",
       note="期間中に航空券を予約すると、エクスペディアのポイント(OneKeyCash)がもらえます。もらったポイントは30日間の期間限定で、ブラックフライデーセールの宿泊の予約に使えます。条件は、エクスペディアの表示にあります(広告主の案内 2026-11-19)。"),
@@ -564,7 +568,7 @@ def home_pool(items: list[dict], today: date) -> list[dict]:
                 pool.append(dict(it, id=f'{it["id"]}@{x}', rule=it["id"], s=x, e=x, when=f'{jpd(x)}、{it["when"]}'))
         elif it.get("s") and "(終了日)" not in it["title"] and not over(it, today) and d(it["s"]) <= hi:      # an entry with only an end day is not a "coming" sale
             pool.append(dict(it, rule=""))
-    seg = {"mall": 0, "ec": 1, "brand": 1, "web": 1}
+    seg = {"mall": 0, "ec": 1, "brand": 1, "store": 1, "web": 1}
     pool.sort(key=lambda it: (0 if d(it["s"]) >= today else 1, it["s"], seg[ENT[it["mall"]][2]], KIND_ORDER[it["kind"]]))
     return pool
 
