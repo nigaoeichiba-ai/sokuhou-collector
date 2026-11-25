@@ -844,7 +844,17 @@ def hero_collage(items: list[dict]) -> str:
                    for c in chosen)
 
 
-def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date, printable_thumbs: list[str] | None = None, use_hubs: list[dict] | None = None, has_pose: bool = False) -> str:
+def new_guides_box(guides: list[dict], n: int = 4) -> str:
+    """The top page's newest articles, by the publication date in guides.json (never a hand-kept list)."""
+    newest = sorted(guides, key=lambda g: (g.get("date", ""), g["slug"]), reverse=True)[:n]
+    if not newest:
+        return ""
+    return ('<section style="margin-top:50px"><div class="sec-head"><h2>新しい<span class="scribble">読みもの</span></h2></div><ul class="readlist">'
+            + "".join(f'<li><a href="/guide/{g["slug"]}/"><b>{esc(g["title"])}</b><span>{esc(g["description"])}</span></a></li>' for g in newest)
+            + '</ul><p style="text-align:center"><a class="btn" href="/guide/">読みもの一覧を見る</a></p></section>')
+
+
+def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], today: date, printable_thumbs: list[str] | None = None, use_hubs: list[dict] | None = None, has_pose: bool = False, guides: list[dict] | None = None) -> str:
     genres_present = [g for g in GENRES if any(i["genre"] == g[0] for i in items)]
     gtiles = ""
     for slug, name, desc, _ in genres_present:
@@ -888,6 +898,7 @@ def index_page(cfg: dict, preview: bool, items: list[dict], series: list[dict], 
 {print_html}
 <section style="margin-top:50px"><div class="sec-head"><h2>新しい<span class="scribble">セット</span></h2><p>同じキャラクター・同じタッチで揃っています。</p></div>{set_grid(newest)}
 <p style="text-align:center"><a class="btn" href="/new/">新着をもっと見る</a></p></section>
+{new_guides_box(guides or [])}
 <section style="margin-top:50px"><div class="sec-head"><h2>タッチから<span class="scribble">選ぶ</span></h2><p>同じ絵でもタッチが違うと、雰囲気が変わります。</p></div><ul class="touch-grid">{ttiles}</ul></section>
 <section class="band yellow dots scallop" style="margin-top:56px"><div class="in"><div class="sec-head"><h2>名前やひとことを入れて<span class="scribble">カードにする</span></h2><p>お祝いのカードを作って画像で保存できます。</p></div>
 <p style="text-align:center"><a class="btn big" href="/tool/card/">カードをつくる</a></p></div></section>
@@ -1876,7 +1887,7 @@ def render_site(cfg: dict, out: Path, release: bool = False, today: date | None 
     use_files, use_live = use_pages(cfg, preview, series, built, guides)
     pose_html, pose_sets = pose_page(cfg, preview, series)
     month_html, month_filled = month_page(cfg, preview, series)
-    pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today, [m["img"] for m in cal_themes[0]["months"][:4]] if cal_themes else None, use_live, len(pose_sets) >= 3)}
+    pages: dict[str, str | bytes] = {"index.html": index_page(cfg, preview, items, series, today, [m["img"] for m in cal_themes[0]["months"][:4]] if cal_themes else None, use_live, len(pose_sets) >= 3, guides)}
     pages.update(use_files)
     if len(pose_sets) >= 3:
         pages["pose/index.html"] = pose_html

@@ -65,6 +65,23 @@ class GuidesTest(unittest.TestCase):
             finally:
                 build.HERE = old
 
+    def test_the_top_page_picks_up_the_newest_guides(self):
+        newest = sorted(self.guides, key=lambda g: (g.get("date", ""), g["slug"]), reverse=True)
+        box = build.new_guides_box(self.guides)
+        self.assertEqual(re.findall(r'href="/guide/([a-z0-9-]+)/"', box), [g["slug"] for g in newest[:4]])
+        self.assertNotIn(f'/guide/{newest[4]["slug"]}/', box)
+
+    def test_a_newer_guide_replaces_the_oldest_one_on_the_top_page(self):
+        """Negative case: a hand-kept list would not change when an article is added."""
+        before = build.new_guides_box(self.guides)
+        added = {"slug": "zz-brand-new", "title": "新しい記事", "description": "説明", "date": "2999-01-01"}
+        after = build.new_guides_box(self.guides + [added])
+        self.assertNotIn("/guide/zz-brand-new/", before)
+        self.assertIn("/guide/zz-brand-new/", after)
+        slugs = re.findall(r'href="/guide/([a-z0-9-]+)/"', before)
+        self.assertNotIn(f"/guide/{slugs[-1]}/", after)
+        self.assertEqual(build.new_guides_box([]), "")
+
 
 if __name__ == "__main__":
     unittest.main()
