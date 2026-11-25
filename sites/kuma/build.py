@@ -358,12 +358,12 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         lines = [[str(r["rank"]["done"]), pref_link(r), n(r["total"][done]), n(r["total"][prev]), ratio_text(r["total"][done], r["total"][prev]),
                   f'{n(r["ytd"][cur])}', " / ".join(rankfacts_mod.directions(d, r))] for r in rows]
         head = ["順位", "道府県", f"{fy_label(done)}", f"{fy_label(prev)}", "前年度との比", f"{fy_label(cur)}({month_range(d)})", rankfacts_mod.sightings_head(d)]
-        after = rankfacts_mod.sightings_after(d, rows)
+        after = rankfacts_mod.sightings_after(d, rows) + rankfacts_mod.sightings_now(d)
         extra = bar_list([(pref_link(r), f'{n(r["total"][done])}件', r["total"][done]) for r in rows], 10)
         top3 = "、".join(f"{r['name']}({n(r['total'][done])}件)" for r in rows[:3])
         h1 = "熊(クマ)が多い県のランキング 出没件数の多い順"        # the searched words are 「熊が多い県 ランキング」 (Search Console, 2026-10)
         first = f"{fy_label(done)}に熊(クマ)の出没が最も多かったのは、{top3}の順です。"
-        lead = (f"{first}{fy_label(done)}の出没件数が多い順に、並べています。"
+        lead = (f"{first}{rankfacts_mod.sightings_now_lead(d)}下の大きな表は、{fy_label(done)}の出没件数が多い順です。"
                 f"{'と'.join(r['name'] for r in d['rows'] if not r['has'])}は、環境省の表に数値がありません(「-」)ので、載せていません。")
     elif kind == "change":
         extra = ""
@@ -395,7 +395,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
                 f"道府県別では{top}の順に多くなっています。")
         yr = table(["年度", "全国の死亡者数(人)"], [[fy_or_h(y) + ("(途中)" if y == cur else ""), n(nat[y][2])] for y in reversed([*years, cur])])
         extra = (f'<h2>全国の死亡者数の年度別の推移</h2>{yr}'
-                 f'<p>死亡者数は、環境省の人身被害の統計(死亡者数の欄)の数字です。{len(zero)}道府県({"・".join(zero)})は、この{len(years)}年度に死亡者の記録がないため、表に載せていません。'
+                 f'<p>死亡者数は、環境省の人身被害の統計(死亡者数の欄)の数字です。{len(zero)}道府県({"・".join(zero)})は、この{len(years)}年度に死亡者の記録がないため、表に載せていません。{rankfacts_mod.only_this_year(d, zero)}'
                  f'事故の日付と場所は、各道府県のページの「熊(クマ)による死亡事故はあったか」で、環境省の一覧にある分を確認できます。全国の一覧と、月別・道府県別の集計は、<a href="/deaths/">熊(クマ)による死亡事故の一覧</a>で確認できます。</p>'
                  f'<p>人数の多い少ないは、山に入る人の数や、クマの生息する範囲にも左右されます。件数・人数の全体は<a href="/ranking/injuries/">人身被害ランキング</a>で確認できます。</p>'
                  + ('<p>時期ごとの違いは<a href="/research/">研究ノート</a>で読めます。</p>' if d.get("research") else ""))
@@ -420,7 +420,7 @@ def ranking_page(d: dict, kind: str, cfg: dict, preview: bool) -> str:
         return page(cfg, preview, path="/ranking/deaths/", title=f"熊(クマ)による死亡者数 都道府県別ランキング({fy_or_h(years[0])}〜{fy_label(done)}の合計・環境省)",
                     description=f"熊に襲われて亡くなった人の数を、道府県別に並べた表です。{fy_label(done)}は全国で{n(nat[done][2])}人。{fy_or_h(years[0])}から{len(years)}年度の合計、直近5年度、{fy_label(cur)}の途中経過を、環境省の統計から載せています。", body=body)
     title = f"{h1}({fy_label(done)}・環境省の速報値)" if kind != "sightings" else f"熊が多い県ランキング 出没件数の都道府県別一覧({fy_label(done)}・環境省の速報値)"
-    desc = lead[:110] if kind != "sightings" else f"{first}{len(rows)}道府県の出没件数を、環境省の速報値から多い順に並べた表です。"
+    desc = lead[:110] if kind != "sightings" else f"{first}{rankfacts_mod.sightings_now_lead(d)}{len(rows)}道府県の出没件数の一覧です。"
     return page(cfg, preview, path=f"/ranking/{kind}/", title=title,
                 description=desc, body=body)
 
@@ -520,6 +520,8 @@ def deaths_list_page(d: dict, cfg: dict, preview: bool) -> str:
     top_text = "、".join(f"{p}({n(v[0] + v[1])}件)" for p, v in top[:3])
     total_cases = cases[cur] + cases[done]
     total_people = people[cur] + people[done]
+    listed_now = {p: sum(i["victims"] for i in d["fatal"][cur]["incidents"] if i["prefecture"] == p) for p in by_p}
+    west = {y: 2018 + int(y[1:]) for y in (cur, done)}       # 令和7年度 = 2025年度; both ways of naming the year are searched
     body = f"""{crumbs([("全国", "/"), ("死亡事故の一覧", None)])}
 <h1>熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}</h1>
 <p class="lead">環境省が公表している死亡事故の一覧は、{fy_label(done)}が{n(cases[done])}件({n(people[done])}人)、{fy_label(cur)}が{n(cases[cur])}件({n(people[cur])}人)で、合わせて{n(total_cases)}件({n(total_people)}人)です。日付の新しい順に、場所とあわせて並べました。件数が多い道府県は、{top_text}の順です。</p>
@@ -527,14 +529,15 @@ def deaths_list_page(d: dict, cfg: dict, preview: bool) -> str:
 <h2>死亡事故の一覧(日付の新しい順)</h2>
 {table(["日付", "場所", "人数", "年度"], rows)}
 <p class="notice">「被害者発見日」と書いた行は、事故の日ではなく、被害者が見つかった日です。環境省が把握した事例に限り、公表までに時間がかかります。事故の経過や被害者の情報は、環境省の資料にないため載せていません。</p>
+{rankfacts_mod.later_deaths(d, listed_now, d['fatal'][cur]['as_of'])}
 <h2>何月に起きたか(件数)</h2>
 {table(["月", fy_label(done), fy_label(cur)], month_rows)}
 <h2>どの道府県で起きたか(件数)</h2>
 {table(["道府県", fy_label(done), fy_label(cur), "合計"], pref_rows)}
 <p>年度ごとの死亡者数の合計は<a href="/ranking/deaths/">死亡者数の都道府県別ランキング</a>(平成20年度から)に、緊急銃猟の実施状況は<a href="/emergency/">緊急銃猟のページ</a>で確認できます。道府県ごとの出没と人身被害は、表の道府県名から各ページへ進めます。山に入る前は<a href="/guide/prepare/">山に入る前の備え</a>を、出会ったときは<a href="/guide/encounter/">出会ったときの行動</a>をお読みください。</p>
 <p class="notice">{freshness(d)}</p>"""
-    return page(cfg, preview, path="/deaths/", title=f"熊(クマ)による死亡事故の一覧 {fy_label(done)}・{fy_label(cur)}の日付と場所",
-                description=f"熊に襲われた死亡事故の一覧です。{fy_label(done)}{n(cases[done])}件、{fy_label(cur)}{n(cases[cur])}件の日付・場所・人数を、環境省の資料から新しい順に並べ、月別・道府県別に集計しました。", body=body)
+    return page(cfg, preview, path="/deaths/", title=f"熊の死亡事故一覧 {west[done]}・{west[cur]}年度の日付と場所(全{n(total_cases)}件)",
+                description=f"熊の死亡事故は、{west[done]}年度が{n(cases[done])}件、{west[cur]}年度は{jp_date(d['fatal'][cur]['as_of'])}時点で{n(cases[cur])}件です。日付・場所・人数の一覧と月別・道府県別の件数、統計の死亡者数との比較を載せています。", body=body)
 
 
 PREF_LIVE = live_mod.LIVE_SOURCES

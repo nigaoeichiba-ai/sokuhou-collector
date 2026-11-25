@@ -94,7 +94,7 @@ class KumaSiteTest(unittest.TestCase):
 
     def test_ranking_matches_the_press_top_five(self):
         html = self.read("ranking/sightings/index.html")
-        rows = re.findall(r'<tr><td>(\d+)</td><td><a href="/([a-z]+)/">', html)
+        rows = re.findall(r'<tr><td>(\d+)</td><td><a href="/([a-z]+)/">', html.split("</table>")[0])      # the full-year table comes first
         self.assertEqual([slug for _, slug in rows[:5]], ["akita", "iwate", "miyagi", "niigata", "aomori"])
         self.assertEqual(rows[0][0], "1")
         self.assertEqual(len(rows), 37)  # 39 listed; Hokkaido and Chiba have "-" instead of figures

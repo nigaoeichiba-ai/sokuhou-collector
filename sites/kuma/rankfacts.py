@@ -9,7 +9,7 @@ Sighting counts are never divided by the population: each prefecture counts them
 from __future__ import annotations
 
 from sites.kuma import population as pop_mod
-from sites.kuma.fmt import fy_label, n
+from sites.kuma.fmt import fy_label, jp_date, n, table
 
 _POP: dict | None = None
 
@@ -90,7 +90,57 @@ def deaths_after(d: dict, rows: list[dict]) -> str:
     return "<p>" + "".join(out) + "</p>"
 
 
+def later_deaths(d: dict, listed: dict[str, int], as_of: str) -> str:
+    """The death list and the injury statistics are published on different days: put the two numbers for the year in progress side by side.
+    `listed` is {prefecture: people in the list}, `as_of` the list's own date. Nothing is said about days or places the list does not have."""
+    cur = d["cur"]
+    stat = d["inj"]["national"][cur][2]
+    total = sum(listed.values())
+    when = d["inj_as_of"].replace("R08年", "令和8年")
+    out = [f"上の一覧のうち{fy_label(cur)}の分は、{jp_date(as_of)}時点の{n(total)}人です。"]
+    if stat == total:
+        out.append(f"{when}の人身被害の統計でも、{fy_label(cur)}の死亡者は全国で{n(stat)}人で、一覧の人数と同じです。")
+    else:
+        word = f"一覧より{n(stat - total)}人多い数です" if stat > total else "一覧の人数とは一致していません"
+        out.append(f"{when}の人身被害の統計では、{fy_label(cur)}の死亡者は全国で{n(stat)}人で、{word}。")
+        more = [(r["name"], r["inj"][cur][2] - listed.get(r["name"], 0)) for r in d["rows"]]
+        more = [(name, k) for name, k in more if k > 0]
+        if stat > total and more:
+            out.append("統計の人数が一覧より多いのは、" + "、".join(f"{name}({n(k)}人)" for name, k in more) + "です。日付と場所は、この一覧にはまだありません。")
+    return f"<h2>{fy_label(cur)}の死亡者数を人身被害の統計と比べる</h2>\n<p>" + "".join(out) + "</p>"
+
+
+def only_this_year(d: dict, zero: list[str]) -> str:
+    """Prefectures left out of the death ranking (no death in the completed years) that do have one in the year in progress."""
+    names = [r["name"] for r in d["rows"] if r["name"] in zero and r["inj"][d["cur"]][2] > 0]
+    if not names:
+        return ""
+    return "このうち" + "・".join(names) + f"は、{fy_label(d['cur'])}(途中)に死亡者の記録があります。"
+
+
 # ---------------------------------------------------------------- sightings
+
+def _ytd_order(d: dict) -> list[dict]:
+    return sorted((r for r in d["rows"] if r["has"]), key=lambda r: (-r["ytd"][d["cur"]], r["name"]))
+
+
+def sightings_now_lead(d: dict) -> str:
+    top = _ytd_order(d)[0]
+    return f"{fy_label(d['cur'])}の{d['months'][0]}月から{d['latest_month']}月に限ると、最も多いのは{top['name']}({n(top['ytd'][d['cur']])}件)です。"
+
+
+def sightings_now(d: dict) -> str:
+    """The ten prefectures with the most sightings so far this year, beside the same months a year earlier."""
+    cur, done = d["cur"], d["done"]
+    span = f"{d['months'][0]}月から{d['latest_month']}月"
+    rows = [[str(i), f'<a href="/{r["slug"]}/">{r["name"]}</a>', f'{n(r["ytd"][cur])}件', f'{n(r["ytd"][done])}件'] for i, r in enumerate(_ytd_order(d)[:10], 1)]
+    return (f"<h2>{fy_label(cur)}の{span}で多い県</h2>\n"
+            + table(["順位", "道府県", f"{fy_label(cur)}", f"{fy_label(done)}の同じ期間"], rows)
+            + f'\n<h2>この順位は生息数の順ではありません</h2>\n<p>並べているのは出没の件数で、クマの生息数(頭数)ではありません。'
+              f'生息数は調べた年や推定の方法が県ごとにそろっていないため、同じ条件で並べた都道府県のランキングは載せていません。'
+              f'出没の件数も、数え方は県ごとに違います。</p>')
+
+
 
 def _dir(new: int | None, old: int | None) -> str:
     if new is None or old is None or (not old and not new):
