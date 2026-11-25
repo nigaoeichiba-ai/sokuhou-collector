@@ -115,7 +115,9 @@ def refresh(c: dict, client: rakuten.Client, picks: dict, limit_pairs: int | Non
         tiers = {t: pick(union, c["tiers"][t], filters, recipient=p.get("recipient")) for t in p["tiers"]}
         out_pairs[key] = {"ideas": ideas_out, "tiers": tiers}
         nonempty += bool(union)
-    if pairs and nonempty < fetch.MIN_PAIR_SHARE * len(pairs):
+    # The share guard protects the FULL refresh from replacing good data with a broken one.  A top-up (keys) only ADDS pages the data does not have: a page that found nothing stays
+    # unpublished either way, so refusing the whole top-up only threw away the pages that did find products (2026-11-25: 8 new themes, 5 with products, none published).
+    if keys is None and pairs and nonempty < fetch.MIN_PAIR_SHARE * len(pairs):
         raise rakuten.RakutenError(f"only {nonempty} of {len(pairs)} pages have any product; not using this refresh")
     if keys is not None:
         return {"pairs": out_pairs}

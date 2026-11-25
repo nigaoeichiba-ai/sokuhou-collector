@@ -86,6 +86,14 @@ class FreshTest(unittest.TestCase):
         self.assertIsNone(out)
         self.assertIn("top-up failed", why)
 
+    def test_a_top_up_keeps_what_it_found_even_when_most_new_pages_found_nothing(self):
+        keys = {ct.pair_key(p) for p in ct.pages(self.c)[:3]}
+        with mock.patch.object(F.rf.fetch, "_search", lambda *a, **k: []):
+            add = F.rf.refresh(self.c, object(), {}, keys=keys)["pairs"]
+            self.assertEqual(set(add), keys)
+            with self.assertRaises(rakuten.RakutenError):                      # the full refresh still refuses empty data
+                F.rf.refresh(self.c, object(), {}, limit_pairs=3)
+
     def test_missing_like_lines_mean_the_full_refresh(self):
         d = data_for(self.c)
         d["likes"].pop(next(iter(d["likes"])))
