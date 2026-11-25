@@ -6796,7 +6796,7 @@
       "short": "福井県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-16",
+      "checkedAt": "2026-11-26",
       "sourceUrl": "https://www.pref.fukui.lg.jp/doc/koukou/nyugaku/r09nittei.html",
       "sourceTitle": "令和9年度 福井県入学者選抜日程",
       "sourceStatus": "verified",
@@ -12927,7 +12927,7 @@
       "time": "16:00",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-2",
@@ -12937,7 +12937,7 @@
       "note": "特色選抜の予備日は1月21日です。",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-3",
@@ -12946,7 +12946,7 @@
       "label": "推薦・特色・中高一貫 合格者通知",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-4",
@@ -12957,7 +12957,7 @@
       "time": "12:00",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-5",
@@ -12966,7 +12966,7 @@
       "label": "一般選抜 学力検査(1日目)",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-6",
@@ -12975,7 +12975,7 @@
       "label": "一般選抜 学力検査(2日目)",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-7",
@@ -12984,7 +12984,16 @@
       "label": "一般選抜 追検査(1日目)",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-fukui-12",
+      "date": "2027-02-26",
+      "type": "exam",
+      "label": "一般選抜 追検査(2日目)",
+      "exam": "koko-fukui",
+      "sourceId": "catalog-koko-fukui",
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-8",
@@ -12995,7 +13004,7 @@
       "time": "14:00",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-9",
@@ -13006,7 +13015,7 @@
       "time": "12:00",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-10",
@@ -13015,7 +13024,7 @@
       "label": "第2次募集 学力検査",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-11",
@@ -13024,7 +13033,7 @@
       "label": "第2次募集 合格者発表",
       "exam": "koko-fukui",
       "sourceId": "catalog-koko-fukui",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-nagasaki-1",
