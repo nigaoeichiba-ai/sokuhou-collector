@@ -5599,7 +5599,7 @@
       "short": "奈良県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-26",
       "sourceUrl": "https://www.pref.nara.lg.jp/documents/25974/r9_a01_nyugakusyasenbatsu_ichijisenbatsu.pdf",
       "sourceTitle": "令和9年度 奈良県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -10577,7 +10577,7 @@
       "time": "15:00",
       "exam": "koko-nara",
       "sourceId": "catalog-koko-nara",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-nara-2",
@@ -10588,25 +10588,25 @@
       "note": "第一出願済みで対象要件を満たす方のみ。",
       "exam": "koko-nara",
       "sourceId": "catalog-koko-nara",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-nara-3",
       "date": "2027-02-24",
       "type": "exam",
-      "label": "一次選抜 検査",
+      "label": "一次選抜 学力検査等",
       "exam": "koko-nara",
       "sourceId": "catalog-koko-nara",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-nara-4",
       "date": "2027-02-25",
       "type": "exam",
-      "label": "一次選抜 検査",
+      "label": "一次選抜 学校独自検査",
       "exam": "koko-nara",
       "sourceId": "catalog-koko-nara",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-nara-5",
@@ -10616,7 +10616,27 @@
       "time": "14:00",
       "exam": "koko-nara",
       "sourceId": "catalog-koko-nara",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-nara-6",
+      "date": "2027-03-09",
+      "type": "exam",
+      "label": "追検査",
+      "note": "志願者の申請は3月5日9時から3月8日15時までです。先に中学校長の手続き（2月26日15時まで）が必要です。",
+      "exam": "koko-nara",
+      "sourceId": "catalog-koko-nara",
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-nara-7",
+      "date": "2027-03-10",
+      "type": "result",
+      "label": "追検査 合格発表",
+      "time": "15:00",
+      "exam": "koko-nara",
+      "sourceId": "catalog-koko-nara",
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-wakayama-1",

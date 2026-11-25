@@ -21,6 +21,7 @@ export const SPEC=[
  ['岐阜県','gifu',['第一次選抜 検査','第一次選抜 検査（一部校）'],'第一次選抜 追検査','合格発表'],
  ['静岡県','shizuoka',['一般・特別選抜 学力検査・面接等'],'追検査','合格発表'],
  ['滋賀県','shiga',['一次募集 学力検査'],'一次募集 追検査（学力検査）','一次募集 入学許可予定者発表'],
+ ['奈良県','nara',['一次選抜 学力検査等'],'追検査','合格発表'],
  ['鳥取県','tottori',['一般選抜 検査'],'一般選抜 追検査','一般選抜 合格発表'],
  ['島根県','shimane',['一般選抜 学力検査'],'一般選抜 追検査','一般選抜 合格情報掲載'],
  ['岡山県','okayama',['一般入学者選抜 学力検査','一般入学者選抜 面接・実技'],'一般入学者選抜 追検査','一般・特別 合格発表'],
@@ -58,7 +59,9 @@ export function tsuikensaValues(registry){
  const names=list=>list.map(r=>r.short);
  const same=rows.filter(r=>r.after===0),before=rows.filter(r=>r.after<0);
  if(names(same).join()!=='岡山県,熊本県')throw new Error('tsuikensa: the prefectures with the result on the make-up day changed: '+names(same).join());
- if(names(before).join()!=='石川県')throw new Error('tsuikensa: the prefectures with the result before the make-up day changed: '+names(before).join());
+ if(names(before).join()!=='石川県,奈良県'||before.some(r=>r.after!==-1))throw new Error('tsuikensa: the prefectures with the result before the make-up day changed: '+names(before).join());
+ const naraNotice=registry.rows.find(r=>r.exam==='koko-nara'&&r.label==='追検査 合格発表');
+ if(!naraNotice)throw new Error('tsuikensa: koko-nara has no row "追検査 合格発表"');
  const ends=v=>rows.filter(r=>r.gap===v);
  const resultCell=r=>r.after>0?`追検査の${r.after}日後`:r.after===0?'追検査と同じ日':`追検査の${-r.after}日前`;
  const table=`<div class="tablewrap"><table class="ed-table"><caption>追検査の日程(令和9年度・${rows.length}道県)</caption><thead><tr><th>道県</th><th>学力検査の最終日</th><th>追検査(初日)</th><th>学力検査の最終日から</th><th>合格発表</th><th>追検査の初日から発表まで</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.name}</td><td>${md(r.last)}</td><td>${md(r.make)}</td><td>${r.gap}日</td><td>${md(r.result)}</td><td>${resultCell(r)}</td></tr>`).join('')}</tbody></table></div>`;
@@ -70,7 +73,8 @@ export function tsuikensaValues(registry){
   MINTEXT:extreme(min),MAXTEXT:extreme(max),
   GAPDIST:dist(gaps,'県'),RESULTDIST:dist(rows.filter(r=>r.after>0).map(r=>r.after),'県'),
   AFTER:rows.filter(r=>r.after>0).length,
-  BEFORE_RESULT:md(before[0].result),BEFORE_MAKE:md(before[0].make),
+  ISHIKAWA_RESULT:md(before[0].result),ISHIKAWA_MAKE:md(before[0].make),
+  NARA_RESULT:md(before[1].result),NARA_MAKE:md(before[1].make),NARA_NOTICE:md(naraNotice.date),
   ASOF:`${asOf.getUTCFullYear()}年${asOf.getUTCMonth()+1}月${asOf.getUTCDate()}日`,
   TABLE:table
  };
