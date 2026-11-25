@@ -127,7 +127,7 @@ def shin_seikatsu() -> dict:
     for name, day, note in items:
         rows.append([name, jp(day), note])
     return page(
-        "/shin-seikatsu/", "article", "/",
+        "/shin-seikatsu/", "article", "/moving/",
         "新生活の手続き 4月1日に入居した場合のカレンダー(2027年版)",
         "新生活の手続き。4月1日に入居した場合の期限を、日付で並べたカレンダー",
         "新生活 手続き", 5,

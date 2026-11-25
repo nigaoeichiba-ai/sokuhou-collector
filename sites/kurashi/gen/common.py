@@ -19,7 +19,7 @@ UNCHANGED = ("/method/", "/kakutei-shinkoku/hitsuyo/", "/kakutei-shinkoku/kanpu/
 REDESIGN_DAY = "2026-11-13"
 SEO_DAY = "2026-11-17"   # the style sheets were joined and the end of every <title> was shortened: every page changed that day (the sitemap lastmod follows the page's own day)
 # the pages whose title, description or lead answer were rewritten after that (the day of the change)
-CHANGED_LATER = {"/nenmatsu-nenshi/": "2026-11-25", "/nenmatsu-chosei/": "2026-11-18", "/moving/tenshutsu/": "2026-11-20", "/nengajo/": "2026-11-25", "/furusato/deadline/": "2026-11-20", "/kakutei-shinkoku/": "2026-11-25", "/kakutei-shinkoku/kanpu/": "2026-11-25"}
+CHANGED_LATER = {"/nenmatsu-nenshi/": "2026-11-25", "/nenmatsu-chosei/": "2026-11-18", "/moving/tenshutsu/": "2026-11-20", "/nengajo/": "2026-11-25", "/furusato/deadline/": "2026-11-20", "/kakutei-shinkoku/": "2026-11-25", "/kakutei-shinkoku/kanpu/": "2026-11-25", "/shin-seikatsu/": "2026-11-25"}
 EDITED = {}          # kept for readers of the old name: a page's day is FIRST_UPDATED if it is in UNCHANGED, else REDESIGN_DAY (page() below)
 SITE_UPDATED = max([SEO_DAY, *CHANGED_LATER.values()])
 WD = "月火水木金土日"
