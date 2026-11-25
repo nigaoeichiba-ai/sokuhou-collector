@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-14",
+ "as_of": "2026-11-20",
  "corroborated": [
   {
    "city": "酒田市",
@@ -2460,14 +2460,14 @@
   }
  ],
  "corroborated_on": {
-  "南陽市": "2026-11-25",
-  "山形市": "2026-11-25",
-  "白鷹町": "2026-11-25",
-  "酒田市": "2026-11-25",
-  "鶴岡市": "2026-11-25"
+  "南陽市": "2026-11-26",
+  "山形市": "2026-11-26",
+  "白鷹町": "2026-11-26",
+  "酒田市": "2026-11-26",
+  "鶴岡市": "2026-11-26"
  },
  "credit": "出典: 山形県「クマ目撃マップ」の元データ(https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma_yamagata_top.html)から、市町村別・月別の件数だけを、当サイトが集計して作成(場所などの詳しい記録は、山形県のページでご確認ください)",
- "fetched_at": "2026-11-25T06:19:13.447555+09:00",
+ "fetched_at": "2026-11-26T06:19:02.848143+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
@@ -2478,7 +2478,7 @@
   },
   "R08": {
    "10": 18,
-   "11": 9,
+   "11": 11,
    "4": 56,
    "5": 172,
    "6": 300,
@@ -2533,9 +2533,10 @@
    }
   },
   "大江町": {
-   "latest": "2026-08-16",
+   "latest": "2026-11-20",
    "monthly": {
     "R08": {
+     "11": 1,
      "7": 3,
      "8": 1
     }
@@ -2562,10 +2563,11 @@
    }
   },
   "天童市": {
-   "latest": "2026-10-05",
+   "latest": "2026-11-18",
    "monthly": {
     "R08": {
      "10": 2,
+     "11": 1,
      "4": 2,
      "6": 2,
      "7": 1,
@@ -2966,9 +2968,9 @@
   }
  },
  "source": "yamagata",
- "source_file": "https://www.pref.yamagata.jp/documents/2414/20261115_kemonote-cleaned.csv",
+ "source_file": "https://www.pref.yamagata.jp/documents/2414/20261122_kemonote-cleaned.csv",
  "source_page": "https://www.pref.yamagata.jp/050011/kurashi/shizen/seibutsu/about_kuma/kuma_yamagata_top.html",
- "total_fy": 893,
+ "total_fy": 895,
  "unparsed": 0,
  "update_note": "山形県が、1〜2週間ごとに更新します。最新の記録は、更新時点から遅れます。件数は、クマの目撃の報告を数えたもので、暦年(1月から)のデータから年度分を取り出しています"
 }
