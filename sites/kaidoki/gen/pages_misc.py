@@ -14,10 +14,26 @@ def coming_rows():
     return rows or [["—", "いま発表されているセールはありません", "—", "—"]]
 
 
+def _sale_name(e) -> str:
+    """'楽天の楽天ブラックフライデー' would read twice: the mall is added only when the name does not start with it."""
+    return e["name"] if e["name"].startswith(e["mall"]) else f"{e['mall']}の{e['name']}"
+
+
+def top_lead(up: list[dict]) -> str:
+    """The first sentence of the top page and the calendar: every running sale (not only the first), or else the nearest one."""
+    if not up:
+        return "いま日程が発表されている大型セールはありません。"
+    now = [e for e in up if phase(e) == "now"]
+    if len(now) > 1:
+        return f"いま開催中のセールは{len(now)}件です。" + "".join(f"{_sale_name(e)}は、{ev_span(e)}です。" for e in now)
+    e = now[0] if now else up[0]
+    return f"{'いま開催中なのは' if now else '最も近いのは'}、{_sale_name(e)}で、{ev_span(e)}です。"
+
+
 def pages() -> list[dict]:
     up = upcoming()
     first = up[0] if up else None
-    lead = (f"{'いま開催中なのは' if phase(first) == 'now' else '最も近いのは'}、{first['mall']}の{first['name']}で、{ev_span(first)}です。" if first else "いま日程が発表されている大型セールはありません。")
+    lead = top_lead(up)
     done = [e for e in sorted(EVENTS, key=lambda e: e["start"], reverse=True) if phase(e) == "done"][:10]
     cal = page(
         "/calendar/", "list", "/", "セール カレンダー", "セールカレンダー|楽天・Amazon・Yahoo!ショッピングの日程を日付順に",
@@ -32,7 +48,7 @@ def pages() -> list[dict]:
             S("最近終わったもの", "終わったセールは、次の年の並びを見る手がかりにもなります。年ごとに日取りは数日ずれるので、前年と同じ日だと思い込まないようにします。",
               table=T("直近に終わったセール", ["モール", "名前", "期間"], [[e["mall"], e["name"], ev_span(e)] for e in done])),
         ],
-        [R("/rakuten/", "楽天のセール"), R("/amazon/sale-calendar/", "Amazonのセール"), R("/yahoo/", "Yahoo!ショッピングのセール"), R("/black-friday/", "ブラックフライデーの日程"), R("/deadline/", "年内の締切カレンダー"), R("/deadline/december/", "12月の年内最後の締切"), R("/calc/", "実質価格の計算ツール")],
+        [R("/rakuten/", "楽天のセール"), R("/amazon/sale-calendar/", "Amazonのセール"), R("/yahoo/", "Yahoo!ショッピングのセール"), R("/black-friday/", "ブラックフライデーの日程"), R("/yahoo/black-friday/", "ヤフーショッピングの買い回りの組み立て"), R("/deadline/", "年内の締切カレンダー"), R("/deadline/december/", "12月の年内最後の締切"), R("/calc/", "実質価格の計算ツール")],
         intent=1, basis=f"{jp(TODAY)}時点の主催者の発表",
     )
     hub = page(
@@ -107,7 +123,7 @@ def pages() -> list[dict]:
               "ポイント倍率やクーポンの数字を入れると、実質価格が出る計算ツールもあります。入れた数字は、送信も保存もしません。"),
             S("決まり", "日程は、主催者の発表や信頼できる報道で確かめたものだけを出します。未発表のものは、確定とは別に、月間カレンダーの「例年の予想」として、過去の年の日付つきで載せています。商品の価格や順位は出しません。詳しい決まりは、調べ方のページにあります。"),
         ],
-        [R("/calendar/", "セール日程の一覧"), R("/deadline/", "年内の締切カレンダー"), R("/rakuten/", "楽天のセール"), R("/amazon/sale-calendar/", "Amazonのセール"), R("/yahoo/", "Yahoo!ショッピングのセール"), R("/buytime/", "買い時のハブ"), R("/calc/", "実質価格の計算ツール"), R("/method/", "調べ方と決まり")],
+        [R("/calendar/", "セール日程の一覧"), R("/yahoo/black-friday/", "ヤフーショッピングの買い回りの組み立て"), R("/deadline/", "年内の締切カレンダー"), R("/rakuten/", "楽天のセール"), R("/amazon/sale-calendar/", "Amazonのセール"), R("/yahoo/", "Yahoo!ショッピングのセール"), R("/buytime/", "買い時のハブ"), R("/calc/", "実質価格の計算ツール"), R("/method/", "調べ方と決まり")],
         intent=1, basis=f"{jp(TODAY)}時点の主催者の発表", closing=False,
     )
     home["noindex"] = False
