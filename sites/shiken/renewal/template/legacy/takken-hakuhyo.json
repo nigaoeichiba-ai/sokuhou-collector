@@ -1,5 +1,5 @@
 {
- "title": "令和8年度宅建の合格発表結果｜合格点33点・合格率18.6%と受験番号の確かめ方",
+ "title": "令和8年度宅建の合格発表結果｜合格点33点・合格率18.6%と合格点の推移",
  "h1": "令和8年度宅建の合格発表結果 合格点は33点、合格率は18.6%",
  "description": "令和8年度の宅建試験は、2026年11月25日に合格発表がありました。合格点は50問中33点、合格率は18.6%、合格者は45,847人です。正解番号と問27の扱い、受験番号の確かめ方もまとめています。",
  "answer": "令和8年度の宅建試験の合格点は、50問中33点(登録講習を修了した人は45問中28点)です。受験者246,440人のうち45,847人が合格し、合格率は18.6%でした。合格発表は2026年11月25日(水)午前9時30分で、受験番号は受験票と全桁で照らし合わせます。",
@@ -7,6 +7,10 @@
   {
    "h2": "合格点・合格率・人数",
    "html": "<div class=\"tablewrap\"><table class=\"ed-table\"><caption>令和8年度 宅建試験の結果</caption><thead><tr><th>項目</th><th>全体</th><th>うち登録講習修了者</th></tr></thead><tbody><tr><td>合格点</td><td>50問中33問以上</td><td>45問中28問以上</td></tr><tr><td>申込者</td><td>307,254人</td><td>58,162人</td></tr><tr><td>受験者</td><td>246,440人</td><td>51,816人</td></tr><tr><td>受験率</td><td>80.2%</td><td>89.1%</td></tr><tr><td>合格者</td><td>45,847人</td><td>12,531人</td></tr><tr><td>合格率</td><td>18.6%</td><td>24.2%</td></tr></tbody></table></div><p>試験は2026年10月18日(日)に、47都道府県の250会場で行われました。令和7年度の合格率18.7%と比べると、0.1ポイント低い結果です。受験地ごとの数字は、<a href=\"/takken-ken-goukakuritsu/\">都道府県別の合格率の順位表</a>で見られます。</p>"
+  },
+  {
+   "h2": "合格点の推移(令和3年度から令和8年度)",
+   "html": "<div class=\"tablewrap\"><table class=\"ed-table\"><caption>宅建の合格点と合格率の推移</caption><thead><tr><th>年度</th><th class=\"num\">合格点(50問)</th><th class=\"num\">登録講習修了者(45問)</th><th class=\"num\">合格者(人)</th><th class=\"num\">合格率</th></tr></thead><tbody><tr><td>令和8年度</td><td class=\"num\">33点</td><td class=\"num\">28点</td><td class=\"num\">45,847</td><td class=\"num\">18.6%</td></tr><tr><td>令和7年度</td><td class=\"num\">33点</td><td class=\"num\">28点</td><td class=\"num\">45,821</td><td class=\"num\">18.7%</td></tr><tr><td>令和6年度</td><td class=\"num\">37点</td><td class=\"num\">32点</td><td class=\"num\">44,992</td><td class=\"num\">18.6%</td></tr><tr><td>令和5年度</td><td class=\"num\">36点</td><td class=\"num\">31点</td><td class=\"num\">40,025</td><td class=\"num\">17.2%</td></tr><tr><td>令和4年度</td><td class=\"num\">36点</td><td class=\"num\">31点</td><td class=\"num\">38,525</td><td class=\"num\">17.0%</td></tr><tr><td>令和3年度(10月)</td><td class=\"num\">34点</td><td class=\"num\">29点</td><td class=\"num\">37,579</td><td class=\"num\">17.9%</td></tr></tbody></table></div><p>令和8年度の合格点33点は、令和7年度と同じです。表の6回では33点から37点まで4点の幅があり、合格率は17.0%から18.7%の間に収まっています。合格点が低い年度が合格しやすい年度とは限りません。合格点は、その年の問題の難しさに合わせて変わります。来年度の勉強では、過去の最も高い37点を超える得点を目標にしておくと、合格点が上がっても対応できます。</p>"
   },
   {
    "h2": "問27は、2と3のどちらも正解",
@@ -26,7 +30,7 @@
   },
   {
    "h2": "よくある質問",
-   "html": "<div class=\"faq-static\"><details><summary>令和8年度の宅建の合格点は何点ですか?</summary><p>50問中33点です。登録講習を修了した人は、45問中28点です。</p></details><details><summary>合格率と合格者数は?</summary><p>合格率は18.6%、合格者は45,847人です。受験者は246,440人でした。</p></details><details><summary>複数の正解があった問題はありますか?</summary><p>問27です。選択肢2と3のどちらも正解として扱われます。</p></details><details><summary>自分の得点は見られますか?</summary><p>インターネットで申し込んだ人は、2026年11月26日(木)から2027年3月31日(水)まで、マイページで得点を見られる予定です。郵送で申し込んだ人は対象として案内されていません。</p></details><details><summary>合格証書はどうやって届きますか?</summary><p>合格者には、簡易書留郵便で合格証書などが発送されます。不在のときは、郵便局に連絡して受け取ります。</p></details></div>"
+   "html": "<div class=\"faq-static\"><details><summary>令和7年度の宅建の合格点は何点でしたか?</summary><p>50問中33点です。令和8年度も同じ33点でした。令和6年度は37点でした。</p></details><details><summary>令和8年度の宅建の合格点は何点ですか?</summary><p>50問中33点です。登録講習を修了した人は、45問中28点です。</p></details><details><summary>合格率と合格者数は?</summary><p>合格率は18.6%、合格者は45,847人です。受験者は246,440人でした。</p></details><details><summary>複数の正解があった問題はありますか?</summary><p>問27です。選択肢2と3のどちらも正解として扱われます。</p></details><details><summary>自分の得点は見られますか?</summary><p>インターネットで申し込んだ人は、2026年11月26日(木)から2027年3月31日(水)まで、マイページで得点を見られる予定です。郵送で申し込んだ人は対象として案内されていません。</p></details><details><summary>合格証書はどうやって届きますか?</summary><p>合格者には、簡易書留郵便で合格証書などが発送されます。不在のときは、郵便局に連絡して受け取ります。</p></details></div>"
   }
  ],
  "slug": "takken-hakuhyo",
