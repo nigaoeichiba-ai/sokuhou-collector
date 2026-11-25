@@ -79,6 +79,28 @@ HARD RULES: polite です・ます Japanese with varied sentence length; no stat
 """
 
 
+# The ledger rules require every brief to say how the page leads to the affiliate links; Codex refused an article brief without it (2026-11-25).
+AFFILIATE_DESIGN = {
+    "themes": """
+## アフィリの設計(この依頼で決定済み)
+- 広告主: 楽天市場など提携済みのモール(商品カードはビルド時にサイトが出す。PR表示もサイトが付ける)
+- リンク先: 各 idea の query と must に合う商品
+- 置く節: テーマページの 4 案それぞれの商品欄
+- 読者の行動: 理由と選び方を読んで、4 案の中から合う品の商品欄を見る
+本文にはモール名・商品名・リンクを書かない。4 案は、実際に品物として買えるものにする。
+""",
+    "articles": """
+## アフィリの設計(この依頼で決定済み)
+- 広告主: 楽天市場など提携済みのモール(商品カードはリンク先のテーマページに出る。PR表示はサイトが付ける)
+- リンク先: "themes" で選ぶ 2〜4 個のテーマページ
+- 置く節: 記事末尾の関連テーマ欄(サイトが自動で出す)
+- 読者の行動: 記事で段取りを知ったあと、関連テーマで品を選ぶ
+最後の節か checklist に、品を選ぶ次の行動が自然につながるようにする。本文にはモール名・商品名・リンクを書かない。"themes" は、読者が次に買う品が実際にあるものだけを選ぶ。
+""",
+}
+NO_LEDGER = "Do not open or query Notion or any other ledger: every rule you need is in this brief.\n"
+
+
 def _load() -> dict:
     return ct.load(CONTENT)
 
@@ -120,7 +142,7 @@ def brief(kind: str, n: int, out: Path, answer: Path, offset: int = 0, demand: P
                 f"with surprising, useful angles no other gift site offers (not the usual rankings and occasion lists). THEME pages start from a feeling, a situation, a problem, "
                 f"an interest or a constraint instead of an occasion; each shows 4 product ideas that editors then fill with real products.\n\n"
                 f"WRITE {n} NEW theme pages that are clearly different from every covered one below (different angle, different products, different queries).\n"
-                f"Existing groups:\n{_groups_text(c)}\n{INSPIRATION}{demand_text(demand)}\nFORMAT:{THEME_SPEC}\nCOVERED THEMES (do not repeat; do not reuse these queries):\n{covered}\n{RULES}")
+                f"Existing groups:\n{_groups_text(c)}\n{INSPIRATION}{demand_text(demand)}\nFORMAT:{THEME_SPEC}\nCOVERED THEMES (do not repeat; do not reuse these queries):\n{covered}\n{RULES}{AFFILIATE_DESIGN['themes']}{NO_LEDGER}")
     elif kind == "messages":
         todo = [o for o in c["occasions"] if o["slug"] not in c["messages"]][offset:offset + n]
         listing = "\n".join(f"- {o['slug']} | {o['name']} | {o['timing']}" for o in todo)
@@ -137,7 +159,7 @@ def brief(kind: str, n: int, out: Path, answer: Path, offset: int = 0, demand: P
                 f"what to write on a card, sending to someone far away, workplace gift manners, returning a gift, handling a gift you dislike, budget thinking, wrapping and noshi basics, "
                 f"making a small gift feel special, gifts for people who say 'nothing needed', and anything else a person planning a gift would truly want to know.\n\n"
                 f"WRITE {n} NEW articles on topics clearly different from the covered ones.{demand_text(demand)}\nFORMAT:{ARTICLE_SPEC}\nEXISTING ARTICLES (do not repeat):\n{covered}\n\n"
-                f"THEME PAGES you may link to (use ONLY these slugs):\n{themes}\n{RULES}")
+                f"THEME PAGES you may link to (use ONLY these slugs):\n{themes}\n{RULES}{AFFILIATE_DESIGN['articles']}{NO_LEDGER}")
     out.write_text(text, encoding="utf-8", newline="\n")
     print(f"brief written to {out}; Codex must write {answer}")
 

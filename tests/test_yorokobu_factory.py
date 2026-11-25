@@ -106,6 +106,14 @@ class FactoryTest(unittest.TestCase):
         factory.brief("articles", 3, out, Path("x/a2.json"))
         self.assertIn("ask-without-asking", out.read_text(encoding="utf-8"))
 
+    def test_briefs_carry_the_affiliate_design(self):
+        out = self.dir / "d.md"
+        for kind in ("themes", "articles"):
+            factory.brief(kind, 2, out, Path("x/answer.json"))
+            text = out.read_text(encoding="utf-8")
+            for word in ("アフィリの設計", "広告主", "リンク先", "置く節", "読者の行動", "Do not open or query Notion"):
+                self.assertIn(word, text, (kind, word))
+
     def test_map_dots_of_a_new_theme_are_kept_and_bad_ones_ignored(self):
         t = good_theme(map=[[1, 0], [-2, -1], [1.5, 1], [0, 2]])
         n, probs = factory.merge_themes({"themes": [t]}, date(2026, 10, 8))
