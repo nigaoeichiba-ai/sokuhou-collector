@@ -59,7 +59,8 @@ def load_library() -> tuple[list[dict], list[dict]]:
             ids.append(it["id"])
         if ids:
             series.append({"slug": d["slug"], "title": d["title"], "lead": lead_with_count(d["lead"], len(ids)), "genre": d["genre"], "touch": d["touch"], "tags": d.get("tags", []),
-                           "season": d.get("season"), "added": d.get("added", LEGACY_ADDED), "legacy": False, "url": f"/series/{d['slug']}/", "ids": ids})
+                           "season": d.get("season"), "added": d.get("added", LEGACY_ADDED), "legacy": False, "url": f"/series/{d['slug']}/", "ids": ids,
+                           "search_title": d.get("search_title")})
     return items, series
 
 

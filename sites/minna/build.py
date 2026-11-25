@@ -1071,6 +1071,11 @@ def pose_note(s: dict) -> str:
     return '<p class="meta" style="margin-top:32px">ほかの動物や人物のポーズは、<a href="/pose/">ポーズ集の一覧</a>から探せます。</p>' if is_pose_set(s) else ""
 
 
+def series_head_title(s: dict) -> str:
+    """The <title> of a set page.  series.json may give "search_title" (the words people actually search, from Search Console); the heading on the page stays the set's name."""
+    return s.get("search_title") or f"{s['title']} 無料・商用OKのイラスト{len(s['items'])}点"
+
+
 def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> str:
     base = cfg["site_url"].rstrip("/")
     g, t = genre_name(s["genre"]), touch_name(s["touch"])
@@ -1090,7 +1095,7 @@ def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> st
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のセット</span></h2>' + set_grid(same_genre) + '</section>') if same_genre else ''}
 {guide_box(guides_for(s['genre'], s['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
-    return page(cfg, preview, path=s["url"], title=f"{s['title']} 無料・商用OKのイラスト{len(s['items'])}点 | {cfg['site_name']}", description=(s["lead"][:90] + "無料・商用OK・登録不要。")[:140],
+    return page(cfg, preview, path=s["url"], title=f"{series_head_title(s)} | {cfg['site_name']}", description=(s["lead"][:90] + "無料・商用OK・登録不要。")[:140],
                 body=body, og_image=f"/og/{s['slug']}.webp" if og else None)
 
 

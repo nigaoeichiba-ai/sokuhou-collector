@@ -229,6 +229,8 @@ def write_series_json(spec: dict) -> int:
         old = json.loads((lib / "series.json").read_text(encoding="utf-8"))
     data = {"added": old.get("added") or date.today().isoformat(), "slug": spec["slug"], "title": spec["title"], "genre": spec["genre"], "touch": spec["touch"], "lead": spec["lead"], "tags": spec["tags"],
             "subject": spec["subject"], "season": spec["season"], "planned": len(spec["items"]), "items": items}
+    if spec.get("search_title"):
+        data["search_title"] = spec["search_title"]     # the <title> words for search (build.series_head_title): a re-ingest must keep them
     (lib / "series.json").write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     return len(items)
 
