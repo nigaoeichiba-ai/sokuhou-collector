@@ -772,6 +772,16 @@ GUIDE_PR = {
     "setsubun-2027-annai": ("節分の準備に", [("豆まき用の豆", "節分 豆 福豆"), ("鬼のお面", "節分 鬼 お面")]),
     "eto-ichiran": ("干支のグッズ", [("干支の置物", "干支 置物 2027 未"), ("来年の手帳", "手帳 2027")]),
 }
+# Sets that readers print (cards, wall displays): the box sits on the set page and on each of its picture pages, right after how to use them.
+SERIES_PR = {
+    "birth-flowers-linecolor": ("印刷して飾る・贈るときに", [("はがきサイズの用紙", "はがき 用紙 インクジェット"), ("写真用紙", "写真用紙 A4 光沢"), ("フォトフレーム", "フォトフレーム はがきサイズ")]),
+}
+
+
+def series_pr_box(cfg: dict, slug: str) -> str:
+    return pr_box(cfg, *SERIES_PR[slug]) if slug in SERIES_PR else ""
+
+
 SPECIAL_PR = {
     "nenga-2027": ("年賀状作りにあると便利なもの", [("プリンターのインク", "プリンター インク 純正"), ("年賀状向けのプリンター用紙", "年賀状 プリンター用紙")]),
     "nurie": ("ぬりえを楽しむ道具", [("色えんぴつ", "色えんぴつ 24色"), ("クレヨン", "クレヨン 幼児 安全"), ("ぬりえの本", "ぬりえ 本")]),
@@ -1102,7 +1112,7 @@ def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> st
 {licence_box()}{grid(s['items'])}
 {set_guide_html(s)}<section style="margin-top:44px"><h2><span class="scribble">用途例</span></h2><ul class="check">{uses_html(s, USES[s['genre']])}</ul></section>
 {series_facts_box(s, series)}
-{pose_note(s)}{share(cfg, s['url'], s['title'] + '(無料・商用OKのイラスト)')}
+{pose_note(s)}{series_pr_box(cfg, s['slug'])}{share(cfg, s['url'], s['title'] + '(無料・商用OKのイラスト)')}
 {('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のセット</span></h2>' + set_grid(same_genre) + '</section>') if same_genre else ''}
 {guide_box(guides_for(s['genre'], s['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
@@ -1213,7 +1223,7 @@ def illust_page(cfg, preview, it: dict, items, series, guides=()) -> str:
 {tips_box(it)}
 {itemguides.item_guide_html(it)}
 <section><h2><span class="scribble">キーワード</span></h2><ul class="tagcloud">{tags}</ul></section>
-{share(cfg, f"/illust/{it['id']}/", f"{it['title']}(無料・商用OKのイラスト)")}
+{series_pr_box(cfg, it['series'])}{share(cfg, f"/illust/{it['id']}/", f"{it['title']}(無料・商用OKのイラスト)")}
 <section style="margin-top:44px"><h2><span class="scribble">同じセットのイラスト</span></h2>{grid(mates)}</section>
 {('<section style="margin-top:44px"><h2><span class="scribble">同じ題材の別のタッチ</span></h2>' + grid(same_subject) + '</section>') if same_subject else ''}
 {similar_box(it)}

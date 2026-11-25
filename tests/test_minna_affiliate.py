@@ -1,5 +1,6 @@
 """Affiliate boxes: shown only with the owner's ids, always marked as advertising, with the links tagged sponsored."""
 import json
+import re
 import unittest
 from datetime import date
 from pathlib import Path
@@ -103,6 +104,31 @@ class AffiliateTest(unittest.TestCase):
             self.assertNotIn("amazon.co.jp", html, slug)
             # the partner (A8) box is on nenga-tsukurikata only (tests/test_minna_partners.py); every other page shows none
             self.assertEqual(html.count('<aside class="pr-box pr-partner">'), 1 if slug in ("nenga-tsukurikata", "mochu-hagaki", "nenmatsu-junbi-calendar", "nenga-2027-schedule", "kantyu-mimai") else 0, slug)
+
+    def test_the_printable_set_and_its_pictures_carry_one_rakuten_box(self):
+        items, series = build.load_data()
+        cfg = {**BASE, **IDS}
+        self.assertTrue(set(build.SERIES_PR) <= {s["slug"] for s in series})
+        for slug, (heading, rows) in build.SERIES_PR.items():
+            self.assertTrue(heading and 1 <= len(rows) <= 3)
+            for label, kw in rows:
+                self.assertNotIn("印刷", kw, kw)
+            s = next(x for x in series if x["slug"] == slug)
+            it = s["items"][0]
+            it = next(i for i in items if i["id"] == it["id"])
+            for html in (build.series_page(cfg, False, s, items, series, False), build.illust_page(cfg, False, it, items, series)):
+                self.assertEqual(html.count('<aside class="pr-box">'), 1, slug)
+                box = re.search(r'<aside class="pr-box">.*?</aside>', html, re.S).group(0)
+                self.assertIn('class="pr-note">PR<', box)
+                self.assertEqual(box.count('rel="nofollow sponsored noopener"'), len(rows))
+                self.assertEqual(box.count("hb.afl.rakuten.co.jp"), len(rows))
+                self.assertNotIn("amazon.co.jp", box)
+
+    def test_a_set_without_a_planned_box_gets_none(self):
+        """Negative case: the box is not on every set page."""
+        items, series = build.load_data()
+        s = next(x for x in series if x["slug"] not in build.SERIES_PR and not x.get("legacy"))
+        self.assertNotIn('<aside class="pr-box">', build.series_page({**BASE, **IDS}, False, s, items, series, False))
 
     def test_every_planned_box_is_for_a_page_that_exists(self):
         guides = {g["slug"] for g in json.loads((Path(build.__file__).parent / "content" / "guides.json").read_text(encoding="utf-8"))["guides"]}
