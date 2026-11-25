@@ -61,6 +61,7 @@ CHECKED_ON = {
 # (day, what, how, result, note); result is "ok" (the body was read), "top" (only the top page or a list was read: never counts as "no change") or "failed".
 # A later "ok" for the same what closes a "failed"; a "top" does not.
 FETCH_LOG = [
+    ("2026-11-25", "法務省 死亡届", "Chrome(ONLINE/FAMILYREGISTER/5-4.html の本文)", "ok", "死亡の事実を知った日から7日以内(国外3か月)。年末年始のページの書き方を合わせた"),
     ("2026-11-25", "国税庁 年末調整がよくわかるページ(令和8年分)", "Chrome(本文)", "ok", "変更点4項目。サイトと一致"),
     ("2026-11-25", "日本郵便 年賀状の引受開始(よくある質問)", "Chrome(本文 question/140)", "ok", "引受12/20・元日の差出目安(できるだけ)12/27。サイトと一致"),
     ("2026-11-25", "総務省 ふるさと納税 税金の控除について", "Chrome(本文)", "ok", "3月15日までの確定申告・ワンストップは5団体以内。サイトと一致"),

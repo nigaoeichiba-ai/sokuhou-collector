@@ -210,6 +210,20 @@ class TokushuNotYet(unittest.TestCase):
         self.assertTrue(self.problem("2026年11月3日時点で未掲載", "2026-11-25", log))
 
 
+class DeathReportStartDay(unittest.TestCase):
+    """The death report counts from the day the death became known; the holiday page must not lump it with 'the day it happened'."""
+
+    @staticmethod
+    def problem(text):
+        return "死亡届" in text and ("事件が起きた日から" in text or "死亡の事実を知った日" not in text)
+
+    def test_holiday_page(self):
+        self.assertFalse(self.problem((SITE / "content" / "nenmatsu-nenshi.json").read_text(encoding="utf-8")))
+
+    def test_negative_the_old_sentence_is_caught(self):
+        self.assertTrue(self.problem("死亡届は7日。戸籍の届出は、届出期間を事件が起きた日から数えます。"))
+
+
 class StaleFailures(unittest.TestCase):
     """A source that failed on 3 different days and was never read since is flagged (negative cases included)."""
 
