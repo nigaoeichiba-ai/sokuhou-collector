@@ -75,6 +75,7 @@ SPECIALS = [
         "description": "鬼、豆まき、恵方巻き、おひなさま、桜など、2月・3月の行事に使えるイラストです。保育園・学校のおたよりや店舗のお知らせに使えます。",
         "season": {"from": "01-05", "to": "04-10"},
         "match_series": ["setsubun-*"],
+        "guides": ["setsubun-2027-annai", "hoiku-otayori"],
         "intro": ["2月の節分から3月のひな祭り、桜の季節まで、行事のおたよりや店舗掲示に使えるイラストです。"],
         "steps": [("イラストを選ぶ", "鬼・豆・恵方巻き・おひなさま・桜などがあります。"), ("PNGをダウンロード", "背景が透明です。"), ("おたよりや画像に配置する", "点数の制限はありません。")],
         "faq": [("鬼の表情は強すぎませんか?", "表情は穏やかにしてあり、掲示物や配布物にも使えます。")],
@@ -178,7 +179,7 @@ SPECIALS = [
         "slug": "nenmatsu-nenshi", "name": "年末年始(大掃除・大晦日・お正月)", "title": "年末年始のイラスト(大掃除・大晦日・冬至・お正月) 無料・商用OK",
         "description": "大掃除、年越し、冬至、おせち、七草まで。年末年始のお知らせ、おたより、掲示に使えるイラストと飾り枠を、場面ごとにそろえました。無料・商用OK・登録不要の透明PNG。",
         "season": {"from": "11-20", "to": "01-15"},
-        "guides": ["nenmatsu-junbi-calendar", "nenmatsu-kyugyo-oshirase", "toji-kabocha-yuzuyu", "nanakusa-gayu-shogatsu-gyoji"],
+        "guides": ["nenmatsu-junbi-calendar", "nenmatsu-kyugyo-oshirase", "toji-kabocha-yuzuyu", "nanakusa-gayu-shogatsu-gyoji", "omisoka-toshikoshi-soba-annai"],
         "match_series": ["nenmatsu-wa", "nenmatsu-todo-pictogram", "winter-prep-year-end-flat", "year-end-office-faceless", "frames-year-end-flat", "omisoka-toshikoshi-flat",
                          "newyear-eve-cool-sumi", "touji-yuzu-kawaii", "osechi-wa", "newyear-objects-flat", "newyear-objects-wa", "nanakusa-wa"],
         "intro": [
