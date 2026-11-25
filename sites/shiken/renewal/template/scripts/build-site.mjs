@@ -16,6 +16,7 @@ import {fileURLToPath} from 'node:url';
 import {parseHTML} from 'linkedom';
 import {loadRegistry,digest,generated,today as jstToday} from './schedule-core.mjs';
 import {redirects,loadLegacy,legacyMain,siteWideMain,siteWide,config,SITE_NAME} from './legacy-pages.mjs';
+import {fillTsuikensa} from './tsuikensa.mjs';
 import {apacheConfig} from './apache-config.mjs';
 
 const run=promisify(execFile);
@@ -24,7 +25,7 @@ export const origin='https://shiken-nittei.com';
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function listFiles(dir,prefix=''){const files=[];for(const entry of await readdir(dir,{withFileTypes:true})){const rel=prefix+entry.name;if(entry.isDirectory())files.push(...await listFiles(path.join(dir,entry.name),rel+'/'));else files.push(rel);}return files.sort();}
-async function sourceRevision(){const files={};for(const f of await listFiles(path.join(rootDir,'dist')))files['dist/'+f]=sha(await readFile(path.join(rootDir,'dist',f)));for(const f of await listFiles(path.join(rootDir,'legacy')))files['legacy/'+f]=sha(await readFile(path.join(rootDir,'legacy',f)));for(const f of ['scripts/build-site.mjs','scripts/render-pages.mjs','scripts/legacy-pages.mjs','scripts/apache-config.mjs','package-lock.json'])files[f]=sha(await readFile(path.join(rootDir,f)));return digest(files);}
+async function sourceRevision(){const files={};for(const f of await listFiles(path.join(rootDir,'dist')))files['dist/'+f]=sha(await readFile(path.join(rootDir,'dist',f)));for(const f of await listFiles(path.join(rootDir,'legacy')))files['legacy/'+f]=sha(await readFile(path.join(rootDir,'legacy',f)));for(const f of ['scripts/build-site.mjs','scripts/render-pages.mjs','scripts/legacy-pages.mjs','scripts/tsuikensa.mjs','scripts/apache-config.mjs','package-lock.json'])files[f]=sha(await readFile(path.join(rootDir,f)));return digest(files);}
 
 export async function buildSite(out){
  const registry=await loadRegistry(),today=jstToday();
@@ -39,7 +40,7 @@ export async function buildSite(out){
  const result=await run(process.execPath,[path.join(rootDir,'scripts/render-pages.mjs'),source],{cwd:rootDir,maxBuffer:200*1024*1024,env:process.env});
  const pages=JSON.parse(result.stdout);
  const {document:shell}=parseHTML(pages[0].html);
- const legacy=await loadLegacy(root);
+ const legacy=fillTsuikensa(await loadLegacy(root),registry);
  // round pages (one round of TOEIC / Eiken / Boki / FP) share the parent page's copy: noindex,follow, unless the page already shows in Google (schedule/search-keep.json, from Search Console).  The parent page lists every round with its dates and links to it.
  const ROUND_RE=/^(toeic-\d{8}|eiken-\d{4}-\d|boki-\d{3}|fp1-gakka-\d{8}|fp1-jafp-\d{4}|fp23-(?:jafp|kinzai)-\d{4})$/;
  const keepIndexed=new Set(JSON.parse(await readFile(new URL('schedule/search-keep.json',root),'utf8')).ids);
