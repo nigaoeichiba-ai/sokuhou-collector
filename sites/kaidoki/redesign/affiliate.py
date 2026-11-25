@@ -154,7 +154,7 @@ def links_for(it: dict) -> list[dict]:
     for kind, target in STORES.get(mall, []):
         name = STORE_LABEL.get(mall) or ENT_NAME.get(mall, mall)
         if kind == "rakuten":
-            out.append(_link("rakuten", rakuten_href(target), f"{name}の楽天市場ストアを見る"))
+            out.append(_link("rakuten", rakuten_href(target), f"{name}の楽天市場ストアを見る" + STORE_ASIDE.get(iid, "")))
         elif kind == "yahoo":
             out.append(_link("vc", vc_href(VC_PID["yahoo"], target), f"{name}のYahoo!ショッピングストアを見る", "yahoo"))
         elif kind == "amazon_s":
@@ -162,6 +162,7 @@ def links_for(it: dict) -> list[dict]:
     return out
 
 
+STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
 STORE_LABEL = {"yamada": "ヤマダデンキ"}      # the mall stores are the company's (ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店), not the web shop the calendar entry names
 ENT_NAME: dict[str, str] = {}      # filled by schedule.py (id -> name) so the labels name the shop
 

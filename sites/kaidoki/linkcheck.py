@@ -21,7 +21,8 @@ def check(root: Path, base: str, pages: dict) -> list[str]:
     m = re.search(r"<h2[^>]*>いま分かっている日程</h2>(.*?)(?=<h2|</main>|</article>)", home.html, re.S)
     if not m:
         return ["home-schedule|/|no 「いま分かっている日程」 section on the top page"]
-    rows = re.findall(r"<tr>(.*?)</tr>", m.group(1), re.S)
+    table = re.sub(r'<div class="aff-lines">.*?</div>', "", m.group(1), flags=re.S)      # the affiliate lines under a name are not part of the name
+    rows = re.findall(r"<tr>(.*?)</tr>", table, re.S)
     n = 0
     for r in rows:
         cells = [_text(c).strip() for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", r, re.S)]

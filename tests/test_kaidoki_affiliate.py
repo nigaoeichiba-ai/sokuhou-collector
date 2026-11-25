@@ -261,3 +261,51 @@ class NamedAdvertiserTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def unlinked_rows(page: str, items) -> list[str]:
+    """The table rows that name a mall or a calendar entry we have a link for, and carry no sponsored link."""
+    bad = []
+    for table in re.findall(r"<table\b.*?</table>", page, flags=re.S):
+        for tr in re.findall(r"<tr\b[^>]*>.*?</tr>", table, flags=re.S):
+            cells = re.findall(r"<t[hd]\b[^>]*>(.*?)</t[hd]>", tr, flags=re.S)
+            if len(cells) < 2 or SPONSORED.search(tr):
+                continue
+            # the upcoming table starts with the kind badge, the two week table with the shop: look at the first two cells, without the shop line under a name
+            for cell in cells[:2]:
+                name = re.sub(r"<[^>]+>", "", re.sub(r"<br><small>.*?</small>", "", cell, flags=re.S)).strip()
+                if S.row_links(name, items):
+                    bad.append(name)
+                    break
+    return bad
+
+
+class TableAndLeadLinkTest(unittest.TestCase):
+    """The affiliate check of 2026-11-25: schedule tables and genre leads that named a partner had no link."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.pages = build({"KAIDOKI_REDESIGN": "1", "KAIDOKI_REDESIGN_DEMO": "0", "KAIDOKI_NOW": "2026-11-12T10:00"})
+
+    def test_every_table_row_of_a_partner_has_its_link(self):
+        items = S.all_items()
+        bad = {p: unlinked_rows(h, items) for p, h in self.pages.items() if p.endswith(".html")}
+        self.assertEqual({p: b for p, b in bad.items() if b}, {})
+
+    def test_a_page_with_a_table_link_says_pr(self):
+        for p, h in self.pages.items():
+            if p.endswith(".html") and re.search(r"<table\b(?:(?!</table>).)*aff-line", h, flags=re.S):
+                self.assertIn("aff-disclose", h, p)
+
+    def test_negative_a_row_without_a_link_is_caught_and_filled(self):
+        items = S.all_items()
+        page = "<table><tr><th>楽天</th><td>11月</td></tr><tr><th>名前のない店</th><td>11月</td></tr></table>"
+        self.assertEqual(unlinked_rows(page, items), ["楽天"])
+        filled = S.link_tables(page, items)
+        self.assertEqual(unlinked_rows(filled, items), [])
+        self.assertIn("aff-disclose", filled)
+        self.assertEqual(len(SPONSORED.findall(filled)), 1)
+
+    def test_the_genre_leads_that_name_a_partner_link_it(self):
+        for path, word in (("daily/index.html", "LOHACOのページを見る"), ("food/index.html", "LOHACOのページを見る"), ("fashion/index.html", "DHCファッションのセールのページを見る")):
+            self.assertRegex(self.pages[path], r'rel="nofollow sponsored noopener">[^<]*' + word, path)

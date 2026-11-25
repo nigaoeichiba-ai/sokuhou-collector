@@ -588,7 +588,7 @@ def genre_body(ctx: "Ctx", gid: str) -> str:
     kids = (ctx.children("/kaden/") if gid == "electronics" else []) + ctx.product_cards(gid)
     articles = article_cards(kids) if kids else notice("このジャンルのショップ・商品ごとのページは、公式ページで確認できたものから順に足します。")
     tail = f'<div class="wrap page-content"><p class="cal-homelink">{link("/calendar/", "セールの日付は、月間カレンダーにあります")}</p></div>'
-    return template("category", intro=paragraphs(c["intro"]), image=category_card(c, anchor=False), sales=sales, checks=checks(c["checks"]), articles=articles) + genre_extra(ctx, gid) + tail
+    return genre_lead_links(gid) + template("category", intro=paragraphs(c["intro"]), image=category_card(c, anchor=False), sales=sales, checks=checks(c["checks"]), articles=articles) + genre_extra(ctx, gid) + tail
 
 
 def genre_partners(gid: str) -> str:
@@ -597,6 +597,21 @@ def genre_partners(gid: str) -> str:
         return ""
     links = [affiliate._link("a8", affiliate.a8_href(key), label, key) if kind == "a8" else affiliate._link("vc", affiliate.vc_text_href(affiliate.VC_PID[key]), label, key) for kind, key, label in items]
     return ('<section class="content-block"><h2>各社のサイトで探す</h2><p>日程と数字は、上の表のとおりです。ここは、各社のサイトへの入り口です。</p>' + affiliate.lines(links) + "</section>")
+
+
+LOHACO_LINK = {"k": "yahoo", "url": "https://lohaco.yahoo.co.jp/", "label": "Yahoo!ショッピングのLOHACOのページを見る"}
+GENRE_LEAD_LINKS = {      # the shop named in the genre page's lead -> its link (the same form as the rows of its product page)
+    "daily": [("LOHACO", LOHACO_LINK)], "food": [("LOHACO", LOHACO_LINK)],
+    "fashion": [("DHCファッション", {"k": "vc", "key": "dhc", "url": "https://www.dhc.co.jp/contents/fashion/page_lp_fashion_web_sale.html", "label": "DHCファッションのセールのページを見る"})],
+}
+
+
+def genre_lead_links(gid: str) -> str:
+    specs = [spec for _, spec in GENRE_LEAD_LINKS.get(gid, [])]
+    if not specs:
+        return ""
+    links = affiliate.product_links({"slug": "", "crumb": ""}, {"name": "", "aff": specs})
+    return '<div class="wrap page-content">' + affiliate.disclosure() + affiliate.lines(links) + "</div>"
 
 
 def genre_extra(ctx: "Ctx", gid: str) -> str:
@@ -862,6 +877,8 @@ def apply(pages: dict, content: list, cfg: dict, spec: dict, site_dir) -> dict:
         head += '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False).replace("</", "<\\/") + "</script>\n"
         out[path.strip("/") + "/index.html"] = wrap(ctx, path, head, crumbs_html(trail), banner("ジャンル", c["page_h1"], c["page_desc"]), genre_body(ctx, gid), spec.get("updated", ""), "genre")
     out.update(product_pages(ctx, base_head))
+    for name in [n for n in out if n.endswith(".html")]:
+        out[name] = schedule.link_tables(out[name], ctx.sched)
     # the kit's own files
     for sub in ("styles", "scripts", "assets"):
         for f in sorted((HERE / "static" / sub).iterdir()):

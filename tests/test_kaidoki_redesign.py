@@ -258,6 +258,7 @@ class RedesignTest(unittest.TestCase):
     # ---- 2026-11-15: the top page's table 'いま分かっている日程' is the calendar's data (every shop), not the malls' two rows ----
     def _top_table_names(self, html):
         sec = html.split("<h2>いま分かっている日程</h2>", 1)[1].split("</section>", 1)[0]
+        sec = re.sub(r'<div class="aff-lines">.*?</div>', "", sec, flags=re.S)          # the affiliate lines of a row are not its name
         return [re.sub(r"<[^>]+>", "", r[1]) for r in re.findall(r"<tr><td>(.*?)</td><td>(.*?)</td>", sec)]
 
     def _expected_top_names(self, today):

@@ -16,6 +16,7 @@ import re
 
 import os
 
+import html
 import json
 from datetime import date, datetime, timedelta, timezone
 from html import escape
@@ -510,10 +511,10 @@ def upcoming_table(items: list[dict], mall: str | None, today: date) -> str:
         a, b = _upcoming_days(it)
         title = f'<a href="{e(it["href"])}">{e(it["title"])}</a>' if it["href"] else e(it["title"])
         rows += (f'<tr class="k-{it["kind"]}" data-kind="{it["kind"]}" data-id="{e(it["id"])}"><td><span class="cal-badge k-{it["kind"]}">{sym} {e(label)}</span></td>'
-                 f'<th scope="row">{title}<br><small>{e(ENT[it["mall"]][0])}</small></th><td>{e(a)}</td><td>{e(b)}</td></tr>')
+                 f'<th scope="row">{title}<br><small>{e(ENT[it["mall"]][0])}</small>{AFF.lines(AFF.links_for(it))}</th><td>{e(a)}</td><td>{e(b)}</td></tr>')
     if not rows:
         return ""
-    return ('<div class="tablewrap"><table class="cal-table cal-upcoming"><caption>これから開かれる企画(開催中を含む。開始日の順)</caption><thead><tr><th scope="col">区分</th><th scope="col">名前</th>'
+    return (AFF.disclosure() + '<div class="tablewrap"><table class="cal-table cal-upcoming"><caption>これから開かれる企画(開催中を含む。開始日の順)</caption><thead><tr><th scope="col">区分</th><th scope="col">名前</th>'
             '<th scope="col">開始日</th><th scope="col">終了日</th></tr></thead><tbody>' + rows + "</tbody></table></div>")
 
 
@@ -629,12 +630,56 @@ def home_table(items: list[dict], today: date) -> str:
             name, nxt = "【発表予定日】" + it["title"], ("今日" if s0 == today else f"発表予定日まであと{(s0 - today).days}日")
         else:
             name, nxt = it["title"], ("開催中" if s0 <= today <= e0 else f"開始まであと{(s0 - today).days}日")
-        body += f'<tr><td>{e(ENT[it["mall"]][0])}</td><td>{e(name)}</td><td>{e(it["when"])}</td><td>{e(nxt)}</td></tr>'
+        body += f'<tr><td>{e(ENT[it["mall"]][0])}</td><td>{e(name)}{AFF.lines(AFF.links_for(it))}</td><td>{e(it["when"])}</td><td>{e(nxt)}</td></tr>'
     if not body:
         return ""
     more = f'<p class="cal-homelink"><a class="text-link" href="/calendar/">{"全部の日程は、月間カレンダーにあります" if len(rows) > HOME_TABLE_MAX else "ほかの日程は、月間カレンダーにあります"} →</a></p>'
-    return ('<div class="tablewrap"><table><caption>これから2週間の確定した日程</caption><thead><tr><th scope="col">モール・ショップ</th><th scope="col">名前</th><th scope="col">期間</th><th scope="col">今日から</th></tr></thead><tbody>'
+    return (AFF.disclosure() + '<div class="tablewrap"><table><caption>これから2週間の確定した日程</caption><thead><tr><th scope="col">モール・ショップ</th><th scope="col">名前</th><th scope="col">期間</th><th scope="col">今日から</th></tr></thead><tbody>'
             + body + "</tbody></table></div>" + more)
+
+
+# ------------------------------------------------------------------ the tables written in the pages: a row of a mall or of a calendar entry carries its links
+TABLE_MALLS = {"楽天": "rakuten", "楽天市場": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
+_ROW = re.compile(r"<tr\b[^>]*>.*?</tr>", flags=re.S)
+_CELL = re.compile(r"(<t[hd]\b[^>]*>)(.*?)(</t[hd]>)", flags=re.S)
+
+
+def row_links(name: str, items: list[dict]) -> list[dict]:
+    """The links of a table row by the words of its first cell: a mall's name, or an entry's title (alone or after its mall's name).  Anything else has none."""
+    if name in TABLE_MALLS:
+        m = TABLE_MALLS[name]
+        return AFF.links_for({"mall": m, "id": m, "href": ""})
+    for it in items:
+        short = MALLS[it["mall"]][0].replace("市場", "") if it["mall"] in MALLS else ENT[it["mall"]][0]
+        if name in (it["title"], f"{short} {it['title']}", f"{ENT[it['mall']][0]} {it['title']}"):
+            return AFF.links_for(it)
+    return []
+
+
+def link_tables(page: str, items: list[dict]) -> str:
+    """Add the affiliate links to the rows of the page's tables that name a partner and have none yet; the page gets the PR sentence if it had none."""
+    added = []
+
+    def row(m):
+        tr = m.group(0)
+        cell = _CELL.search(tr)
+        if not cell or "aff-line" in tr or "sponsored" in tr:
+            return tr
+        name = html.unescape(re.sub(r"<[^>]+>", "", cell.group(2))).strip()
+        links = row_links(name, items)
+        if not links:
+            return tr
+        added.append(name)
+        return tr[:cell.end(2)] + AFF.lines(links) + tr[cell.end(2):]
+
+    def table(m):
+        return _ROW.sub(row, m.group(0))
+
+    out = re.sub(r"<table\b.*?</table>", table, page, flags=re.S)
+    if added and "aff-disclose" not in out:
+        first = re.search(r'(<div class="tablewrap">\s*)?<table\b', out)
+        out = out[:first.start()] + AFF.disclosure() + out[first.start():]
+    return out
 
 
 # ------------------------------------------------------------------ the top page's slides: the coming big sales of the three malls (confirmed / announced / expected, told apart), then other shops' confirmed ones
