@@ -5405,7 +5405,7 @@
       "short": "三重県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-26",
       "sourceUrl": "https://www.pref.mie.lg.jp/common/content/001278528.pdf",
       "sourceTitle": "令和9年度 三重県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -10298,7 +10298,7 @@
       "label": "前期選抜等 出願書類受付 締切",
       "exam": "koko-mie",
       "sourceId": "catalog-koko-mie",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-mie-2",
@@ -10308,7 +10308,7 @@
       "note": "学校が指定する日程。",
       "exam": "koko-mie",
       "sourceId": "catalog-koko-mie",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-mie-3",
@@ -10318,7 +10318,7 @@
       "note": "学校が指定する日程。",
       "exam": "koko-mie",
       "sourceId": "catalog-koko-mie",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-mie-4",
@@ -10327,7 +10327,7 @@
       "label": "前期選抜等 追検査",
       "exam": "koko-mie",
       "sourceId": "catalog-koko-mie",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-mie-5",
@@ -10336,7 +10336,7 @@
       "label": "前期選抜等 合格内定",
       "exam": "koko-mie",
       "sourceId": "catalog-koko-mie",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-mie-6",
@@ -10345,7 +10345,7 @@
       "label": "後期選抜 検査",
       "exam": "koko-mie",
       "sourceId": "catalog-koko-mie",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-mie-7",
@@ -10354,7 +10354,17 @@
       "label": "前期・後期 合格発表",
       "exam": "koko-mie",
       "sourceId": "catalog-koko-mie",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-mie-8",
+      "date": "2027-03-19",
+      "type": "exam",
+      "label": "追検査・再募集の検査",
+      "note": "面接・作文などは3月23日になる場合があります。",
+      "exam": "koko-mie",
+      "sourceId": "catalog-koko-mie",
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-kyoto-1",
