@@ -236,6 +236,13 @@
    "basis": "掲載時点",
    "fetched": "2026-11-03"
   },
+  "nenkin_ikuji": {
+   "org": "日本年金機構",
+   "table": "国民年金保険料の育児免除制度",
+   "url": "https://www.nenkin.go.jp/service/kokunen/menjo/ikujimenjo.html",
+   "basis": "2026年10月1日の更新を確認",
+   "fetched": "2026-11-03"
+  },
   "dnc_r9": {
    "org": "大学入試センター",
    "table": "令和9年度試験(実施期日)",

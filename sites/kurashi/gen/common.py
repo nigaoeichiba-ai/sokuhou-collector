@@ -19,7 +19,7 @@ UNCHANGED = ("/method/", "/kakutei-shinkoku/hitsuyo/", "/kakutei-shinkoku/kanpu/
 REDESIGN_DAY = "2026-11-13"
 SEO_DAY = "2026-11-17"   # the style sheets were joined and the end of every <title> was shortened: every page changed that day (the sitemap lastmod follows the page's own day)
 # the pages whose title, description or lead answer were rewritten after that (the day of the change)
-CHANGED_LATER = {"/nenmatsu-nenshi/": "2026-11-25", "/nenmatsu-chosei/": "2026-11-18", "/moving/tenshutsu/": "2026-11-20", "/nengajo/": "2026-11-25", "/furusato/deadline/": "2026-11-20", "/kakutei-shinkoku/": "2026-11-25", "/kakutei-shinkoku/kanpu/": "2026-11-25", "/shin-seikatsu/": "2026-11-25"}
+CHANGED_LATER = {"/nenmatsu-nenshi/": "2026-11-25", "/nenmatsu-chosei/": "2026-11-18", "/moving/tenshutsu/": "2026-11-20", "/nengajo/": "2026-11-25", "/furusato/deadline/": "2026-11-20", "/kakutei-shinkoku/": "2026-11-25", "/kakutei-shinkoku/kanpu/": "2026-11-25", "/shin-seikatsu/": "2026-11-25", "/life/birth/": "2026-11-25"}
 EDITED = {}          # kept for readers of the old name: a page's day is FIRST_UPDATED if it is in UNCHANGED, else REDESIGN_DAY (page() below)
 SITE_UPDATED = max([SEO_DAY, *CHANGED_LATER.values()])
 WD = "月火水木金土日"
@@ -141,6 +141,7 @@ SOURCES = {
     "egov_ginko": {"org": "e-Gov法令検索", "table": "銀行法施行令(第5条)", "url": "https://laws.e-gov.go.jp/law/357CO0000000040", "basis": "現行法令"},
     "egov_kaigo": {"org": "e-Gov法令検索", "table": "介護保険法(第27条)", "url": "https://laws.e-gov.go.jp/law/409AC0000000123", "basis": "現行法令"},
     "nenkin_kanyu": {"org": "日本年金機構", "table": "国民年金に加入するための手続き", "url": "https://www.nenkin.go.jp/service/kokunen/kanyu/20140710-04.html", "basis": "掲載時点"},
+    "nenkin_ikuji": {"org": "日本年金機構", "table": "国民年金保険料の育児免除制度", "url": "https://www.nenkin.go.jp/service/kokunen/menjo/ikujimenjo.html", "basis": "2026年10月1日の更新を確認"},
     "dnc_r9": {"org": "大学入試センター", "table": "令和9年度試験(実施期日)", "url": "https://www.dnc.ac.jp/kyotsu/shiken_jouhou/r9/", "basis": "令和9年度"},
     "kaigokensaku": {"org": "厚生労働省 介護サービス情報公表システム", "table": "サービス利用までの流れ", "url": "https://www.kaigokensaku.mhlw.go.jp/commentary/flow.html", "basis": "掲載時点"},
     "digital_moving": {"org": "デジタル庁", "table": "引越し手続のオンライン化・ワンストップ化(マイナポータルの転出届・転入予約)", "url": "https://www.digital.go.jp/policies/moving_onestop_service", "basis": "2026年3月13日の更新を確認"},
