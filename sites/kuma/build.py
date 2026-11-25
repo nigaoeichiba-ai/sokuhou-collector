@@ -327,7 +327,7 @@ def index_page(d: dict, cfg: dict, preview: bool) -> str:
 {tile_map(d)}
 <h2>{fy_label(done)}に出没が多かった道府県</h2>
 {top_rows}
-<p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a> / <a href="/ranking/deaths/">死亡者数のランキング</a> / <a href="/season/">何月に多いか(都道府県別)</a>{' / <a href="/ranking/captures/">許可捕獲数のランキング</a>' if d.get('captures') else ''}</p>
+<p><a href="/ranking/sightings/">全国のランキング</a> / <a href="/ranking/change/">前年度の同じ期間との比較</a> / <a href="/ranking/injuries/">人身被害のランキング</a> / <a href="/ranking/deaths/">死亡者数のランキング</a> / <a href="/deaths/">死亡事故の一覧(日付と場所)</a> / <a href="/season/">何月に多いか(都道府県別)</a>{' / <a href="/ranking/captures/">許可捕獲数のランキング</a>' if d.get('captures') else ''}</p>
 <h2>{fy_label(done)}は、出没が秋に集中しました</h2>
 <p>全国の月別では、{d['peak_month']}月が最も多く({n(nat['monthly'][done][d['months'].index(d['peak_month'])])}件)でした。{fy_label(cur)}の月別も、公表が進み次第、追加します。</p>
 {charts.lines([{"label": fy_label(y), "values": nat["monthly"][y], "cls": c, "strong": y == cur} for y, c in zip(d["years"], ("c0", "c1", "c2", "c3", "c4"))], [f"{m}月" for m in d["months"]], title="全国の月別の出没件数", desc="令和4年度から令和8年度までの、全国の月別の出没件数(件)", uid="home")}

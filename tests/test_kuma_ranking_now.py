@@ -74,6 +74,9 @@ class RankingNowTest(unittest.TestCase):
         for word in ("死亡事故一覧", "2025", "2026", f"{count}件"):
             self.assertIn(word, title)
 
+    def test_the_top_page_links_to_the_death_list(self):
+        self.assertIn('href="/deaths/"', self.read("index.html"))
+
     def test_a_prefecture_left_out_of_the_death_ranking_but_hit_this_year_is_named(self):
         cur = self.d["cur"]
         done = [y for y in self.d["inj"]["years"] if y != cur]
