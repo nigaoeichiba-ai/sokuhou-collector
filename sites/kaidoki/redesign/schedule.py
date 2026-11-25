@@ -37,7 +37,8 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "sonystore": ("ソニーストア", "ソ", "brand"), "xserver": ("エックスサーバー", "X", "web"), "xdomain": ("XServerドメイン", "ド", "web"),
        "google": ("Googleストア", "G", "brand"), "asus": ("ASUS Store", "エ", "brand"), "lg": ("LG", "L", "brand"), "sharp": ("シャープ COCORO STORE", "シ", "brand"),
        "panasonic": ("パナソニック", "パ", "brand"), "nec": ("NEC", "N", "brand"), "uniqlo": ("ユニクロ", "ユ", "brand"), "zozo": ("ZOZOTOWN", "Z", "ec"), "hands": ("ハンズ", "ハ", "ec"), "nojima": ("ノジマ", "ノ", "ec"), "edion": ("エディオン", "エ", "ec"), "joshin": ("Joshin web", "ジ", "ec"), "toshiba": ("東芝ライフスタイル", "東", "brand"), "aqua": ("AQUA", "ア", "brand"), "regza": ("TVS REGZA", "レ", "brand"), "aoki": ("AOKI", "青", "brand"), "tcl": ("TCL", "T", "brand"), "expedia": ("エクスペディア", "旅", "web"), "yodobashi": ("ヨドバシ.com", "橋", "ec"), "bic": ("ビックカメラ", "ビ", "ec"), "gu": ("GU", "U", "brand"), "yokado": ("イトーヨーカドー", "ヨ", "ec"), "donki": ("ドン・キホーテ", "ド", "ec"), "seiyu": ("西友", "西", "ec"), "aeon": ("イオン", "イ", "ec"), "nikon": ("ニコン", "コ", "brand"), "hisense": ("ハイセンス", "海", "brand"), "haier": ("ハイアール", "ハ", "brand"), "brother": ("ブラザー", "ブ", "brand"), "canon": ("キヤノン", "キ", "brand"), "fujifilm": ("富士フイルム", "富", "brand"),
-       "stardomain": ("スタードメイン", "ス", "web"), "nta": ("日本旅行", "日", "web"), "jalan": ("じゃらんnet", "ら", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand"), "lenovo": ("Lenovo公式オンラインストア", "ボ", "brand"), "orbis": ("オルビス", "オ", "brand")}
+       "stardomain": ("スタードメイン", "ス", "web"), "nta": ("日本旅行", "日", "web"), "jalan": ("じゃらんnet", "ら", "web"), "dhc": ("DHC公式オンラインショップ", "D", "brand"), "lenovo": ("Lenovo公式オンラインストア", "ボ", "brand"), "orbis": ("オルビス", "オ", "brand"),
+       "yogibo": ("Yogibo", "ぎ", "brand"), "gap": ("Gap", "ギ", "brand"), "zoff": ("Zoff", "ゾ", "brand"), "welcia": ("ウエルシアグループ", "ウ", "ec"), "tsuruha": ("ツルハグループ", "ツ", "ec")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
@@ -216,6 +217,11 @@ EXTRA_CONFIRMED += [
     C("c-yodobashi-food-bf", "yodobashi", "ヨドバシ.com 食品ブラックフライデーセール", "2026-11-20", "2026-12-06", _span("2026-11-20", "2026-12-06"), "", src=SRC_OFFICIAL, note="対象の食品・飲料・お酒が期間限定の特価です。"),
     C("c-edion-point", "edion", "エディオンネットショップ ポイント還元キャンペーン(終了日)", "2026-12-03", "2026-12-03", f"{jpd('2026-12-03')}まで(開始日は確認していません)", "", src=SRC_OFFICIAL, note="当社指定の商品が対象です。", checked="2026-11-25"),
     C("c-yodobashi-stock", "yodobashi", "ヨドバシ.com 文房具・ファッション 在庫限りの特価(終了日)", "2026-11-30", "2026-11-30", f"{jpd('2026-11-30')}まで(開始日は確認していません)", "", src=SRC_PAGE),
+    C("c-yogibo-bf", "yogibo", "Yogibo ブラックフライデー", "2026-11-13", "2026-11-30", _span("2026-11-13", "2026-11-30"), "", src=PRESS2, checked="2026-11-25"),
+    C("c-gap-bf", "gap", "Gap ブラックフライデー 2026", "2026-11-19", "2026-11-30", _span("2026-11-19", "2026-11-30"), "", src=PRESS2, checked="2026-11-25"),
+    C("c-zoff-bf", "zoff", "Zoff BLACK FRIDAY", "2026-11-12", "2026-12-03", _span("2026-11-12", "2026-12-03"), "", src=PRESS2, checked="2026-11-25"),
+    C("c-welcia-bf", "welcia", "ウエルシアグループ BLACKFRIDAYキャンペーン", "2026-10-05", "2026-12-06", _span("2026-10-05", "2026-12-06"), "", src=PRESS2, checked="2026-11-25"),
+    C("c-tsuruha-bf", "tsuruha", "ツルハグループ ブラックフライデー", "2026-10-01", "2026-11-30", _span("2026-10-01", "2026-11-30"), "", src=PRESS2, checked="2026-11-25"),
     C("c-bic-bf", "bic", "ビックカメラ ブラックフライデー", "2026-11-13", "2026-11-30", _span("2026-11-13", "2026-11-30"), "", src=PRESS2, note="全店とビックカメラ.comの企画です。まとめ買い割は11月23日(月)までです。", checked="2026-11-23"),
     C("c-expedia-flight", "expedia", "エクスペディア 航空券の予約でOneKeyCashプレゼント(終了日)", "2026-11-25", "2026-11-25", f"{jpd('2026-11-25')}まで(開始日は確認していません)", "", src="広告主(エクスペディア)の案内",
       note="期間中に航空券を予約すると、エクスペディアのポイント(OneKeyCash)がもらえます。もらったポイントは30日間の期間限定で、ブラックフライデーセールの宿泊の予約に使えます。条件は、エクスペディアの表示にあります(広告主の案内 2026-11-19)。"),

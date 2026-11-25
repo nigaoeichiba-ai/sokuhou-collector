@@ -46,6 +46,8 @@ STORES = {
     "asus": [("rakuten", "https://www.rakuten.co.jp/asus-store/")],
     "nec": [("rakuten", "https://www.rakuten.co.jp/nec-direct/")],
     "yamada": [("rakuten", "https://www.rakuten.co.jp/yamada-denki/"), ("yahoo", "https://store.shopping.yahoo.co.jp/yamada-denki/")],   # ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店(2026-11-12 実際に開いて確認)
+    "yogibo": [("rakuten", "https://www.rakuten.co.jp/yogibo/")],
+    "zoff": [("rakuten", "https://www.rakuten.co.jp/zoff/")],
     "zozo": [("yahoo","https://store.shopping.yahoo.co.jp/zozo/")],
     "sharp": [("amazon_s", "シャープ")],
     "google": [("amazon_s", "Google Pixel")],
@@ -85,6 +87,9 @@ NO_LINK = {
     "edion": "提携済みのASP案件がない(2026-11-21追加。3つのASPの調査表に載っていない。案件の有無を調べて、あれば申請する=未確認)",
     "bic": "A8.netに物販の案件がない(2026-11-12の調査表)",
     "nojima": "A8.netに物販の案件がない(2026-11-12の調査表)。ノジマオンラインはセール対象外",
+    "gap": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
+    "welcia": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
+    "tsuruha": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
 }
 
