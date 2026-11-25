@@ -544,7 +544,7 @@ def native_body(ctx: Ctx, path: str, pg: dict) -> str | None:
 
 def brand_block(it: dict, at: datetime) -> str:
     """A shop's own sale (a schedule.py entry) in the sale-date block: ribbon, name, the dates as the shop's page gives them, the one-line note, the check day, the affiliate links of the shop."""
-    st = "終了" if schedule.over(it, at.date()) else ("開催中" if schedule.covers(it, at.date()) else ("開催予定" if schedule.d(it["s"]) > at.date() else "終了"))
+    st = "終了" if schedule.over(it, at.date()) else ("開催中" if schedule.covers(it, at.date()) or schedule.end_only(it) else ("開催予定" if schedule.d(it["s"]) > at.date() else "終了"))
     soon = "" if st == "開催中" else " soon"
     name = schedule.ENT[it["mall"]][0]
     checked = it["checked"].replace("-", "/") if it.get("checked") else ""

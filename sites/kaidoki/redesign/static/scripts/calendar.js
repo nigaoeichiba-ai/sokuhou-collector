@@ -8,6 +8,12 @@
   function todayIso() { return jstNow().toISOString().slice(0, 10); }
   /* a sale is over after its last day, and on that day once the hour written for the end is past ('01:59' -> from 02:00) */
   function isOver(e, et) { var now = jstNow().toISOString(); var today = now.slice(0, 10); return e < today || (e === today && !!et && now.slice(11, 16) > et); }
+  /* the words of a confirmed sale that is not over.  endOnly: only the end day was read, so s is the end day too and says nothing about the start */
+  function saleText(s, e, endOnly, today) {
+    if (e === today) return '本日が最終日';
+    if (endOnly) return '終了まであと' + (dayNo(e) - dayNo(today)) + '日';
+    return s <= today ? '開催中' : '開始まであと' + (dayNo(s) - dayNo(today)) + '日';
+  }
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
   function iso(y, m, d) { return y + '-' + pad(m) + '-' + pad(d); }
   function dayNo(s) { var p = s.split('-'); return Date.UTC(+p[0], +p[1] - 1, +p[2]) / 86400000; }
@@ -151,7 +157,7 @@
       var el = li.querySelector('[data-live]'); if (!el) return;
       var s = li.dataset.s, e = li.dataset.e, k = li.dataset.kind, txt = '';
       if (k === 'notice') txt = s < today ? '発表の予定日は過ぎました' : s === today ? '本日' : 'あと' + (dayNo(s) - n) + '日';
-      else if (k === 'confirmed') txt = isOver(e, li.dataset.et) ? '終了' : s <= today ? (e === today ? '本日が最終日' : '開催中') : '開始まであと' + (dayNo(s) - n) + '日';
+      else if (k === 'confirmed') txt = isOver(e, li.dataset.et) ? '終了' : saleText(s, e, li.hasAttribute('data-endonly'), today);
       else if (k === 'expected') txt = s < today ? '' : s === today ? '予想の日は本日' : '予想の日まであと' + (dayNo(s) - n) + '日';
       el.textContent = txt;
     });

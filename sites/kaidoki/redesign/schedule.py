@@ -337,6 +337,11 @@ def for_mall(items: list[dict], mall: str | None) -> list[dict]:
     return [i for i in items if not mall or i["mall"] == mall]
 
 
+def end_only(it: dict) -> bool:
+    """Only the end day of the sale was read ("(終了日)" in its name): its s is that day and is not a start."""
+    return "(終了日)" in it["title"]
+
+
 def covers(it: dict, day: date) -> bool:
     if it.get("days") is not None:
         return day.isoformat() in it["days"]
@@ -425,7 +430,7 @@ def item_li(it: dict) -> str:
     mall_title = ENT[it["mall"]][0]
     dates = ""
     if it.get("s") and it["kind"] != "regular":
-        dates = f' data-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-et="{end_hm(it)}"'
+        dates = f' data-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-et="{end_hm(it)}"' + (" data-endonly" if end_only(it) else "")
     extra = f'<p class="cal-note">{e(it["note"])}</p>' if it.get("note") else ""
     ann = f'<p class="cal-note">公式が発表を予定している日時は、{e(it["announce"])}です。</p>' if it.get("announce") else ""
     basis = ""
