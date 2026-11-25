@@ -7,14 +7,14 @@ from __future__ import annotations
 
 # genre id -> (page path, the shops of schedule.ENT that sell in it, the word of the Amazon search link on the page, the page's own title and description)
 GENRES: dict[str, dict] = {
-    "electronics": {"path": "/kaden/", "brands": ("yamada", "sonystore", "google", "asus", "lg", "sharp", "panasonic", "nec", "lenovo", "dyson"), "amazon": "家電", "crumb": "家電・デジタル"},
-    "food": {"path": "/food/", "brands": (), "amazon": "食品", "crumb": "食品・飲料"},
-    "daily": {"path": "/daily/", "brands": (), "amazon": "日用品", "crumb": "日用品"},
-    "fashion": {"path": "/fashion/", "brands": ("uniqlo", "zozo"), "amazon": "ファッション", "crumb": "ファッション"},
-    "beauty": {"path": "/beauty/", "brands": ("dhc", "orbis"), "amazon": "美容", "crumb": "美容・健康"},
-    "home": {"path": "/home/", "brands": ("nitori",), "amazon": "インテリア", "crumb": "家具・暮らし"},
-    "hobby": {"path": "/hobby/", "brands": ("playstation",), "amazon": "スポーツ アウトドア", "crumb": "趣味・レジャー"},
-    "service": {"path": "/service/", "brands": ("xserver", "xdomain", "stardomain"), "amazon": "", "crumb": "WEBサービス"},
+    "electronics": {"path": "/kaden/", "brands": ("yamada", "sonystore", "google", "asus", "lg", "sharp", "panasonic", "nec", "lenovo", "dyson", "kojima"), "amazon": "家電", "crumb": "家電・デジタル"},
+    "food": {"path": "/food/", "brands": ("greenbeans",), "amazon": "食品", "crumb": "食品・飲料"},
+    "daily": {"path": "/daily/", "brands": ("welcia", "tsuruha"), "amazon": "日用品", "crumb": "日用品"},
+    "fashion": {"path": "/fashion/", "brands": ("uniqlo", "zozo", "gap", "zoff"), "amazon": "ファッション", "crumb": "ファッション"},
+    "beauty": {"path": "/beauty/", "brands": ("dhc", "orbis", "shiseido"), "amazon": "美容", "crumb": "美容・健康"},
+    "home": {"path": "/home/", "brands": ("nitori", "yogibo"), "amazon": "インテリア", "crumb": "家具・暮らし"},
+    "hobby": {"path": "/hobby/", "brands": ("playstation", "toysrus"), "amazon": "スポーツ アウトドア", "crumb": "趣味・レジャー"},
+    "service": {"path": "/service/", "brands": ("xserver", "xdomain", "stardomain", "colorfulbox", "his"), "amazon": "", "crumb": "WEBサービス"},
 }
 GENRE_PATH = {k: v["path"] for k, v in GENRES.items()}
 # genres whose product pages are shown to each other as related (a symmetric relation: the listing below is read both ways, so a page that lists another is listed by it)

@@ -280,6 +280,28 @@ def unlinked_rows(page: str, items) -> list[str]:
     return bad
 
 
+class NewProgrammeTest(unittest.TestCase):
+    """2026-11-25: HIS (ValueCommerce) and ColorfulBox (A8.net) were approved; their entries carry the issued codes.  Green Beans is under review: no link."""
+
+    def test_the_codes_are_the_issued_ones(self):
+        by = {it["id"]: S.item_li(it) for it in S.all_items()}
+        self.assertIn("sid=3787704&amp;pid=892757627&amp;vc_url=https%3A%2F%2Fwww.his-j.com%2F", by["c-his-bf"])
+        self.assertIn("https://px.a8.net/svt/ejp?a8mat=4BGTLP+F5D7J6+42SG+61Z82", by["c-colorfulbox-bf"])
+        self.assertIn("https://www19.a8.net/0.gif?a8mat=4BGTLP+F5D7J6+42SG+61Z82", by["c-colorfulbox-bf"])
+        for iid in ("c-his-bf", "c-colorfulbox-bf"):
+            self.assertEqual(len(SPONSORED.findall(by[iid])), 1, iid)
+        self.assertEqual(SPONSORED.findall(by["c-greenbeans-bf"]), [])
+
+    def test_negative_a_dropped_programme_is_caught(self):
+        saved = AFF.ASP.pop("his")
+        try:
+            it = next(i for i in S.all_items() if i["id"] == "c-his-bf")
+            self.assertEqual(AFF.links_for(it), [])          # the coverage tests (a shop is linked or has a reason) then fail: it is in neither table
+            self.assertNotIn("his", AFF.NO_LINK)
+        finally:
+            AFF.ASP["his"] = saved
+
+
 class TableAndLeadLinkTest(unittest.TestCase):
     """The affiliate check of 2026-11-25: schedule tables and genre leads that named a partner had no link."""
 

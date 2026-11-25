@@ -19,7 +19,7 @@ CFG = json.loads((Path(__file__).resolve().parents[1] / "config.json").read_text
 SITE_NAME = json.loads((Path(__file__).resolve().parent / "site.json").read_text(encoding="utf-8"))["name"]       # the redesign's name (config.json still has the old one)
 REL = "nofollow sponsored noopener"
 VC_SID = "3787704"
-VC_PID = {"yahoo": "892746613", "nta": "892749530", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204", "orbis": "892748240", "daimaru": "892748241", "belluna": "892748242", "ablenet": "892748243", "expedia": "892749934", "jalan": "892753320"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
+VC_PID = {"his": "892757627", "yahoo": "892746613", "nta": "892749530", "dhc": "892746566", "yamada": "892746569", "lenovo": "892748202", "minisforum": "892748204", "orbis": "892748240", "daimaru": "892748241", "belluna": "892748242", "ablenet": "892748243", "expedia": "892749934", "jalan": "892753320"}               # ValueCommerce MyLink ad of each programme (Yahoo!ショッピング / DHCオンラインショップ)
 A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+1F7FFM+CO4+6AZAQ", "www16"), "xbiz": ("4BEHX9+1GEAN6+CO4+3SZMKY", "www14"),
           # approved 2026-11-13, link codes read from the A8 tool (media 007 = this calendar).  Not yet in ASP: the calendar has no dated sale of these shops to attach them to
           # (a shop is listed only when a sale is confirmed; Alpen's Black Friday 2026 days were not published when read).  To switch on: add the shop to schedule.ENT with a confirmed entry and to ASP below.
@@ -27,7 +27,8 @@ A8_MAT = {"xdomain": ("4BGJFW+4W8GGY+CO4+15ORS2", "www15"), "xserver": ("4BEHX9+
           "alpen": ("4BGJFW+4V1L9E+3OSK+5YJRM", "www15"), "oisix": ("4BGJFW+6PQ50I+3RK+2THJS3", "www15"),
           # read from the A8 tool (media 007, text materials) on 2026-11-15
           "muumuu": ("4BGJFW+5U65YA+348+1BNJ9E", "www16"), "mixhost": ("4BGJFW+6FLRQA+3JTE+5YJRM", "www10"), "lolipop": ("4BGJFW+30D1IA+348+5YZ76", "www14"),
-          "sakura": ("4BGJFW+30YH42+D8Y+62U36", "www15"), "happy": ("4BGOWL+1PBVSY+5MMG+5YZ76", "www13"), "stardomain": ("4BGJFW+5CWLEQ+1WTI+C0B9U", "www16"), "nenga": ("4BGH3G+CRMSF6+33J0+15OK2A", "www15"), "onamae": ("4BECH2+C50BFM+50+2HHVNM", "www12")}
+          "sakura": ("4BGJFW+30YH42+D8Y+62U36", "www15"), "happy": ("4BGOWL+1PBVSY+5MMG+5YZ76", "www13"), "stardomain": ("4BGJFW+5CWLEQ+1WTI+C0B9U", "www16"), "nenga": ("4BGH3G+CRMSF6+33J0+15OK2A", "www15"), "onamae": ("4BECH2+C50BFM+50+2HHVNM", "www12"),
+          "colorfulbox": ("4BGTLP+F5D7J6+42SG+61Z82", "www19")}      # approved 2026-11-25 (free text material); listing ads on the company name and marks are not allowed
 
 YAHOO_GUIDE = "https://shopping.yahoo.co.jp/promotion/campaign/guide/"
 RAKUTEN_EVENT = {"/rakuten/super-sale/": "https://event.rakuten.co.jp/campaign/supersale/", "/rakuten/marathon/": "https://event.rakuten.co.jp/campaign/point-up/marathon/",
@@ -58,9 +59,9 @@ STORES = {
 # The shops of an ASP programme that is already ours (the programme's own landing page).
 ASP = {"dhc": ("vc", "dhc", "https://www.dhc.co.jp/goods/campaign.jsp"), "xdomain": ("a8", "xdomain", ""), "xserver": ("a8", "xserver", ""), "stardomain": ("a8", "stardomain", ""), "nta": ("vc", "nta", "https://www.nta.co.jp/cpn/campaign/black-friday/"),
        "jalan": ("vc", "jalan", "https://www.jalan.net/theme/otoku_10days/"),      # じゃらんnet (VC programme 2021810, approved for this site 2026-11-20); MyLink code read from the VC tool 2026-11-20; only the programme's own domain
-       "expedia": ("vctext", "expedia", ""), "lenovo": ("vctext", "lenovo", ""), "orbis": ("vctext", "orbis", "")}      # expedia: a VC free-text ad (material 2927839, its landing page is the Black Friday page), code read from the VC tool 2026-11-17      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
+       "expedia": ("vctext", "expedia", ""), "his": ("vc", "his", "https://www.his-j.com/"), "colorfulbox": ("a8", "colorfulbox", ""), "lenovo": ("vctext", "lenovo", ""), "orbis": ("vctext", "orbis", "")}      # expedia: a VC free-text ad (material 2927839, its landing page is the Black Friday page), code read from the VC tool 2026-11-17      # stardomain: approved at A8 (code read from the A8 tool 2026-11-15)
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
-ASP_NAME = {"orbis": "オルビス", "happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "jalan": "じゃらんnet", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com", "nenga": "年賀状スクエア"}
+ASP_NAME = {"his": "HIS", "colorfulbox": "ColorfulBox", "orbis": "オルビス", "happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "jalan": "じゃらんnet", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com", "nenga": "年賀状スクエア"}
 MALLS = ("rakuten", "amazon", "yahoo")
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).
@@ -92,10 +93,8 @@ NO_LINK = {
     "gap": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
     "welcia": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
     "tsuruha": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
-    "greenbeans": "A8の提携一覧(A8_PROGRAMS.md)と data/linkage/advertisers.json に提携がない。3つのASPの管理画面での検索は未実施(2026-11-25追加)",
-    "shiseido": "A8の提携一覧(A8_PROGRAMS.md)と data/linkage/advertisers.json に提携がない。3つのASPの管理画面での検索は未実施(2026-11-25追加)",
-    "his": "A8の提携一覧(A8_PROGRAMS.md)と data/linkage/advertisers.json に提携がない。3つのASPの管理画面での検索は未実施(2026-11-25追加)",
-    "colorfulbox": "A8の提携一覧(A8_PROGRAMS.md)と data/linkage/advertisers.json に提携がない。3つのASPの管理画面での検索は未実施(2026-11-25追加)",
+    "greenbeans": "A8.net に申請して審査中(2026-11-25)。承認されるまで広告は置かない",
+    "shiseido": "直営ストアの案件は VC・A8の保存一覧・アクセストレードで見つからない(2026-11-25 窓口が確認)",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
 }
 

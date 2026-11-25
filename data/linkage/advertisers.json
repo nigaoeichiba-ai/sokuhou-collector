@@ -73,6 +73,32 @@
    ]
   },
   {
+   "id": "his",
+   "names": [
+    "HIS",
+    "H.I.S."
+   ],
+   "sites": [
+    "kaidoki"
+   ],
+   "href_has": [
+    "pid=892757627"
+   ]
+  },
+  {
+   "id": "colorfulbox",
+   "names": [
+    "ColorfulBox",
+    "カラフルボックス"
+   ],
+   "sites": [
+    "kaidoki"
+   ],
+   "href_has": [
+    "4BGTLP+F5D7J6"
+   ]
+  },
+  {
    "id": "lenovo",
    "names": [
     "Lenovo"
