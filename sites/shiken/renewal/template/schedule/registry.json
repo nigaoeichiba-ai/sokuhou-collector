@@ -5132,7 +5132,7 @@
       "short": "石川県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-26",
       "sourceUrl": "https://www.pref.ishikawa.lg.jp/kyoiku/gakkou/senbatu/documents/r9housin.pdf",
       "sourceTitle": "令和9年度 石川県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -6629,7 +6629,7 @@
       "short": "滋賀県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-16",
+      "checkedAt": "2026-11-26",
       "sourceUrl": "https://www.pref.shiga.lg.jp/edu/ma09/16947.html",
       "sourceTitle": "令和9年度 滋賀県公立高等学校入学者選抜",
       "sourceStatus": "verified",
@@ -6739,7 +6739,7 @@
       "short": "沖縄県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-17",
+      "checkedAt": "2026-11-26",
       "sourceUrl": "https://www.pref.okinawa.jp/kyoiku/gakko/1008883/1008887/1041122.html",
       "sourceTitle": "令和9年度 沖縄県立高等学校入学者選抜 日程",
       "sourceStatus": "verified",
@@ -9862,7 +9862,7 @@
       "label": "推薦入学 出願 締切",
       "exam": "koko-ishikawa",
       "sourceId": "catalog-koko-ishikawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-ishikawa-6",
@@ -9871,7 +9871,7 @@
       "label": "推薦 面接等",
       "exam": "koko-ishikawa",
       "sourceId": "catalog-koko-ishikawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-ishikawa-7",
@@ -9880,7 +9880,7 @@
       "label": "推薦 選考結果通知",
       "exam": "koko-ishikawa",
       "sourceId": "catalog-koko-ishikawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-ishikawa-1",
@@ -9889,7 +9889,7 @@
       "label": "一般入学 出願 締切",
       "exam": "koko-ishikawa",
       "sourceId": "catalog-koko-ishikawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-ishikawa-2",
@@ -9898,7 +9898,7 @@
       "label": "全日制一般 学力検査等",
       "exam": "koko-ishikawa",
       "sourceId": "catalog-koko-ishikawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-ishikawa-3",
@@ -9907,7 +9907,7 @@
       "label": "全日制一般 学力検査等",
       "exam": "koko-ishikawa",
       "sourceId": "catalog-koko-ishikawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-ishikawa-4",
@@ -9917,7 +9917,17 @@
       "time": "12:00",
       "exam": "koko-ishikawa",
       "sourceId": "catalog-koko-ishikawa",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-ishikawa-8",
+      "date": "2027-03-18",
+      "type": "exam",
+      "label": "一般入学 追検査",
+      "note": "追検査の選抜結果の通知も3月18日です。",
+      "exam": "koko-ishikawa",
+      "sourceId": "catalog-koko-ishikawa",
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-yamanashi-1",
@@ -12720,7 +12730,7 @@
       "time": "12:00",
       "exam": "koko-shiga",
       "sourceId": "catalog-koko-shiga",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-shiga-2",
@@ -12729,7 +12739,7 @@
       "label": "一次募集 学力検査",
       "exam": "koko-shiga",
       "sourceId": "catalog-koko-shiga",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-shiga-3",
@@ -12738,7 +12748,7 @@
       "label": "一次募集 学校独自検査",
       "exam": "koko-shiga",
       "sourceId": "catalog-koko-shiga",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-shiga-4",
@@ -12749,7 +12759,7 @@
       "time": "09:00",
       "exam": "koko-shiga",
       "sourceId": "catalog-koko-shiga",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-shiga-5",
@@ -12760,7 +12770,7 @@
       "time": "12:00",
       "exam": "koko-shiga",
       "sourceId": "catalog-koko-shiga",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-shiga-6",
@@ -12769,7 +12779,7 @@
       "label": "二次募集 検査",
       "exam": "koko-shiga",
       "sourceId": "catalog-koko-shiga",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-shiga-7",
@@ -12780,7 +12790,25 @@
       "time": "09:00",
       "exam": "koko-shiga",
       "sourceId": "catalog-koko-shiga",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-shiga-8",
+      "date": "2027-03-07",
+      "type": "exam",
+      "label": "一次募集 追検査（学力検査）",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-shiga-9",
+      "date": "2027-03-08",
+      "type": "exam",
+      "label": "一次募集 追検査（学校独自検査）",
+      "exam": "koko-shiga",
+      "sourceId": "catalog-koko-shiga",
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-tokushima-1",
@@ -12857,7 +12885,7 @@
       "note": "登録は1月18日(月)から。出願書類の提出は、別に2月1日・2日です。",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-17"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-okinawa-1",
@@ -12867,7 +12895,7 @@
       "note": "出願書類の受付は、2月1日(月)が9時から16時、2月2日(火)が9時から14時までです。郵送も2日14時までに必着です。Web出願システムでの志願情報の登録は、1月28日(木)正午までに済ませます。志願変更の申出は、2月5日(金)・8日(月)です。",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-17",
+      "checkedAt": "2026-11-26",
       "time": "14:00"
     },
     {
@@ -12877,7 +12905,7 @@
       "label": "一般選抜 学力検査(1日目)",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-17"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-okinawa-3",
@@ -12887,7 +12915,7 @@
       "note": "面接等も、この期間に行われます。",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-17"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-okinawa-4",
@@ -12896,7 +12924,7 @@
       "label": "特色選抜・一般選抜 合格発表",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-17"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-okinawa-5",
@@ -12906,7 +12934,7 @@
       "note": "3月18日〜19日。受付は、18日が9時から16時、19日が9時から14時までです。郵送も19日14時までに必着です。取下げ・再出願は、3月23日(火)の9時から14時です。",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-17",
+      "checkedAt": "2026-11-26",
       "time": "14:00"
     },
     {
@@ -12916,7 +12944,25 @@
       "label": "第2次募集 合格発表",
       "exam": "koko-okinawa",
       "sourceId": "catalog-koko-okinawa",
-      "checkedAt": "2026-11-17"
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-okinawa-8",
+      "date": "2027-03-09",
+      "type": "exam",
+      "label": "一般選抜 追検査",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-okinawa-9",
+      "date": "2027-03-25",
+      "type": "exam",
+      "label": "第2次募集 面接",
+      "exam": "koko-okinawa",
+      "sourceId": "catalog-koko-okinawa",
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-fukui-1",
