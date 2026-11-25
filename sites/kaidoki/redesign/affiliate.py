@@ -48,6 +48,8 @@ STORES = {
     "yamada": [("rakuten", "https://www.rakuten.co.jp/yamada-denki/"), ("yahoo", "https://store.shopping.yahoo.co.jp/yamada-denki/")],   # ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店(2026-11-12 実際に開いて確認)
     "yogibo": [("rakuten", "https://www.rakuten.co.jp/yogibo/")],
     "zoff": [("rakuten", "https://www.rakuten.co.jp/zoff/")],
+    "kojima": [("rakuten", "https://www.rakuten.co.jp/r-kojima/")],
+    "toysrus": [("rakuten", "https://www.rakuten.co.jp/toysrus/")],
     "zozo": [("yahoo","https://store.shopping.yahoo.co.jp/zozo/")],
     "sharp": [("amazon_s", "シャープ")],
     "google": [("amazon_s", "Google Pixel")],
@@ -90,6 +92,10 @@ NO_LINK = {
     "gap": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
     "welcia": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
     "tsuruha": "A8の提携一覧(A8_PROGRAMS.md)に載っていない。3つのASPの管理画面での検索と、モール公式店の確認(Gap・ウエルシアは楽天の店のURLが404)は不足(2026-11-25追加)",
+    "greenbeans": "A8の提携一覧(A8_PROGRAMS.md)と data/linkage/advertisers.json に提携がない。3つのASPの管理画面での検索は未実施(2026-11-25追加)",
+    "shiseido": "A8の提携一覧(A8_PROGRAMS.md)と data/linkage/advertisers.json に提携がない。3つのASPの管理画面での検索は未実施(2026-11-25追加)",
+    "his": "A8の提携一覧(A8_PROGRAMS.md)と data/linkage/advertisers.json に提携がない。3つのASPの管理画面での検索は未実施(2026-11-25追加)",
+    "colorfulbox": "A8の提携一覧(A8_PROGRAMS.md)と data/linkage/advertisers.json に提携がない。3つのASPの管理画面での検索は未実施(2026-11-25追加)",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
 }
 
@@ -162,7 +168,7 @@ def links_for(it: dict) -> list[dict]:
     return out
 
 
-STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
+STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
 STORE_LABEL = {"yamada": "ヤマダデンキ"}      # the mall stores are the company's (ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店), not the web shop the calendar entry names
 ENT_NAME: dict[str, str] = {}      # filled by schedule.py (id -> name) so the labels name the shop
 
