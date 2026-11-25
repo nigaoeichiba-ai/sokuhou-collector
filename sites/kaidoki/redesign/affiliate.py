@@ -52,6 +52,10 @@ STORES = {
     "kojima": [("rakuten", "https://www.rakuten.co.jp/r-kojima/")],
     "toysrus": [("rakuten", "https://www.rakuten.co.jp/toysrus/")],
     "jins": [("rakuten", "https://www.rakuten.co.jp/jins/")],
+    "dospara": [("rakuten", "https://www.rakuten.co.jp/dospara-r/")],
+    "mouse": [("rakuten", "https://www.rakuten.co.jp/mousecomputer/")],
+    "anker": [("rakuten", "https://www.rakuten.co.jp/anker/")],
+    "ksdenki": [("rakuten", "https://www.rakuten.co.jp/ksdenki/")],
     "zozo": [("yahoo","https://store.shopping.yahoo.co.jp/zozo/")],
     "sharp": [("amazon_s", "シャープ")],
     "google": [("amazon_s", "Google Pixel")],
@@ -104,6 +108,7 @@ NO_LINK = {
     "mitsuioutlet": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
     "lalaport": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
     "premiumoutlets": "3つのASPの調査表(2026-11-12)とA8の提携一覧に載っていない(2026-11-26追加)。ASPの管理画面での検索は未実施。楽天市場の公式店は確認できていない",
+    "hp": "A8の検索で該当がない(2026-11-12の調査表)。楽天市場の公式店は確認していない",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
 }
 
@@ -176,7 +181,7 @@ def links_for(it: dict) -> list[dict]:
     return out
 
 
-STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)", "c-jins-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
+STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)", "c-jins-bf": "(日程は別に確認)", "c-dospara-bf": "(日程は別に確認)", "c-mouse-bf": "(日程は別に確認)", "c-anker-early": "(日程は別に確認)", "c-ks-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
 STORE_LABEL = {"yamada": "ヤマダデンキ"}      # the mall stores are the company's (ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店), not the web shop the calendar entry names
 ENT_NAME: dict[str, str] = {}      # filled by schedule.py (id -> name) so the labels name the shop
 

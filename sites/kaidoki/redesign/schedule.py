@@ -43,7 +43,8 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "greenbeans": ("グリーンビーンズ", "緑", "ec"), "shiseido": ("資生堂オンラインストア", "資", "brand"), "kojima": ("コジマ", "こ", "ec"), "toysrus": ("トイザらス", "ト", "ec"),
        "his": ("HIS", "H", "web"), "colorfulbox": ("ColorfulBox", "カ", "web"),
        "omsystem": ("OM SYSTEM", "O", "brand"), "jins": ("JINS", "J", "brand"), "owndays": ("OWNDAYS", "眼", "brand"), "mistore": ("三越伊勢丹オンラインストア", "三", "ec"), "takashimaya": ("高島屋オンラインストア", "高", "ec"), "akachan": ("アカチャンホンポ", "赤", "ec"),
-       "mitsuioutlet": ("三井アウトレットパーク", "井", "store"), "lalaport": ("ららぽーと", "ら", "store"), "premiumoutlets": ("プレミアム・アウトレット", "プ", "store"), "muumuu": ("ムームードメイン", "ム", "web")}
+       "mitsuioutlet": ("三井アウトレットパーク", "井", "store"), "lalaport": ("ららぽーと", "ら", "store"), "premiumoutlets": ("プレミアム・アウトレット", "プ", "store"), "muumuu": ("ムームードメイン", "ム", "web"),
+       "dospara": ("ドスパラ", "ス", "ec"), "mouse": ("マウスコンピューター", "マ", "brand"), "hp": ("日本HP", "H", "brand"), "anker": ("Anker", "ア", "brand"), "ksdenki": ("ケーズデンキオンラインショップ", "ケ", "ec")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
@@ -278,6 +279,14 @@ EXTRA_CONFIRMED += [
     C("c-lalaport-bf", "lalaport", "ららぽーと ブラックフライデー", "2026-11-13", "2026-11-29", _span("2026-11-13", "2026-11-29"), "", src=PRESS2, checked="2026-11-26", note="施設によって内容が違います。"),
     C("c-premium-bf", "premiumoutlets", "プレミアム・アウトレット ブラックフライデー", "2026-11-20", "2026-11-29", _span("2026-11-20", "2026-11-29"), "", src=PRESS2, checked="2026-11-26", note="全国10施設の企画です。"),
     C("c-muumuu-kaigyo", "muumuu", "ムームードメイン 開業・会社設立応援キャンペーン(終了日)", "2026-12-17", "2026-12-17", f"{jpd('2026-12-17')}まで(開始日は確認していません)", "", src=SRC_PAGE, checked="2026-11-26", note="対象と条件は、ムームードメインのキャンペーンの表示にあります。"),
+]
+
+EXTRA_CONFIRMED += [
+    C("c-dospara-bf", "dospara", "ドスパラ ブラックフライデー", "2026-11-13", "2026-12-04", _span("2026-11-13", "2026-12-04", "11:00", "10:59"), "", src=PRESS2, checked="2026-11-26", note="通販サイトの期間です。実店舗は12月3日(木)の閉店までです。下のリンクは楽天市場店で、この日程が当てはまるかは発表にありません。"),
+    C("c-mouse-bf", "mouse", "マウスコンピューター ブラックフライデーセール", "2026-11-18", "2026-12-09", _span("2026-11-18", "2026-12-09", "11:00", "10:59"), "", src=PRESS2, checked="2026-11-26", note="公式の通販サイトの企画です。下のリンクは楽天市場店で、この日程が当てはまるかは発表にありません。"),
+    C("c-hp-bf", "hp", "日本HP 個人向けパソコン ブラックフライデーセール", "2026-11-16", "2026-12-14", _span("2026-11-16", "2026-12-14", "13:00", "12:59"), "", src=PRESS2, checked="2026-11-26", note="個人向けの期間です。法人向けは、期間が違います。"),
+    C("c-anker-early", "anker", "Anker ブラックフライデー先行セール", "2026-11-20", "2026-11-26", _span("2026-11-20", "2026-11-26", "11:00", "23:59"), "", src=SRC_PAGE, checked="2026-11-26", note="Anker Japanの公式オンラインストアと直営店の企画です。下のリンクは楽天市場店で、この日程が当てはまるかは発表にありません。"),
+    C("c-ks-bf", "ksdenki", "ケーズデンキオンラインショップ ブラックフライデーセール", "2026-11-20", "2026-11-30", _span("2026-11-20", "2026-11-30"), "", src=PRESS2, checked="2026-11-26", note="下のリンクは楽天市場店で、この日程が当てはまるかは発表にありません。"),
 ]
 
 EXPECTED = [
