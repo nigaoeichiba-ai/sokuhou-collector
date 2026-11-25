@@ -1021,7 +1021,7 @@ def theme_page(d: dict, cfg: dict, preview: bool, t: dict) -> str:
 <p style="margin-top:40px">{amazon}</p>
 {f'<section class="related" style="margin-top:40px"><h2><span class="scribble">ほかの{esc(group["name"])}テーマ</span></h2><ul class="plain cols2 chips">{other}</ul></section>' if other else ""}
 {theme_reads(c, t)}"""
-    return page(cfg, preview, path=f"/theme/{t['slug']}/", title=f"{t['title']} | {cfg['site_name']}", description=t["lead"][:110], body=body,
+    return page(cfg, preview, path=f"/theme/{t['slug']}/", title=f"{t['title']} | {cfg['site_name']}", description=meta_cut(t["lead"]), body=body,
                 og_image=og_for(f"theme/{t['slug']}"))
 
 
@@ -1312,6 +1312,17 @@ def article_picks(cfg: dict, d: dict, a: dict, n: int = 3) -> str:
     return ""
 
 
+def meta_cut(text: str, limit: int = 120) -> str:
+    """The meta description: whole sentences of the lead up to `limit` characters, so the search result does not stop in the middle of a sentence.
+    Where the leading sentences are too short (under 50 characters) or the first one is already too long, the old plain cut is used."""
+    out = ""
+    for s in text.split("。")[:-1]:
+        if len(out) + len(s) + 1 > limit:
+            break
+        out += s + "。"
+    return out if len(out) >= 50 else text[:110]
+
+
 def article_page(d: dict, cfg: dict, preview: bool, a: dict) -> str:
     c = d["c"]
     secs = "".join(f'<section class="g-sec"><h2><span class="scribble">{esc(s["h"])}</span></h2><p>{esc(s["body"])}</p></section>' for s in a["sections"])
@@ -1337,7 +1348,7 @@ def article_page(d: dict, cfg: dict, preview: bool, a: dict) -> str:
 {share_bar(cfg, f"/read/{a['slug']}/", a["title"], "この記事をだれかに送る")}
 {f'<section class="related" style="margin-top:44px"><h2><span class="scribble">贈り物を探してみる</span></h2><ul class="plain cols2 chips">{rel}</ul></section>' if rel else ""}
 <script type="application/ld+json">{ld}</script><script type="application/ld+json">{faq_ld}</script>"""
-    return page(cfg, preview, path=f"/read/{a['slug']}/", title=f"{a['title']} | {cfg['site_name']}", description=a["lead"][:110], body=body, og_image=og_for(f"read/{a['slug']}"))
+    return page(cfg, preview, path=f"/read/{a['slug']}/", title=f"{a['title']} | {cfg['site_name']}", description=a.get("seo_description") or meta_cut(a["lead"]), body=body, og_image=og_for(f"read/{a['slug']}"))
 
 
 def read_hub_page(d: dict, cfg: dict, preview: bool) -> str:

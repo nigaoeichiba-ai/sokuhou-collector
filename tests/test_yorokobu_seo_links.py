@@ -21,6 +21,19 @@ class TitlesTest(unittest.TestCase):
         self.assertTrue(a["title"].startswith("移動が多い人へのプレゼント"))
 
 
+class DescriptionTest(unittest.TestCase):
+    def test_the_description_ends_with_a_whole_sentence(self):
+        lead = "あ" * 59 + "。" + "い" * 39 + "。" + "う" * 60 + "。"
+        self.assertEqual(build.meta_cut(lead), lead[:100])                 # 60 + 40 characters; the third sentence would pass 120, so it is left out
+        self.assertEqual(build.meta_cut("短い。" + "え" * 150 + "。"), ("短い。" + "え" * 150)[:110])     # too short a start: the old cut
+
+    def test_the_borrowed_item_article_answers_the_amount_in_its_description(self):
+        a = next(x for x in content.load()["articles"] if x["slug"] == "borrowed-item-return-thanks")
+        self.assertIn("目安", a["seo_description"])
+        self.assertTrue(a["seo_description"].endswith("。"))
+        self.assertLessEqual(len(a["seo_description"]), 120)
+
+
 class InternalLinksTest(unittest.TestCase):
     c = content.load()
 
