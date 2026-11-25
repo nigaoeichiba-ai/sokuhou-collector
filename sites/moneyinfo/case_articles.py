@@ -241,14 +241,48 @@ def at_box(rk, lead, text):
             f'{escape(text)}<img src="https://h.accesstrade.net/sp/rr?rk={rk}" width="1" height="1" border="0" alt=""></a></p></aside>')
 
 
+def a8_link(mat, server, text):
+    """A8.net as issued (the link words and the 1x1 picture are not changed); only rel and target are added."""
+    return (f'<a href="https://px.a8.net/svt/ejp?a8mat={mat}" rel="nofollow sponsored noopener" target="_blank">{escape(text)}</a>'
+            f'<img border="0" width="1" height="1" src="https://{server}.a8.net/0.gif?a8mat={mat}" alt="">')
+
+
+def yahoo_link(text):
+    """ValueCommerce free text (Yahoo! Shopping): the words may be ours; the address and the measurement picture are as issued."""
+    ids = "sid=3788870&pid=892757587"
+    return (f'<a href="//ck.jp.ap.valuecommerce.com/servlet/referral?{ids}" rel="nofollow sponsored noopener" target="_blank">'
+            f'<img src="//ad.jp.ap.valuecommerce.com/servlet/gifbanner?{ids}" height="1" width="1" border="0" alt="">{escape(text)}</a>')
+
+
+# {slug: ((heading of the section the box closes, reason sentence, (link html, ...)), ...)}
+LINK_ADS = {
+    "case-year-end-expenses": (
+        ("取得価額で経費への入れ方を確認する",
+         "取得価額と使い始めた日は、帳簿に残しておきます。会計ソフトで記帳する場合は、料金と対応する申告の区分を申し込みの前に比べてください。",
+         (a8_link("4BGSTF+247PXE+4JGQ+BZ8OY", "www15", "はじめてでも安心のサポート体制 マネーフォワード クラウド確定申告"),
+          a8_link("4BGSTF+201OOY+35XE+5YJRM", "www14", "やよいの青色申告オンライン"))),
+        ("仕事で使う日から納品と注文を逆算する",
+         "注文する前に、在庫と届け先を入れて到着予定日を確認します。年内に使い始められる日に届くかどうかを基準に選んでください。",
+         (yahoo_link("仕事用の備品をYahoo!ショッピングで探す"),)),
+    ),
+}
+
+
+def link_box(lead, links):
+    items = "".join(f"<li>{link}</li>" for link in links)
+    return f'<aside class="ad-box" aria-label="広告"><p class="ad-label">PR（広告）</p><p>{escape(lead)}</p><ul>{items}</ul></aside>'
+
+
 def with_ads(slug, body):
     """Close the designed section with its advertisement box; a missing section stops the build."""
-    for heading, rk, lead, text in AT_ADS.get(slug, ()):
+    boxes = [(heading, link_box(lead, links)) for heading, lead, links in LINK_ADS.get(slug, ())]
+    boxes += [(heading, at_box(rk, lead, text)) for heading, rk, lead, text in AT_ADS.get(slug, ())]
+    for heading, box in boxes:
         start = body.find(f"<h2>{heading}")
         end = body.find("</section>", start)
         if start < 0 or end < 0:
             raise ValueError(f"{slug}: no section for the advertisement: {heading}")
-        body = body[:end] + at_box(rk, lead, text) + body[end:]
+        body = body[:end] + box + body[end:]
     return body
 
 

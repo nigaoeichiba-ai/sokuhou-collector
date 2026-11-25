@@ -37,12 +37,15 @@ AD_PREFIX = "https://ck.jp.ap.valuecommerce.com/servlet/referral?sid=3788870&pid
 AT_PREFIX = "https://h.accesstrade.net/sp/cc?rk="
 
 
+A8_PREFIX = "https://px.a8.net/svt/ejp?a8mat="
+
+
 def external_links(folder: Path) -> list[str]:
     """Outside links that are not an approved advertisement of this site."""
     found = []
     for page in folder.rglob("*.html"):
         for href in re.findall(r'<a [^>]*href="(https?://[^"]+)"', page.read_text(encoding="utf-8")):
-            if not href.startswith(BASE) and not href.startswith((AD_PREFIX, AT_PREFIX)):
+            if not href.startswith(BASE) and not href.startswith((AD_PREFIX, AT_PREFIX, A8_PREFIX)):
                 found.append(f"{page.name}: {href}")
     return found
 
@@ -154,6 +157,21 @@ class MoneyinfoBuildTest(unittest.TestCase):
             self.assertNotIn(banned, page)
         self.assertIn('href="case-year-end-expenses.html"', (self.rel / "index.html").read_text(encoding="utf-8"))
         self.assertIn('href="case-year-end-expenses.html"', (self.rel / "cases.html").read_text(encoding="utf-8"))
+
+    def test_the_year_end_page_carries_the_three_approved_shop_and_software_links_with_pr_and_rel(self):
+        page = (self.rel / "case-year-end-expenses.html").read_text(encoding="utf-8")
+        for href in ("https://px.a8.net/svt/ejp?a8mat=4BGSTF+247PXE+4JGQ+BZ8OY", "https://px.a8.net/svt/ejp?a8mat=4BGSTF+201OOY+35XE+5YJRM",
+                     "//ck.jp.ap.valuecommerce.com/servlet/referral?sid=3788870&pid=892757587"):
+            tags = re.findall(r'<a href="' + re.escape(href) + r'"[^>]*>', page)
+            self.assertEqual(len(tags), 1, href)
+            self.assertIn('rel="nofollow sponsored noopener"', tags[0])
+            self.assertIn('target="_blank"', tags[0])
+        for pixel in ("www15.a8.net/0.gif?a8mat=4BGSTF+247PXE+4JGQ+BZ8OY", "www14.a8.net/0.gif?a8mat=4BGSTF+201OOY+35XE+5YJRM",
+                      "ad.jp.ap.valuecommerce.com/servlet/gifbanner?sid=3788870&pid=892757587"):
+            self.assertIn(pixel, page)
+        self.assertEqual(page.count("PR（広告）"), 3)
+        others = [p.name for p in self.rel.rglob("*.html") if p.name != "case-year-end-expenses.html" and "a8mat=" in p.read_text(encoding="utf-8")]
+        self.assertEqual(others, [])
 
     def test_the_outside_link_check_finds_a_planted_link(self):
         copy = self.tmp / "planted"
