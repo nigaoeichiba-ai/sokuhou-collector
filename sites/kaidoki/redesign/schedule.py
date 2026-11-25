@@ -646,8 +646,8 @@ _CELL = re.compile(r"(<t[hd]\b[^>]*>)(.*?)(</t[hd]>)", flags=re.S)
 
 def row_links(name: str, items: list[dict]) -> list[dict]:
     """The links of a table row by the words of its first cell: a mall's name, or an entry's title (alone or after its mall's name).  Anything else has none."""
-    if name in TABLE_MALLS:
-        m = TABLE_MALLS[name]
+    m = "yahoo" if re.match(r"\d+月超PayPay祭", name) else TABLE_MALLS.get(name)      # a coming 超PayPay祭 written month first (the past years' rows are not matched)
+    if m:
         return AFF.links_for({"mall": m, "id": m, "href": ""})
     for it in items:
         short = MALLS[it["mall"]][0].replace("市場", "") if it["mall"] in MALLS else ENT[it["mall"]][0]

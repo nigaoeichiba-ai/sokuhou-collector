@@ -306,6 +306,10 @@ class TableAndLeadLinkTest(unittest.TestCase):
         self.assertIn("aff-disclose", filled)
         self.assertEqual(len(SPONSORED.findall(filled)), 1)
 
+    def test_a_coming_paypay_row_written_month_first_is_linked(self):
+        self.assertTrue(S.row_links("12月超PayPay祭(最大21%)", []))
+        self.assertEqual(S.row_links("超PayPay祭 2025年3月", []), [])
+
     def test_the_genre_leads_that_name_a_partner_link_it(self):
         for path, word in (("daily/index.html", "LOHACOのページを見る"), ("food/index.html", "LOHACOのページを見る"), ("fashion/index.html", "DHCファッションのセールのページを見る")):
             self.assertRegex(self.pages[path], r'rel="nofollow sponsored noopener">[^<]*' + word, path)
