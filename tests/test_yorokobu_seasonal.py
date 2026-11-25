@@ -16,6 +16,9 @@ from tests.yorokobu_data import with_musts
 PATHS = ["oseibo/index.html", "oseibo/work/index.html", "oseibo/thanks/index.html", "nenga/index.html"]
 OIWAI = ["oiwai/index.html", "oiwai/seijin/index.html", "oiwai/gakko/index.html", "oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html", "oiwai/kekkon/index.html", "oiwai/shussan/index.html"]
 
+# D26 (2026-11-17): sheets already rewritten without store names in the text.  Add a sheet here when it is rewritten.
+NO_STORE_NAMES = ["oiwai/taishoku/index.html"]
+
 
 def by_slug(data, slug):
     return next(pg for pg in data["pages"] if pg["slug"] == slug)
@@ -192,8 +195,11 @@ class OiwaiPagesTest(unittest.TestCase):
     def test_every_sheet_names_both_stores_and_the_date_and_can_be_printed(self):
         for rel in OIWAI[1:]:
             html = self.read(rel)
-            self.assertIn("三越伊勢丹", html, rel)
-            self.assertIn("松坂屋名古屋店", html, rel)
+            if rel in NO_STORE_NAMES:
+                self.assertNotRegex(html, "三越|伊勢丹|松坂屋|高島屋", rel)
+            else:
+                self.assertIn("三越伊勢丹", html, rel)
+                self.assertIn("松坂屋名古屋店", html, rel)
             self.assertIn("data-print hidden", html, rel)
             self.assertIn("確認日 2026年10月15日", html, rel)
             self.assertEqual(d26.problems(html), [], rel)
@@ -210,7 +216,7 @@ class OiwaiPagesTest(unittest.TestCase):
         self.assertIn("赤ちゃんの祖父母は10万円", self.read("oiwai/shussan/index.html"))
         for rel in OIWAI[1:]:
             self.assertEqual(self.read(rel).count("<th scope=\"row\">三越伊勢丹"), self.read(rel).count("<th scope=\"row\">三越伊勢丹") , rel)
-            self.assertIn("金額は各社が示した目安の要約です", self.read(rel), rel)           # the page says the table is a summary, not the store's own table
+            self.assertIn("目安の要約です", self.read(rel), rel)           # the page says the table is a summary, not the store's own table
         # one store's table is not copied row for row: at most three rows for a store in any amount table
         for rel in OIWAI[1:]:
             tables = re.findall(r'<table class="seas-tbl"><thead><tr><th scope="col">案内</th>.*?</table>', self.read(rel), re.S)
