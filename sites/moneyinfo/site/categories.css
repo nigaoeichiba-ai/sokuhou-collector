@@ -191,3 +191,4 @@
 .budget-list .budget-summary { background: #f7efd9; font-weight: 700; }
 .budget-amount { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .budget-note { grid-column: 1 / -1; margin-top: .25rem; font-size: .91em; font-weight: 400; }
+.year-table{overflow-x:auto;margin:14px 0}.year-table table{border-collapse:collapse;min-width:560px;width:100%;font-size:14px;line-height:1.7}.year-table th,.year-table td{border:1px solid #dfc8a4;padding:9px 11px;vertical-align:top;text-align:left}.year-table thead th{background:#f7f0e2}.year-table tbody th{background:#fffaf0;font-weight:700;min-width:8.5em}

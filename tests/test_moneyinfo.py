@@ -131,8 +131,11 @@ class MoneyinfoBuildTest(unittest.TestCase):
         found = []
         for p in self.rel.rglob("*.html"):
             found += [(p.name, m) for m in re.findall(r'<a [^>]*href="' + re.escape(AT_PREFIX) + r'[^"]*"[^>]*>.*?</a>', p.read_text(encoding="utf-8"))]
-        self.assertEqual([n for n, _ in found], ["case-first-living.html"] * 2, found)
-        for (_, tag), rk in zip(found, ("0100q8vc00p3as", "0100q7ix00p3as")):
+        self.assertEqual(sorted(n for n, _ in found), ["case-first-living.html"] * 2 + ["case-year-end-expenses.html"], found)
+        expected = {"0100q8vc00p3as": "case-first-living.html", "0100q7ix00p3as": "case-first-living.html", "0100q8lb00p3as": "case-year-end-expenses.html"}
+        for name, tag in found:
+            rk = re.search(r"rk=([0-9a-z]+)", tag)[1]
+            self.assertEqual(expected.pop(rk), name)
             self.assertIn(f'href="{AT_PREFIX}{rk}"', tag)
             self.assertIn(f'<img src="https://h.accesstrade.net/sp/rr?rk={rk}" width="1" height="1" border="0" alt="">', tag)
             for needle in ('rel="nofollow sponsored noopener"', 'target="_blank"', 'referrerpolicy="no-referrer-when-downgrade"'):
@@ -141,6 +144,16 @@ class MoneyinfoBuildTest(unittest.TestCase):
             self.assertNotIn("http", words)
             self.assertNotIn("公式", words)            # the advertiser forbids looking official
         self.assertEqual(page.count("PR（広告）"), 2)
+
+    def test_the_year_end_page_has_the_table_the_schedule_the_boundaries_and_no_editing_mark_or_forbidden_claim(self):
+        page = (self.rel / "case-year-end-expenses.html").read_text(encoding="utf-8")
+        for needle in ('<th scope="col">取得価額</th>', "10万円未満", "10万円以上20万円未満", "20万円以上40万円未満", "40万円以上",
+                       "2026年4月1日", "300万円", "timeline-year-end-expenses.webp", "hero-year-end-expenses.webp", "12月21日", "2026年11月25日"):
+            self.assertIn(needle, page)
+        for banned in ("〔アフィリ", "国税庁", "丸投げ", "全自動", "必ず節税", "承認するだけ"):
+            self.assertNotIn(banned, page)
+        self.assertIn('href="case-year-end-expenses.html"', (self.rel / "index.html").read_text(encoding="utf-8"))
+        self.assertIn('href="case-year-end-expenses.html"', (self.rel / "cases.html").read_text(encoding="utf-8"))
 
     def test_the_outside_link_check_finds_a_planted_link(self):
         copy = self.tmp / "planted"

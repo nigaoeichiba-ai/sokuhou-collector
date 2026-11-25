@@ -102,7 +102,8 @@ CASES = (
 
 
 from consult_articles import CONSULT  # noqa: E402  the consultation-type articles (consult/*.md), newest first
-CASES = (*CONSULT, *CASES)
+import year_end_article  # noqa: E402
+CASES = (year_end_article.build(), *CONSULT, *CASES)
 
 
 AVERAGE = {
@@ -219,6 +220,12 @@ def ad_html(slug):
 # AccessTrade (media 1170676). The issued href, rk and measurement image are never changed (the ASP forbids editing the code).
 # {slug: ((heading of the section the box closes, rk, reason sentence, link words), ...)}
 AT_ADS = {
+    "case-year-end-expenses": (
+        # CFOne (approved 2026-11-25). Forbidden by the advertiser: anything that reads as "leave it all to us" or a promised saving.
+        ("年内に買う物を絞る", "0100q8lb00p3as",
+         "申告を自分で進めるときの相談先の一つに、会計事務所の無料相談があります。対象は、法人なら役員のみで年商1億円未満・国内取引が中心の場合、個人事業主なら所得が事業・給与・退職のみの場合です。",
+         "申告の無料相談の対象と内容を確認する"),
+    ),
     "case-first-living": (
         ("これから必要になるお金と時期", "0100q8vc00p3as",
          "引っ越しの費用は、荷物の量と時期で変わります。物件が決まったら、早めに手配の方法と料金を確認してください。", "引っ越しポルタで引っ越しの手配を調べる"),

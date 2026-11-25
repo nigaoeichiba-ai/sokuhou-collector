@@ -14,7 +14,7 @@ REVIEWS = {
     "article": (30, ("stamp", "brokerage")),
     "travel-cost-average": (180, ("tourism",)),
     # the consultation type (consult/*.md): the sources are kept in the editors' notes, not in the repository
-    "case-first-living": (180, ()), "case-childbirth-leave": (180, ()), "case-parent-care": (180, ()), "case-deposit-types": (90, ()),
+    "case-first-living": (180, ()), "case-childbirth-leave": (180, ()), "case-parent-care": (180, ()), "case-deposit-types": (90, ()), "case-year-end-expenses": (40, ()),
 }
 
 if __name__ == "__main__":
