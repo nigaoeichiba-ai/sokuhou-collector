@@ -97,7 +97,7 @@ class PageTest(unittest.TestCase):
         hero = self.imgs(html, r'<div class="feat-photo.*?</a>')[0]
         self.assertRegex(hero, r'^<img src="[^"]+" alt="[^"]*">$')                    # the shop's picture: src and alt only
         mg = self.imgs(html, r'<div class="mg[ "].*?</div>')
-        self.assertEqual(len(mg), 4)
+        self.assertEqual(len(mg), len(f["manga"]["panels"]))
         self.assertTrue(all('loading="lazy"' in i and 'decoding="async"' in i for i in mg))
 
     def test_every_picture_of_the_sites_own_says_its_size_so_that_nothing_jumps(self):

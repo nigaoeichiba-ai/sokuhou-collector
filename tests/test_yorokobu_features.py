@@ -207,7 +207,7 @@ class PageTest(unittest.TestCase):
             html = self.read(f"pick/{f['slug']}/index.html")
             for needle in ("30秒でわかる結論", "合う相手と避けたい相手", "仕様を一つずつ読む", "良い点と気になる点", "渡し方", "想定の場面", "代わりの候補", "よくある質問", "この記事について"):
                 self.assertIn(needle, html, f"{f['slug']}: {needle}")
-            self.assertEqual(html.count('class="mg-cell"'), 4)
+            self.assertEqual(html.count('class="mg-cell"'), len(f["manga"]["panels"]))    # 1-4 pictures (owner 2026-10-13); every one the feature has is on the page
             self.assertIn("実際の贈り物の感想や購入者の声ではありません", html)               # the scene says it is made up
             self.assertIn('class="pr-chip"', html)
             self.assertIn("hb.afl.rakuten.co.jp/hgc/AFF.ID/?pc=", html)
