@@ -1180,7 +1180,7 @@ jobs:
 
         CATALOG_PY
         cat > "$RUNNER_TEMP/catalog-code/scheduled_runner.py" <<'CATALOG_PY'
-        """Six-hour private refresh. Never writes a website or the source site's data."""
+        """Daily private refresh. Never writes a website or the source site's data."""
         from pathlib import Path
         from datetime import datetime, timezone
         from urllib.parse import urlsplit
@@ -1206,14 +1206,14 @@ jobs:
 
 
         def still_fresh(result):
-            """Leave six hours of validity after completing a large refresh cycle."""
+            """Retain completed partial observations for one day; display allows two hours of scheduler delay."""
             if not isinstance(result,dict):return True
             dates=[product.get('checked_at') for product in result.get('products',{}).values()]
             if not dates and result.get('actual_calls',0):dates=[result.get('finished_at') or result.get('updated_at')]
             for value in dates:
                 date=stamp(value)
                 if not date or date>datetime.now(timezone.utc):raise ValueError('invalid_saved_fact_date')
-                if (datetime.now(timezone.utc)-date).total_seconds()>18*3600:return False
+                if (datetime.now(timezone.utc)-date).total_seconds()>=24*3600:return False
             return True
 
 
@@ -1324,7 +1324,7 @@ jobs:
 
         def validate_config(config):
             if (not isinstance(config,dict) or set(config)!={'version','enabled','request_id','plan_sha256','interval_hours','website_sync_enabled'}
-                    or config['version']!=1 or type(config['enabled']) is not bool or config['interval_hours']!=6
+                    or config['version']!=1 or type(config['enabled']) is not bool or config['interval_hours']!=24
                     or config['website_sync_enabled'] is not False
                     or not re.fullmatch('[0-9a-f]{32}',str(config['request_id']))
                     or not re.fullmatch('[0-9a-f]{64}',str(config['plan_sha256']))):
@@ -1345,7 +1345,7 @@ jobs:
             if latest and latest.get('plan_sha256')==config['plan_sha256'] and latest.get('status')=='complete':
                 date=stamp(latest.get('finished_at'))
                 if not date or date>datetime.now(timezone.utc):raise ValueError('invalid_schedule_date')
-                if not force and (datetime.now(timezone.utc)-date).total_seconds()<6*3600:
+                if not force and (datetime.now(timezone.utc)-date).total_seconds()<24*3600:
                     return {'status':'already_fresh','publication':False}
             checkpoint=channel.schedule_read('checkpoint')
             if checkpoint and checkpoint.get('plan_sha256')==config['plan_sha256'] and checkpoint.get('status')=='paused_source_busy_or_unverified':
@@ -1408,7 +1408,7 @@ jobs:
             for url in list(completed):
                 observed=[stamp(quotes[o['id']].get('checked_at')) for o in grouped[url]]
                 if any(not d or d>datetime.now(timezone.utc) for d in observed):raise ValueError('invalid_saved_SKU_date')
-                if any((datetime.now(timezone.utc)-d).total_seconds()>18*3600 for d in observed):
+                if any((datetime.now(timezone.utc)-d).total_seconds()>=24*3600 for d in observed):
                     completed.remove(url)
                     for o in grouped[url]:quotes.pop(o['id'],None)
             # Existing facts are only fallback facts, retaining their original dates.
