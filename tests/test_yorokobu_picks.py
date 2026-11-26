@@ -36,6 +36,18 @@ def live_items(d: dict, sold_out: tuple[str, ...] = ()) -> dict:
     return out
 
 
+def h1_text(html: str) -> str:
+    return re.sub(r"<[^>]+>", "", re.search(r"<h1[^>]*>(.*?)</h1>", html, re.S).group(1))
+
+
+def date_stays_whole(html: str) -> bool:
+    """True when every date in the h1 sits inside one no-wrap span."""
+    inner = re.search(r"<h1[^>]*>(.*?)</h1>", html, re.S).group(1)
+    kept = " ".join(re.findall(r'<span class="nb">([^<]*)</span>', inner))
+    dates = re.findall(r"(?:\d{4}年)?\d{1,2}月\d{1,2}日", h1_text(html))
+    return bool(dates) and all(x in kept for x in dates)
+
+
 def render(tmp: Path, days: list[dict], daily_items: dict | None, name: str = "site") -> Path:
     items = json.loads((FIX / "items.json").read_text(encoding="utf-8"))
     if daily_items is not None:
@@ -171,10 +183,20 @@ class PagesTest(unittest.TestCase):
 
     def test_the_newest_day_says_today_and_the_older_one_its_date_with_links_between_them(self):
         new, old = self.read("picks/2026-10-11/index.html"), self.read("picks/2026-10-10/index.html")
-        self.assertIn("<h1>今日のおすすめギフト20選 10月11日</h1>", new)
-        self.assertIn("<h1>2026年10月10日のおすすめギフト20選</h1>", old)
+        self.assertEqual(h1_text(new), "今日のおすすめギフト20選 10月11日")
+        self.assertEqual(h1_text(old), "2026年10月10日のおすすめギフト20選")
         self.assertIn('href="/picks/2026-10-10/"', new)
         self.assertIn('href="/picks/2026-10-11/"', old)
+
+    def test_the_date_in_the_heading_cannot_be_broken_across_lines(self):
+        self.assertTrue(date_stays_whole(self.read("picks/2026-10-11/index.html")))
+        self.assertTrue(date_stays_whole(self.read("picks/2026-10-10/index.html")))
+        self.assertIn(".nb { white-space: nowrap; }", (SITE / "assets" / "style.css").read_text(encoding="utf-8"))
+
+    def test_the_heading_check_finds_a_date_that_could_be_broken(self):
+        self.assertFalse(date_stays_whole("<h1>今日のおすすめギフト20選 11月25日</h1>"))                 # the shape that broke at 375px
+        self.assertFalse(date_stays_whole('<h1><span class="nb">今日のおすすめ</span> 11月25日</h1>'))
+        self.assertFalse(date_stays_whole('<h1><span class="nb">11</span>月25日</h1>'))
 
     def test_twenty_cards_ten_from_each_shop_with_both_shops_buttons(self):
         html = self.read("picks/2026-10-11/index.html")

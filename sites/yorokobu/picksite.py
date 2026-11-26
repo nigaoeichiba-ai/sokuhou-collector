@@ -31,6 +31,12 @@ def day_path(iso: str) -> str:
     return f"/picks/{iso}/"
 
 
+def day_heading(iso: str, total: int, newest: bool) -> str:
+    """The day page's h1 as HTML: each phrase is kept on one line, so a narrow screen breaks between phrases and never inside a date (it showed 「11」 / 「月25日」 at 375px)."""
+    parts = ["今日のおすすめ", f"ギフト{total}選", " ", date_label(iso)] if newest else [f"{date_label(iso, True)}の", "おすすめ", f"ギフト{total}選"]
+    return "".join(x if x == " " else f'<span class="nb">{esc(x)}</span>' for x in parts)
+
+
 def _chips(items: list[str]) -> str:
     return '<ul class="pick-for">' + "".join(f"<li>{esc(x)}</li>" for x in items) + "</ul>"
 
@@ -140,7 +146,7 @@ def day_page(d: dict, cfg: dict, preview: bool, day: dict, newest: bool, prev_da
     ld2 = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": h1, "datePublished": iso, "dateModified": iso, "inLanguage": "ja",
                       "author": {"@type": "Organization", "name": cfg["site_name"]}}, ensure_ascii=False)
     lede = day["lede"].replace("20点", f"{total}点")   # the day's text says 20; a product the shop no longer lists is left out, so show the real count
-    body = f"""{B.head_band("yellow", "", esc(h1), lede, single=True)}
+    body = f"""{B.head_band("yellow", "", day_heading(iso, total, newest), lede, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("毎日のおすすめ", "/picks/"), (date_label(iso), None)])}</div>
 {B.pr_quiet(cfg)}
 <p class="pick-theme"><span class="eyebrow">Today's theme</span>{esc(day["theme"])}</p>
