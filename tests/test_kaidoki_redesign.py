@@ -259,7 +259,7 @@ class RedesignTest(unittest.TestCase):
     def _top_table_names(self, html):
         sec = html.split("<h2>いま分かっている日程</h2>", 1)[1].split("</section>", 1)[0]
         sec = re.sub(r'<div class="aff-lines">.*?</div>', "", sec, flags=re.S)          # the affiliate lines of a row are not its name
-        return [re.sub(r"<[^>]+>", "", r[1]) for r in re.findall(r"<tr[^>]*><td>(.*?)</td><td>(.*?)</td>", sec)]
+        return [re.sub(r"<[^>]+>", "", r[1]) for r in re.findall(r"<tr><td>(.*?)</td><td>(.*?)</td>", sec)]
 
     def _expected_top_names(self, today):
         from datetime import date, timedelta
@@ -273,13 +273,20 @@ class RedesignTest(unittest.TestCase):
         """2026-11-27: four sales that ended at 23:59 stood as 開催中 on the top until the morning build."""
         sec = self.live["index.html"].split("<h2>いま分かっている日程</h2>", 1)[1].split("</section>", 1)[0]
         body = sec.split("<tbody>", 1)[1].split("</tbody>", 1)[0]
-        rows = re.findall(r"<tr[^>]*>", body)
+        rows = re.findall(r"<tr>", body)                                  # plain rows: sites/kaidoki/linkcheck.py counts them
         self.assertTrue(rows)
-        for r in rows:
-            self.assertRegex(r, r'data-sale-s="\d{4}-\d\d-\d\d" data-e="\d{4}-\d\d-\d\d"')
-        self.assertEqual(body.count("<td data-today>"), len(rows))
+        self.assertEqual(len(re.findall(r'<td data-sale-s="\d{4}-\d\d-\d\d" data-e="\d{4}-\d\d-\d\d"', body)), len(rows))
         js = (Path(__file__).resolve().parent.parent / "sites/kaidoki/redesign/static/scripts/calendar.js").read_text(encoding="utf-8")
-        self.assertIn("tr[data-sale-s]", js)
+        self.assertIn("td[data-sale-s]", js)
+
+    def test_the_linkage_rule_still_reads_the_top_table(self):
+        """2026-11-27: attributes on <tr> made the linkage gate find no sale, and three publishes stayed off the live site."""
+        from types import SimpleNamespace
+        from sites.kaidoki import linkcheck
+        pages = {"/": SimpleNamespace(html=self.live["index.html"]), "/calendar/": SimpleNamespace(html=self.live["calendar/index.html"])}
+        self.assertEqual(linkcheck.check(Path("."), "", pages), [])
+        broken = {**pages, "/": SimpleNamespace(html=self.live["index.html"].replace("<tr>", '<tr data-x="1">'))}
+        self.assertTrue(linkcheck.check(Path("."), "", broken))
 
     def test_the_top_table_follows_the_calendar_data(self):
         from datetime import date

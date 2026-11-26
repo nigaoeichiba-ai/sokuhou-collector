@@ -162,12 +162,11 @@
       el.textContent = txt;
     });
     /* the table of the top page and the ribbons of its sale blocks: a sale that ended (or started) after the morning build */
-    document.querySelectorAll('tr[data-sale-s]').forEach(function (tr) {
-      var out = tr.querySelector('[data-today]'); if (!out) return;
-      var s = tr.dataset.saleS, e = tr.dataset.e, txt;
-      if (tr.dataset.kind === 'notice') txt = s < today ? '発表の予定日は過ぎました' : s === today ? '今日' : '発表予定日まであと' + (dayNo(s) - n) + '日';
-      else txt = isOver(e, tr.dataset.et) ? '終了' : s <= today ? '開催中' : '開始まであと' + (dayNo(s) - n) + '日';
-      out.textContent = txt;
+    document.querySelectorAll('td[data-sale-s]').forEach(function (td) {
+      var s = td.dataset.saleS, e = td.dataset.e, txt;
+      if (td.dataset.kind === 'notice') txt = s < today ? '発表の予定日は過ぎました' : s === today ? '今日' : '発表予定日まであと' + (dayNo(s) - n) + '日';
+      else txt = isOver(e, td.dataset.et) ? '終了' : s <= today ? '開催中' : '開始まであと' + (dayNo(s) - n) + '日';
+      td.textContent = txt;
     });
     document.querySelectorAll('.sale-block[data-start], .sale-tile[data-start]').forEach(function (el) {
       var s = el.dataset.start, e = el.dataset.end; if (!s || !e) return;
