@@ -1579,6 +1579,7 @@ def index_page(d: dict, cfg: dict, preview: bool, today: date) -> str:
 <section class="block"><div class="sec-head"><span class="eyebrow">Now</span><h2>そろそろ準備したいイベント</h2><p>これから迎えるイベントのプレゼントを先取りで。</p></div>
 <ul class="tiles wide">{season}</ul>{month_more}</section>
 {shogatsu.home_band(today)}
+{seasonal.home_links()}
 <section class="block"><div class="sec-head"><span class="eyebrow">For whom</span><h2>だれに贈りますか？</h2></div>
 <ul class="chip-grid round">{rec}</ul></section>
 {budget_block(d)}

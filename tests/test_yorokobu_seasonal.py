@@ -200,6 +200,14 @@ class OiwaiPagesTest(unittest.TestCase):
     def read(self, rel):
         return (self.root / rel).read_text(encoding="utf-8")
 
+    def test_the_home_page_leads_to_every_sheet_that_has_no_sheet_above_it(self):
+        tops = [p["path"] for p in seasonal.load()["pages"] if not p.get("parent")]
+        self.assertEqual(sorted(tops), ["/nenga/", "/oiwai/", "/oseibo/"])
+        home = self.read("index.html")
+        missing = lambda html: [u for u in tops if f'href="{u}"' not in html]
+        self.assertEqual(missing(home), [])
+        self.assertEqual(missing(home.replace('href="/oseibo/"', 'href="/x/"')), ["/oseibo/"])      # the check finds a lost link
+
     def test_the_hub_the_five_sheets_are_built_listed_and_linked_with_their_parent_in_the_crumbs(self):
         sm = self.read("sitemap.xml")
         for rel in OIWAI:

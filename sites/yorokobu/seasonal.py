@@ -205,6 +205,14 @@ def hook(occasion: str) -> str:
     return (f'<section class="seas-hook" style="margin-top:44px"><h2><span class="scribble">{esc(h["title"])}</span></h2><p>{esc(h["text"])}</p><ul class="plain">{links}</ul></section>')
 
 
+def home_links() -> str:
+    """The block on the home page that leads to every sheet that has no sheet above it (read from the content files, so a new one appears by itself)."""
+    tops = [pg for pg in load()["pages"] if not pg.get("parent")]
+    links = "".join(f'<li><a href="{esc(pg["path"])}">{esc(pg["h1"])}</a></li>' for pg in tops)
+    return ('<section class="block seas-home"><div class="sec-head"><span class="eyebrow">Sheets</span><h2>お祝いと季節の早見表</h2>'
+            f'<p>贈る時期や金額の目安、のしの書き方をまとめて確かめられます。</p></div><ul class="plain cols2 chips">{links}</ul></section>')
+
+
 def build_pages(d: dict, cfg: dict, preview: bool, known: dict | None = None) -> dict[str, str]:
     data = load()
     bad = problems(data)
