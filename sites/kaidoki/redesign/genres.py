@@ -8,8 +8,8 @@ from __future__ import annotations
 # genre id -> (page path, the shops of schedule.ENT that sell in it, the word of the Amazon search link on the page, the page's own title and description)
 GENRES: dict[str, dict] = {
     "electronics": {"path": "/kaden/", "brands": ("yamada", "sonystore", "google", "asus", "lg", "sharp", "panasonic", "nec", "lenovo", "dyson", "kojima", "canon", "nikon", "fujifilm", "omsystem", "dospara", "mouse", "hp", "anker", "ksdenki", "au", "microsoft", "samsung", "fmv", "tfal"), "amazon": "家電", "crumb": "家電・デジタル"},
-    "food": {"path": "/food/", "brands": ("greenbeans",), "amazon": "食品", "crumb": "食品・飲料"},
-    "daily": {"path": "/daily/", "brands": ("welcia", "tsuruha", "akachan"), "amazon": "日用品", "crumb": "日用品"},
+    "food": {"path": "/food/", "brands": ("greenbeans", "seven", "famima", "dennys"), "amazon": "食品", "crumb": "食品・飲料"},
+    "daily": {"path": "/daily/", "brands": ("welcia", "tsuruha", "akachan", "apita"), "amazon": "日用品", "crumb": "日用品"},
     "fashion": {"path": "/fashion/", "brands": ("uniqlo", "zozo", "gap", "zoff", "jins", "owndays", "mistore", "takashimaya", "mitsuioutlet", "lalaport", "premiumoutlets", "abcmart"), "amazon": "ファッション", "crumb": "ファッション"},
     "beauty": {"path": "/beauty/", "brands": ("dhc", "orbis", "shiseido"), "amazon": "美容", "crumb": "美容・健康"},
     "home": {"path": "/home/", "brands": ("nitori", "yogibo"), "amazon": "インテリア", "crumb": "家具・暮らし"},
