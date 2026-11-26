@@ -69,12 +69,19 @@ def write() -> int:
     if not _ORIGINAL and not os.environ.get("GITHUB_ACTIONS") and not os.environ.get("KAIDOKI_KEEP_GEN"):
         _remember(SITE)
         atexit.register(restore)
-    for f in content.glob("*.json"):
-        f.unlink()
+    targets = []
     for p in pages:
         slug = p["path"].strip("/").replace("/", "-") or "home"
         slug = {"calendar": "sale-list"}.get(slug, slug)    # tests/test_wadaipost.py keeps a file named calendar.json out of git
-        (content / f"{slug}.json").write_text(json.dumps(p, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+        targets.append((content / f"{slug}.json", p))
+    if _ORIGINAL:          # a page file this write is about to CREATE was not there before: restore() removes it (2026-11-26: two such files stayed untracked in the working folders)
+        for f, _ in targets:
+            if f not in _ORIGINAL:
+                _ORIGINAL[f] = f.read_bytes() if f.exists() else None
+    for f in content.glob("*.json"):
+        f.unlink()
+    for f, p in targets:
+        f.write_text(json.dumps(p, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
     site = json.loads((SITE / "site.json").read_text(encoding="utf-8"))
     site["updated"] = TODAY.isoformat()
     site.update({

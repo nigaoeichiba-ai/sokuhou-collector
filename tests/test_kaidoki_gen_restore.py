@@ -40,6 +40,15 @@ class GenRestoreTest(unittest.TestCase):
         self.assertGreater(gen.restore(), 0)
         self.assertEqual(self._now(), self.before)                     # back, byte for byte: the file removed by the write (old.json) too
 
+    def test_a_page_file_that_did_not_exist_is_removed_again(self):
+        pages = [{"path": "/", "updated": "2026-11-15"}, {"path": "/new/page/", "updated": "2026-11-15"}]
+        with mock.patch.object(gen, "all_pages", return_value=pages), mock.patch.dict("os.environ", {"GITHUB_ACTIONS": "", "KAIDOKI_KEEP_GEN": ""}):
+            gen.write()
+            self.assertIn("new-page.json", self._now())                # the write made it
+            gen.write()                                                # a second write must not turn it into a file to keep
+        gen.restore()
+        self.assertEqual(self._now(), self.before)
+
     def test_negative_without_restore_the_change_stays(self):
         with mock.patch.dict("os.environ", {"GITHUB_ACTIONS": "", "KAIDOKI_KEEP_GEN": ""}):
             gen.write()
