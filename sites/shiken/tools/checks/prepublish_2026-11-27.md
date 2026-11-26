@@ -38,3 +38,8 @@
 - ルール: ng_rules.json version 2026-11-26.1。check_text.py と tests の結果が通ったので公開する。
 - 判定: テストとNG語ゲートが通ったら公開する。
 
+
+## 追記(11/27 朝の4回目・窓口の依頼)
+- 対象: /nyushi/ /fees/ /zenki-koki/ の、情報の出どころを公式に限る文と公式のページへ向ける文を書き直した。数字・日付は変えていない。
+- ルール: ng_rules.json version 2026-11-26.1、STYLE_GUIDE_JA。check_text.py と tests の結果が通ったので公開する。
+- 判定: テストとNG語ゲートが通ったら公開する。
