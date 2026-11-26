@@ -207,6 +207,9 @@ ADS = {
 }
 
 
+ADS["travel-cost-average"] = ADS["case-family-trip"]      # the same lodging services close the average-cost page
+
+
 def ad_html(slug):
     ads = ADS.get(slug)
     if not ads:

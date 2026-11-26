@@ -117,10 +117,12 @@ class MoneyinfoBuildTest(unittest.TestCase):
 
     def test_the_only_advertisement_is_the_approved_one_with_pr_rel_target_and_a_word_as_text(self):
         ads = ad_links(self.rel)
-        self.assertEqual(len(ads), 3, ads)
-        for ad, pid in zip(sorted(ads), ("892753631", "892753632", "892753633")):
+        ads = [a for a in ads if "pid=892757587" not in a]      # the shop link of the year-end page has its own test
+        self.assertEqual(len(ads), 6, ads)
+        wanted = [(p, i) for p in ("case-family-trip.html", "travel-cost-average.html") for i in ("892753631", "892753632", "892753633")]
+        for ad, (name, pid) in zip(sorted(ads), wanted):
             page, tag = ad.split(": ", 1)
-            self.assertEqual(page, "case-family-trip.html")
+            self.assertEqual(page, name)
             self.assertIn('rel="nofollow sponsored noopener"', tag)
             self.assertIn('target="_blank"', tag)
             self.assertIn("pid=" + pid, tag)
