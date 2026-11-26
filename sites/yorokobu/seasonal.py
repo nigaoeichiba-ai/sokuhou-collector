@@ -1,6 +1,6 @@
 """季節とお祝いの早見表 (/oseibo/ /nenga/ /oiwai/ ...): one-page cheat sheets that can be printed, each fact tied to the department-store page it was read on.
 
-Everything on these pages comes from the files content/seasonal/*.json, whose `sources` are the pages (三越伊勢丹, 高島屋, 大丸松坂屋, 松坂屋名古屋店) opened and read in a real browser on the file's `checked` date.  A section names the
+Everything on these pages comes from the files content/seasonal/*.json, whose `sources` are the pages (department stores) opened and read in a real browser on the file's `checked` date.  A section names the
 sources it rests on; where the stores disagree (the months of お歳暮, 寒中御伺 or 寒中御見舞) the page shows each store's wording instead of picking one.  Nothing is written that the sources do
 not say, and the page says that customs differ by region and family.  The pages carry the Rakuten and Amazon search buttons like the other gift pages; no price or picture of a product is shown.
 """

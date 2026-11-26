@@ -16,8 +16,21 @@ from tests.yorokobu_data import with_musts
 PATHS = ["oseibo/index.html", "oseibo/work/index.html", "oseibo/thanks/index.html", "nenga/index.html"]
 OIWAI = ["oiwai/index.html", "oiwai/seijin/index.html", "oiwai/gakko/index.html", "oiwai/taishoku/index.html", "oiwai/shinchiku/index.html", "oiwai/choju/index.html", "oiwai/kekkon/index.html", "oiwai/shussan/index.html"]
 
-# D26 (2026-11-17): sheets already rewritten without store names in the text.  Add a sheet here when it is rewritten.
-NO_STORE_NAMES = ["oiwai/taishoku/index.html"]
+# D26 (2026-11-17): the text on the screen names no store.  The names stay inside `sources` (the internal record of what was read).
+STORE_NAMES = re.compile("三越|伊勢丹|高島屋|大丸|松坂屋|日本百貨店協会")
+
+
+def shown_strings(o):
+    """Every string of a content file that can reach a page: all of it except the `sources` records and the note at the head of the file."""
+    if isinstance(o, dict):
+        for k, v in o.items():
+            if k not in ("sources", "_note"):
+                yield from shown_strings(v)
+    elif isinstance(o, list):
+        for v in o:
+            yield from shown_strings(v)
+    elif isinstance(o, str):
+        yield o
 
 
 def by_slug(data, slug):
@@ -87,12 +100,28 @@ class ContentTest(unittest.TestCase):
         self.assertIn(oseibo["budget"][0]["range"], blob)                  # the amount the site already shows (two sources agreed) is the amount the sheet shows
         self.assertNotRegex(blob, r"必ず|絶対|間違い|失礼になりません")           # custom differs by region and family: no absolute words
 
-    def test_what_the_stores_disagree_on_is_shown_per_store(self):
+    def test_what_the_stores_disagree_on_is_shown_row_by_row_without_their_names(self):
         data = seasonal.load()
         first = by_slug(data, "oseibo")["sections"][0]["table"]["rows"]
-        self.assertEqual([r[0] for r in first], ["三越伊勢丹", "高島屋", "大丸松坂屋"])
+        self.assertEqual(len({r[1] for r in first}), 3)
+        self.assertEqual(len({r[0] for r in first}), 3)
         self.assertIn("寒中御見舞", json.dumps(data, ensure_ascii=False))
         self.assertIn("寒中御伺", json.dumps(data, ensure_ascii=False))
+
+
+class NoStoreNamesTest(unittest.TestCase):
+    def test_no_content_file_puts_a_store_name_on_the_screen(self):
+        content = Path(build.__file__).parent / "content"
+        files = [*sorted((content / "seasonal").glob("*.json")), content / "shogatsu.json", content / "guides.json", content / "etiquette.json"]
+        for f in files:
+            data = json.loads(f.read_text(encoding="utf-8"))
+            if f.name == "etiquette.json":                                   # its `sources` sit under each occasion; the walk skips them at any depth
+                data = data["occasions"]
+            self.assertEqual([t for t in shown_strings(data) if STORE_NAMES.search(t)], [], f.name)
+
+    def test_the_check_finds_a_store_name_and_leaves_the_internal_record_alone(self):
+        bad = {"pages": [{"lead": "高島屋の案内をもとにまとめました。"}], "sources": {"a": {"name": "三越伊勢丹"}}}
+        self.assertEqual([t for t in shown_strings(bad) if STORE_NAMES.search(t)], ["高島屋の案内をもとにまとめました。"])
 
 
 class OverlapTest(unittest.TestCase):
@@ -192,14 +221,10 @@ class OiwaiPagesTest(unittest.TestCase):
             self.assertEqual(d26.problems(html), [], rel)                                   # D26: no source on the screen
             self.assertIn("しきたりには諸説があり、地域や家で違います", html, rel)
 
-    def test_every_sheet_names_both_stores_and_the_date_and_can_be_printed(self):
+    def test_every_sheet_names_no_store_shows_the_date_and_can_be_printed(self):
         for rel in OIWAI[1:]:
             html = self.read(rel)
-            if rel in NO_STORE_NAMES:
-                self.assertNotRegex(html, "三越|伊勢丹|松坂屋|高島屋", rel)
-            else:
-                self.assertIn("三越伊勢丹", html, rel)
-                self.assertIn("松坂屋名古屋店", html, rel)
+            self.assertNotRegex(html, STORE_NAMES, rel)
             self.assertIn("data-print hidden", html, rel)
             self.assertIn("確認日 2026年10月15日", html, rel)
             self.assertEqual(d26.problems(html), [], rel)
@@ -215,13 +240,12 @@ class OiwaiPagesTest(unittest.TestCase):
         self.assertIn("近い親族は5万円から10万円ほどです", self.read("oiwai/kekkon/index.html"))
         self.assertIn("赤ちゃんの祖父母は10万円", self.read("oiwai/shussan/index.html"))
         for rel in OIWAI[1:]:
-            self.assertEqual(self.read(rel).count("<th scope=\"row\">三越伊勢丹"), self.read(rel).count("<th scope=\"row\">三越伊勢丹") , rel)
             self.assertIn("目安の要約です", self.read(rel), rel)           # the page says the table is a summary, not the store's own table
-        # one store's table is not copied row for row: at most three rows for a store in any amount table
+        # one store's table is not copied row for row: at most three rows of one way of reading the amounts
         for rel in OIWAI[1:]:
-            tables = re.findall(r'<table class="seas-tbl"><thead><tr><th scope="col">案内</th>.*?</table>', self.read(rel), re.S)
+            tables = re.findall(r'<table class="seas-tbl"><thead><tr><th scope="col">分け方</th>.*?</table>', self.read(rel), re.S)
             for tb in tables:
-                self.assertLessEqual(len(re.findall(r'<th scope="row">三越伊勢丹', tb)), 3, rel)
+                self.assertLessEqual(len(re.findall(r'<th scope="row">贈る人別の目安', tb)), 3, rel)
 
     def test_no_product_price_or_picture_and_the_ad_notice_is_there(self):
         for rel in OIWAI:
