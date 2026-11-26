@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-25T04:10:04.362764+00:00",
+ "fetched_at": "2026-11-26T03:33:54.551690+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -1755,6 +1755,18 @@
    "title": "産業車両等の脱炭素化促進事業のうち、空港における脱炭素化促進事業③空港におけるEV・FCV型車両改造事業（二酸化炭素排出抑制対策事業費等補助金）"
   },
   {
+   "acceptance_end_datetime": "2027-03-31T14:59:00.000Z",
+   "acceptance_start_datetime": "2025-10-29T00:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDVm7MAH",
+   "id": "a0WJ200000CDVm7MAH",
+   "institution_name": "東京都生産性向上・職場環境整備等支援事業補助金　消費税仕入控除税額報告",
+   "name": "S-00007438",
+   "subsidy_max_limit": 0,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "令和７年度病院勤務者勤務環境改善事業・救急医療体制強化事業"
+  },
+  {
    "acceptance_end_datetime": "2027-01-29T07:30:00.000Z",
    "acceptance_start_datetime": "2026-10-16T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDVn9MAH",
@@ -1767,5 +1779,5 @@
    "title": "【農産園芸課向け】都城市農業資材等価格高騰緊急支援事業費補助金（令和８年度）"
   }
  ],
- "total": 147
+ "total": 148
 }
