@@ -1094,7 +1094,7 @@
       "field": "高校入試",
       "edition": "2027年度",
       "page": "https://www.pref.okayama.lg.jp/uploaded/life/1015516_9804789_misc.pdf",
-      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 インターネット入力の先行期間・時刻は未確認です。",
+      "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
       "category": "school"
     },
     {
@@ -1892,7 +1892,7 @@
         "result": "published"
       },
       "notes": "午前・午後の受付時刻は異なります。受験地による実施状況も、申し込む回の案内で確かめておいてください。",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-27",
       "field": "語学",
       "category": "qualification",
       "applyPage": {
@@ -2193,7 +2193,7 @@
       "field": "語学",
       "aliases": "トーイック 英語",
       "edition": "2027年1月24日実施回",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-27",
       "sourceTitle": "IIBC｜年間テスト日程",
       "sourceUrl": "https://www.iibc-global.org/toeic/test/lr/guide01/schedule.html",
       "sourceStatus": "verified",
@@ -5180,7 +5180,7 @@
       "short": "山梨県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-27",
       "sourceUrl": "https://www.pref.yamanashi.jp/documents/84777/r9kihonziko.pdf",
       "sourceTitle": "令和9年度 山梨県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -5700,7 +5700,7 @@
       "short": "鳥取県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-27",
       "sourceUrl": "https://www.pref.tottori.lg.jp/secure/1422415/R09_jisshiyoukou_tottori.pdf",
       "sourceTitle": "令和9年度 鳥取県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -5806,7 +5806,7 @@
       "short": "岡山県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-27",
       "sourceUrl": "https://www.pref.okayama.lg.jp/uploaded/life/1015516_9804789_misc.pdf",
       "sourceTitle": "令和9年度 岡山県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -5827,7 +5827,7 @@
         "exam": "published",
         "result": "published"
       },
-      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。 インターネット入力の先行期間・時刻は未確認です。",
+      "notes": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
       "variants": [
         {
           "name": "一般入学者選抜(全日制課程・定時制課程)",
@@ -6119,7 +6119,7 @@
       "short": "佐賀県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-27",
       "sourceUrl": "https://www.pref.saga.lg.jp/kyouiku/kiji003119218/3_119218_389544_up_7eamtra8.pdf",
       "sourceTitle": "令和9年度 佐賀県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -6972,7 +6972,7 @@
       "type": "deadline",
       "label": "ネット申込締切",
       "sourceId": "toeic",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "nurse-deadline",
@@ -7053,7 +7053,7 @@
       "label": "試験日",
       "note": "午前・午後の2回実施。申込区分の受付時刻を確認",
       "sourceId": "toeic",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "kyotsu-1",
@@ -7101,7 +7101,7 @@
       "label": "デジタル公式認定証発行",
       "planned": true,
       "sourceId": "toeic",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "nurse-exam",
@@ -7296,7 +7296,7 @@
       "label": "ネット申込締切",
       "exam": "toeic-20270124",
       "sourceId": "catalog-toeic-20270124",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "toeic-20270124-exam",
@@ -7306,7 +7306,7 @@
       "note": "午前・午後の区分によって受付時刻が異なります。",
       "exam": "toeic-20270124",
       "sourceId": "catalog-toeic-20270124",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "toeic-20270124-result",
@@ -7316,7 +7316,7 @@
       "planned": true,
       "exam": "toeic-20270124",
       "sourceId": "catalog-toeic-20270124",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "toeic-20270214-deadline",
@@ -9938,7 +9938,7 @@
       "note": "1月14日は一括受付。",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-yamanashi-2",
@@ -9948,7 +9948,7 @@
       "note": "1日で実施する学校は1月28日。",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-yamanashi-3",
@@ -9958,7 +9958,7 @@
       "note": "1日で実施する学校は1月28日。",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-yamanashi-4",
@@ -9967,7 +9967,7 @@
       "label": "前期募集 内定",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-yamanashi-5",
@@ -9978,7 +9978,7 @@
       "note": "2月16日は一括受付。",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-yamanashi-6",
@@ -9987,7 +9987,7 @@
       "label": "後期募集・定時制 検査",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-yamanashi-7",
@@ -9996,7 +9996,7 @@
       "label": "後期募集・定時制 検査",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-yamanashi-8",
@@ -10005,7 +10005,7 @@
       "label": "後期募集・定時制 追検査",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-yamanashi-9",
@@ -10014,7 +10014,7 @@
       "label": "前期・後期 入学許可予定者発表",
       "exam": "koko-yamanashi",
       "sourceId": "catalog-koko-yamanashi",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-nagano-1",
@@ -10775,7 +10775,7 @@
       "time": "12:00",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-2",
@@ -10784,7 +10784,7 @@
       "label": "特色選抜 検査",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-3",
@@ -10793,7 +10793,7 @@
       "label": "特色選抜 合格発表",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-4",
@@ -10803,7 +10803,7 @@
       "time": "12:00",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-5",
@@ -10812,7 +10812,7 @@
       "label": "一般選抜 検査",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-6",
@@ -10821,7 +10821,7 @@
       "label": "一般選抜 検査",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-7",
@@ -10830,7 +10830,7 @@
       "label": "一般選抜 追検査",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-8",
@@ -10840,7 +10840,7 @@
       "time": "12:00",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-9",
@@ -10850,7 +10850,7 @@
       "time": "12:00",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-10",
@@ -10859,7 +10859,7 @@
       "label": "再募集 検査",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tottori-11",
@@ -10869,7 +10869,7 @@
       "time": "12:00",
       "exam": "koko-tottori",
       "sourceId": "catalog-koko-tottori",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-shimane-1",
@@ -10962,11 +10962,13 @@
     {
       "id": "koko-okayama-1",
       "date": "2027-01-28",
+      "time": "12:00",
       "type": "deadline",
       "label": "特別入学者選抜等 出願 締切",
+      "note": "郵送の場合は1月27日（水）必着です。烏城高校の定時制の特別な入学者選抜の出願は、1月28日午後8時までです。",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-2",
@@ -10975,7 +10977,7 @@
       "label": "特別入学者選抜 学力検査",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-3",
@@ -10985,7 +10987,7 @@
       "note": "一方の日のみ実施する場合があります。",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-4",
@@ -10995,7 +10997,7 @@
       "note": "一方の日のみ実施する場合があります。",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-6",
@@ -11004,7 +11006,7 @@
       "label": "特別入学者選抜等 選抜結果通知",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-5",
@@ -11013,16 +11015,18 @@
       "label": "特別入学者選抜 追検査",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-7",
       "date": "2027-02-26",
+      "time": "12:00",
       "type": "deadline",
       "label": "一般入学者選抜 出願 締切",
+      "note": "郵送の場合は2月25日（木）必着です。",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-8",
@@ -11031,7 +11035,7 @@
       "label": "一般入学者選抜 学力検査",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-9",
@@ -11040,7 +11044,7 @@
       "label": "一般入学者選抜 面接・実技",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-10",
@@ -11049,7 +11053,7 @@
       "label": "一般入学者選抜 追検査",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-okayama-11",
@@ -11058,7 +11062,7 @@
       "label": "一般・特別 合格発表",
       "exam": "koko-okayama",
       "sourceId": "catalog-koko-okayama",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-hiroshima-7",
@@ -11584,11 +11588,13 @@
     {
       "id": "koko-saga-1",
       "date": "2027-01-27",
+      "time": "12:00",
       "type": "deadline",
       "label": "特別選抜 出願 締切",
+      "note": "郵送の場合は、1月26日（火）に届くように配達日を指定します。",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-2",
@@ -11597,7 +11603,7 @@
       "label": "特別選抜 検査",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-3",
@@ -11606,16 +11612,18 @@
       "label": "特別選抜 合格発表",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-4",
       "date": "2027-02-16",
+      "time": "12:00",
       "type": "deadline",
       "label": "一般選抜 出願 締切",
+      "note": "郵送の場合は、2月15日（月）に届くように配達日を指定します。",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-5",
@@ -11624,7 +11632,7 @@
       "label": "一般選抜 検査",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-6",
@@ -11633,7 +11641,7 @@
       "label": "一般選抜 検査",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-7",
@@ -11642,7 +11650,7 @@
       "label": "一般選抜 追検査",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-8",
@@ -11651,16 +11659,18 @@
       "label": "一般選抜 合格発表",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-9",
       "date": "2027-03-12",
+      "time": "14:00",
       "type": "deadline",
       "label": "再募集 出願 締切（実施する場合のみ）",
+      "note": "原則として郵送は受け付けません。",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-10",
@@ -11669,7 +11679,7 @@
       "label": "再募集 検査（実施する場合のみ）",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-saga-11",
@@ -11678,7 +11688,7 @@
       "label": "再募集 合格発表（実施する場合のみ）",
       "exam": "koko-saga",
       "sourceId": "catalog-koko-saga",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-kumamoto-1",

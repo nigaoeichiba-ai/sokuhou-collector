@@ -342,6 +342,30 @@ class Renewal(unittest.TestCase):
         old = "TOEIC（2027年）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。"
         self.assertNotRegex(old, r"申込の締切は20\d\d年")
 
+    def test_the_toeic_page_moves_to_the_next_open_round_when_its_own_has_closed(self):
+        # 2026-11-27: the 1/10 round closed on 11/26 and the page still showed it, with no deadline to apply by
+        def toeic(day):
+            with tempfile.TemporaryDirectory() as tmp:
+                out = Path(tmp) / "site"
+                BUILD.make_site(out, day)
+                return (out / "exams" / "toeic" / "index.html").read_text(encoding="utf-8")
+        head = lambda h: (re.search(r"<title>(.*?)</title>", h, re.S).group(1), re.search(r'<meta name="description" content="(.*?)"', h).group(1))
+        h = toeic("2026-11-27")
+        title, d = head(h)
+        self.assertIn("2027年1月24日", title)
+        self.assertNotIn("2027年1月10日", title + d)
+        self.assertIn("申込の締切は2026年12月9日", d)
+        later = head(toeic("2026-12-10"))      # after 12/9 it moves on again
+        self.assertIn("2027年2月14日", later[0])
+        self.assertIn("申込の締切は2027年1月7日", later[1])
+        # negative case: the page as it was on 11/27 (own round, no deadline left) is recognised
+        old = "TOEIC L&R 公開テスト（2027年1月10日実施回）の試験日は2027年1月10日(日)、合格発表は2027年1月28日(木)。"
+        self.assertNotRegex(old, r"申込の締切は20\d\d年")
+        rounds = re.search(r'<section class="ed-rounds">.*?</section>', h, re.S).group(0)
+        self.assertIn("2027年1月10日実施回", rounds)          # those who applied for 1/10 still find its dates
+        self.assertIn("2027年1月10日(日)", rounds)
+        self.assertNotIn('href="/exams/toeic-20270124/"', rounds)
+
     def test_thin_utility_pages_are_noindex_and_out_of_the_sitemap(self):
         # Search Console (2026-11-20): crawled-not-indexed jumped to 80; the thin fixed pages (form, privacy, change log) are kept out of the index and the sitemap
         sm = re.findall(r"<loc>(.*?)</loc>", (self.out / "sitemap.xml").read_text(encoding="utf-8"))
