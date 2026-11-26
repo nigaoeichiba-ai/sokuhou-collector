@@ -480,6 +480,23 @@ class Renewal(unittest.TestCase):
             self.assertIn("amazon.co.jp/s?k=", h, slug)
             self.assertEqual(AFF.problems(h), [], slug)
 
+    def test_the_registration_page_offers_the_course_where_the_reader_starts_over(self):
+        # 2026-11-26: /takken-toroku/ (updated for the 11/25 results) had no affiliate link.  The section sits right after "落ちていたときは".
+        def placed(h):
+            a, pr, faq = h.find("落ちていたときは、来年の準備に切り替える</h2>"), h.find('id="pr-takken-toroku-title"'), h.find("よくある質問</h2>")
+            return 0 <= a < pr < faq and "a8mat=4BGJFS+GCTW8I+44M0+61Z82" in h[pr:faq]
+        h = self.pages["takken-toroku/index.html"]
+        self.assertTrue(placed(h))
+        self.assertEqual(h.count('id="pr-takken-toroku-title"'), 1)
+        self.assertEqual(AFF.problems(h), [])
+        self.assertFalse(placed(h.replace("61Z82", "00000")))                  # negative case: the course link is gone
+        for slug in ("deadlines", "fees", "flow", "results", "yama"):
+            page = self.pages[f"{slug}/index.html"]
+            self.assertIn("a8mat=4BGJFS+GCTW8I+44M0+5YJRM", page, slug)
+            self.assertIn("【PR】資格試験の勉強を始めるなら", page, slug)
+            self.assertIn("tag=amazonmacs-22", page, slug)
+            self.assertEqual(AFF.problems(page), [], slug)
+
     def test_no_affiliate_link_is_a_bare_address_or_lacks_rel(self):
         for rel, h in self.pages.items():
             self.assertEqual(AFF.problems(h), [], rel)

@@ -23,16 +23,17 @@ export function inScope(exam,scope){
  return [].concat(scope).some(s=>s==='all'||(s.startsWith('cat:')&&exam.category===s.slice(4))||(s.startsWith('fam:')&&(exam.family===s.slice(4)||exam.family.startsWith(s.slice(4)+'-')))||(s.startsWith('pre:')&&exam.id.startsWith(s.slice(4)))||(s.startsWith('ids:')&&s.slice(4).split(',').includes(exam.id)));
 }
 const FEATURED='ids:takken,gyosei,sharoshi,nurse,kaigo,kanri,shindanshi,eiken,toeic,boki,fp,kyotsu,komuin-sogo,itpassport-cbt';
-// per page: parent (breadcrumb), art picture, related exams (cards), live list (coming dates made from the registry), pr group (affiliate section)
+// per page: parent (breadcrumb), art picture, related exams (cards), live list (coming dates made from the registry), pr group (affiliate section),
+// prAfter (the start of a heading: the affiliate section goes right after that section instead of after the lists)
 export const config={
  'boki-net':{parent:'/yomimono/',art:'decided',related:['ids:boki-net-2026,boki,boki-175'],live:{scope:'ids:boki,boki-173,boki-175',types:['exam']},pr:'bokinet'},
  'boki':{parent:'/schedule/',art:'decided',related:['ids:boki,boki-173,boki-175,boki-net-2026'],live:{scope:'fam:boki',types:['exam']},pr:'boki'},
  'cbt':{parent:'/yomimono/',art:'decided',related:['ids:itpassport-cbt,fe-cbt,boki-net-2026,fp23-jafp-2026,fp23-kinzai-2026'],pr:'fp'},
  'corrections':{noindex:true,parent:'/',art:'decided',related:[FEATURED]},
- 'deadlines':{parent:'/schedule/',art:'decided',live:{scope:'all',types:['deadline'],limit:40,heading:'これから締切が来る申込'}},
+ 'deadlines':{parent:'/schedule/',art:'decided',live:{scope:'all',types:['deadline'],limit:40,heading:'これから締切が来る申込'},pr:'shikaku'},
  'eiken':{parent:'/schedule/',art:'decided',related:['fam:eiken'],live:{scope:'fam:eiken',types:['deadline','exam','result'],limit:14},pr:'eiken'},
- 'fees':{parent:'/yomimono/',art:'decided',related:[FEATURED]},
- 'flow':{parent:'/yomimono/',art:'prepared',related:[FEATURED]},
+ 'fees':{parent:'/yomimono/',art:'decided',related:[FEATURED],pr:'shikaku'},
+ 'flow':{parent:'/yomimono/',art:'prepared',related:[FEATURED],pr:'shikaku'},
  'fp':{parent:'/schedule/',art:'decided',related:['fam:fp'],live:{scope:'fam:fp',types:['deadline','exam','result'],limit:12},pr:'fp'},
  'goukaku-ritsu':{parent:'/yomimono/',art:'decided',related:['ids:takken,gyosei,sharoshi,kaigo,nurse'],pr:'takken'},
  'nyugaku-tetsuzuki':{parent:'/nyushi/',art:'family',related:['ids:national-zenki-2027,national-koki-2027'],pr:'daigaku'},
@@ -62,7 +63,7 @@ export const config={
  'toeic-moshikomi-2027':{parent:'/yomimono/',art:'decided',related:['ids:toeic,toeic-20270124,toeic-20270214,toeic-20270306,toeic-20270314'],live:{scope:'fam:toeic',types:['deadline','exam','result'],limit:8,heading:'TOEICのこれからの日程'},pr:'toeic'},
  'zenki-goukaku-to-koki-shiken':{parent:'/nyushi/',art:'decided',related:['ids:todai-2027,kyodai-2027,hokudai-zenki-2027,hokudai-koki-2027'],pr:'daigaku'},
  'yamaguchi-koko-nyushi':{parent:'/nyushi/',art:'family',related:['ids:koko-yamaguchi'],pr:'koko'},
- 'takken-toroku':{parent:'/yomimono/',art:'decided',related:['ids:takken']},
+ 'takken-toroku':{parent:'/yomimono/',art:'decided',related:['ids:takken'],pr:'takken',prAfter:'落ちていたときは'},
  'kangoshi-ganshu':{parent:'/yomimono/',art:'decided',related:['ids:nurse'],live:{scope:'ids:nurse',types:['deadline','exam','result'],limit:6,heading:'第116回の日程'},pr:'nurse'},
  'komuin':{parent:'/schedule/',art:'decided',related:['fam:komuin'],live:{scope:'fam:komuin',types:['deadline','exam','result'],limit:10},pr:'komuin'},
  'method':{parent:'/yomimono/',art:'decided',related:[FEATURED]},
@@ -70,10 +71,10 @@ export const config={
  'nendo':{parent:'/yomimono/',art:'decided',related:[FEATURED],pr:'komuin'},
  'nyushi':{parent:'/',art:'family',children:'/nyushi/',childrenHeading:'入試のくわしい解説',related:['ids:kyotsu,kyotsu-tsuishi-2027,todai-2027,kyodai-2027,hokudai-zenki-2027'],live:{scope:['cat:university','cat:school'],types:['deadline','exam','result'],limit:24,heading:'これから先の入試の日程'},pr:'kyotsu'},
  'postmark':{parent:'/yomimono/',art:'decided',related:['ids:takken,gyosei,sharoshi,kangoshi,nurse,kaigo']},
- 'results':{parent:'/schedule/',art:'prepared',related:[],live:{scope:'all',types:['result'],limit:30,heading:'これから先の合格発表・結果の日'}},
+ 'results':{parent:'/schedule/',art:'prepared',related:[],live:{scope:'all',types:['result'],limit:30,heading:'これから先の合格発表・結果の日'},pr:'shikaku'},
  'schedule':{parent:'/',art:'discover',related:[],list:'all',children:'/schedule/',childrenHeading:'試験ごとのまとめと、日付の一覧'},
  'takken-junbi':{parent:'/yomimono/',art:'decided',related:['ids:takken'],pr:'takken'},
- 'yama':{parent:'/schedule/',art:'compare',related:[FEATURED],live:{scope:'all',types:['exam'],limit:30,heading:'これから先の試験日'}},
+ 'yama':{parent:'/schedule/',art:'compare',related:[FEATURED],live:{scope:'all',types:['exam'],limit:30,heading:'これから先の試験日'},pr:'shikaku'},
  'yomimono':{parent:'/',art:'discover',related:[],children:'/yomimono/',childrenHeading:'特集の一覧'},
  'zenki-koki':{parent:'/nyushi/',art:'family',related:['ids:todai-2027,kyodai-2027,hokudai-zenki-2027,hokudai-koki-2027,national-zenki-2027,national-koki-2027'],pr:'daigaku'}
 };
@@ -114,15 +115,17 @@ export function legacyMain({slug,data,registry,today,prefix,legacy}){
  const crumbs=[['トップ','/']];if(parentTitle)crumbs.push([parentTitle,c.parent]);
  const bc=crumbs.map(([t,h])=>`<a href="${h}">${esc(t)}</a>`).join('<span aria-hidden="true">›</span>')+`<span aria-hidden="true">›</span><span aria-current="page">${esc(data.h1)}</span>`;
  const tok=h=>h.replace(/\{\{LEFT:(\d{4}-\d{2}-\d{2})\}\}/g,(m,d)=>{const n=Math.round((Date.parse(d+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000);return n>0?`締切まで、残り${n}日`:n===0?'締切は、きょうです':'締切は、過ぎています';}).replace(/\{\{TODAY\}\}/g,jpDate(today));
- const sections=data.sections.map(s=>`<section class="ed-section legacy-section">${s.h2?`<h2>${esc(s.h2)}</h2>`:''}${tok(s.html)}</section>`).join('');
+ const pr=c.pr?affiliateSection(c.pr,'pr-'+slug):'';
+ const at=c.prAfter?data.sections.findIndex(s=>(s.h2||'').startsWith(c.prAfter)):-1;
+ if(c.prAfter&&at<0)throw new Error(`${slug}: no section starts with "${c.prAfter}" (prAfter)`);
+ const sections=data.sections.map((s,i)=>`<section class="ed-section legacy-section">${s.h2?`<h2>${esc(s.h2)}</h2>`:''}${tok(s.html)}</section>${i===at?pr:''}`).join('');
  const live=c.live?liveSection(registry,c.live,today):'';
  const list=c.list?listSection(registry,c.list):'';
  const articles=c.children?childrenSection(legacy,c.children,c.childrenHeading||'あわせて読みたい',slug):'';
- const pr=c.pr?affiliateSection(c.pr,'pr-'+slug):'';
  const related=(c.related||[]).length?relatedSection(registry,c.related):'';
  const nav=`<section class="ed-section"><h2>あわせて読みたい</h2><p><a href="/guides/decided/">受ける試験の日程を探す</a>　<a href="/guides/compare/">試験の予定を比べる</a>　<a href="/yomimono/">特集の一覧</a>　<a href="/schedule/">掲載している試験の一覧</a>　<a href="/deadlines/">申込の締切が近い試験</a>　<a href="/results/">合格発表の日</a>　<a href="/nyushi/">入試カレンダー</a></p></section>`;
  const crumbData=crumbs.map(([t,h])=>({name:t,url:h}));crumbData.push({name:data.h1,url:`/${slug}/`});
- return {html:`<article class="exam-detail legacy-page" data-theme="cream"><nav class="ed-breadcrumb" aria-label="現在のページ">${bc}</nav><header class="ed-hero"><div><span class="ed-eyebrow">${c.parent==='/yomimono/'?'受験の前の読みもの':'試験の日程と準備'}</span><h1 id="legacy-title">${esc(data.h1)}</h1><p class="ed-intro">${esc(data.answer||data.description)}</p></div><figure><img src="${prefix}/assets/guide-${c.art}.webp" width="1536" height="1024" alt="" decoding="async"></figure></header>${live}${sections}${list}${articles}${pr}${related}${nav}</article>`,crumbs:crumbData};
+ return {html:`<article class="exam-detail legacy-page" data-theme="cream"><nav class="ed-breadcrumb" aria-label="現在のページ">${bc}</nav><header class="ed-hero"><div><span class="ed-eyebrow">${c.parent==='/yomimono/'?'受験の前の読みもの':'試験の日程と準備'}</span><h1 id="legacy-title">${esc(data.h1)}</h1><p class="ed-intro">${esc(data.answer||data.description)}</p></div><figure><img src="${prefix}/assets/guide-${c.art}.webp" width="1536" height="1024" alt="" decoding="async"></figure></header>${live}${sections}${list}${articles}${at<0?pr:''}${related}${nav}</article>`,crumbs:crumbData};
 }
 
 // ---- site-wide pages -------------------------------------------------------------------------------------------------

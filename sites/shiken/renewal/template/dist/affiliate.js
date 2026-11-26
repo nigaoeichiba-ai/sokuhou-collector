@@ -55,7 +55,9 @@ export const GROUPS={
  hokudai:{name:'北海道大学の入試',word:'北海道大学 過去問'},
  daigaku:{name:'国公立大学の入試',word:'国公立大学 過去問'},
  careercon:{name:'キャリアコンサルタント',word:'キャリアコンサルタント 試験 テキスト'},
- denken:{name:'電験三種',word:'電験三種 参考書'}
+ denken:{name:'電験三種',word:'電験三種 参考書'},
+ // the pages that compare many exams (fees, flow, busiest months, deadlines, result days): the general course lists of the partners
+ shikaku:{name:'資格試験',word:'資格試験 テキスト',course:true,agaroot:'sogo',ito:'sogo'}
 };
 // exam id / family -> group
 export function groupFor(exam){
