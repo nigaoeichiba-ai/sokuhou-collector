@@ -390,6 +390,55 @@
    "href_has": [
     "4BEL1J+ATDNT6"
    ]
+  },
+  {
+   "id": "yahoo-shopping-trend",
+   "names": [
+    "Yahoo!ショッピング"
+   ],
+   "sites": [
+    "trend"
+   ],
+   "href_has": [
+    "pid=892755274"
+   ]
+  },
+  {
+   "id": "jalan-trend",
+   "names": [
+    "じゃらん"
+   ],
+   "sites": [
+    "trend"
+   ],
+   "href_has": [
+    "pid=892757567"
+   ]
+  },
+  {
+   "id": "nta-trend",
+   "names": [
+    "日本旅行"
+   ],
+   "sites": [
+    "trend"
+   ],
+   "href_has": [
+    "pid=892749522"
+   ]
+  },
+  {
+   "id": "expedia-trend",
+   "names": [
+    "エクスペディア",
+    "Expedia"
+   ],
+   "sites": [
+    "trend"
+   ],
+   "href_has": [
+    "pid=892757568"
+   ]
   }
  ]
 }
