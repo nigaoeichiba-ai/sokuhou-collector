@@ -1097,6 +1097,20 @@ def series_head_title(s: dict) -> str:
     return s.get("search_title") or f"{s['title']} 無料・商用OKのイラスト{len(s['items'])}点"
 
 
+# Sets a visitor uses together, whatever their genre: (heading, slugs or prefix*).  A set of a family links to the others of it (Search Console 2026-11-26: the year-end greeting sets did not
+# link to each other, because the "other sets of the genre" block stops at eight).
+SET_FAMILIES = (("年末年始のあいさつで一緒に使うセット", ("oseibo-reijo-wa", "oseibo-gifts-flat", "nenga-jimai-flat", "mochu-flowers-watercolor", "nenga-frames-*")),)
+
+
+def family_box(s: dict, series: list[dict]) -> str:
+    for heading, patterns in SET_FAMILIES:
+        members = match_series(list(patterns), series)
+        others = [x for x in members if x["slug"] != s["slug"]]
+        if others and len(others) < len(members):
+            return f'<section style="margin-top:44px"><h2><span class="scribble">{esc(heading)}</span></h2>{set_grid(others[:8])}</section>'
+    return ""
+
+
 def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> str:
     base = cfg["site_url"].rstrip("/")
     g, t = genre_name(s["genre"]), touch_name(s["touch"])
@@ -1113,7 +1127,7 @@ def series_page(cfg, preview, s: dict, items, series, og: bool, guides=()) -> st
 {set_guide_html(s)}<section style="margin-top:44px"><h2><span class="scribble">用途例</span></h2><ul class="check">{uses_html(s, USES[s['genre']])}</ul></section>
 {series_facts_box(s, series)}
 {pose_note(s)}{series_pr_box(cfg, s['slug'])}{share(cfg, s['url'], s['title'] + '(無料・商用OKのイラスト)')}
-{('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のセット</span></h2>' + set_grid(same_genre) + '</section>') if same_genre else ''}
+{family_box(s, series)}{('<section style="margin-top:44px"><h2><span class="scribble">他の' + esc(g) + 'のセット</span></h2>' + set_grid(same_genre) + '</section>') if same_genre else ''}
 {guide_box(guides_for(s['genre'], s['touch'], list(guides)))}
 <script type="application/ld+json">{ld}</script>"""
     return page(cfg, preview, path=s["url"], title=f"{series_head_title(s)} | {cfg['site_name']}", description=(s["lead"][:90] + "無料・商用OK・登録不要。")[:140],
