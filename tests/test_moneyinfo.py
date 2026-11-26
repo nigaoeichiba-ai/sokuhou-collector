@@ -107,7 +107,7 @@ class MoneyinfoBuildTest(unittest.TestCase):
         self.assertTrue(proofs)
         sitemap = (self.rel / "sitemap.xml").read_text(encoding="utf-8")
         for proof in proofs:
-            self.assertEqual((self.rel / proof.name).read_bytes(),
+            self.assertEqual((self.rel / proof.name).read_bytes().replace(b"\r\n", b"\n"),    # a Windows checkout writes CRLF; the content is what counts
                              f"google-site-verification: {proof.name}\n".encode("utf-8"))
             self.assertFalse((self.rev / proof.name).exists())
             self.assertNotIn(proof.name, sitemap)
