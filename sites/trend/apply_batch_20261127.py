@@ -6,6 +6,7 @@ import json
 import os
 import re
 import sys
+import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -29,12 +30,12 @@ ARTICLES = {
     "trend-dune-part3-saijoei": a("デューン第3作", "デューンPART3", "デューン PART3", ["trend-kusuriya-eiga-yoshu", "trend-game-hatsubai-2026-12", "trend-netflix-nesage"], "trend-kusuriya-eiga-yoshu"),
     "trend-kagome-nesage-2027": a("カゴメ値上げ2027", "カゴメの値上げ", "カゴメ 値上げ", ["trend-ajinomoto-mayonnaise-nesage", "trend-pan-nesage-2027", "trend-meiji-nesage-2027"], "trend-ajinomoto-mayonnaise-nesage"),
     "trend-sendai-hikari-pageant-2026": a("仙台光のページェント2026", "仙台光のページェント2026", "仙台 光のページェント", ["trend-christmas-market-2026-nyujoryo", "trend-yorunoyo-2026", "trend-nenmatsu-shinkansen-hatsubai-2026"], "trend-yorunoyo-2026"),
-    "trend-atami-fuyu-hanabi-2026": a("熱海の冬花火2026", "熱海の冬花火2026", "熱海 花火 12月", ["trend-yorunoyo-2026", "trend-nenmatsu-9renkyu-2026", "trend-nenmatsu-shinkansen-hatsubai-2026"], "trend-yorunoyo-2026"),
+    "trend-atami-fuyu-hanabi-2026": a("熱海の冬花火2026", "熱海の冬花火2026", "熱海の花火", ["trend-yorunoyo-2026", "trend-nenmatsu-9renkyu-2026", "trend-nenmatsu-shinkansen-hatsubai-2026"], "trend-yorunoyo-2026"),
     "trend-midosuji-illumination-2026": a("御堂筋イルミ2026", "御堂筋イルミ2026", "御堂筋イルミネーション", ["trend-yorunoyo-2026", "trend-christmas-market-2026-nyujoryo", "trend-nenmatsu-9renkyu-2026"], "trend-yorunoyo-2026"),
-    "trend-danto-kanki-yuki-sonae": a("暖冬の急な寒気", "暖冬と雪の備え", "暖冬 雪 備え", ["trend-elnino-danto-2026", "trend-winter-tire-kanki", "trend-teiden-danbou"], "trend-elnino-danto-2026"),
-    "trend-suidokan-toketsu-boshi": a("水道管の凍結対策", "水道管の凍結防止", "水道管 凍結 防止", ["trend-teiden-danbou", "trend-heat-shock-kan", "trend-osouji-november"], "trend-osouji-november"),
-    "trend-hinoiri-hayai-2026": a("日の入りいちばん早い", "日の入りが早い時期", "日の入り 一番早い", ["trend-toji-2026-yuzu-kabocha", "trend-futagoza-ryuseigun-2026", "trend-yorunoyo-2026"], "trend-toji-2026-yuzu-kabocha"),
-    "trend-winter-camp-neru-sobi": a("冬キャンプの寝る装備", "冬キャンプの寝る装備", "冬キャンプ ストーブ", ["trend-teiden-danbou", "trend-futagoza-ryuseigun-2026", "trend-winter-tire-kanki"], "trend-futagoza-ryuseigun-2026"),
+    "trend-danto-kanki-yuki-sonae": a("暖冬の急な寒気", "暖冬と雪の備え", "雪の備え", ["trend-elnino-danto-2026", "trend-winter-tire-kanki", "trend-teiden-danbou"], "trend-elnino-danto-2026"),
+    "trend-suidokan-toketsu-boshi": a("水道管の凍結対策", "水道管の凍結防止", "水道管の凍結防止", ["trend-teiden-danbou", "trend-heat-shock-kan", "trend-osouji-november"], "trend-osouji-november"),
+    "trend-hinoiri-hayai-2026": a("日の入りいちばん早い", "日の入りが早い時期", "日の入り", ["trend-toji-2026-yuzu-kabocha", "trend-futagoza-ryuseigun-2026", "trend-yorunoyo-2026"], "trend-toji-2026-yuzu-kabocha"),
+    "trend-winter-camp-neru-sobi": a("冬キャンプの寝る装備", "冬キャンプの寝る装備", "冬キャンプ", ["trend-teiden-danbou", "trend-futagoza-ryuseigun-2026", "trend-winter-tire-kanki"], "trend-futagoza-ryuseigun-2026"),
 }
 
 # filled in after looking at each returned card
@@ -63,6 +64,21 @@ TODO = {
     "trend-atami-fuyu-hanabi-2026": ("2026-12-25", "花火は12月6日と25日", "熱海の花火、帰り方を先に決める", "終了後の駅は混みます。泊まるか電車で帰るかを決めて、泊まるなら空室を調べましょう。"),
     "trend-midosuji-illumination-2026": ("2026-12-31", "大みそかまで", "御堂筋イルミに行く日を選ぶ", "中之島の催しも目当てなら、12月11日から25日の間で予定を組みましょう。"),
 }
+
+
+_day26_link = day26.link_html
+
+
+def link_html(label):
+    # the public content may only carry the fixed top page of Yahoo! Shopping (tests/test_trend_site), and the link says so
+    mm = re.match(r"Yahoo!ショッピングで(.+?)を探す（PR）", label)
+    if mm:
+        return day26.vc("892755274", urllib.parse.quote("https://shopping.yahoo.co.jp/", safe=""),
+                        "Yahoo!ショッピングのトップから" + mm.group(1) + "を探す")
+    return _day26_link(label)
+
+
+day26.link_html = link_html
 
 
 def build(slug):
