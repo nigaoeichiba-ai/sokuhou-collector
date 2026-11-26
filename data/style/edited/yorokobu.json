@@ -2501,6 +2501,385 @@
   "unchanged": 67,
   "units": 92
  },
+ "gift/christmas-baby/index.html": {
+  "accepted": [
+   {
+    "from": "赤ちゃんへのクリスマスプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "赤ちゃんへのクリスマスプレゼント、種類別の人気4点",
+    "why": "語順を自然にする"
+   },
+   {
+    "from": "布のおもちゃは軽くてやわらかく、握る、振る、なめる遊びが中心の時期でも安心して渡せる品です。",
+    "kind": "item",
+    "to": "布のおもちゃは軽くてやわらかく、握る、振る、なめる遊びが中心の時期に向きます。",
+    "why": "根拠のない安心を外す"
+   },
+   {
+    "from": "月齢が進んでいれば、大きめの積み木や絵本が長く遊べて、親子で一緒に過ごす時間も贈れます。",
+    "kind": "item",
+    "to": "月齢が進んでいれば、大きめの積み木や絵本を長く使えます。親子で一緒に遊べる品です。",
+    "why": "比喩を具体化する"
+   },
+   {
+    "from": "月齢に合う対象年齢の表示を見て小さな部品が外れない作りか確認する。",
+    "kind": "item",
+    "to": "対象年齢が月齢に合うか、小さな部品が外れない作りかを確認する。",
+    "why": "確認点を並べ直す"
+   },
+   {
+    "from": "握る、振る、触るの遊びに向き、ベビーカーや布団まわりにも置けます。",
+    "kind": "para",
+    "to": "布のおもちゃは握る、振る、触る遊びに向き、ベビーカーや布団まわりにも置けます。",
+    "why": "品名を主語にする"
+   },
+   {
+    "from": "よだれや食事で毎日使えて、名前入りなら初めてのクリスマスの記念にも残ります。",
+    "kind": "para",
+    "to": "よだれや食事のときに毎日使えます。名前入りなら、初めてのクリスマスの記念にも残ります。",
+    "why": "用途と記念性を分ける"
+   }
+  ],
+  "date": "2026-11-26",
+  "deleted": [
+   "ほかの商品"
+  ],
+  "diagnosis": [
+   "構成: 選び方と安全の基準が商品一覧より後ろにあり、同じ候補の説明も重複しています。",
+   "具体: 「喜ばれやすい」「安心」「ぴったり」より、月齢、素材、使う場面を示す方が判断しやすくなります。",
+   "見出し: 「こんな贈り方はどうでしょう」など、節の中身が分からない見出しがあります。",
+   "リズム: 一文に用途や利点を詰めた箇所を分けると、短時間でも要点を拾えます。"
+  ],
+  "failed": "",
+  "hash": "8ba194b71001",
+  "needs_check": [
+   {
+    "question": "赤ちゃん向けのページに「恋人への平均予算」を載せる意図があるか確認してください。",
+    "text": "クリスマスにみんなはいくらで何を贈る？"
+   },
+   {
+    "question": "リンツ リンドール 11種類アソートは、赤ちゃん本人ではなく保護者向けの商品として掲載しているのか確認してください。",
+    "text": "Amazonで見つけた贈り物"
+   }
+  ],
+  "page": "gift/christmas-baby/index.html",
+  "rejected": [
+   {
+    "after": "価格・在庫は2026年11月26日 11:36時点の情報です。掲載情報はよろこぶプレゼントの作成者が管理しています。価格や販売状況は変更される場合があります。購",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月26日 11:36時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "after": "クリスマスプレゼントの調査結果を見る(データ室)",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['クリスマスプレゼント']"
+    ],
+    "text": "調査の数字をくわしく見る(データ室)"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "月齢と使い方で選ぶクリスマスプレゼント",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']"
+    ],
+    "text": "赤ちゃんへのクリスマス、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "月齢が進んだ赤ちゃんなら、積み木や絵本を親子で長く楽しめます。クリスマスの思い出にも残る品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['絵本']"
+    ],
+    "text": "月齢が進んだ赤ちゃんなら、親子で長く遊べて、クリスマスの思い出にも残ります。"
+   },
+   {
+    "after": "残り方と定番度で比べる",
+    "problems": [
+     "new claim: 定番"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "大きな品や生ものは、受け取りや保管の都合があるため、贈る前に相手の予定を確認します",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['都合']"
+    ],
+    "text": "相手の予定を縛る大きな品や生ものは受け取りや保管を確認します"
+   },
+   {
+    "after": "小さな部品が外れやすいおもちゃは誤飲のおそれがあるため避けます",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['誤飲']"
+    ],
+    "text": "小さな部品が外れやすいおもちゃを確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "クリスマス柄のロンパースやスタイは当日の写真に残せます。毎日の暮らしでも使え、洗い替えにもなります。",
+    "problems": [
+     "added claim/hedge removed: 「写真に写りやすい」が「写真に残せる」という断定に変わっている"
+    ],
+    "text": "クリスマス柄のロンパースやスタイは、当日の写真に写りやすく、毎日の暮らしでも使えて洗い替えにも役立ちます。"
+   },
+   {
+    "after": "洗えるか、肌に触れる素材は何かを商品説明で確かめる。服のサイズは少し先の月齢を選ぶ。",
+    "problems": [
+     "condition dropped: 素材がやさしいかという確認条件が落ちている"
+    ],
+    "text": "洗えるか、肌にふれる素材はやさしいかを商品説明で確かめ、サイズは少し先の月齢を選ぶ。"
+   },
+   {
+    "after": "置き場所や好みに合わせてサイズと色はシンプルなものを選ぶ。迷ったら消耗品にする。",
+    "problems": [
+     "condition dropped: 「親が置き場所や好みで困らないよう」という対象と目的が落ちている"
+    ],
+    "text": "親が置き場所や好みで困らないよう、サイズと色はシンプルなものを選び、迷えば消耗品にする。"
+   },
+   {
+    "after": "クリスマス当日の写真に残せて洗い替えとして普段も着てもらえる一着です。",
+    "problems": [
+     "added claim: 「写真に映える」から「写真に残せる」という別の効用が足されている"
+    ],
+    "text": "クリスマス当日の写真に映え、洗い替えとして普段にも着せてもらえる一着です。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「喜ばれやすい理由…」〜「親が置き場所や好みで困らない…」と「気をつけたいこと…」〜「小さな部品が外れやすいおもち…」を「赤ちゃんの初めてのクリスマス…」の直後へ移し、月齢、安全、手入れの基準を示してから商品を見せる構成にします。",
+   "「喜ばれやすい理由…」〜「月齢が進んでいれば、大きめの…」と「赤ちゃんへのクリスマス、こん…」〜「楽天市場で「名入れ スタイ …」は候補と理由が重なるため、一つの節に統合します。",
+   "「ほかの商品…」は後続の商品がないため削除します。商品が動的に入る見出しなら削除せず、表示条件を確認してください。",
+   "ページ末は「一言入れて探す…」〜「Amazonで探す…」の商品検索で終え、その後の関連記事一覧は補助情報として分けます。"
+  ],
+  "unchanged": 63,
+  "units": 89
+ },
+ "gift/christmas-girlfriend/index.html": {
+  "accepted": [
+   {
+    "from": "彼女へのクリスマスプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "彼女へのクリスマスプレゼント4点",
+    "why": "根拠のない人気を削除"
+   },
+   {
+    "from": "彼女へのほかのイベント",
+    "kind": "heading",
+    "to": "彼女へのプレゼント、イベント別",
+    "why": "不自然な係り方を修正"
+   }
+  ],
+  "date": "2026-11-26",
+  "deleted": [
+   "喜ばれやすい理由",
+   "マフラーはクリスマスデートの帰り道や通勤で使え、顔まわりにくるため好きな色に寄せると安心です。",
+   "手袋は寒い朝の駅や買い物で役立ち、バッグに入る薄手タイプなら荷物になりにくいです。携帯向きです。",
+   "ルームウェアは休日の朝や映画を見る夜に着られ、外では見せないくつろぎの時間を贈れます。冬向きです。"
+  ],
+  "diagnosis": [
+   "構成: 予算、注意点、選び方が離れており、判断する順序が見えにくくなっています。",
+   "構成: マフラー、手袋、ルームウェアの用途が別の節で重複しています。",
+   "見出し: 「喜ばれやすい理由」「こんな贈り方」など、節の中身が分かりにくい言葉があります。",
+   "語: 「携帯向き」「日常で出番を作る」など、ふつうの会話では使いにくい表現が混じっています。"
+  ],
+  "failed": "",
+  "hash": "ddea8c5972bd",
+  "needs_check": [],
+  "page": "gift/christmas-girlfriend/index.html",
+  "rejected": [
+   {
+    "after": "彼女へのクリスマスプレゼントは、見た目だけで決めず、普段の服や家での過ごし方に合う小物を選びます。デート中に渡すなら、箱や紙袋の大きさも確認します。",
+    "problems": [
+     "names / quoted words lost: ['クリスマス', 'マフラー', 'ルームウェア']",
+     "words added that the original does not have (information must not grow): ['クリスマスプレゼント', '普段', '確認', '大']"
+    ],
+    "text": "彼女にクリスマスの小物を贈るなら、かわいさだけで決めず、本人がいつもの服に合わせられるかを見たいところです。マフラーや手"
+   },
+   {
+    "after": "彼女へのクリスマスプレゼントには、普段の服に合うマフラーや手袋、家で着るルームウェアが選びやすい品です。デートの途中で渡すなら、箱や紙袋の大きさも確認します。",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']",
+     "words added that the original does not have (information must not grow): ['クリスマスプレゼント', '普段', '確認']",
+     "condition removed (2 -> 1)"
+    ],
+    "text": "彼女にクリスマスの小物を贈るなら、かわいさだけで決めず、本人がいつもの服に合わせられるかを見たいところです。マフラーや手"
+   },
+   {
+    "after": "クリスマスプレゼントの予算と贈った人の割合",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']"
+    ],
+    "text": "クリスマスにみんなはいくらで何を贈る？"
+   },
+   {
+    "after": "手袋は指先のサイズ感が大切です。迷ったら、伸縮性のある素材かミトン型を選びます。",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "手袋は指先のサイズ感が大事なので、迷う場合は伸縮性のある素材やミトン型を選ぶ。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "彼女へのクリスマスプレゼントの候補",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']"
+    ],
+    "text": "彼女へのクリスマス、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "ハンドクリームは冬に乾燥する手元に使えます。見た目だけでなく、普段使えるかも見て選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ハンドクリーム']"
+    ],
+    "text": "冬の乾燥する手元に使いやすく、かわいさだけでなく日常で出番を作れます。"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、彼女へのクリスマスプレゼントに合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女', 'クリスマスプレゼント']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "11種類の味を詰め合わせた定番のチョコレートです。彼女に好きな味を選んでもらえます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女']"
+    ],
+    "text": "11種類の味を詰め合わせた定番のチョコレートです。相手に好きな味を選んでもらえます。"
+   },
+   {
+    "after": "彼女の好きなもの、趣味、年齢などを入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['彼女', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "スマホ対応の手袋",
+    "problems": [
+     "a search phrase, title or name of a theme: not reworded (SEO, owner policy: no change without evidence)"
+    ],
+    "text": "手袋 スマホ"
+   },
+   {
+    "after": "大きな品や生ものは、相手が受け取れる日時と保管場所を確認してから選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日時']"
+    ],
+    "text": "相手の予定を縛る大きな品や生ものは受け取りや保管を確認します"
+   },
+   {
+    "after": "クリスマスプレゼントを贈る相手",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']"
+    ],
+    "text": "クリスマスに贈るほかの相手"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月26日 11:36時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (dataroom.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "調査の数字をくわしく見る(データ室)"
+   },
+   {
+    "after": "マフラーは彼女のコート、靴、バッグの色に合わせます。手持ちの服から浮かない色を選びます。",
+    "problems": [
+     "added claim: コート・靴・バッグの色に合わせるという指定が足されています。"
+    ],
+    "text": "マフラーは彼女のコート、靴、バッグの色を見て、手持ちの服から浮かない色にする。"
+   },
+   {
+    "after": "ルームウェアは肌ざわりと洗濯のしやすさを確認します。厚すぎず、収納しやすいものを選びます。",
+    "problems": [
+     "added claim: 「収納に困らない」が、より強い「収納しやすい」に変わっています。"
+    ],
+    "text": "ルームウェアは肌ざわりと洗濯のしやすさを確認し、厚すぎて収納に困らないものにする。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "一言入れて探す"
+   }
+  ],
+  "structure_suggestions": [
+   "「クリスマスにみんなはいくらで…」〜「調査の数字をくわしく見る(デ…」の予算と調査データを「彼女にクリスマスの小物を贈る…」の直後へ移し、最初に金額の目安を確認できる順にします。",
+   "「気をつけたいこと…」〜「服や靴はサイズを確認してから…」の注意点を「選び方のポイント…」の前へ移し、受け取りやサイズを確認してから品物を選ぶ流れにします。",
+   "「この日を忘れない(たいせつな…」は「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」へ移し、候補を決めたあとの行動としてまとめます。"
+  ],
+  "unchanged": 61,
+  "units": 89
+ },
  "gift/coming-of-age-friend-female/index.html": {
   "accepted": [
    {
@@ -18907,6 +19286,121 @@
   ],
   "unchanged": 41,
   "units": 59
+ },
+ "shogatsu/noshi-watashikata/index.html": {
+  "accepted": [
+   {
+    "from": "お年賀ののしは紅白の蝶結びの水引に上段に「御年賀」、下段に贈り主の名前を書くのが共通の基本です。水引の本数と姓かフルネームかは百貨店の案内が分かれています。違いを並べたうえで当日の流れを組み立てました。",
+    "kind": "note",
+    "to": "お年賀ののしは紅白の蝶結びの水引を使い、上段に「御年賀」、下段に贈り主の名前を書くのが基本です。水引の本数と、名前を姓だけにするかフルネームにするかは、百貨店によって案内が分かれます。",
+    "why": "予告を削り結論を先に"
+   },
+   {
+    "from": "大丸松坂屋は手渡しでは外のしがよく用いられ、配送では内のしが適切だと案内しています。配送する場合は表書きを「ご挨拶」などとする方法も案内されています。",
+    "kind": "para",
+    "to": "大丸松坂屋は手渡しでは外のしがよく用いられ、配送では内のしが適切だと案内しています。配送の場合、表書きを「ご挨拶」などにする方法も挙げています。",
+    "why": "重複を抑え文を簡潔に"
+   },
+   {
+    "from": "前もって連絡して都合のよい日と時間を聞きます。午前は避け、午後の落ち着いた時間に合わせる、と案内されています",
+    "kind": "item",
+    "to": "前もって連絡し、都合のよい日と時間を聞きます。午前を避け、午後の落ち着いた時間に合わせるよう案内されています",
+    "why": "不自然な読点を直す"
+   },
+   {
+    "from": "「つまらないものですが」は三越伊勢丹の案内が避けるよう勧める言い方です",
+    "kind": "item",
+    "to": "三越伊勢丹は「つまらないものですが」を避けるよう案内しています",
+    "why": "主語と判断を明確にする"
+   }
+  ],
+  "date": "2026-11-26",
+  "deleted": [
+   "お年賀ののしは紅白の蝶結びの水引に上段に「御年賀」、下段に贈り主の名前を書くのが共通の基本です。水引の本数と姓かフルネームかは百貨店の案内が分かれています。違いを並べたうえで当日の流れを組み立てました"
+  ],
+  "diagnosis": [
+   "構成: 導入が重複し、表書きの説明が渡し方の節に混在しています。",
+   "リズム: 一文に複数の案内を詰めた箇所があり、判断の基準がつかみにくくなっています。",
+   "見出し: 「並べる」という編集側の動作より、比較する内容を示すほうが明確です。"
+  ],
+  "failed": "",
+  "hash": "c40ddf987366",
+  "needs_check": [],
+  "page": "shogatsu/noshi-watashikata/index.html",
+  "rejected": [
+   {
+    "after": "水引の本数と名前 百貨店三社の案内",
+    "problems": [
+     "numbers differ: ['三'] -> ['百', '三']"
+    ],
+    "text": "水引と名前: 三社の案内を並べる"
+   },
+   {
+    "after": "お年賀は紅白の蝶結びを使い、水引の上に「御年賀」、下に贈り主の名前を書きます。本数と、名前を姓だけにするかフルネームにするかは、百貨店によって案内が分かれます。",
+    "problems": [
+     "names / quoted words lost: ['「御年賀」']",
+     "words added that the original does not have (information must not grow): ['注文']",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "共通する基本は紅白の蝶結びで、水引の上に「御年賀」、下に贈り主の名前を書く形です。本数と姓かフルネームかは百貨店によって"
+   },
+   {
+    "after": "表書きの基本は「御年賀」です。三越伊勢丹は「賀正」「迎春」も使えるとし、大丸松坂屋も「賀正」を挙げています。三越伊勢丹の予算別の記事では、特別にお世話になった相",
+    "problems": [
+     "attribution removed (1 -> 0)"
+    ],
+    "text": "表書きは「御年賀」が基本で、三越伊勢丹は「賀正」「迎春」も使えるとしています。大丸松坂屋も「賀正」を挙げています。特別に"
+   },
+   {
+    "after": "訪問先の家で手渡す場合、当サイトでは袋から品物を出し、両手で渡す形を勧めます。大丸松坂屋は風呂敷や手提げ袋に包んで持参し、あいさつをしてから両手で渡すと案内して",
+    "problems": [
+     "attribution removed (1 -> 0)",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "当サイトでは訪問先の家で手渡す場合は、袋から出して品物を両手で渡す形を勧めます。大丸松坂屋の案内は、風呂敷や手提げ袋に包"
+   },
+   {
+    "after": "家族が多い相手には「皆さんで召し上がってください」と添えると受け取ってもらいやすくなります",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手']"
+    ],
+    "text": "人数の多い家には「皆さんで召し上がってください」と添えると受け取りやすくなります"
+   },
+   {
+    "after": "大丸松坂屋は風呂敷や手提げ袋に包んで持参するよう案内しています。持参用の袋を使うこと自体は問題ありません。当サイトでは手渡すときに品物を袋から出し、両手で渡す形",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['自体']",
+     "attribution removed (1 -> 0)",
+     "condition removed (1 -> 0)"
+    ],
+    "text": "大丸松坂屋の案内は風呂敷や手提げ袋に包んで持参するとしています。持っていくときの袋は問題ありません。当サイトでは渡すとき"
+   },
+   {
+    "after": "高島屋は個人なら姓のみ、大丸松坂屋はフルネームと案内しています。当サイトでは迷ったら頼んだお店の標準の形に任せてよいと考えます。贈り先に同じ姓の人が多い場合はフ",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場合']"
+    ],
+    "text": "高島屋は個人なら姓のみ、大丸松坂屋はフルネームと案内が分かれています。当サイトでは迷ったら頼んだお店の標準の形に任せてよ"
+   },
+   {
+    "after": "三越伊勢丹の案内では、通常の帰省の手土産はのしなしでも構わないとされています。のしを付けずに渡すなら、表書きは要りません。渡すときの一言で新年のあいさつと贈り主",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['一言']"
+    ],
+    "text": "三越伊勢丹の案内では、通常の帰省の手土産はのしなしでも構わないとされています。のしを付けずに渡す場合は特別な表書きは要り"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (shogatsu.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "お正月の特集のトップへ"
+   }
+  ],
+  "structure_suggestions": [
+   "「表書きは「御年賀」が基本で、…」は表書きの種類を説明しているため、「共通する基本は紅白の蝶結びで…」の直後へ移し、「水引と名前: 三社の案内を並…」の節にまとめます。"
+  ],
+  "unchanged": 35,
+  "units": 49
  },
  "shogatsu/okashi-igai/index.html": {
   "accepted": [
