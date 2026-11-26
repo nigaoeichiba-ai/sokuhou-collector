@@ -3,6 +3,7 @@
 // (the lists of coming dates) is made here from schedule/registry.json at build time, so it is right on the day the site is built (the site is built again every day).
 import {readFile} from 'node:fs/promises';
 import {affiliateSection} from '../dist/affiliate.js';
+import {listedEdition} from '../dist/current-round.js';
 
 // Equivalent single-exam pages go to the detail page of the same exam (HTTP 301).
 export const redirects={
@@ -88,7 +89,7 @@ export async function loadLegacy(root){
  for(const slug of Object.keys(config)){try{out[slug]=JSON.parse(await readFile(new URL('legacy/'+slug+'.json',root),'utf8'));}catch(e){if(e.code!=='ENOENT')throw e;}}
  return out;
 }
-const examCard=e=>`<a href="/exams/${e.id}/"><span>${esc(e.field)} · ${esc(e.edition)}</span><strong>${esc(e.name)}</strong><b>›</b></a>`;
+const examCard=registry=>e=>`<a href="/exams/${e.id}/"><span>${esc(e.field)} · ${esc(listedEdition(e,registry.exams,registry.rows))}</span><strong>${esc(e.name)}</strong><b>›</b></a>`;
 const fmtTime=r=>r.time?`${r.time}${r.type==='deadline'?'まで':''}`:'';
 export function liveSection(registry,live,today){
  const ids=new Map(registry.exams.filter(e=>inScope(e,live.scope)).map(e=>[e.id,e]));
@@ -101,11 +102,11 @@ export function liveSection(registry,live,today){
 function relatedSection(registry,related,heading='日程と申し込みの案内'){
  const exams=registry.exams.filter(e=>inScope(e,related));
  if(!exams.length)return '';
- return `<section class="ed-other"><h2>${esc(heading)}</h2><div>${exams.slice(0,24).map(examCard).join('')}</div></section>`;
+ return `<section class="ed-other"><h2>${esc(heading)}</h2><div>${exams.slice(0,24).map(examCard(registry)).join('')}</div></section>`;
 }
 function listSection(registry,mode){
  const groups=mode==='all'?[['資格・検定','cat:qualification'],['大学入試','cat:university'],['公立高校入試','cat:school']]:[['都道府県別の公立高校入試',mode]];
- return groups.map(([name,scope])=>{const exams=registry.exams.filter(e=>inScope(e,scope));return `<section class="ed-section"><h2>${esc(name)}（${exams.length}件）</h2><ul class="ed-link-list">${exams.map(e=>`<li><a href="/exams/${e.id}/">${esc(e.name)}</a><span>${esc(e.edition)}</span></li>`).join('')}</ul></section>`;}).join('');
+ return groups.map(([name,scope])=>{const exams=registry.exams.filter(e=>inScope(e,scope));return `<section class="ed-section"><h2>${esc(name)}（${exams.length}件）</h2><ul class="ed-link-list">${exams.map(e=>`<li><a href="/exams/${e.id}/">${esc(e.name)}</a><span>${esc(listedEdition(e,registry.exams,registry.rows))}</span></li>`).join('')}</ul></section>`;}).join('');
 }
 function childrenSection(legacy,parent,heading,self){
  const items=Object.values(legacy).filter(d=>config[d.slug]&&config[d.slug].parent===parent&&d.slug!==self);

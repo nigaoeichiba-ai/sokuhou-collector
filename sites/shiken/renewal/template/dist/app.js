@@ -6,6 +6,7 @@ import {CHECKED_AT,scheduleMeta,eventLabel,scheduleSummary,eventToIcs} from './o
 import {sourceHtml,eventSourceHtml,renderSourceOverview} from './schedule-ui.js';
 import {monthDays,shiftMonth,parseDate,dateKey,jstToday,dayDiff,eventsFor,readSaved} from './calendar.js';
 import {events,exams,types,guides} from './data.js';
+import {shownRound,listedEdition} from './current-round.js';
 // Restore inactive screens for navigation. Static HTML exposes only this page's heading.
 const shellData=document.getElementById('page-shells');
 if(shellData){for(const [id,html] of Object.entries(JSON.parse(shellData.textContent)))document.getElementById(id).innerHTML=html;shellData.remove();}
@@ -56,9 +57,9 @@ function renderDay(){
 function renderSituations(){
  $('#situation-links').innerHTML=guides.map(g=>`<a class="situation-card" href="#/guide/${g.id}"><strong>${g.title}</strong><small>${g.sub}</small><span class="situation-art sprite art-${g.art}" aria-hidden="true"></span></a>`).join('');
 }
-function eventSummary(examId,type){return scheduleSummary(events,examId,type,key=>formatDate(key,true));}
+function eventSummary(examId,type){return scheduleSummary(events,shownRound(examId,events),type,key=>formatDate(key,true));}
 function examCard(exam,{prepared=false}={}){
- return `<article class="exam-card"><h3>${exam.name}</h3><p>${exam.edition}</p><p><strong>試験日</strong>　${eventSummary(exam.id,'exam')}</p><p><strong>申込締切</strong>　${eventSummary(exam.id,'deadline')}</p><div class="exam-actions"><button class="text-button" data-exam="${exam.id}">日程・申込方法を見る ›</button><button class="save-button" data-save="${exam.id}" aria-pressed="${state.saved.includes(exam.id)}">${state.saved.includes(exam.id)?'✓ 保存済み':'♧ 保存'}</button></div>${sourceHtml(exam.id)}<label class="applied-label"><input type="checkbox" data-applied="${exam.id}" ${state.applied.includes(exam.id)?'checked':''}>申込を済ませた</label>${prepared?`<a class="text-link" href="#/guide/prepared?exam=${exam.id}">受験前の準備を確認 ›</a>`:''}</article>`;
+ return `<article class="exam-card"><h3>${exam.name}</h3><p>${listedEdition(exam,exams,events)}</p><p><strong>試験日</strong>　${eventSummary(exam.id,'exam')}</p><p><strong>申込締切</strong>　${eventSummary(exam.id,'deadline')}</p><div class="exam-actions"><button class="text-button" data-exam="${exam.id}">日程・申込方法を見る ›</button><button class="save-button" data-save="${exam.id}" aria-pressed="${state.saved.includes(exam.id)}">${state.saved.includes(exam.id)?'✓ 保存済み':'♧ 保存'}</button></div>${sourceHtml(exam.id)}<label class="applied-label"><input type="checkbox" data-applied="${exam.id}" ${state.applied.includes(exam.id)?'checked':''}>申込を済ませた</label>${prepared?`<a class="text-link" href="#/guide/prepared?exam=${exam.id}">受験前の準備を確認 ›</a>`:''}</article>`;
 }
 function renderSaved(){
  const saved=exams.filter(e=>state.saved.includes(e.id));
@@ -68,7 +69,7 @@ function renderSaved(){
 function renderSearch(query){
  const q=query.trim().toLocaleLowerCase('ja');const items=exams.filter(e=>!q||`${e.name} ${e.short} ${e.aliases}`.toLocaleLowerCase('ja').includes(q));
  $('#search-results').hidden=false;$('#search-heading').textContent=q?`「${query.trim()}」の検索結果`:'掲載している試験';
- $('#search-result-list').innerHTML=items.length?items.map(e=>`<div class="search-result-row"><div><strong>${e.name}</strong><p class="small-note">${e.edition}</p></div><button class="primary" data-exam="${e.id}">日程を見る ›</button></div>`).join(''):'<p>名前に合う試験が見つかりませんでした。英検・TOEIC・簿記など、短い名前でもう一度探してみましょう。掲載していない試験・実施回もあります。</p>';
+ $('#search-result-list').innerHTML=items.length?items.map(e=>`<div class="search-result-row"><div><strong>${e.name}</strong><p class="small-note">${listedEdition(e,exams,events)}</p></div><button class="primary" data-exam="${e.id}">日程を見る ›</button></div>`).join(''):'<p>名前に合う試験が見つかりませんでした。英検・TOEIC・簿記など、短い名前でもう一度探してみましょう。掲載していない試験・実施回もあります。</p>';
  $('#search-results').scrollIntoView({block:'start',behavior:'smooth'});
 }
 function dialog(content){$('#dialog-body').innerHTML=content;$('#detail-dialog').showModal();}

@@ -7,6 +7,7 @@ the contact form and the visit counter.  Each check has a case that must fail (a
 from __future__ import annotations
 
 import importlib.util
+import subprocess
 import datetime
 import json
 import re
@@ -365,6 +366,27 @@ class Renewal(unittest.TestCase):
         self.assertIn("2027年1月10日実施回", rounds)          # those who applied for 1/10 still find its dates
         self.assertIn("2027年1月10日(日)", rounds)
         self.assertNotIn('href="/exams/toeic-20270124/"', rounds)
+
+    def test_the_lists_show_the_same_toeic_round_as_the_detail_page(self):
+        # 2026-11-27: the detail page moved to 1/24 while the top, the guides and the lists still showed 1/10 with its closed deadline
+        old = "2027年1月10日実施回"
+        def listed(html):      # the places that name the parent's round (a dated row of a schedule table keeps the row's own round)
+            pat = (r'<a href="/exams/toeic/">[^<]*実施回[^<]*</a>', r'<a href="/exams/toeic/"><span>[^<]*</span>', r'<a href="/exams/toeic/">TOEIC[^<]*</a><span>[^<]*</span>',
+                   r'<h3><a href="/exams/toeic/">[^<]*</a></h3><p class="catalog-edition">[^<]*</p>', r'<h3>TOEIC[^<]*公開テスト</h3><p>[^<]*</p>', r'data-compare="toeic"[^>]*><span>TOEIC<small>[^<]*</small>')
+            return [m for p in pat for m in re.findall(p, html)]
+        for rel in ("index.html", "minkan/index.html", "schedule/index.html", "guides/decided/index.html", "guides/discover/index.html", "guides/compare/index.html"):
+            found = listed(self.pages[rel])
+            self.assertTrue(found, rel)
+            self.assertEqual([x for x in found if old in x], [], rel)
+            self.assertTrue(any("2027年1月24日" in x for x in found), rel)
+        # negative case: the list as it was is recognised
+        self.assertTrue([x for x in listed('<h3><a href="/exams/toeic/">TOEIC L&amp;R 公開テスト</a></h3><p class="catalog-edition">2027年1月10日実施回</p>') if old in x])
+        # the rule itself: its own round up to the last day of applications, the next one after it
+        rows = [{"exam": "toeic", "type": "deadline", "date": "2026-11-26"}, {"exam": "toeic-20270124", "type": "deadline", "date": "2026-12-09"}]
+        script = ("const m=await import(" + json.dumps((TEMPLATE / "dist" / "current-round.js").as_uri()) + ");const rows=" + json.dumps(rows)
+                  + ";console.log(['2026-11-26','2026-11-27','2026-12-10'].map(d=>m.shownRound('toeic',rows,d)).join(','))")
+        r = subprocess.run([BUILD.find_node(), "--input-type=module", "-e", script], capture_output=True, text=True, encoding="utf-8")
+        self.assertEqual(r.stdout.strip(), "toeic,toeic-20270124,toeic", r.stderr)
 
     def test_thin_utility_pages_are_noindex_and_out_of_the_sitemap(self):
         # Search Console (2026-11-20): crawled-not-indexed jumped to 80; the thin fixed pages (form, privacy, change log) are kept out of the index and the sitemap

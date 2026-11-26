@@ -18,6 +18,7 @@ import {loadRegistry,digest,generated,today as jstToday} from './schedule-core.m
 import {redirects,loadLegacy,legacyMain,siteWideMain,siteWide,config,SITE_NAME} from './legacy-pages.mjs';
 import {fillTsuikensa} from './tsuikensa.mjs';
 import {apacheConfig} from './apache-config.mjs';
+import {listedEdition} from '../dist/current-round.js';
 
 const run=promisify(execFile);
 const root=new URL('../',import.meta.url),rootDir=fileURLToPath(root);
@@ -108,7 +109,7 @@ export async function buildSite(out){
 function autoCrumbs(pathname,registry){
  if(pathname==='/')return null;
  if(pathname.startsWith('/guides/'))return [{name:'トップ',url:'/'},{name:'状況から探す',url:'/#situations'},{name:guideName(pathname),url:pathname}];
- if(pathname.startsWith('/exams/')){const e=registry.exams.find(x=>x.id===pathname.split('/')[2]);return e?[{name:'トップ',url:'/'},{name:'試験を探す',url:'/guides/decided/'},{name:e.name+'（'+e.edition+'）',url:pathname}]:null;}
+ if(pathname.startsWith('/exams/')){const e=registry.exams.find(x=>x.id===pathname.split('/')[2]);return e?[{name:'トップ',url:'/'},{name:'試験を探す',url:'/guides/decided/'},{name:e.name+'（'+listedEdition(e,registry.exams,registry.rows)+'）',url:pathname}]:null;}
  return null;
 }
 const guideName=p=>({'/guides/decided/':'受ける試験が決まっている方','/guides/discover/':'これから選ぶ方','/guides/compare/':'複数の試験を受ける方','/guides/family/':'お子さんの入試を調べる方','/guides/prepared/':'申し込み済みの方'}[p]||'ご案内');

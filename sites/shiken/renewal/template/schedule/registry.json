@@ -5812,6 +5812,11 @@
       "sourceStatus": "verified",
       "application": [
         {
+          "start": "2026-12-07",
+          "label": "志願者情報等の登録（出願サイト）",
+          "sourceId": "catalog-koko-okayama"
+        },
+        {
           "start": "2027-01-26",
           "label": "特別入学者選抜等 出願",
           "sourceId": "catalog-koko-okayama"

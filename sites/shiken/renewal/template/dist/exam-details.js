@@ -3,16 +3,14 @@ import {CHECKED_AT,scheduleMeta,scheduleSources,eventLabel as officialEventLabel
 import {sourceHtml,eventSourceHtml,futureHtml} from './schedule-ui.js';
 import {examDetails,detailPhases} from './exam-details-data.js';
 import {affiliateSection,groupFor} from './affiliate.js';
+import {shownRound} from './current-round.js';
 let detailAbort;
 export function mountExam(id,params,c){
  detailAbort?.abort();detailAbort=new AbortController();const signal=detailAbort.signal;
  const {state,exams,events,formatDate,esc,checklist,updateProgress}=c;
  const base=exams.find(e=>e.id===id),meta=examDetails[id];if(!base||!meta){location.hash='#/guide/decided';return;}
  // the TOEIC parent page (2026-11-27): once its own round stops taking applications, it shows the next round of the series that still does (sid = the round whose dates are shown); a link to one of the old round's events keeps the old round
- const SERIES={toeic:/^toeic-\d{8}$/};
- const sid=(()=>{const re=SERIES[id];if(!re)return id;const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Tokyo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()),own=events.filter(e=>e.exam===id);
-  if(own.some(e=>(e.type==='deadline'&&e.date>=day)||e.id===params.get('event')))return id;
-  const next=events.filter(e=>re.test(e.exam)&&e.type==='deadline'&&e.date>=day).sort((a,b)=>a.date.localeCompare(b.date))[0];return next?next.exam:id;})();
+ const sid=events.some(e=>e.exam===id&&e.id===params.get('event'))?id:shownRound(id,events);
  const exam=sid===id?base:{...base,edition:exams.find(e=>e.id===sid).edition};
  const root=document.querySelector('#exam-page'),ownEvents=events.filter(e=>e.exam===sid).sort((a,b)=>a.date.localeCompare(b.date));
  const eventLabel=e=>officialEventLabel(e)+(e.planned?'（予定）':'');
