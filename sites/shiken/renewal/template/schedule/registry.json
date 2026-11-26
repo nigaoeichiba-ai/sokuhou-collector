@@ -1093,7 +1093,7 @@
       "aliases": "2027年度 岡山県 公立高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "page": "https://www.pref.okayama.lg.jp/uploaded/life/1015516_9804789_misc.pdf",
+      "page": "https://www.pref.okayama.lg.jp/uploaded/life/1061952_10292582_misc.pdf",
       "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
       "category": "school"
     },
@@ -1165,7 +1165,7 @@
       "aliases": "2027年度 佐賀県 公立高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "page": "https://www.pref.saga.lg.jp/kyouiku/kiji003119218/3_119218_389544_up_7eamtra8.pdf",
+      "page": "https://www.pref.saga.lg.jp/kyouiku/kiji003121187/3_121187_403049_up_y3avgnct.pdf",
       "description": "学校・課程・選抜方法で必要な手続きが異なります。中学校への提出期限は、県の締切より早いことがあります。",
       "category": "school"
     },
@@ -1772,8 +1772,8 @@
       "url": "https://www.pref.shimane.lg.jp/education/kyoiku/senbatsu/senbatsu_info/index.data/R9_nyuugakusyasenbatsujissiyoukou.pdf"
     },
     "catalog-koko-okayama": {
-      "title": "令和9年度 岡山県公立高等学校入学者選抜 公式日程",
-      "url": "https://www.pref.okayama.lg.jp/uploaded/life/1015516_9804789_misc.pdf"
+      "title": "令和9年度 岡山県立高等学校入学者選抜実施要項",
+      "url": "https://www.pref.okayama.lg.jp/uploaded/life/1061952_10292582_misc.pdf"
     },
     "catalog-koko-hiroshima": {
       "title": "令和9年度 広島県公立高等学校入学者選抜 公式日程",
@@ -1800,8 +1800,8 @@
       "url": "https://www.pref.fukuoka.lg.jp/uploaded/attachment/284848.pdf"
     },
     "catalog-koko-saga": {
-      "title": "令和9年度 佐賀県公立高等学校入学者選抜 公式日程",
-      "url": "https://www.pref.saga.lg.jp/kyouiku/kiji003119218/3_119218_389544_up_7eamtra8.pdf"
+      "title": "令和9年度 佐賀県立高等学校入学者選抜実施要項",
+      "url": "https://www.pref.saga.lg.jp/kyouiku/kiji003121187/3_121187_403049_up_y3avgnct.pdf"
     },
     "catalog-koko-kumamoto": {
       "title": "令和9年度 熊本県公立高等学校入学者選抜 公式日程",
@@ -5807,8 +5807,8 @@
       "field": "高校入試",
       "edition": "2027年度",
       "checkedAt": "2026-11-27",
-      "sourceUrl": "https://www.pref.okayama.lg.jp/uploaded/life/1015516_9804789_misc.pdf",
-      "sourceTitle": "令和9年度 岡山県公立高等学校入学者選抜 公式日程",
+      "sourceUrl": "https://www.pref.okayama.lg.jp/uploaded/life/1061952_10292582_misc.pdf",
+      "sourceTitle": "令和9年度 岡山県立高等学校入学者選抜実施要項",
       "sourceStatus": "verified",
       "application": [
         {
@@ -6120,8 +6120,8 @@
       "field": "高校入試",
       "edition": "2027年度",
       "checkedAt": "2026-11-27",
-      "sourceUrl": "https://www.pref.saga.lg.jp/kyouiku/kiji003119218/3_119218_389544_up_7eamtra8.pdf",
-      "sourceTitle": "令和9年度 佐賀県公立高等学校入学者選抜 公式日程",
+      "sourceUrl": "https://www.pref.saga.lg.jp/kyouiku/kiji003121187/3_121187_403049_up_y3avgnct.pdf",
+      "sourceTitle": "令和9年度 佐賀県立高等学校入学者選抜実施要項",
       "sourceStatus": "verified",
       "application": [
         {
