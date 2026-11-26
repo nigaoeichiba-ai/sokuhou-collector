@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-25",
- "data_basis": "2026年11月15日確認",
+ "updated": "2026-11-26",
+ "data_basis": "2026年11月26日確認",
  "sources": [
   "nta_2030"
  ],
@@ -156,11 +156,16 @@
    "text": "確定申告はいつまで"
   },
   {
+   "path": "/month/12/",
+   "text": "12月のやること"
+  },
+  {
    "path": "/month/1/",
    "text": "1月のやること"
   }
  ],
  "deadline_ids": [
+  "kanpu-r3-end",
   "kanpu-start"
  ]
 }

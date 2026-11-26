@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from datetime import date
 
-from .pages_hub import (CLOSED_FROM, KAKUTEI_END, KAKUTEI_START, KYOTSU, NENGA_NEW_YEAR, NENGA_SALE_END, NENGA_START, ONESTOP_CHANGE, REFUND_START,
+from .pages_hub import (CLOSED_FROM, KAKUTEI_END, KAKUTEI_START, KYOTSU, NENGA_NEW_YEAR, NENGA_SALE_END, NENGA_START, ONESTOP_CHANGE, REFUND_R3_END, REFUND_START,
                         YEAR_END)
 
 LAST_WEEKDAY = date(2026, 12, 28)          # the last weekday the national offices are open before the year-end holiday
@@ -19,6 +19,7 @@ CATALOG = [
     ("gyosei-saigo-heijitsu", LAST_WEEKDAY, "国の行政機関の最後の平日", "", "/nenmatsu-nenshi/"),
     ("gyosei-yasumi", CLOSED_FROM, "国の行政機関の年末年始の休みの開始", "", "/nenmatsu-nenshi/"),
     ("nenmatsu-shime", YEAR_END, "ふるさと納税・医療費の年内の締め", "ふるさと納税・医療費の締め", "/furusato/deadline/"),
+    ("kanpu-r3-end", REFUND_R3_END, "令和3年分の還付申告を出せる最後の日", "", "/kakutei-shinkoku/kanpu/"),
     ("kanpu-start", REFUND_START, "令和8年分の還付申告を出せる最初の日", "", "/kakutei-shinkoku/kanpu/"),
     ("onestop-henko", ONESTOP_CHANGE, "ワンストップ特例の変更届の期限", "ワンストップ特例の変更届の期限", "/furusato/one-stop/"),
     ("nengajo-hanbai-end", NENGA_SALE_END, "年賀はがきの販売の最終日", "", "/nengajo/"),
@@ -32,7 +33,7 @@ BY_PAGE = {
     "/": ["nengajo-hikiuke", "nengajo-motojitsu", "gyosei-yasumi", "nenmatsu-shime", "onestop-henko", "shinkoku-start", "shinkoku-end"],
     "/month/": [c[0] for c in CATALOG],
     "/month/11/": ["nenmatsu-shime"],
-    "/month/12/": ["nengajo-hikiuke", "nengajo-motojitsu", "gyosei-saigo-heijitsu", "gyosei-yasumi", "nenmatsu-shime"],
+    "/month/12/": ["nengajo-hikiuke", "nengajo-motojitsu", "gyosei-saigo-heijitsu", "gyosei-yasumi", "nenmatsu-shime", "kanpu-r3-end"],
     "/month/1/": ["kanpu-start", "onestop-henko", "nengajo-hanbai-end", "kyotsu-honshiken"],
     "/month/2/": ["shinkoku-start"],
     "/month/3/": ["shinkoku-end"],
@@ -42,7 +43,7 @@ BY_PAGE = {
     "/furusato/one-stop/": ["onestop-henko"],
     "/kakutei-shinkoku/": ["shinkoku-start", "shinkoku-end"],
     "/kakutei-shinkoku/junbi/": ["nenmatsu-shime", "kanpu-start", "shinkoku-start", "shinkoku-end"],
-    "/kakutei-shinkoku/kanpu/": ["kanpu-start"],
+    "/kakutei-shinkoku/kanpu/": ["kanpu-r3-end", "kanpu-start"],
     "/iryouhi-koujo/": ["nenmatsu-shime"],
 }
 

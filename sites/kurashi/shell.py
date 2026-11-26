@@ -35,9 +35,9 @@ MONTH_ART = ("calendar", "cream", "月ごとの準備")
 
 # the catalog event -> the guide whose dialog the calendar opens, and the kind the calendar shows it as (prep / deadline / boundary = the year's end)
 EVENT_GUIDE = {"nengajo-hikiuke": "nengajo", "nengajo-motojitsu": "nengajo", "nengajo-hanbai-end": "nengajo", "gyosei-saigo-heijitsu": "holiday", "gyosei-yasumi": "holiday",
-               "nenmatsu-shime": "furusato-deadline", "kanpu-start": "kanpu", "onestop-henko": "donation", "kyotsu-honshiken": "kyotsu", "shinkoku-start": "kakutei-shinkoku",
+               "nenmatsu-shime": "furusato-deadline", "kanpu-start": "kanpu", "kanpu-r3-end": "kanpu", "onestop-henko": "donation", "kyotsu-honshiken": "kyotsu", "shinkoku-start": "kakutei-shinkoku",
                "shinkoku-end": "kakutei-shinkoku"}
-EVENT_KIND = {"onestop-henko": "deadline", "shinkoku-end": "deadline", "nengajo-hanbai-end": "deadline", "nenmatsu-shime": "boundary", "gyosei-saigo-heijitsu": "boundary",
+EVENT_KIND = {"kanpu-r3-end": "deadline", "onestop-henko": "deadline", "shinkoku-end": "deadline", "nengajo-hanbai-end": "deadline", "nenmatsu-shime": "boundary", "gyosei-saigo-heijitsu": "boundary",
               "gyosei-yasumi": "boundary"}
 EVENT_DESC = {
     "nengajo-hikiuke": "2027年用の年賀状の引き受けが始まります。日本郵便の発表(2026年8月31日)による日です。",
@@ -47,6 +47,7 @@ EVENT_DESC = {
     "gyosei-yasumi": "国の行政機関の年末年始の休み(12月29日から1月3日)が始まります。市区町村の休みは条例で決まるので、窓口ごとの案内を確かめておきましょう。",
     "nenmatsu-shime": "ふるさと納税と医療費は、この日までに支払った分が2026年分の対象です。申告の期限とは別の日です。",
     "kanpu-start": "令和8年分の還付申告を、この日から提出できます。確定申告の期間の初日とは別の日です。",
+    "kanpu-r3-end": "令和3年分(2021年分)の還付申告を出せる最後の日です。5年の期間がこの日で終わります。税務署の窓口は12月29日から休みです。",
     "onestop-henko": "ワンストップ特例の申請後に住所や氏名が変わったときの、変更届の期限です。多くの自治体は、申請書の締切も1月10日(必着)としています。寄附先の案内で確かめておきましょう。",
     "kyotsu-honshiken": "令和9年度の大学入学共通テストの本試験の初日です。試験は2日間です。",
     "shinkoku-start": "令和8年分の確定申告の期間が始まります。",

@@ -167,9 +167,9 @@ class CalendarFiles(unittest.TestCase):
 
     def test_month_file_has_all_the_deadlines_of_the_month(self):
         s = self.ics("month-12.ics")
-        self.assertEqual(s.count("BEGIN:VEVENT"), 5)
-        self.assertEqual(s.count("BEGIN:VALARM"), 5)
-        self.assertEqual(s.count("END:VEVENT"), 5)
+        self.assertEqual(s.count("BEGIN:VEVENT"), 6)
+        self.assertEqual(s.count("BEGIN:VALARM"), 6)
+        self.assertEqual(s.count("END:VEVENT"), 6)
         for d in ("20261220", "20261227", "20261228", "20261229", "20261231"):
             self.assertIn(f"DTSTART;VALUE=DATE:{d}", s)
         self.assertEqual(self.ics("month-1.ics").count("BEGIN:VEVENT"), 4)
@@ -203,8 +203,9 @@ class CalendarFiles(unittest.TestCase):
             html = text(out, "month/12/index.html")
             self.assertNotIn("nengajo-hikiuke.ics", html)
             self.assertIn("nenmatsu-shime.ics", html)
+            self.assertIn("kanpu-r3-end.ics", html)
             self.assertFalse((out / "calendar" / "nengajo-hikiuke.ics").exists())
-            self.assertEqual((out / "calendar" / "month-12.ics").read_bytes().decode().count("BEGIN:VEVENT"), 4)
+            self.assertEqual((out / "calendar" / "month-12.ics").read_bytes().decode().count("BEGIN:VEVENT"), 5)
         finally:
             tmp.cleanup()
 

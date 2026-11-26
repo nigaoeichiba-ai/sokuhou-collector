@@ -1,7 +1,7 @@
 {
  "og_image": "/assets/og.jpg",
  "glyph": "暦",
- "updated": "2026-11-25",
+ "updated": "2026-11-26",
  "home_label": "トップ",
  "nav": [
   [
@@ -328,6 +328,13 @@
    "name": "ふるさと納税・医療費の年内の締め",
    "lead": "ふるさと納税・医療費の締め",
    "url": "/furusato/deadline/"
+  },
+  {
+   "id": "kanpu-r3-end",
+   "date": "2026-12-31",
+   "name": "令和3年分の還付申告を出せる最後の日",
+   "lead": "",
+   "url": "/kakutei-shinkoku/kanpu/"
   },
   {
    "id": "kanpu-start",
