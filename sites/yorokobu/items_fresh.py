@@ -27,6 +27,7 @@ from sites.yorokobu import refresh as rf  # noqa: E402
 from sokuhou import rakuten  # noqa: E402
 
 JST = timezone(timedelta(hours=9))
+THIN_PAGE_ITEMS = 3                    # build.MIN_THEME_ITEMS: a theme page with fewer products is not published
 MAX_MISSING_PAGE_SHARE = 0.25          # more new pages than this and the full refresh is the better way
 ITEMS_WORKFLOW = "yorokobu-items.yml"
 WAIT_MAX_MINUTES = 50                  # how long the deploy waits for a running yorokobu-items before it fetches everything itself
@@ -43,10 +44,20 @@ def age_hours(data: dict, now: datetime) -> float:
     return (now - t).total_seconds() / 3600
 
 
+def searched_with_old_words(page: dict, entry: dict) -> bool:
+    """A page that the file has with too few products to be shown AND with other search words than the content has now: it is searched again (2026-11-26: 23 theme pages stayed unpublished
+    until the next daily fetch, because the file held their empty answers to the old words)."""
+    ideas = entry.get("ideas") or []
+    if not ideas or sum(len(i.get("items") or []) for i in ideas) >= THIN_PAGE_ITEMS:
+        return False
+    return [i.get("query") for i in ideas] != [i.get("query") for i in page["ideas"]]
+
+
 def missing(c: dict, data: dict) -> tuple[list[str], list[str], list[str]]:
-    """(item codes of the daily picks that the file does not have, page keys that it does not have, recipient slugs whose like lines it does not have)."""
+    """(item codes of the daily picks that the file does not have, page keys that it does not have or has empty under old search words, recipient slugs whose like lines it does not have)."""
     codes = list(dict.fromkeys(x for x in dp.rakuten_codes(c.get("daily") or []) if x not in (data.get("daily") or {})))   # a code reused on two days is looked up once
-    keys = [ct.pair_key(p) for p in ct.pages(c) if ct.pair_key(p) not in (data.get("pairs") or {})]
+    have = data.get("pairs") or {}
+    keys = [k for p in ct.pages(c) if (k := ct.pair_key(p)) not in have or searched_with_old_words(p, have[k])]
     likes = [r["slug"] for r in c.get("recipients") or [] if r.get("like_rows") and r["slug"] not in (data.get("likes") or {})]
     return codes, keys, likes
 

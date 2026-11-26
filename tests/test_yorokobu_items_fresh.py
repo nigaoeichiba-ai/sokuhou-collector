@@ -74,6 +74,18 @@ class FreshTest(unittest.TestCase):
         self.assertIsNone(F.prepare(many, self.c, {}, NOW, 36, lambda: object())[0])
         self.assertIn("too different", F.prepare(many, self.c, {}, NOW, 36, lambda: object())[1])
 
+    def test_a_thin_page_is_searched_again_only_when_its_search_words_changed(self):
+        d = data_for(self.c)
+        p = ct.pages(self.c)[-1]
+        key = ct.pair_key(p)
+        stored = [{"query": i["query"], "items": []} for i in p["ideas"]]
+        d["pairs"][key] = {"ideas": stored, "tiers": {}}
+        self.assertNotIn(key, F.missing(self.c, d)[1])                          # same words: asking again would give the same empty answer
+        stored[0]["query"] = "old words ギフト"
+        self.assertEqual(F.missing(self.c, d)[1], [key])
+        stored[1]["items"] = [{"code": str(n)} for n in range(3)]               # enough products to be shown: left to the daily fetch
+        self.assertNotIn(key, F.missing(self.c, d)[1])
+
     def test_without_an_api_key_a_needed_top_up_means_the_full_refresh_and_a_failed_one_too(self):
         d = data_for(self.c)
         del d["daily"][sorted(d["daily"])[0]]
