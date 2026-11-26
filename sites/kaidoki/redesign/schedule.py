@@ -684,7 +684,8 @@ def home_table(items: list[dict], today: date) -> str:
             name, nxt = "【発表予定日】" + it["title"], ("今日" if s0 == today else f"発表予定日まであと{(s0 - today).days}日")
         else:
             name, nxt = it["title"], ("開催中" if s0 <= today <= e0 else f"開始まであと{(s0 - today).days}日")
-        body += f'<tr><td>{e(ENT[it["mall"]][0])}</td><td>{e(name)}{AFF.lines(AFF.links_for(it))}</td><td>{e(it["when"])}</td><td>{e(nxt)}</td></tr>'
+        body += (f'<tr data-sale-s="{it["s"]}" data-e="{it["e"] or it["s"]}" data-et="{end_hm(it)}" data-kind="{it["kind"]}">'
+                 f'<td>{e(ENT[it["mall"]][0])}</td><td>{e(name)}{AFF.lines(AFF.links_for(it))}</td><td>{e(it["when"])}</td><td data-today>{e(nxt)}</td></tr>')
     if not body:
         return ""
     more = f'<p class="cal-homelink"><a class="text-link" href="/calendar/">{"全部の日程は、月間カレンダーにあります" if len(rows) > HOME_TABLE_MAX else "ほかの日程は、月間カレンダーにあります"} →</a></p>'

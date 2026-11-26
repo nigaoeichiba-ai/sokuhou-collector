@@ -161,6 +161,24 @@
       else if (k === 'expected') txt = s < today ? '' : s === today ? '予想の日は本日' : '予想の日まであと' + (dayNo(s) - n) + '日';
       el.textContent = txt;
     });
+    /* the table of the top page and the ribbons of its sale blocks: a sale that ended (or started) after the morning build */
+    document.querySelectorAll('tr[data-sale-s]').forEach(function (tr) {
+      var out = tr.querySelector('[data-today]'); if (!out) return;
+      var s = tr.dataset.saleS, e = tr.dataset.e, txt;
+      if (tr.dataset.kind === 'notice') txt = s < today ? '発表の予定日は過ぎました' : s === today ? '今日' : '発表予定日まであと' + (dayNo(s) - n) + '日';
+      else txt = isOver(e, tr.dataset.et) ? '終了' : s <= today ? '開催中' : '開始まであと' + (dayNo(s) - n) + '日';
+      out.textContent = txt;
+    });
+    document.querySelectorAll('.sale-block[data-start], .sale-tile[data-start]').forEach(function (el) {
+      var s = el.dataset.start, e = el.dataset.end; if (!s || !e) return;
+      var at = function (v) { return Date.parse(/(Z|[+-]\d\d:\d\d)$/.test(v) ? v : v + '+09:00'); }, now = Date.now();
+      var st = now < at(s) ? '開催予定' : now >= at(e) + 60000 ? '終了' : '開催中';
+      if (el.dataset.status === st) return;
+      el.dataset.status = st;
+      var mark = el.querySelector('.ribbon, .status'); if (!mark) return;
+      mark.textContent = st;
+      mark.classList.toggle(mark.classList.contains('ribbon') ? 'soon' : 'upcoming', st !== '開催中');
+    });
     document.querySelectorAll('tr[data-next]').forEach(function (tr) {
       var out = tr.querySelector('[data-next-day]'); if (!out) return;
       var next = (tr.dataset.next || '').split(' ').filter(function (x) { return x >= today; })[0];

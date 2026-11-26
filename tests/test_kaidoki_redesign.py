@@ -259,7 +259,7 @@ class RedesignTest(unittest.TestCase):
     def _top_table_names(self, html):
         sec = html.split("<h2>いま分かっている日程</h2>", 1)[1].split("</section>", 1)[0]
         sec = re.sub(r'<div class="aff-lines">.*?</div>', "", sec, flags=re.S)          # the affiliate lines of a row are not its name
-        return [re.sub(r"<[^>]+>", "", r[1]) for r in re.findall(r"<tr><td>(.*?)</td><td>(.*?)</td>", sec)]
+        return [re.sub(r"<[^>]+>", "", r[1]) for r in re.findall(r"<tr[^>]*><td>(.*?)</td><td>(.*?)</td>", sec)]
 
     def _expected_top_names(self, today):
         from datetime import date, timedelta
@@ -268,6 +268,18 @@ class RedesignTest(unittest.TestCase):
         rows = [it for it in schedule.all_items() if it["kind"] in ("confirmed", "notice") and it.get("s") and "(終了日)" not in it["title"]
                 and date.fromisoformat(it["e"] or it["s"]) >= today and date.fromisoformat(it["s"]) <= end]
         return {("【発表予定日】" if it["kind"] == "notice" else "") + it["title"] for it in rows}
+
+    def test_every_top_row_can_turn_over_on_the_visitors_clock(self):
+        """2026-11-27: four sales that ended at 23:59 stood as 開催中 on the top until the morning build."""
+        sec = self.live["index.html"].split("<h2>いま分かっている日程</h2>", 1)[1].split("</section>", 1)[0]
+        body = sec.split("<tbody>", 1)[1].split("</tbody>", 1)[0]
+        rows = re.findall(r"<tr[^>]*>", body)
+        self.assertTrue(rows)
+        for r in rows:
+            self.assertRegex(r, r'data-sale-s="\d{4}-\d\d-\d\d" data-e="\d{4}-\d\d-\d\d"')
+        self.assertEqual(body.count("<td data-today>"), len(rows))
+        js = (Path(__file__).resolve().parent.parent / "sites/kaidoki/redesign/static/scripts/calendar.js").read_text(encoding="utf-8")
+        self.assertIn("tr[data-sale-s]", js)
 
     def test_the_top_table_follows_the_calendar_data(self):
         from datetime import date
