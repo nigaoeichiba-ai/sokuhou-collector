@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-26T03:33:54.551690+00:00",
+ "fetched_at": "2026-11-26T21:17:00.910211+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -193,6 +193,18 @@
    "target_area_search": "東京都",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "東京都環境保全資金融資あっせん"
+  },
+  {
+   "acceptance_end_datetime": "2027-02-28T14:59:00.000Z",
+   "acceptance_start_datetime": "2025-03-30T15:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDL8JMAX",
+   "id": "a0WJ200000CDL8JMAX",
+   "institution_name": null,
+   "name": "S-00006337",
+   "subsidy_max_limit": 29500000000,
+   "target_area_search": "全国",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "令和６年度補正予算　商用車等の電動化促進事業"
   },
   {
    "acceptance_end_datetime": "2027-01-29T15:00:00.000Z",
@@ -745,18 +757,6 @@
    "target_area_search": "福岡県",
    "target_number_of_employees": "従業員数の制約なし",
    "title": "【飯塚市】令和8年度外国人材受入環境整備事業費補助金"
-  },
-  {
-   "acceptance_end_datetime": "2027-02-28T14:59:00.000Z",
-   "acceptance_start_datetime": "2025-03-30T15:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDL8JMAX",
-   "id": "a0WJ200000CDL8JMAX",
-   "institution_name": "脱炭素成長型経済構造移行推進対策費補助金",
-   "name": "S-00006337",
-   "subsidy_max_limit": 29500000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和６年度補正予算　商用車等の電動化促進事業"
   },
   {
    "acceptance_end_datetime": "2026-12-25T14:59:00.000Z",
