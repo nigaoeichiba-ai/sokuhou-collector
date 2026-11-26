@@ -120,6 +120,16 @@ def newest_first(arts: list[dict]) -> list[dict]:
     return sorted(arts, key=lambda p: (p["published"], p.get("seq", 0), p["path"]), reverse=True)
 
 
+def sync_related_titles(pages: list[dict], arts: list[dict]) -> None:
+    """The text of a link to an article is the article's own h1, taken at every build: the copy written in the linking page's JSON
+    goes stale when the headline changes (2026-11-26: "today the 18th" of the JAL sale stayed on three pages)."""
+    titles = {a["path"]: a["h1"] for a in arts}
+    for p in pages:
+        for r in p.get("related", []):
+            if r["path"] in titles:
+                r["text"] = titles[r["path"]]
+
+
 def prepare(cfg: dict, spec: dict, pages: list[dict], site_dir: Path) -> list[dict]:
     pages = json.loads(json.dumps(pages))
     by = {p["path"]: p for p in pages}
@@ -144,6 +154,7 @@ def prepare(cfg: dict, spec: dict, pages: list[dict], site_dir: Path) -> list[di
             p["sections"].insert(at, {"html": statuspanel.typhoon_panel(p["status_typhoon"])})
         dates = f'公開日 {ja_date(p["published"])}' + (f' / 更新日 {ja_date(p["updated"])}' if p.get("updated") else "")
         p["sections"].insert(0, {"html": f'<p class="dates">{dates}</p>'})
+    sync_related_titles(pages, arts)
     ordered = newest_first(arts)
     # the home page's own date follows the content: the newest day any article was published or changed (home.json's "updated" was written by hand and stayed at 11/11 while
     # articles went up until 11/15: the top page's 最終更新 and its sitemap lastmod were stale).  Never earlier than what home.json says.
