@@ -21,6 +21,7 @@ export const SPEC=[
  ['岐阜県','gifu',['第一次選抜 検査','第一次選抜 検査（一部校）'],'第一次選抜 追検査','合格発表'],
  ['静岡県','shizuoka',['一般・特別選抜 学力検査・面接等'],'追検査','合格発表'],
  ['滋賀県','shiga',['一次募集 学力検査'],'一次募集 追検査（学力検査）','一次募集 入学許可予定者発表'],
+ ['兵庫県','hyogo',['学力検査・多部制3月選抜A'],'追検査','3月選抜 合否結果発表'],
  ['奈良県','nara',['一次選抜 学力検査等'],'追検査','合格発表'],
  ['鳥取県','tottori',['一般選抜 検査'],'一般選抜 追検査','一般選抜 合格発表'],
  ['島根県','shimane',['一般選抜 学力検査'],'一般選抜 追検査','一般選抜 合格情報掲載'],
@@ -59,7 +60,7 @@ export function tsuikensaValues(registry){
  const names=list=>list.map(r=>r.short);
  const same=rows.filter(r=>r.after===0),before=rows.filter(r=>r.after<0);
  if(names(same).join()!=='岡山県,熊本県')throw new Error('tsuikensa: the prefectures with the result on the make-up day changed: '+names(same).join());
- if(names(before).join()!=='石川県,奈良県'||before.some(r=>r.after!==-1))throw new Error('tsuikensa: the prefectures with the result before the make-up day changed: '+names(before).join());
+ if(names(before).join()!=='石川県,兵庫県,奈良県'||before.map(r=>r.after).join()!=='-1,-8,-1')throw new Error('tsuikensa: the prefectures with the result before the make-up day changed: '+names(before).join());
  const naraNotice=registry.rows.find(r=>r.exam==='koko-nara'&&r.label==='追検査 合格発表');
  if(!naraNotice)throw new Error('tsuikensa: koko-nara has no row "追検査 合格発表"');
  const ends=v=>rows.filter(r=>r.gap===v);
@@ -74,7 +75,8 @@ export function tsuikensaValues(registry){
   GAPDIST:dist(gaps,'県'),RESULTDIST:dist(rows.filter(r=>r.after>0).map(r=>r.after),'県'),
   AFTER:rows.filter(r=>r.after>0).length,
   ISHIKAWA_RESULT:md(before[0].result),ISHIKAWA_MAKE:md(before[0].make),
-  NARA_RESULT:md(before[1].result),NARA_MAKE:md(before[1].make),NARA_NOTICE:md(naraNotice.date),
+  HYOGO_RESULT:md(before[1].result),HYOGO_MAKE:md(before[1].make),
+  NARA_RESULT:md(before[2].result),NARA_MAKE:md(before[2].make),NARA_NOTICE:md(naraNotice.date),
   ASOF:`${asOf.getUTCFullYear()}年${asOf.getUTCMonth()+1}月${asOf.getUTCDate()}日`,
   TABLE:table
  };

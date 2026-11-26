@@ -5554,7 +5554,7 @@
       "short": "兵庫県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-26",
       "sourceUrl": "https://www2.hyogo-c.ed.jp/hpe/uploads/sites/10/2026/07/R9-%E5%85%A5%E5%AD%A6%E8%80%85%E9%81%B8%E6%8A%9C%E5%9F%BA%E6%9C%AC%E6%96%B9%E9%87%9D%E3%83%BB%E8%A9%B3%E7%B4%B0%E6%97%A5%E7%A8%8B.pdf",
       "sourceTitle": "令和9年度 兵庫県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -10539,7 +10539,7 @@
       "label": "推薦・特色等 2月選抜 検査",
       "exam": "koko-hyogo",
       "sourceId": "catalog-koko-hyogo",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-hyogo-2",
@@ -10548,7 +10548,7 @@
       "label": "推薦・特色等 2月選抜 検査（一部校）",
       "exam": "koko-hyogo",
       "sourceId": "catalog-koko-hyogo",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-hyogo-3",
@@ -10558,7 +10558,7 @@
       "time": "14:00",
       "exam": "koko-hyogo",
       "sourceId": "catalog-koko-hyogo",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-hyogo-4",
@@ -10567,7 +10567,7 @@
       "label": "学力検査・多部制3月選抜A",
       "exam": "koko-hyogo",
       "sourceId": "catalog-koko-hyogo",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-hyogo-5",
@@ -10577,7 +10577,27 @@
       "time": "10:00",
       "exam": "koko-hyogo",
       "sourceId": "catalog-koko-hyogo",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-hyogo-6",
+      "date": "2027-03-26",
+      "type": "exam",
+      "label": "追検査",
+      "note": "学力検査を感染症などのやむを得ない理由で受けられなかった人が対象。出願は3月17日12時まで。",
+      "exam": "koko-hyogo",
+      "sourceId": "catalog-koko-hyogo-extra-0",
+      "checkedAt": "2026-11-26"
+    },
+    {
+      "id": "koko-hyogo-7",
+      "date": "2027-03-29",
+      "type": "result",
+      "label": "追検査 合否結果発表",
+      "time": "14:00",
+      "exam": "koko-hyogo",
+      "sourceId": "catalog-koko-hyogo-extra-0",
+      "checkedAt": "2026-11-26"
     },
     {
       "id": "koko-nara-1",
