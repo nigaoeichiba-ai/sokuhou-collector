@@ -120,6 +120,13 @@ class PreviewBuildTest(BuildTestBase):
         for needle in ("Google AdSense", "adssettings.google.com", "aboutads.info", "policies.google.com/technologies/partner-sites"):
             self.assertIn(needle, text)
 
+    def test_a_site_with_the_adsense_script_switched_off_does_not_name_the_service(self):
+        out, _ = self.render({**BASE_CFG, "adsense_tag": False})                      # owner decision D36 (2026-11-27)
+        text = self.read(out, "privacy/index.html")
+        for needle in ("AdSense", "adssettings.google.com", "policies.google.com/technologies/partner-sites"):
+            self.assertNotIn(needle, text)
+        self.assertIn("広告について", text)
+
 
 class RebuildTest(BuildTestBase):
     def test_rebuilding_into_the_same_folder_removes_only_stale_files(self):

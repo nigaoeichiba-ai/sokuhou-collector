@@ -21,7 +21,7 @@ sys.path.insert(0, str(HERE.parents[1]))  # repo root, so `python sites/saichin/
 
 from sites.saichin import industry_view, ranking_notes, analysis_pages, area_story, articles, charts, content, dataset, history_old, long_history, ogimage, outlook, pref_story, rakuten_widget, trend_pages, work_pages, wage as wagelib  # noqa: E402
 from sokuhou.sitekit import asset_files, asset_pages, contact_body, contact_files, form_privacy  # noqa: E402
-from sokuhou.sitekit import structured_data  # noqa: E402
+from sokuhou.sitekit import ADS_PRIVACY_WITHOUT_ADSENSE, adsense_switched_off, adsense_tag_on, structured_data  # noqa: E402
 from sokuhou.sources import mhlw_minwage  # noqa: E402
 
 SLUGS = dict(zip(
@@ -309,7 +309,7 @@ def layout(cfg: dict, preview: bool, *, path: str, title: str, description: str,
         if preview else ""
     )
     adsense = ""
-    if cfg.get("adsense_pub_id") and path not in NO_ADS_PATHS:
+    if adsense_tag_on(cfg) and path not in NO_ADS_PATHS:
         pub = cfg["adsense_pub_id"].replace("ca-", "")
         adsense = (
             '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
@@ -1044,6 +1044,10 @@ def about_page(d: dict, cfg: dict, preview: bool) -> str:
 
 
 def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
+    ads = ("""<h2>広告について</h2>
+<p>当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
+<p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用については、<a href="https://www.aboutads.info/" rel="noopener" target="_blank">広告業界団体のオプトアウトのページ</a> でも無効にできます。詳しくは、<a href="https://policies.google.com/technologies/partner-sites" rel="noopener" target="_blank">Google のポリシーと規約</a>をご覧ください。</p>
+<p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>""" if not adsense_switched_off(cfg) else ADS_PRIVACY_WITHOUT_ADSENSE)
     body = f"""<h1>プライバシーポリシー</h1>
 <h2>取得する情報</h2>
 <p>当サイトは、会員登録などの機能を持ちません。お問い合わせの際にいただいたお名前・メールアドレスなどは、返信のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。</p>
@@ -1051,10 +1055,7 @@ def privacy_page(d: dict, cfg: dict, preview: bool) -> str:
 <p>「あなたの時給は大丈夫?」や計算ツールに入力された都道府県・時給・月給などは、お使いの端末の中で計算するだけで、当サイトのサーバーへは送信・保存しません。</p>
 <h2>アクセス解析</h2>
 <p>現時点では、Google アナリティクスなどのアクセス解析ツールを使用していません。使用を始める場合は、このページでお知らせします。</p>
-<h2>広告について</h2>
-<p>当サイトは、第三者配信の広告サービス「Google AdSense」を利用する場合があります。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
-<p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用については、<a href="https://www.aboutads.info/" rel="noopener" target="_blank">広告業界団体のオプトアウトのページ</a> でも無効にできます。詳しくは、<a href="https://policies.google.com/technologies/partner-sites" rel="noopener" target="_blank">Google のポリシーと規約</a>をご覧ください。</p>
-<p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>
+{ads}
 <p>当サイトの一部のページには、アフィリエイト広告(広告であることを「PR」などで示しています)を含みます。アフィリエイトサービス「A8.net」を利用しており、広告のリンクを通じて、ブラウザに Cookie が保存され、広告主のサイトでの申し込みなどが、A8.net を通じて当サイトの成果として記録されることがあります。成果の記録に、お名前などの個人を特定する情報は使われません。</p>
 <h2>免責事項・著作権</h2>
 <p>免責事項は、<a href="/about/">運営者情報</a>に記載しています。</p>

@@ -136,6 +136,22 @@ def structured_data(cfg: dict, path: str, body: str, existing: str = "") -> str:
 _ADS_TAG = re.compile(r'<script async src="https://pagead2\.googlesyndication\.com/pagead/js/adsbygoogle\.js[^"]*"[^>]*></script>\n?')
 
 
+def adsense_tag_on(cfg: dict) -> bool:
+    """Whether the site loads the AdSense script.  "adsense_tag": false in config.json turns it off (owner decision D36, 2026-11-27: saichin, kuma, minna);
+    ads.txt stays as long as "adsense_pub_id" is set, so the account's record of the site does not change."""
+    return bool(cfg.get("adsense_pub_id")) and not adsense_switched_off(cfg)
+
+
+def adsense_switched_off(cfg: dict) -> bool:
+    """Only the explicit setting changes the privacy text: a site that says nothing keeps the wording it had."""
+    return cfg.get("adsense_tag", True) is False
+
+
+# The privacy policy of a site without the AdSense script: no service it does not use is named.
+ADS_PRIVACY_WITHOUT_ADSENSE = ("<h2>広告について</h2>\n<p>当サイトは、アフィリエイト広告などの広告を掲載することがあります。広告の表示やリンクの利用にあたり、お使いのブラウザに Cookie(クッキー)が"
+                               "保存されたり、閲覧に関する情報が広告の事業者へ送信されたりすることがあります。Cookie は、ブラウザの設定で無効にできます。</p>")
+
+
 def drop_ads_from_noindex(pages: dict) -> int:
     """Take the AdSense tag out of every page that asks not to be indexed (a page no search sends anyone to is no place for an ad); returns how many pages changed.
     A site calls this after it has decided which pages are noindex (the robots meta is added after the layout is made)."""
@@ -160,7 +176,7 @@ def layout(site: dict, cfg: dict, preview: bool, *, path: str, title: str, descr
     banner = ('<div class="preview">プレビュー版です。運営者情報などが未設定のため、検索エンジンには公開されません。</div>\n'
               if preview else "")
     adsense = ""
-    if cfg.get("adsense_pub_id") and path not in site.get("no_ads_paths", ()):      # pages with nothing of their own to read (forms, link lists, the 404) carry no tag
+    if adsense_tag_on(cfg) and path not in site.get("no_ads_paths", ()):              # pages with nothing of their own to read (forms, link lists, the 404) carry no tag
         pub = cfg["adsense_pub_id"].replace("ca-", "")
         adsense = ('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
                    f'?client=ca-{esc(pub)}" crossorigin="anonymous"></script>\n')
@@ -303,15 +319,16 @@ def legal_pages(site: dict, cfg: dict, preview: bool, *, purpose: str, sources_h
 {sources_row}{update_row}</dl>
 <h2>免責事項</h2>
 {disclaimer_html}"""
+    ads_privacy = (f"""<h2>広告について</h2>
+<p>当サイトは、第三者配信の広告サービス「Google AdSense」を{"利用しています" if cfg.get("privacy_adsense_in_use") else "利用する場合があります"}。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
+<p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用を無効にするには、<a href="https://www.aboutads.info/choices/" rel="noopener" target="_blank">広告業界団体のオプトアウトのページ</a> もご利用いただけます。</p>
+<p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>""" if not adsense_switched_off(cfg) else ADS_PRIVACY_WITHOUT_ADSENSE)
     privacy = f"""<h1>プライバシーポリシー</h1>
 <h2>取得する情報</h2>
 <p>当サイトは、会員登録などの機能を持ちません。お問い合わせの際にいただいたお名前・メールアドレスなどは、返信のためだけに使い、法令に基づく場合を除いて、第三者へ提供しません。</p>
 {input_note}{form_privacy(cfg)}<h2>アクセス解析</h2>
 {analytics_text(cfg)}
-<h2>広告について</h2>
-<p>当サイトは、第三者配信の広告サービス「Google AdSense」を{"利用しています" if cfg.get("privacy_adsense_in_use") else "利用する場合があります"}。広告配信事業者は、利用者の興味に応じた広告を表示するために、Cookie(クッキー)を使用することがあります。</p>
-<p>Cookie を無効にする、または、パーソナライズ広告を無効にするには、<a href="https://adssettings.google.com/" rel="noopener" target="_blank">Google の広告設定</a>をご利用ください。第三者配信事業者による Cookie の使用を無効にするには、<a href="https://www.aboutads.info/choices/" rel="noopener" target="_blank">広告業界団体のオプトアウトのページ</a> もご利用いただけます。</p>
-<p>広告の配信にあたり、お使いのブラウザから広告配信事業者へ、閲覧に関する情報が送信されることがあります。</p>
+{ads_privacy}
 <h2>アフィリエイトについて</h2>
 <p>当サイトには、商品やサービスの紹介リンク(アフィリエイトリンク)が含まれる場合があります。該当するページには、広告であることを明示します。リンク先で商品が購入されると、当サイトの運営者に報酬が支払われることがあります。</p>{amazon_disclosure(cfg)}
 {cfg.get("privacy_affiliate_note_html", "")}<h2>免責事項・著作権</h2>
