@@ -83,6 +83,14 @@ class AmazonPicksTest(unittest.TestCase):
         glen = next(p for p in c["amazon"] if p["asin"] == "B001TP4S62")
         self.assertIn(glen, build.amazon_picks_for(c, "fathers-day", "father"))
         self.assertNotIn(glen, build.amazon_picks_for(c, "fathers-day", "baby"))
+        # a child's page shows only the picks that name the child (2026-11-27: round chocolates on the baby and toddler Christmas pages)
+        sweet = {"asin": "B000000000", "occasions": ["christmas"]}
+        toy = {"asin": "B000000001", "occasions": ["christmas"], "recipients": ["toddler"]}
+        cc = {"amazon": [sweet, toy]}
+        self.assertEqual(build.amazon_picks_for(cc, "christmas", "toddler"), [toy])
+        self.assertEqual(build.amazon_picks_for(cc, "christmas", "baby"), [])
+        self.assertEqual(build.amazon_picks_for(cc, "christmas", "child"), [])
+        self.assertEqual(build.amazon_picks_for(cc, "christmas", "mother"), [sweet])
         self.assertNotIn(glen, build.amazon_picks_for(c, "mothers-day", "father"))
 
     def test_without_an_associates_id_nothing_is_shown_and_there_is_no_hub(self):

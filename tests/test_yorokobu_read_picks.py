@@ -1,4 +1,4 @@
-"""Owner's approval of 2026-11-01 (B1): the 101 reading articles had no product link; each now ends with 「この話題の人気の3点」, three image cards of the first theme it names that has
+"""Owner's approval of 2026-11-01 (B1): the 101 reading articles had no product link; each now ends with 「この話題に合う3点」, three image cards of the first theme it names that has
 enough products.  The cards are the theme pages' own (the picture carries the link, the words are the site's); nothing of the shop is stored in the repository."""
 import re
 import unittest
@@ -24,7 +24,7 @@ def world(products_per_idea=3):
 class ArticlePicksTest(unittest.TestCase):
     def test_an_article_gets_three_cards_of_its_theme_with_the_picture_linked_and_no_name_link(self):
         html = build.article_picks(CFG, world(), {"themes": ["fridge"]})
-        self.assertIn("この話題の人気の3点", html)
+        self.assertIn("この話題に合う3点", html)
         self.assertEqual(html.count('<li class="item"'), 3)
         self.assertEqual(html.count('class="item-img"><a href="https://hb.afl.rakuten.co.jp/'), 3)
         self.assertNotRegex(html, r'<p class="item-blurb"><a ')                      # the words are not a link

@@ -137,12 +137,12 @@ class BoardsTest(unittest.TestCase):
     def test_a_board_of_an_occasion_the_site_does_not_have_is_left_out(self):
         self.assertFalse((self.out / "data/christmas").exists())                                    # (the fixture has no Christmas)
 
-    def test_the_mothers_day_page_gets_the_other_surveys(self):
-        html = self.read("data/mothers-day-budget/index.html")
-        self.assertIn("ほかの調査では", html)
-        self.assertIn("花キューピット", html)
-        self.assertIn("エン・ジャパン", html)
-        self.assertIn("71%", html)
+    def test_no_study_of_mothers_day_is_named_or_quoted(self):
+        for rel in ("data/mothers-day-budget/index.html", "occasion/mothers-day/index.html"):
+            html = self.read(rel)
+            for word in ("花キューピット", "エン・ジャパン", "エンバイト", "GMOアスク", "71%", "ほかの調査では"):
+                self.assertNotIn(word, html, rel)
+        self.assertNotIn('<ul class="stat-tiles">', self.read("occasion/mothers-day/index.html"))
 
     def test_the_board_pages_pass_the_site_check(self):
         problems = [p for p in sitecheck.check_dir(self.out, CFG["site_url"], skip=("lists",)) if "data/" in p]

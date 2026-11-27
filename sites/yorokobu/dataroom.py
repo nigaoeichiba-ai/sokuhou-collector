@@ -283,46 +283,42 @@ def occasion_prices(d: dict) -> tuple | None:
     return "/data/occasion-prices/", "イベント別・相手別の価格の目安", lead, body, "イベント別・相手別の価格", f"中央値がいちばん高いのは「{hi_o[0]}」({yen(hi_o[3])})"
 
 
-def mothers_day_budget(d: dict) -> tuple | None:
+def budget_trend(d: dict) -> str:
+    """What the survey of Mother's Day budgets says, as a trend in the site's own words: no name of a study and none of its shares (owner 2026-11-17).
+    The price range itself stays: it is what a reader acts on."""
     s = (d["c"].get("stats") or {}).get("survey_budget", {}).get("mothers-day")
     if not s:
+        return ""
+    now = s["years"][max(s["years"])]
+    top = s["bands"][max(range(len(now)), key=lambda i: now[i])]
+    return f"ある調査では、母の日の予算は{top}を考える人が多い傾向です。"
+
+
+def mothers_day_budget(d: dict) -> tuple | None:
+    trend = budget_trend(d)
+    if not trend:
         return None
-    years = sorted(s["years"])
-    latest = years[-1]
-    now = s["years"][latest]
-    top_i = max(range(len(now)), key=lambda i: now[i])
-    rows = [(band, [(y, s["years"][y][i], f'{s["years"][y][i]:.1f}%') for y in years]) for i, band in enumerate(s["bands"])]
-    c1 = figure(d, f'{s["title"]}の年ごとの変化', grouped(rows, [f"{y}年" for y in years], top=max(max(v) for v in s["years"].values())),
-                stat_source(s) + f'。{esc(s["method"])}。',
-                table(["予算"] + [f"{y}年" for y in years], [[b] + [f'{s["years"][y][i]:.1f}%' for y in years] for i, b in enumerate(s["bands"])]),
-                card=dict(id="mothers-day-budget--survey", finding=f"{latest}年の調査でいちばん多い予算は{s['bands'][top_i]}({now[top_i]:.1f}%)です。",
-                          rows=tuple((b, now[i], f"{now[i]:.0f}%") for i, b in enumerate(s["bands"])), source=f'{latest}年の調査'))
-    notes = [f"{latest}年の調査でいちばん多い予算は{s['bands'][top_i]}({now[top_i]:.1f}%)です。",
-             f"5,000円未満は{now[0] + now[1]:.1f}%、10,000円以上は{now[-1]:.1f}%でした。"]
-    if len(years) >= 2 and s["years"][years[0]][-1] < now[-1]:
-        notes.append(f"10,000円以上の割合は、{years[0]}年の{s['years'][years[0]][-1]:.1f}%から、{latest}年の{now[-1]:.1f}%へと増えています。")
-    body = ""
+    s = d["c"]["stats"]["survey_budget"]["mothers-day"]
+    now = s["years"][max(s["years"])]
+    notes = [trend]
+    if now[-1] < max(now) / 2:
+        notes.append(f"{s['bands'][-1]}をかける人は少なめです。")
+    chart = finding = ""
     items = products_of_occasion(d, "mothers-day")
-    prod_note = ""
     if len(items) >= MIN_PRODUCTS:
         bs = band_stats(items)
-        share = [b["share"] for b in bs]
-        rows2 = [(band, [(f"{latest}年の調査", now[i], f"{now[i]:.0f}%"), ("当サイトの商品", share[i], f"{share[i]:.0f}%")]) for i, band in enumerate(s["bands"])]
-        c2 = figure(d, "調査の予算と売られている商品の価格", grouped(rows2, [f"{latest}年の予算の調査", f"母の日の商品の価格({len(items)}点)"], top=max(max(now), max(share))),
-                    stat_source(s) + f'。商品は、{own_source(d, len(items))[4:]}',
-                    table(["価格帯", f"{latest}年の予算の調査", "当サイトの商品の割合"], [[b, f"{now[i]:.1f}%", f"{share[i]:.1f}%"] for i, b in enumerate(s["bands"])]))
-        gap = max(range(len(now)), key=lambda i: share[i] - now[i])
-        gap_n = max(range(len(now)), key=lambda i: now[i] - share[i])
-        if share[gap] - now[gap] >= 5:
-            notes.append(f"当サイトの母の日の商品は、{s['bands'][gap]}の割合が{share[gap]:.0f}%で予算の調査({now[gap]:.0f}%)より多くなっています。")
-        if now[gap_n] - share[gap_n] >= 5:
-            notes.append(f"{s['bands'][gap_n]}は予算の調査では{now[gap_n]:.0f}%と多いのに当サイトの商品は{share[gap_n]:.0f}%です。この価格帯の商品は相対的に少なめです。")
-        prod_note = c2
-    body = (f'<section class="data-notes"><h2>わかったこと</h2><ul>{"".join(f"<li>{esc(n)}</li>" for n in notes)}</ul></section>{c1}{prod_note}{mothers_day_extra(d)}'
-            '<section class="data-notes"><h2>見かたの注意</h2><p>調査はインターネットで答えた人の数字で日本中の人の平均ではありません。予算は「かけようと思っている金額」で実際に使った金額とは限りません。'
-            '母の日のプレゼントは、<a href="/occasion/mothers-day/">母の日のページ</a>から探せます。</p></section>')
-    lead = "母の日のプレゼントにみんなはいくらかけようとしているのか。日比谷花壇の調査の3年分の変化と楽天市場で売られている商品の価格を並べて見ます。"
-    return "/data/mothers-day-budget/", "母の日の予算と商品の価格", lead, body, "母の日の予算", f"母の日の予算は{s['bands'][top_i]}が最多({now[top_i]:.0f}%)"
+        top = max(bs, key=lambda b: b["share"])
+        finding = f"当サイトの母の日の商品は{top['label']}がいちばん多く{top['share']:.0f}%です。"
+        notes.append(finding)
+        rows = [(b["label"], b["share"], f"{b['n']}点({b['share']:.0f}%)") for b in bs]
+        chart = figure(d, f"母の日の商品の価格({len(items)}点)", hbars(rows), own_source(d, len(items)),
+                       table(["価格帯", "商品の数"], [[r[0], r[2]] for r in rows]),
+                       card=dict(id="mothers-day-budget--shop", finding=finding, rows=tuple(rows), source=own_plain(d, len(items))))
+    body = (f'<section class="data-notes"><h2>わかったこと</h2><ul>{"".join(f"<li>{esc(n)}</li>" for n in notes)}</ul></section>{chart}'
+            '<section class="data-notes"><h2>予算の決め方</h2><p>花だけを贈るか、品物を添えるかを先に決めると、価格帯を選べます。送料やラッピング代がかかる場合は、'
+            'その分も予算に入れておきましょう。母の日のプレゼントは、<a href="/occasion/mothers-day/">母の日のページ</a>から探せます。</p></section>')
+    lead = "母の日のプレゼントの予算を決めるときの目安と、楽天市場で当サイトが取り上げている商品の価格をまとめました。"
+    return "/data/mothers-day-budget/", "母の日の予算と商品の価格", lead, body, "母の日の予算", trend.split("では、")[1].rstrip("。")
 
 
 def births_marriages(d: dict) -> tuple | None:
@@ -519,16 +515,6 @@ def survey_boards(d: dict) -> list[tuple]:
     return [r for r in out if r]
 
 
-def mothers_day_extra(d: dict) -> str:
-    """Added to the Mother's Day budget page: what two more surveys say (the page's own chart is the Hibiya Kadan survey)."""
-    ex = (d["c"].get("surveys") or {}).get("mothers_day_extra")
-    if not ex:
-        return ""
-    studies = {s["id"]: s for s in ex["studies"]}
-    return ('<section class="data-notes"><h2>ほかの調査では</h2>' + _tiles(ex["headline"], studies) + "</section>" + _takeaways(ex["takeaways"])
-            + _studies_section(ex["studies"]) + _cautions(ex["cautions"]))
-
-
 def occasion_teaser(d: dict, occasion: str, compact: bool = False) -> str:
     """On an occasion's page (and, shortened, on its pair pages): what people say they spend and give, from the survey board of that occasion, and the way into it."""
     sv = d["c"].get("surveys") or {}
@@ -537,11 +523,15 @@ def occasion_teaser(d: dict, occasion: str, compact: bool = False) -> str:
     src = board or (sv.get("mothers_day_extra") if path else None)
     if not path or not src or path not in {r[0] for r in results(d)}:
         return ""
-    studies = {s["id"]: s for s in src["studies"]}
-    head = src["headline"][:2 if compact else 4]
     name = d["c"]["occ"][occasion]["name"]
-    return (f'<section class="board-teaser{" compact" if compact else ""}"><h2><span class="scribble">{esc(name)}にみんなはいくらで何を贈る？</span></h2>{_tiles(head, studies)}'
-            f'<p class="more"><a class="btn btn-sub" href="{path}">調査の数字をくわしく見る(データ室)</a></p></section>')
+    if board:
+        inner = _tiles(src["headline"][:2 if compact else 4], {s["id"]: s for s in src["studies"]})
+        label = "調査の数字をくわしく見る(データ室)"
+    else:                                                             # Mother's Day: the trend in words, none of the studies' figures
+        inner = f"<p>{esc(budget_trend(d))}</p>"
+        label = "予算の目安と商品の価格を見る(データ室)"
+    return (f'<section class="board-teaser{" compact" if compact else ""}"><h2><span class="scribble">{esc(name)}にみんなはいくらで何を贈る？</span></h2>{inner}'
+            f'<p class="more"><a class="btn btn-sub" href="{path}">{label}</a></p></section>')
 
 
 def ranking_turnover(d: dict) -> tuple | None:
@@ -578,7 +568,7 @@ def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:
     groups = (("みんなの予算と贈りもの(調査から)", "survey", "調査会社などの発表した数字を図にしました。贈る相手やイベントを選ぶときの目安になります。"),
               ("いま売られている商品から", "own", "当サイトが取り上げている楽天市場の商品を毎日、集計しています。価格・評価・送料を見比べられます。"),
               ("国の統計から", "stat", "出生数・婚姻件数など、贈る機会の大きさを見ます。"))
-    kind = {"mothers-day-budget": "survey", "price-bands": "own", "occasion-prices": "own", "ranking-prices": "own", "ranking-turnover": "own", "kind-prices": "own", "births-marriages": "stat"}
+    kind = {"mothers-day-budget": "own", "price-bands": "own", "occasion-prices": "own", "ranking-prices": "own", "ranking-turnover": "own", "kind-prices": "own", "births-marriages": "stat"}
     for b in (d["c"].get("surveys") or {}).get("boards", []):
         kind[b["slug"]] = "survey"
     body = ""

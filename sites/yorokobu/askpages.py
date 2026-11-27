@@ -126,9 +126,9 @@ def dock_data(d: dict, cfg: dict, rec: dict | None, today: date) -> dict | None:
         nxt = [g["date"].isoformat() for y in (today.year, today.year + 1) for g in giftcal.gift_days(y) if g["slug"] == o["slug"]]
         b = boards.get(o["slug"])
         path = f'/data/{b["slug"]}/' if b else ("/data/mothers-day-budget/" if o["slug"] == "mothers-day" and (c.get("surveys") or {}).get("mothers_day_extra") else "")
-        src = b or ((c.get("surveys") or {}).get("mothers_day_extra") if path else None)
+        src = b                                                       # (no figures of the Mother's Day studies: owner 2026-11-17)
         occs.append({"slug": o["slug"], "name": o["name"], "range": quartiles(xs), "dates": nxt, "board": path if path in {r[0] for r in dataroom.results(d)} else "",
-                     "facts": [f'{h["label"]}: {h["value"]}' for h in (src or {}).get("headline", [])[:3]] if path else []})
+                     "facts": [f'{h["label"]}: {h["value"]}' for h in (src or {}).get("headline", [])[:3]]})
     groups = {gid: {"label": g["label"], "kind": g["kind"], "range": g["range"], "risk": RISK[gid][0], "risk_note": RISK[gid][1]} for gid, g in (rec or {}).get("groups", {}).items()}
     types = [{"slug": p["slug"], "name": p["name"], "tagline": p["tagline"], "w": TYPE_WEIGHTS.get(p["slug"], {})} for p in c["persona"]["personas"]]
     return {"fresh": d["fetched_label"], "occasions": occs, "groups": groups, "types": types, "today": today.isoformat()}

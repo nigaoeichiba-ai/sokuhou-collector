@@ -748,7 +748,7 @@ def top_picks(cfg: dict, d: dict, key: str, n: int = 4, label: str = "") -> str:
     if not shown:
         return ""
     cards = "".join(item_card(cfg, it, rank=i + 1, eager=i < 2, must=must) for i, (it, must) in enumerate(shown))       # the first two are what the visitor sees first: not lazy
-    return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>{(esc(label) + "、") if label else ""}種類の違う人気の{len(shown)}点</h2></div>'
+    return (f'<section class="top-picks"><div class="sec-title"><span class="tag">まず見たい</span><h2>{(esc(label) + "、") if label else ""}種類の違う{len(shown)}点</h2></div>'
             f'<ul class="items">{cards}</ul>{freshness(d)}</section>')
 
 
@@ -835,8 +835,14 @@ def amazon_pick_card(cfg: dict, p: dict) -> str:
             f'<span class="btn"><a href="{esc(amazon_dp(cfg, p["asin"]))}" target="_blank" rel="nofollow sponsored noopener">Amazonで見る</a></span></li>')
 
 
+# A page for a child shows only the picks that name that child: a pick made for adults (a round chocolate a small child can choke on, matcha sweets, a tablet) is not
+# a present for a baby because the occasion is the same (2026-11-27: the Christmas pages of a baby, a toddler and a child showed a box of round chocolates).
+CHILD_RECIPIENTS = ("baby", "toddler", "child")
+
+
 def amazon_picks_for(c: dict, occasion: str, recipient: str | None = None, limit: int = 4) -> list[dict]:
-    out = [p for p in c.get("amazon", []) if occasion in p["occasions"] and (not p.get("recipients") or recipient is None or recipient in p["recipients"])]
+    out = [p for p in c.get("amazon", []) if occasion in p["occasions"]
+           and (recipient in p.get("recipients", ()) if recipient in CHILD_RECIPIENTS else (not p.get("recipients") or recipient is None or recipient in p["recipients"]))]
     return out[:limit]
 
 
@@ -848,7 +854,7 @@ def amazon_picks_section(cfg: dict, c: dict, occasion: str, recipient: str | Non
         return ""
     cards = "".join(amazon_pick_card(cfg, p) for p in picks)
     return (f'<section class="amazon-picks" style="margin-top:50px"><h2><span class="scribble">Amazonで見つけた贈り物</span></h2>'
-            f'<p class="sec-lead">Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。</p>'
+            f'<p class="sec-lead">Amazonの売れ筋ランキングで見た商品から、この場面に合うものを選びました(確認日: {esc(c["amazon_checked"])})。価格や在庫は変わります。</p>'
             f'<ul class="apicks">{cards}</ul>'
             f'<p class="more"><a class="btn btn-sub" href="/amazon/">Amazonで選ぶ贈り物をすべて見る</a></p></section>')
 
@@ -1294,7 +1300,7 @@ def guide_page(d: dict, cfg: dict, preview: bool, slug: str) -> str:
 # ---------------------------------------------------------------- reading articles (free-form, added by the content factory)
 
 def article_picks(cfg: dict, d: dict, a: dict, n: int = 3) -> str:
-    """「この話題の人気の3点」 for a reading article: the first products of the first theme it names that has enough of them (the cards of the theme pages, as they are: the picture
+    """「この話題に合う3点」 for a reading article: the first products of the first theme it names that has enough of them (the cards of the theme pages, as they are: the picture
     carries the link, the words are the site's own; nothing of the shop is stored in the repository).  '' when no theme of the article has {n} products today.
     (2026-11-01: the 101 reading articles had no product link at all.)"""
     c = d["c"]
@@ -1306,7 +1312,7 @@ def article_picks(cfg: dict, d: dict, a: dict, n: int = 3) -> str:
         if len(shown) >= n:
             set_keep()
             cards = "".join(item_card(cfg, it, rank=None, eager=False, must=must) for it, must in shown[:n])
-            return (f'<section class="top-picks read-picks" style="margin-top:44px"><div class="sec-title"><span class="tag">読んだあとに</span><h2>この話題の人気の{n}点</h2></div>'
+            return (f'<section class="top-picks read-picks" style="margin-top:44px"><div class="sec-title"><span class="tag">読んだあとに</span><h2>この話題に合う{n}点</h2></div>'
                     f'<ul class="items">{cards}</ul>{freshness(d)}'
                     f'<p class="more"><a class="btn btn-sub" href="/theme/{slug}/">{esc(c["theme"][slug]["name"])}のプレゼントをもっと見る</a></p></section>')
     return ""

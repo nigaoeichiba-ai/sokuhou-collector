@@ -92,11 +92,12 @@ class DataRoomTest(unittest.TestCase):
                 self.assertIn("<table", f, rel)
         self.assertNotIn("総務省統計局", self.read("data/births-marriages/index.html"))
 
-    def test_the_mothers_day_page_puts_the_survey_next_to_the_products_and_says_what_differs(self):
+    def test_the_mothers_day_page_tells_the_budget_as_a_trend_beside_the_sites_own_prices(self):
         html = self.read("data/mothers-day-budget/index.html")
-        self.assertIn("37.0%", html)                                                  # the survey figure of 2025
-        self.assertIn("母の日の商品の価格(", html)                                   # the second chart (the site's own products)
-        self.assertRegex(html, r"10,000円以上の割合は、2023年の7\.6%から、2025年の9\.0%へと増えています")
+        self.assertIn("ある調査では、母の日の予算は3,000〜4,999円を考える人が多い傾向です", html)
+        self.assertIn("母の日の商品の価格(", html)                                   # the site's own products
+        for word in ("日比谷花壇", "37.0%", "21.8%", "有効回答"):                      # owner 2026-11-17: no name of a study, none of its shares
+            self.assertNotIn(word, html)
 
     def test_the_price_ranges_are_ordered_and_use_quartiles(self):
         self.assertEqual(dataroom.quartiles([1, 2, 3, 4, 5]), (2.0, 3.0, 4.0))

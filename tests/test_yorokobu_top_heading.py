@@ -1,4 +1,4 @@
-"""The heading of the first four products (「種類の違う人気の4点」) was the same on every gift page, and the style dictionary once rewrote it with the words of one page for all of them.
+"""The heading of the first four products (「種類の違う4点」) was the same on every gift page, and the style dictionary once rewrote it with the words of one page for all of them.
 Now the gift pages name their own occasion and person in it (build side, 2026-11-03); the theme pages, which have no occasion, keep the common heading."""
 import json
 import re
@@ -46,7 +46,7 @@ class HeadingTest(unittest.TestCase):
                 continue
             seen += 1
             label = p["title"].split(" ")[0]
-            self.assertTrue(h.startswith(label + "、種類の違う人気の"), (build.ct.pair_key(p), h))
+            self.assertTrue(h.startswith(label + "、種類の違う"), (build.ct.pair_key(p), h))
             others = [q["title"].split(" ")[0] for q in self.c["pairs"] if q["title"].split(" ")[0] != label]
             self.assertFalse(any(h.startswith(o) for o in others), (build.ct.pair_key(p), h))          # not the words of another page
         self.assertGreater(seen, 0, "the fixture built no gift page with the block")
@@ -55,17 +55,17 @@ class HeadingTest(unittest.TestCase):
         for f in (self.out / "theme").glob("*/index.html"):
             h = heading(f.read_text(encoding="utf-8"))
             if h:
-                self.assertRegex(h, r"^種類の違う人気の\d点$", f.parent.name)
+                self.assertRegex(h, r"^種類の違う\d点$", f.parent.name)
 
     def test_the_label_is_escaped_and_optional(self):
         d = world()
-        self.assertIn("<h2>種類の違う人気の", build.top_picks(C2, d, "k1"))
+        self.assertIn("<h2>種類の違う", build.top_picks(C2, d, "k1"))
         html = build.top_picks(C2, d, "k1", label="先生<への>送別ギフト")
-        self.assertIn("先生&lt;への&gt;送別ギフト、種類の違う人気の", html)
+        self.assertIn("先生&lt;への&gt;送別ギフト、種類の違う", html)
 
     def test_the_old_common_heading_on_a_gift_page_would_be_caught(self):           # negative: the heading without the page's words
-        self.assertFalse(re.match(r"^先生への送別ギフト、種類の違う人気の", "種類の違う人気の4点"))
-        self.assertTrue(re.match(r"^先生への送別ギフト、種類の違う人気の", "先生への送別ギフト、種類の違う人気の4点"))
+        self.assertFalse(re.match(r"^先生への送別ギフト、種類の違う", "種類の違う4点"))
+        self.assertTrue(re.match(r"^先生への送別ギフト、種類の違う", "先生への送別ギフト、種類の違う4点"))
 
 
 if __name__ == "__main__":
