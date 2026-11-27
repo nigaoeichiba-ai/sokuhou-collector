@@ -18,8 +18,8 @@ JS = SIM / "nengajo-sim.js"
 
 SALE = "2026-11-16T15:00:00+09:00"      # 確認日の午後(早割は4社とも適用中。おたより本舗は表から外した)
 LATER = "2026-11-20T15:00:00+09:00"     # Rakpo の締切後・年賀状スクエアの46%OFFの最中
-AFTER = "2026-11-24T10:00:00+09:00"     # 挨拶状・Rakpo の締切後。年賀状スクエアは45%OFF(11/27 23:59まで)、しまうまは11/30まで
-LATE = "2026-11-28T10:00:00+09:00"      # 年賀状スクエアの45%OFFも終了(しまうまは11/30まで)
+AFTER = "2026-11-24T10:00:00+09:00"     # 挨拶状・Rakpo の締切後。年賀状スクエアは45%OFF(11/28に延長を確認。11/29 23:59まで)、しまうまは11/30まで
+LATE = "2026-11-30T10:00:00+09:00"      # 年賀状スクエアの45%OFFも終了(しまうまは11/30まで)
 
 
 def runtime() -> list[str]:
@@ -72,8 +72,8 @@ class TestNengajoSimCalc(unittest.TestCase):
 
     def test_after_the_deadlines_normal_prices(self):
         r = by_id(compute([mk(30, now=AFTER)])[0])
-        self.assertEqual(r["square"]["min"], 3912 + 2550)                                    # 45% OFF (11/24-11/27 23:59): official 21-30 sheets 3,912 yen
-        self.assertEqual((r["square"]["saleRate"], r["square"]["saleLabel"]), ("45%OFF", "11月27日(金)23:59"))
+        self.assertEqual(r["square"]["min"], 3912 + 2550)                                    # 45% OFF (11/24-11/29 23:59): official 21-30 sheets 3,912 yen
+        self.assertEqual((r["square"]["saleRate"], r["square"]["saleLabel"]), ("45%OFF", "11月29日(日)23:59"))
         self.assertEqual(r["aisatsu"]["min"], 7370 + 2550 + 759 + 330)                       # 11,009 yen: no discount until the next one is on the official page
         self.assertEqual(r["rakpo"]["min"], 6200 + 2400 + 825)
         self.assertEqual(r["shimauma"]["min"], 6570)                                         # 12% OFF until 11/30
@@ -89,7 +89,7 @@ class TestNengajoSimCalc(unittest.TestCase):
     def test_deadline_edges_in_jst(self):
         c = [mk(30, now=t) for t in ("2026-11-17T01:59:00+09:00", "2026-11-17T02:00:00+09:00", "2026-11-18T23:59:30+09:00", "2026-11-19T00:00:00+09:00",
                                       "2026-11-19T12:59:00+09:00", "2026-11-19T13:00:00+09:00", "2026-11-23T23:59:00+09:00", "2026-11-24T00:00:00+09:00",
-                                      "2026-11-27T23:59:00+09:00", "2026-11-28T00:00:00+09:00", "2026-11-30T12:59:00+09:00", "2026-11-30T13:00:00+09:00")]
+                                      "2026-11-29T23:59:00+09:00", "2026-11-30T00:00:00+09:00", "2026-11-30T12:59:00+09:00", "2026-11-30T13:00:00+09:00")]
         g = [by_id(x) for x in compute(c)]
         T, F = True, False
         self.assertEqual([x["rakpo"]["onSale"] for x in g], [T, F, F, F, F, F, F, F, F, F, F, F])
