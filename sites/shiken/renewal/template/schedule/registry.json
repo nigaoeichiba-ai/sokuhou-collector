@@ -4907,7 +4907,7 @@
       "short": "千葉県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-13",
+      "checkedAt": "2026-11-27",
       "sourceUrl": "https://www.pref.chiba.lg.jp/kyouiku/shidou/nyuushi/koukou/r9/r9nyushinittei.html",
       "sourceTitle": "令和9年度 千葉県公立高等学校入学者選抜 公式日程",
       "sourceStatus": "verified",
@@ -12151,7 +12151,7 @@
       "label": "志願者情報登録・検査料納付 締切",
       "exam": "koko-chiba",
       "sourceId": "catalog-koko-chiba",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-chiba-2",
@@ -12160,7 +12160,8 @@
       "label": "出願書類提出 締切",
       "exam": "koko-chiba",
       "sourceId": "catalog-koko-chiba",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27",
+      "time": "12:00"
     },
     {
       "id": "koko-chiba-3",
@@ -12170,7 +12171,7 @@
       "note": "一部の選抜・課程は2月16日のみです。",
       "exam": "koko-chiba",
       "sourceId": "catalog-koko-chiba",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-chiba-4",
@@ -12180,7 +12181,7 @@
       "note": "一部の選抜・課程は2月16日のみです。",
       "exam": "koko-chiba",
       "sourceId": "catalog-koko-chiba",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-chiba-5",
@@ -12189,7 +12190,7 @@
       "label": "追検査",
       "exam": "koko-chiba",
       "sourceId": "catalog-koko-chiba",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-chiba-6",
@@ -12198,7 +12199,49 @@
       "label": "入学許可候補者発表",
       "exam": "koko-chiba",
       "sourceId": "catalog-koko-chiba",
-      "checkedAt": "2026-11-13"
+      "checkedAt": "2026-11-27",
+      "time": "09:00"
+    },
+    {
+      "id": "koko-chiba-add-1",
+      "date": "2027-02-22",
+      "type": "deadline",
+      "label": "追検査の受付 締切",
+      "time": "12:00",
+      "note": "受付は2月19日（金）と22日（月）です。",
+      "exam": "koko-chiba",
+      "sourceId": "catalog-koko-chiba",
+      "checkedAt": "2026-11-27"
+    },
+    {
+      "id": "koko-chiba-add-2",
+      "date": "2027-03-05",
+      "type": "deadline",
+      "label": "第2次募集 出願書類提出 締切",
+      "note": "志願者情報の登録と検査料の納付は、3月2日から4日です。",
+      "exam": "koko-chiba",
+      "sourceId": "catalog-koko-chiba",
+      "checkedAt": "2026-11-27"
+    },
+    {
+      "id": "koko-chiba-add-3",
+      "date": "2027-03-10",
+      "type": "exam",
+      "label": "第2次募集 検査",
+      "note": "定員に満たない学校・学科で行います。",
+      "exam": "koko-chiba",
+      "sourceId": "catalog-koko-chiba",
+      "checkedAt": "2026-11-27"
+    },
+    {
+      "id": "koko-chiba-add-4",
+      "date": "2027-03-12",
+      "type": "result",
+      "label": "第2次募集 合格発表",
+      "time": "09:00",
+      "exam": "koko-chiba",
+      "sourceId": "catalog-koko-chiba",
+      "checkedAt": "2026-11-27"
     },
     {
       "id": "koko-tokyo-1",

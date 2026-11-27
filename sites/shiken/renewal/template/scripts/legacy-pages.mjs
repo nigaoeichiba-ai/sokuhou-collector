@@ -67,6 +67,9 @@ export const config={
  'hyogo-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-hyogo'],live:{scope:'ids:koko-hyogo',types:['exam','result'],limit:8,heading:'兵庫県のこれからの日程'},pr:'koko'},
  'koko-goukaku-happyo-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-gunma,koko-kanagawa,koko-hyogo,koko-osaka'],pr:'koko'},
  'touroku-hanbaisha-nittei':{parent:'/yomimono/',art:'decided',related:['ids:touroku-tokyo-2027,touroku-tokyo-2026'],pr:'touroku'},
+ 'kyushu-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-fukuoka,koko-saga,koko-nagasaki,koko-kumamoto,koko-oita,koko-miyazaki,koko-kagoshima,koko-okinawa'],pr:'koko',prAfter:'今日から決めておくこと'},
+ 'chiba-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-chiba'],live:{scope:'ids:koko-chiba',types:['deadline','exam','result'],limit:12,heading:'千葉県のこれからの日程'},pr:'koko',prAfter:'いまから2月までの準備'},
+ 'kanken-goukaku-happyo-2026':{parent:'/yomimono/',art:'decided',related:['ids:kanken-2027-02-14,kanken-2027-06-20'],live:{scope:'fam:kanken',types:['deadline','exam'],limit:6,heading:'漢検のこれからの日程'},pr:'kanken',prAfter:'申込までに決めること'},
  'takken-toroku':{parent:'/yomimono/',art:'decided',related:['ids:takken'],pr:'takken',prAfter:'落ちていたときは'},
  'kangoshi-ganshu':{parent:'/yomimono/',art:'decided',related:['ids:nurse'],live:{scope:'ids:nurse',types:['deadline','exam','result'],limit:6,heading:'第116回の日程'},pr:'nurse'},
  'komuin':{parent:'/schedule/',art:'decided',related:['fam:komuin'],live:{scope:'fam:komuin',types:['deadline','exam','result'],limit:10},pr:'komuin'},
@@ -74,8 +77,8 @@ export const config={
  'minkan':{parent:'/schedule/',art:'decided',related:['fam:toeic','fam:kanken','ids:itpassport-cbt,fe-cbt'],live:{scope:['ids:toeic,toeic-20261206,toeic-20261219,toeic-20270124,toeic-20270214,toeic-20270306,toeic-20270314','fam:kanken'],types:['deadline','exam'],limit:16},pr:'toeic'},
  'nendo':{parent:'/yomimono/',art:'decided',related:[FEATURED],pr:'komuin'},
  'nyushi':{parent:'/',art:'family',children:'/nyushi/',childrenHeading:'入試のくわしい解説',related:['ids:kyotsu,kyotsu-tsuishi-2027,todai-2027,kyodai-2027,hokudai-zenki-2027'],live:{scope:['cat:university','cat:school'],types:['deadline','exam','result'],limit:24,heading:'これから先の入試の日程'},pr:'kyotsu'},
- 'postmark':{parent:'/yomimono/',art:'decided',related:['ids:takken,gyosei,sharoshi,kangoshi,nurse,kaigo']},
- 'results':{parent:'/schedule/',art:'prepared',related:[],live:{scope:'all',types:['result'],limit:30,heading:'これから先の合格発表・結果の日'},pr:'shikaku'},
+ 'postmark':{parent:'/yomimono/',art:'decided',related:['ids:takken,gyosei,sharoshi,kangoshi,nurse,kaigo'],pr:'postmark'},
+ 'results':{parent:'/schedule/',art:'prepared',today:true,related:[],live:{scope:'all',types:['result'],limit:30,heading:'これから先の合格発表・結果の日'},pr:'shikaku'},
  'schedule':{parent:'/',art:'discover',related:[],list:'all',children:'/schedule/',childrenHeading:'試験ごとのまとめと、日付の一覧'},
  'takken-junbi':{parent:'/yomimono/',art:'decided',related:['ids:takken'],pr:'takken'},
  'yama':{parent:'/schedule/',art:'compare',related:[FEATURED],live:{scope:'all',types:['exam'],limit:30,heading:'これから先の試験日'},pr:'shikaku'},
@@ -98,6 +101,17 @@ export function liveSection(registry,live,today){
  if(!rows.length)return `<section class="ed-section"><h2>${esc(heading)}</h2><p>いま掲載している、${esc(jpDate(today))}より先の日程はありません。日程が発表されたら追加します。</p></section>`;
  const trs=rows.map(r=>{const e=ids.get(r.exam);return `<tr><td>${esc(jpDate(r.date))}${r.time?`<br><small>${esc(fmtTime(r))}</small>`:''}</td><td><a href="/exams/${e.id}/">${esc(e.name)}</a><br><small>${esc(e.edition)}</small></td><td>${esc(TYPE[r.type])}${r.planned?'（予定）':''}${r.label&&r.label!=='試験日'?`<br><small>${esc(r.label)}</small>`:''}</td></tr>`;}).join('');
  return `<section class="ed-section"><h2>${esc(heading)}</h2><p>${esc(jpDate(today))}以降の日程です。日付の早い順に表示しています。${live.types.length===1&&live.types[0]==='result'?'結果の確かめ方は':'申込の方法や時刻は'}、試験ごとのページで確かめられます。</p><div class="tablewrap"><table class="ed-table"><thead><tr><th>日付</th><th>試験・実施回</th><th>区分</th></tr></thead><tbody>${trs}</tbody></table></div></section>`;
+}
+// the result days of this very day (the site is built again every day), for people who search for today's announcements
+export function todaySection(registry,today){
+ const ids=new Map(registry.exams.map(e=>[e.id,e]));
+ const rows=registry.rows.filter(r=>ids.has(r.exam)&&r.type==='result'&&r.date>=today&&r.primary!==false).sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'').localeCompare(b.time||''));
+ const item=r=>{const e=ids.get(r.exam);return `<li><a href="/exams/${e.id}/">${esc(e.name)}</a>（${esc(r.label||TYPE.result)}${r.time?'、'+esc(r.time):''}${r.planned?'、予定':''}）</li>`;};
+ const now=rows.filter(r=>r.date===today),next=rows.length&&!now.length?rows.filter(r=>r.date===rows[0].date):[];
+ const body=now.length?`<p>${esc(jpDate(today))}に結果の日がある試験は、次のとおりです。</p><ul>${now.map(item).join('')}</ul>`
+  :next.length?`<p>このサイトの日程表では、${esc(jpDate(today))}が結果の日の試験はありません。次の結果の日は${esc(jpDate(next[0].date))}です。</p><ul>${next.map(item).join('')}</ul>`
+  :'<p>これから先の結果の日は、発表されたら追加します。</p>';
+ return `<section class="ed-section"><h2>今日の合格発表</h2>${body}</section>`;
 }
 function relatedSection(registry,related,heading='日程と申し込みの案内'){
  const exams=registry.exams.filter(e=>inScope(e,related));
@@ -123,7 +137,7 @@ export function legacyMain({slug,data,registry,today,prefix,legacy}){
  const at=c.prAfter?data.sections.findIndex(s=>(s.h2||'').startsWith(c.prAfter)):-1;
  if(c.prAfter&&at<0)throw new Error(`${slug}: no section starts with "${c.prAfter}" (prAfter)`);
  const sections=data.sections.map((s,i)=>`<section class="ed-section legacy-section">${s.h2?`<h2>${esc(s.h2)}</h2>`:''}${tok(s.html)}</section>${i===at?pr:''}`).join('');
- const live=c.live?liveSection(registry,c.live,today):'';
+ const live=(c.today?todaySection(registry,today):'')+(c.live?liveSection(registry,c.live,today):'');
  const list=c.list?listSection(registry,c.list):'';
  const articles=c.children?childrenSection(legacy,c.children,c.childrenHeading||'あわせて読みたい',slug):'';
  const related=(c.related||[]).length?relatedSection(registry,c.related):'';
