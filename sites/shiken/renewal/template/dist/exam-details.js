@@ -63,7 +63,9 @@ export function mountExam(id,params,c){
  root.addEventListener('change',e=>{if(e.target.matches('[data-check]'))progress();},{signal});
  if(selectedEvent)$('.ed-date-tools').open=true;
  const word=e=>e.edition.replace('実施回','');
- document.title=(sid===id?meta.seoTitle:meta.seoTitle?.replace(word(base),word(exam)))||exam.name+'｜'+exam.edition+'の日程・受験準備｜資格・試験への道';
+ // the prefecture pages (2026-11-27): people search '◯◯県公立高校入試日程 2027', so the title says those words and names only the kinds of dates the page has
+ const kokoTitle=()=>{if(!id.startsWith('koko-'))return '';const kinds=[['deadline','出願締切'],['exam','試験日'],['result','合格発表']].filter(([t])=>ownEvents.some(e=>e.type===t)).map(([,w])=>w);return exam.name.replace(/\s+/g,'')+'日程 '+exam.edition+(kinds.length?'｜'+kinds.join('・'):'')+'｜資格・試験への道';};
+ document.title=(sid===id?meta.seoTitle:meta.seoTitle?.replace(word(base),word(exam)))||kokoTitle()||exam.name+'｜'+exam.edition+'の日程・受験準備｜資格・試験への道';
  const upcoming=t=>ownEvents.filter(e=>e.type===t&&e.date>=todayJ).sort((x,y)=>x.date.localeCompare(y.date))[0];
  const dlE=upcoming('deadline'),exE=upcoming('exam'),reE=upcoming('result'),rolling=scheduleMeta[sid]?.fields?.deadline==='rolling',bits=[dlE?'申込の締切は'+formatDate(dlE.date,true)+(dlE.time?' '+dlE.time+'まで':''):'',exE?'試験日は'+formatDate(exE.date,true):'',reE?'合格発表は'+formatDate(reE.date,true):''].filter(Boolean);
  document.querySelector('meta[name="description"]').content=meta.seoDesc||(bits.length?(sid===id?exam.name+'（'+exam.edition+'）の':exam.name+'で次に申し込めるのは'+exam.edition+'です。')+bits.join('、')+'。申し込みから当日までの流れと持ち物を、確認日つきでまとめています。':rolling?exam.name+'（'+exam.edition+'）は、受ける日と会場を選んで予約する試験です。申し込みから当日までの流れと、受けられない期間を、確認日つきでまとめています。':(exam.name+'（'+exam.edition+'）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。'));

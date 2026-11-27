@@ -343,6 +343,28 @@ class Renewal(unittest.TestCase):
         old = "TOEIC（2027年）の日程と申し込みから当日までの準備をご案内します。確認日と、公表状況を分けて掲載しています。"
         self.assertNotRegex(old, r"申込の締切は20\d\d年")
 
+    def test_the_prefecture_pages_say_nyushi_nittei_and_only_the_dates_they_have(self):
+        # Search Console (2026-11-27): '千葉県公立高校入試日程 2027' and the like showed the prefecture pages with no click; their titles lacked 入試日程
+        def lacks(rel: str, html: str) -> list[str]:
+            t = re.search(r"<title>(.*?)</title>", html, re.S).group(1)
+            return [] if re.match(r"\S+公立高校入試日程 2027年度｜", t) else [f"{rel}: {t}"]
+        koko = {rel: h for rel, h in self.pages.items() if rel.startswith("exams/koko-")}
+        self.assertEqual(len(koko), 47)
+        self.assertEqual([x for rel, h in koko.items() for x in lacks(rel, h)], [])
+        events = {}
+        for rel, h in koko.items():
+            t = re.search(r"<title>(.*?)</title>", h, re.S).group(1)
+            ex = rel.split("/")[1]
+            for word, kind in (("出願締切", "deadline"), ("試験日", "exam"), ("合格発表", "result")):
+                if word in t:
+                    events.setdefault((ex, kind), word)
+        have = {(e["exam"], e["type"]) for e in REGISTRY["rows"]}
+        self.assertTrue(events)
+        self.assertEqual([k for k in events if k not in have], [])          # the title never promises a date the page does not have
+        # negative case: the title as it was is recognised
+        old = "<title>千葉県 公立高校入試｜2027年度の日程・受験準備｜資格・試験への道</title>"
+        self.assertTrue(lacks("old", old))
+
     def test_the_toeic_page_moves_to_the_next_open_round_when_its_own_has_closed(self):
         # 2026-11-27: the 1/10 round closed on 11/26 and the page still showed it, with no deadline to apply by
         def toeic(day):
@@ -413,10 +435,14 @@ class Renewal(unittest.TestCase):
         # Search Console (2026-11-20): 80 pages crawled-not-indexed; the round pages share the parent's copy (build rule ROUND_RE, kept ones from schedule/search-keep.json)
         sm = re.findall(r"<loc>(.*?)</loc>", (self.out / "sitemap.xml").read_text(encoding="utf-8"))
         robots = lambda rel: re.search(r'name="robots" content="([^"]*)"', self.pages[rel]).group(1)
-        for ex in ("toeic-20261219", "toeic-20270124", "eiken-2026-1", "eiken-2027-1", "boki-173", "fp1-gakka-20260524", "fp23-jafp-2027", "fp23-kinzai-2026", "fp1-jafp-2026"):
+        keep = set(json.loads((TEMPLATE / "schedule" / "search-keep.json").read_text(encoding="utf-8"))["ids"])
+        for ex in ("toeic-20270124", "toeic-20270306", "fp1-gakka-20260524"):          # never shown in Google: out
+            self.assertNotIn(ex, keep)
             self.assertEqual(robots(f"exams/{ex}/index.html"), "noindex,follow", ex)
             self.assertNotIn(f"https://shiken-nittei.com/exams/{ex}/", sm, ex)
-        for ex in ("toeic-20261206", "eiken-2027-3"):          # shown in Google in the last 28 days: stay indexed
+        # 2026-11-27: pages that were noindex although Google showed them (toeic-20261219, 94 impressions in 7 days) are in the list
+        self.assertLessEqual({"toeic-20261206", "toeic-20261219", "eiken-2027-2", "eiken-2027-3", "fp23-jafp-2026"}, keep)
+        for ex in sorted(keep):          # shown in Google in the last 28 days: stay indexed
             self.assertEqual(robots(f"exams/{ex}/index.html"), "index,follow", ex)
             self.assertIn(f"https://shiken-nittei.com/exams/{ex}/", sm, ex)
         for parent, child in (("toeic", "toeic-20261219"), ("eiken", "eiken-2026-1"), ("boki", "boki-173"), ("fp", "fp1-gakka-20260524")):
