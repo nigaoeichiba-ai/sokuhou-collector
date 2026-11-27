@@ -1,5 +1,5 @@
 {
- "fetched_at": "2026-11-26T21:17:00.910211+00:00",
+ "fetched_at": "2026-11-27T21:17:26.184821+00:00",
  "source": "https://api.jgrants-portal.go.jp/exp/v1/public/subsidies",
  "subsidies": [
   {
@@ -987,18 +987,6 @@
    "title": "【長野県茅野市】消費喚起イベント事業補助金"
   },
   {
-   "acceptance_end_datetime": "2026-11-27T15:00:00.000Z",
-   "acceptance_start_datetime": "2026-03-24T04:00:00.000Z",
-   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDY5GMAX",
-   "id": "a0WJ200000CDY5GMAX",
-   "institution_name": "令和７年度補正 「再生可能エネルギー導入拡大・分散型エネルギーリソース導入支援等事業費補助金」ディマンドリスポンスの拡大に向けたIoT化推進事業",
-   "name": "S-00008435",
-   "subsidy_max_limit": 20000000,
-   "target_area_search": "全国",
-   "target_number_of_employees": "従業員数の制約なし",
-   "title": "令和７年度補正 ディマンドリスポンスの拡大に向けたIoT化推進事業"
-  },
-  {
    "acceptance_end_datetime": "2027-03-31T08:00:00.000Z",
    "acceptance_start_datetime": "2026-04-01T00:00:00.000Z",
    "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WJ200000CDYvXMAX",
@@ -1357,6 +1345,18 @@
    "target_area_search": "全国",
    "target_number_of_employees": "300名以下",
    "title": "令和８年度都市ガス分野の災害対応・レジリエンス強化に係る支援事業費補助金"
+  },
+  {
+   "acceptance_end_datetime": "2027-05-31T14:59:00.000Z",
+   "acceptance_start_datetime": "2026-04-01T00:00:00.000Z",
+   "detail_url": "https://www.jgrants-portal.go.jp/subsidy/a0WfQ000004MP0fUAG",
+   "id": "a0WfQ000004MP0fUAG",
+   "institution_name": "東京都生産性向上・職場環境整備等支援事業補助金　消費税仕入控除税額報告",
+   "name": "S-00010079",
+   "subsidy_max_limit": 0,
+   "target_area_search": "東京都",
+   "target_number_of_employees": "従業員数の制約なし",
+   "title": "東京都生産性向上・職場環境整備等支援事業補助金　消費税仕入控除税額報告"
   },
   {
    "acceptance_end_datetime": "2026-12-14T08:00:00.000Z",
