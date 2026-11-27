@@ -9,6 +9,7 @@ import json
 import re
 from pathlib import Path
 
+from sites.yorokobu import surveyguard
 from sokuhou.sitekit import BuildError
 
 HERE = Path(__file__).resolve().parent
@@ -138,10 +139,14 @@ def load(content_dir: Path = CONTENT_DIR) -> dict:
     messages = _load_messages(content_dir, occ)
     etiquette = _load_etiquette(content_dir, occ)
     amazon, amazon_checked = _load_amazon(content_dir, occ, rec)
-    return {"messages": messages, "travel_messages": _load_travel_messages(content_dir, occ), "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
+    loaded = {"messages": messages, "travel_messages": _load_travel_messages(content_dir, occ), "etiquette": etiquette, "amazon": amazon, "amazon_checked": amazon_checked, "occasions": occasions, "recipients": recipients, "pairs": pairs, "filters": filters,
             "occ": occ, "rec": rec, "tiers": tiers, "guides": guides, "guide_moves": guide_moves, "themes": themes,
             "theme": theme, "theme_groups": groups, "articles": articles,
             "stats": _load_stats(content_dir), "surveys": _load_surveys(content_dir), "ask": _load_ask(content_dir), "daily": _load_daily(content_dir), "features": _load_features(content_dir), "taboo": _load_taboo(content_dir), "persona": _load_persona(content_dir, theme), "map_tags": _load_map_tags(content_dir)}
+    found = surveyguard.check_content(loaded)                       # no figure of another party's study in any text of the site (owner 2026-11-17)
+    if found:
+        raise BuildError("a figure or a name of a study in the content (surveyguard.py): " + " / ".join(found[:5]))
+    return loaded
 
 
 def _load_daily(content_dir: Path) -> list[dict]:
@@ -169,9 +174,6 @@ def _load_stats(content_dir: Path) -> dict:
     return data
 
 
-QUANTITY = re.compile(r"[0-9][0-9,]*(?:\.[0-9]+)?(?=\s*(?:%|円|ポイント))")
-
-
 def _numbers(text: str) -> set[str]:
     return {m.replace(",", "") for m in re.findall(r"[0-9][0-9,]*(?:\.[0-9]+)?", text)}
 
@@ -186,44 +188,22 @@ def _plain_json(v) -> str:
 
 
 def check_board(b: dict) -> None:
-    """One survey board (surveys.json): the sources are named and complete, every chart row is a number that fits its unit, and every sentence that states a
-    quantity (a % or a yen figure) states one that is in the board's own data, so a typed-over number cannot slip into prose."""
-    where = f"surveys {b.get('slug') or b.get('board')}"
-    _need(b, ("studies", "headline", "takeaways", "cautions"), where)
-    ids = set()
-    for s in b["studies"]:
-        _need(s, ("id", "org", "name", "url", "period", "n", "target", "method"), f"{where} study")
-        if not s["url"].startswith("https://") or not isinstance(s["n"], int) or s["n"] <= 0:
-            raise BuildError(f"{where} study {s['id']}: a bad url or sample size")
-        ids.add(s["id"])
-    for h in b["headline"]:
-        _need(h, ("value", "label", "study"), f"{where} headline")
-        if h["study"] not in ids:
-            raise BuildError(f"{where}: headline names an unknown study {h['study']}")
-    for ch in b.get("charts", []):
-        _need(ch, ("id", "study", "title", "unit", "rows", "finding"), f"{where} chart")
-        if ch["study"] not in ids or ch["unit"] not in ("%", "円"):
-            raise BuildError(f"{where} chart {ch['id']}: an unknown study or unit")
-        for row in ch["rows"]:
-            if len(row) != 2 or not isinstance(row[1], (int, float)) or row[1] < 0 or (ch["unit"] == "%" and row[1] > 100):
-                raise BuildError(f"{where} chart {ch['id']}: a row that is not a number that fits {ch['unit']}: {row}")
-    for r in b.get("ranks", []):
-        _need(r, ("title", "study", "rows"), f"{where} rank")
-        if r["study"] not in ids:
-            raise BuildError(f"{where}: a ranking names an unknown study {r['study']}")
-    # the numbers the board's data has: chart rows, headline values, the rows of rankings, the studies, and its `facts` (source numbers that only a note uses)
-    data = _plain_json([ch["rows"] for ch in b.get("charts", [])] + [h["value"] for h in b["headline"]] + [r["rows"] for r in b.get("ranks", [])]
-                       + [b["studies"], b.get("facts", [])])
-    have = _numbers(data)
-    prose = (list(b["takeaways"]) + [ch["finding"] for ch in b.get("charts", [])] + [ch.get("note", "") for ch in b.get("charts", [])]
-             + [r.get("note", "") for r in b.get("ranks", [])] + list(b["cautions"]) + [h["label"] for h in b["headline"]])
-    for sentence in prose:
-        for q in QUANTITY.findall(sentence):
-            if q.replace(",", "") not in have:
-                raise BuildError(f"{where}: the sentence '{sentence[:30]}…' states {q}, which is not in the board's data")
-    for ch in b.get("charts", []):
-        if len(ch["rows"]) > 8:
-            raise BuildError(f"{where} chart {ch['id']}: more than 8 rows (the picture of a chart draws 8)")
+    """One board (surveys.json): the trends in the site's own words, the advice and the price ranges.  `studies` is the editors' record of what a trend rests
+    on and never goes on a page (owner 2026-11-17: no name of a study, none of its shares, sample sizes or periods; surveyguard.py refuses such a sentence)."""
+    where = f"surveys {b.get('slug')}"
+    _need(b, ("slug", "h1", "crumb", "lead", "finding", "teaser", "takeaways", "advice", "cautions"), where)
+    old = [k for k in ("headline", "charts", "ranks", "facts") if k in b]
+    if old:
+        raise BuildError(f"{where}: {', '.join(old)}: a board shows no figures of a study")
+    for a in b["advice"]:
+        _need(a, ("h", "p"), f"{where} advice")
+    for r in b.get("shop", []):
+        _need(r, ("label", "query"), f"{where} shop")
+        if not isinstance(r.get("lo"), int) or not (r.get("hi") is None or isinstance(r.get("hi"), int) and r["hi"] > r["lo"]):
+            raise BuildError(f"{where} shop {r['label']}: a price range that is not one")
+    found = surveyguard.check_content(b)
+    if found:
+        raise BuildError(f"{where}: {found[0]}")
 
 
 LABEL_NOT = ("ml", "kg", "ビール", "ワイン", "酒", "ボトル", "ヘア", "アイロン", "ブラシ", "シャンプー", "美容", "サロン")
@@ -293,17 +273,15 @@ def _load_ask(content_dir: Path) -> dict:
 
 
 def _load_surveys(content_dir: Path) -> dict:
-    """surveys.json (optional): the survey boards of the data room, one per occasion with sources we could check, and the extras of the Mother's Day page."""
+    """surveys.json (optional): the trend boards of the data room, one per occasion, and the record behind the Mother's Day trend."""
     data = _optional(content_dir, "surveys.json") or {}
     slugs = set()
     for b in data.get("boards", []):
-        _need(b, ("slug", "h1", "crumb", "lead"), "surveys board")
+        _need(b, ("slug",), "surveys board")
         if b["slug"] in slugs:
             raise BuildError(f"surveys: duplicate board {b['slug']}")
         slugs.add(b["slug"])
         check_board(b)
-    if data.get("mothers_day_extra"):
-        check_board({**data["mothers_day_extra"], "board": "mothers-day-budget"})
     return data
 
 

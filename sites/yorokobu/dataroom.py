@@ -1,13 +1,15 @@
 """データ室: charts of gift prices and gift occasions, from two kinds of numbers.
 
   * the site's own products (the Rakuten items it shows, refreshed every day): what is actually sold at which price, how well it is reviewed, how it ships;
-  * public statistics and one survey (content/stats.json, each with its source): how many babies and weddings there are, what people say they spend.
+  * public statistics (content/stats.json): how many babies and weddings there are;
+  * trends in what people give and spend, in the site's own words (content/surveys.json): no name of a study and none of its figures (owner 2026-11-17).
 
 The charts are plain HTML and CSS bars (no script, no image): they scale to a phone, can be read by a screen reader, and every chart has its numbers as a table.
 Every sentence that states a number is made from the data in this build, so it is true on the day it is published and changes with the data.
 """
 from __future__ import annotations
 
+import re
 from statistics import median
 from urllib.parse import quote
 
@@ -194,7 +196,7 @@ def _page(d: dict, cfg: dict, preview: bool, path: str, title: str, h1: str, lea
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("データ室", "/data/"), (crumb, None)] if path != "/data/" else [("トップ", "/"), ("データ室", None)])}</div>
 {body}
 {B.share_bar(cfg, path, h1, "このページをだれかに・自分に送る", hint=True)}
-<p class="notice" style="margin-top:44px">数字は調べた時点のものです。商品の価格・在庫・レビューは変わります。調査の数字は調査の対象や方法によって異なり、すべての人にあてはまるものではありません。</p>"""
+<p class="notice" style="margin-top:44px">数字は調べた時点のものです。商品の価格・在庫・レビューは変わります。予算や贈り方の傾向は一例で、すべての人にあてはまるものではありません。</p>"""
     return B.page(cfg, preview, path=path, title=f"{title} | {cfg['site_name']}", description=lead[:110], body=html, og_image=B.og_for(f"data/{first}" if first else "default"))
 
 
@@ -278,7 +280,7 @@ def occasion_prices(d: dict) -> tuple | None:
              f"贈る相手では中央値がいちばん高いのは「{hi_r[0]}」の{yen(hi_r[3])}、いちばん低いのは「{lo_r[0]}」の{yen(lo_r[3])}です。"]
     lead = "楽天市場で、イベントや贈る相手ごとに、どのくらいの価格の商品が選ばれやすいか。当サイトが取り上げている商品の価格を中央値と真ん中の半分の範囲で見せます。毎日、更新しています。"
     body = (f'<section class="data-notes"><h2>わかったこと</h2><ul>{"".join(f"<li>{esc(n)}</li>" for n in notes)}</ul></section>{cho}{chr_}'
-            '<section class="data-notes"><h2>見かたの注意</h2><p>ここにあるのは「売られている商品の価格」です。「贈るときにかける予算」とは同じではありません。予算の調査は'
+            '<section class="data-notes"><h2>見かたの注意</h2><p>ここにあるのは「売られている商品の価格」です。「贈るときにかける予算」とは同じではありません。予算の目安は'
             '<a href="/data/mothers-day-budget/">母の日の予算と商品の価格</a>で見られます。</p></section>')
     return "/data/occasion-prices/", "イベント別・相手別の価格の目安", lead, body, "イベント別・相手別の価格", f"中央値がいちばん高いのは「{hi_o[0]}」({yen(hi_o[3])})"
 
@@ -294,6 +296,22 @@ def budget_trend(d: dict) -> str:
     return f"ある調査では、母の日の予算は{top}を考える人が多い傾向です。"
 
 
+def own_price_chart(d: dict, occasion: str, slug: str) -> tuple[str, str]:
+    """(finding, chart) of the site's own products of one occasion by price range: the numbers the site computed itself.  ("", "") with too few products."""
+    items = products_of_occasion(d, occasion)
+    if len(items) < MIN_PRODUCTS:
+        return "", ""
+    name = d["c"]["occ"][occasion]["name"]
+    bs = band_stats(items)
+    top = max(bs, key=lambda b: b["share"])
+    finding = f"当サイトの{name}の商品は{top['label']}が最も多く{top['share']:.0f}%です。"
+    rows = [(b["label"], b["share"], f"{b['n']}点({b['share']:.0f}%)") for b in bs]
+    chart = figure(d, f"{name}の商品の価格({len(items)}点)", hbars(rows), own_source(d, len(items)),
+                   table(["価格帯", "商品の数"], [[r[0], r[2]] for r in rows]),
+                   card=dict(id=f"{slug}--shop-prices", finding=finding, rows=tuple(rows), source=own_plain(d, len(items))))
+    return finding, chart
+
+
 def mothers_day_budget(d: dict) -> tuple | None:
     trend = budget_trend(d)
     if not trend:
@@ -303,17 +321,9 @@ def mothers_day_budget(d: dict) -> tuple | None:
     notes = [trend]
     if now[-1] < max(now) / 2:
         notes.append(f"{s['bands'][-1]}をかける人は少なめです。")
-    chart = finding = ""
-    items = products_of_occasion(d, "mothers-day")
-    if len(items) >= MIN_PRODUCTS:
-        bs = band_stats(items)
-        top = max(bs, key=lambda b: b["share"])
-        finding = f"当サイトの母の日の商品は{top['label']}がいちばん多く{top['share']:.0f}%です。"
+    finding, chart = own_price_chart(d, "mothers-day", "mothers-day-budget") if "mothers-day" in d["c"]["occ"] else ("", "")
+    if finding:
         notes.append(finding)
-        rows = [(b["label"], b["share"], f"{b['n']}点({b['share']:.0f}%)") for b in bs]
-        chart = figure(d, f"母の日の商品の価格({len(items)}点)", hbars(rows), own_source(d, len(items)),
-                       table(["価格帯", "商品の数"], [[r[0], r[2]] for r in rows]),
-                       card=dict(id="mothers-day-budget--shop", finding=finding, rows=tuple(rows), source=own_plain(d, len(items))))
     body = (f'<section class="data-notes"><h2>わかったこと</h2><ul>{"".join(f"<li>{esc(n)}</li>" for n in notes)}</ul></section>{chart}'
             '<section class="data-notes"><h2>予算の決め方</h2><p>花だけを贈るか、品物を添えるかを先に決めると、価格帯を選べます。送料やラッピング代がかかる場合は、'
             'その分も予算に入れておきましょう。母の日のプレゼントは、<a href="/occasion/mothers-day/">母の日のページ</a>から探せます。</p></section>')
@@ -341,7 +351,7 @@ def births_marriages(d: dict) -> tuple | None:
     body = (f'<section class="data-notes"><h2>わかったこと</h2><ul>{"".join(f"<li>{esc(n)}</li>" for n in notes)}</ul>'
             '<p>出産祝いや結婚祝いを贈る機会は全体としては少なくなっています。それだけに贈るときは、相手の暮らしに合うものをていねいに選びたいところです。</p></section>'
             f'{fig_b}{fig_m}{links}')
-    lead = "出産祝い、結婚祝いを贈る機会はどのくらいあるのか。国の統計で出生数と婚姻件数の移り変わりを見ます。"
+    lead = "出産祝い、結婚祝いを贈る機会はどのくらいあるのか。国の統計から出生数と婚姻件数の移り変わりをまとめました。"
     return "/data/births-marriages/", "出産祝い・結婚祝いの機会の移り変わり", lead, body, "出生数と婚姻件数", f"出生数は{by[0]}年から{(1 - b1 / b0) * 100:.0f}%減"
 
 
@@ -374,37 +384,14 @@ def ranking_prices(d: dict) -> tuple | None:
     return "/data/ranking-prices/", "世代別・性別の売れ筋の価格", lead, body, "売れ筋の価格", f"売れ筋の価格がいちばん高いのは「{hi[0]}」({yen(hi[1]['median'])})"
 
 
-# ---------------------------------------------------------------- survey boards: what people say they spend and give, per occasion, with the products of that price range under it
-
-SERIES = ("s1", "s2", "s3")
-
-
-def _fmt(v: float, unit: str) -> str:
-    return f"{v:,.0f}円" if unit == "円" else f"{v:g}%"
-
-
-def _study_n(s: dict) -> str:
-    return s.get("n_text") or f"{s['n']:,}人"
-
-
-def _short_source(s: dict) -> str:
-    return f'{s["period"].split("日")[0].split("月")[0]}月の調査({_study_n(s)})'
-
-
-def _studies_section(studies: list[dict]) -> str:
-    li = "".join(f'<li><b>{esc(s["period"])}の調査</b>'
-                 f'<dl><dt>回答数</dt><dd>{esc(_study_n(s))}</dd><dt>対象・方法</dt><dd>{esc(s["target"])}({esc(s["method"])})</dd></dl></li>' for s in studies)
-    return (f'<section class="data-notes"><h2>調べた調査</h2><ul class="studies">{li}</ul>'
-            '<p class="chart-note">数字は各調査の発表のとおりです。調査によって、対象も質問も違うため、数字どうしを直接は比べられないことがあります。</p></section>')
-
-
-def _tiles(head: list[dict], studies: dict[str, dict]) -> str:
-    li = "".join(f'<li><b>{esc(h["value"])}</b><span>{esc(h["label"])}</span></li>' for h in head)
-    return f'<ul class="stat-tiles">{li}</ul>'
-
+# ---------------------------------------------------------------- trend boards: what people tend to spend and give, per occasion, with the products of that price range under it
 
 def _takeaways(items: list[str]) -> str:
     return f'<section class="data-notes"><h2>わかったこと</h2><ul>{"".join(f"<li>{esc(t)}</li>" for t in items)}</ul></section>'
+
+
+def _advice(items: list[dict]) -> str:
+    return '<section class="data-notes"><h2>選ぶときの決め方</h2>' + "".join(f'<h3>{esc(a["h"])}</h3><p>{a["p"]}</p>' for a in items) + "</section>"
 
 
 def _cautions(items: list[str]) -> str:
@@ -447,7 +434,7 @@ def _shop_section(d: dict, b: dict) -> str:
     if not out:
         return ""
     other = (f'<section class="block" id="shop-amazon"><div class="sec-head"><h2>Amazonで探す</h2></div><p class="more">{amazon}</p></section>') if amazon else ""
-    return ('<section class="block" id="shop"><div class="sec-head"><h2>この予算で探す</h2><p>調査で多かった価格帯の商品です。ボタンから楽天市場でほかの商品も探せます。</p></div>'
+    return ('<section class="block" id="shop"><div class="sec-head"><h2>この予算で探す</h2><p>予算の目安に合わせた価格帯の商品です。ボタンから楽天市場でほかの商品も探せます。</p></div>'
             f'{out}{B.freshness(d)}</section>{other}')
 
 
@@ -467,23 +454,7 @@ def _days_tile(d: dict, occasion: str) -> str:
 
 
 def board_page(d: dict, b: dict) -> tuple | None:
-    """One survey board: (path, h1, lead, body, crumb, finding)."""
-    studies = {s["id"]: s for s in b["studies"]}
-    figs = ""
-    for i, ch in enumerate(b.get("charts", [])):
-        rows = ch["rows"]
-        mx = max(v for _, v in rows)
-        top = 100.0 if (ch["unit"] == "%" and mx >= 50) else (float(-(-mx * 1.15 // 10) * 10) if ch["unit"] == "%" else mx * 1.0)
-        series = SERIES[i % 3]
-        st = studies[ch["study"]]
-        shown = tuple((l, v, _fmt(v, ch["unit"])) for l, v in rows)
-        cap = f'調査時期: {esc(st["period"])}、回答 {esc(_study_n(st))}。{esc(ch.get("note", ""))}'
-        figs += figure(d, ch["title"], hbars([(l, v, t) for l, v, t in shown], top=top, series_class=series), cap,
-                       table(["項目", "数字"], [[l, t] for l, _, t in shown]),
-                       card=dict(id=f'{b["slug"]}--{ch["id"]}', finding=ch["finding"], rows=shown, series=series, source=_short_source(st)))
-    ranks = "".join(f'<section class="data-notes"><h2>{esc(r["title"])}</h2><div class="tablewrap"><table class="gift-days"><tbody>'
-                    + "".join(f"<tr><th>{esc(a)}</th><td>{esc(c)}</td></tr>" for a, c in r["rows"]) + f'</tbody></table></div><p class="chart-note">{esc(r.get("note", ""))}</p></section>'
-                    for r in b.get("ranks", []))
+    """One trend board: (path, h1, lead, body, crumb, finding)."""
     c = d["c"]
     rel = []
     occ = b.get("occasion")
@@ -499,11 +470,17 @@ def board_page(d: dict, b: dict) -> tuple | None:
         rel.append(("/budget/", "予算からプレゼントを探す"))
     rel.append(("/data/", "データ室のほかの図を見る"))
     related = '<section class="block"><div class="sec-head"><h2>つづけて探す</h2></div><ul class="plain cols2 chips">' + "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in rel) + "</ul></section>"
+    advice = _advice(b["advice"])
+    asks = bool(c.get("ask"))
+    for path, there in (("/budget/", d["_has_budget"]), ("/ask/", asks), ("/dock/", asks and bool(c.get("persona")))):
+        if not there:                                                 # no page to lead to: the words stay, the link goes
+            advice = re.sub(rf'<a href="{path}">(.*?)</a>', r"\1", advice)
+    finding, chart = own_price_chart(d, occ, b["slug"]) if occ and occ in c["occ"] else ("", "")
+    own = f'<section class="data-notes"><h2>当サイトの商品の価格</h2><p>{esc(finding)}</p></section>{chart}' if chart else ""
     shop = _shop_section(d, b)
-    body = ((_b().pr_quiet(d["cfg"]) if shop else "") + _days_tile(d, occ or "") + '<section class="data-notes"><h2>3秒でわかる</h2>' + _tiles(b["headline"], studies) + "</section>"
-            + _takeaways(b["takeaways"]) + figs + ranks + shop + _studies_section(b["studies"]) + _cautions(b["cautions"]) + related)
-    h0 = b["headline"][0]
-    return f'/data/{b["slug"]}/', b["h1"], b["lead"], body, b["crumb"], f'{h0["label"]}は{h0["value"]}'
+    body = ((_b().pr_quiet(d["cfg"]) if shop else "") + _days_tile(d, occ or "") + _takeaways(b["takeaways"]) + advice + own + shop
+            + _cautions(b["cautions"]) + related)
+    return f'/data/{b["slug"]}/', b["h1"], b["lead"], body, b["crumb"], b["finding"]
 
 
 def survey_boards(d: dict) -> list[tuple]:
@@ -516,21 +493,16 @@ def survey_boards(d: dict) -> list[tuple]:
 
 
 def occasion_teaser(d: dict, occasion: str, compact: bool = False) -> str:
-    """On an occasion's page (and, shortened, on its pair pages): what people say they spend and give, from the survey board of that occasion, and the way into it."""
+    """On an occasion's page and on its pair pages: the trend of what people give and spend, in words, and the way into the board of that occasion."""
     sv = d["c"].get("surveys") or {}
     board = next((b for b in sv.get("boards", []) if b.get("occasion") == occasion), None)
     path = f'/data/{board["slug"]}/' if board else ("/data/mothers-day-budget/" if occasion == "mothers-day" and sv.get("mothers_day_extra") else "")
-    src = board or (sv.get("mothers_day_extra") if path else None)
-    if not path or not src or path not in {r[0] for r in results(d)}:
+    if not path or path not in {r[0] for r in results(d)}:
         return ""
     name = d["c"]["occ"][occasion]["name"]
-    if board:
-        inner = _tiles(src["headline"][:2 if compact else 4], {s["id"]: s for s in src["studies"]})
-        label = "調査の数字をくわしく見る(データ室)"
-    else:                                                             # Mother's Day: the trend in words, none of the studies' figures
-        inner = f"<p>{esc(budget_trend(d))}</p>"
-        label = "予算の目安と商品の価格を見る(データ室)"
-    return (f'<section class="board-teaser{" compact" if compact else ""}"><h2><span class="scribble">{esc(name)}にみんなはいくらで何を贈る？</span></h2>{inner}'
+    text = board["teaser"] if board else budget_trend(d)
+    label = "傾向と商品の価格を見る(データ室)" if board else "予算の目安と商品の価格を見る(データ室)"
+    return (f'<section class="board-teaser{" compact" if compact else ""}"><h2><span class="scribble">{esc(name)}にみんなはいくらで何を贈る？</span></h2><p>{esc(text)}</p>'
             f'<p class="more"><a class="btn btn-sub" href="{path}">{label}</a></p></section>')
 
 
@@ -565,9 +537,9 @@ def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:
     if not rs:
         return {}
     out = {path.strip("/") + "/index.html": _page(d, cfg, preview, path, h1, h1, lead, body, crumb) for path, h1, lead, body, crumb, _ in rs}
-    groups = (("みんなの予算と贈りもの(調査から)", "survey", "調査会社などの発表した数字を図にしました。贈る相手やイベントを選ぶときの目安になります。"),
+    groups = (("みんなの予算と贈りもの", "survey", "予算や贈り方の傾向を、当サイトの商品の価格とあわせてまとめました。贈る相手やイベントを選ぶときの目安になります。"),
               ("いま売られている商品から", "own", "当サイトが取り上げている楽天市場の商品を毎日、集計しています。価格・評価・送料を見比べられます。"),
-              ("国の統計から", "stat", "出生数・婚姻件数など、贈る機会の大きさを見ます。"))
+              ("国の統計から", "stat", "出生数・婚姻件数など、贈る機会の大きさをまとめています。"))
     kind = {"mothers-day-budget": "own", "price-bands": "own", "occasion-prices": "own", "ranking-prices": "own", "ranking-turnover": "own", "kind-prices": "own", "births-marriages": "stat"}
     for b in (d["c"].get("surveys") or {}).get("boards", []):
         kind[b["slug"]] = "survey"
@@ -580,11 +552,11 @@ def build_pages(d: dict, cfg: dict, preview: bool) -> dict[str, str]:
         body += (f'<section class="block" style="margin-top:{34 if i == 0 else 26}px"><div class="sec-head">{"<span class=eyebrow>Data</span>" if i == 0 else ""}<h2>{esc(title)}</h2><p>{esc(note)}</p></div>'
                  f'<ul class="tiles wide">{tiles}</ul></section>')
     body += ('<section class="data-notes" style="margin-top:34px"><h2>このデータ室の数字について</h2>'
-             '<p>「調査から」の数字は、調査会社などが発表したものを、図にしています。「いま売られている商品から」は、当サイトが取り上げた楽天市場の商品の価格や順位の記録を、'
-             '集計したものです。市場全体の数字ではありません。どちらも、集計の方法と見かたの注意を、それぞれのページに書いています。商品の名前や画像は、集計のページには載せていません。</p>'
+             '<p>「みんなの予算と贈りもの」は、予算や贈り方の傾向を言葉でまとめたものです。「いま売られている商品から」は、当サイトが取り上げた楽天市場の商品の価格や順位の記録を、'
+             '集計したものです。市場全体の数字ではありません。見かたの注意は、それぞれのページに書いています。商品の名前や画像は、集計のページには載せていません。</p>'
              '<p>数字は毎日取り直しています。誤りに気づいたときは、<a href="/about/#history">運営者情報の更新の履歴</a>に「訂正」として残します。'
              'お気づきの点は<a href="/contact/">お問い合わせ</a>からお知らせください。</p></section>')
-    lead = "プレゼントの価格、予算、贈る機会を数字で見る場所です。調査の数字と、当サイトが取り上げている商品のデータ(毎日更新)を図にしています。図は画像にして保存したり、LINEで送ったりできます。"
+    lead = "プレゼントの価格、予算、贈る機会をまとめて見る場所です。予算や贈り方の傾向と、当サイトが取り上げている商品のデータ(毎日更新)の図があります。図は画像にして保存したり、LINEで送ったりできます。"
     out["data/index.html"] = _page(d, cfg, preview, "/data/", "データ室", "データ室", lead, body, "データ室")
     return out
 

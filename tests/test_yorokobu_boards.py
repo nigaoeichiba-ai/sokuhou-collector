@@ -8,9 +8,10 @@ import unittest
 from datetime import date
 from pathlib import Path
 
-from sites.yorokobu import build, content, dataroom, ogimage
+from sites.yorokobu import build, content, dataroom, ogimage, surveyguard
 from sokuhou import sitecheck
 from sokuhou.sitekit import BuildError
+from tests import yorokobu_d26 as d26
 from tests.test_yorokobu_dataroom import CFG, FIX, inflated
 
 REAL = Path(build.HERE) / "content" / "surveys.json"
@@ -51,88 +52,77 @@ class BoardsTest(unittest.TestCase):
         return (self.out / rel).read_text(encoding="utf-8")
 
     # ------------------------------------------------------------ the content file
-    def test_the_real_surveys_file_loads_and_every_board_names_its_sources(self):
+    def test_the_real_surveys_file_loads_and_every_board_has_trends_advice_and_a_record(self):
         c = content.load()
         boards = c["surveys"]["boards"]
         self.assertGreaterEqual(len(boards), 5)
         for b in boards:
-            self.assertTrue(b["studies"] and b["cautions"] and b["takeaways"], b["slug"])
-            for s in b["studies"]:
-                self.assertTrue(s["url"].startswith("https://") and s["n"] > 0 and s["period"], s["id"])
+            self.assertTrue(b["studies"] and b["cautions"] and b["takeaways"] and len(b["advice"]) >= 3, b["slug"])
+            self.assertEqual(surveyguard.check_content(b), [], b["slug"])
 
-    def test_a_sentence_with_a_number_that_is_not_in_the_data_is_refused(self):
-        b = copy.deepcopy(json.loads(REAL.read_text(encoding="utf-8"))["boards"][0])
-        content.check_board(b)                                                     # as written: fine
-        bad = copy.deepcopy(b)
-        bad["takeaways"][0] = bad["takeaways"][0].replace("17,643円", "18,643円")
-        with self.assertRaises(BuildError):
-            content.check_board(bad)
-        bad = copy.deepcopy(b)
-        bad["charts"][0]["finding"] = "子どもへ贈った人は、52%です。"
-        with self.assertRaises(BuildError):
-            content.check_board(bad)
-        bad = copy.deepcopy(b)                                                      # a note, a caution and a label are checked as well
-        bad["charts"][1]["note"] = "同性の友人では、5,000円未満が67%でした。"
-        with self.assertRaises(BuildError):
-            content.check_board(bad)
-        bad = copy.deepcopy(b)
-        bad["cautions"].append("調査は、881人の数字です。")
-        content.check_board(bad)                                                    # (a bare count of people is not a quantity the check knows)
-        bad["cautions"][-1] = "予算は、9,999円が平均です。"
-        with self.assertRaises(BuildError):
-            content.check_board(bad)
-        bad = copy.deepcopy(b)
-        bad["headline"][1]["label"] = "恋人への平均予算は21,000円"
-        with self.assertRaises(BuildError):
-            content.check_board(bad)
-
-    def test_a_chart_row_that_does_not_fit_its_unit_or_a_source_that_does_not_exist_is_refused(self):
+    def test_a_board_that_states_figures_of_a_study_is_refused(self):
         b = json.loads(REAL.read_text(encoding="utf-8"))["boards"][0]
-        for edit in (lambda x: x["charts"][0]["rows"].__setitem__(0, ["子ども", 125]),
-                     lambda x: x["charts"][0].__setitem__("study", "nobody"),
-                     lambda x: x["studies"][0].__setitem__("url", "http://example.com/"),
-                     lambda x: x["studies"][0].__setitem__("n", 0),
-                     lambda x: x.__setitem__("cautions", [])):
+        content.check_board(b)                                                      # as written: fine
+        for edit in (lambda x: x.__setitem__("headline", [{"value": "54%", "label": "贈った人"}]),
+                     lambda x: x.__setitem__("charts", []),
+                     lambda x: x["takeaways"].append("昨年贈った人は54%と、調査は伝えています。"),
+                     lambda x: x["advice"][0].__setitem__("p", "880人を対象にした結果です。"),
+                     lambda x: x.__setitem__("lead", "株式会社アイディエーションの数字をまとめました。"),
+                     lambda x: x["shop"][0].__setitem__("hi", -1),
+                     lambda x: x.__setitem__("advice", [])):
             bad = copy.deepcopy(b)
             edit(bad)
             with self.assertRaises(BuildError):
                 content.check_board(bad)
 
     # ------------------------------------------------------------ the pages
-    def test_a_board_shows_the_numbers_the_sentences_the_sources_and_the_way_to_the_products(self):
+    def test_a_board_tells_trends_advice_the_sites_own_prices_and_the_way_to_the_products(self):
         html = self.read("data/birthday-survey/index.html")
-        for text in ("3秒でわかる", "17,643円", "恋人への平均予算", "わかったこと", "調べた調査", "見かたの注意", "この予算で探す"):
+        for text in ("わかったこと", "選ぶときの決め方", "当サイトの商品の価格", "見かたの注意", "この予算で探す"):
             self.assertIn(text, html, text)
-        self.assertNotIn("株式会社アイディエーション", html)                                              # D26: no source name
-        self.assertNotIn("prtimes.jp", html)                                                        # D26: no source link
-        self.assertIn("880人", html)
-        self.assertEqual(len(re.findall(r'<figure class="chart" id="birthday-survey--', html)), 3)  # three charts, each with its own anchor
+        for word in ("株式会社アイディエーション", "prtimes.jp", "880人", "17,643", "54%", "調査時期", "回答数", "調べた調査"):
+            self.assertNotIn(word, html, word)
+        self.assertEqual(surveyguard.problems(d26.visible_text(html)), [])
+        self.assertEqual(len(re.findall(r'<figure class="chart" id="birthday-survey--', html)), 1)  # the chart of the site's own products
         self.assertGreaterEqual(html.count('<li class="item"'), 2)                                  # products of the price range
         self.assertIn("楽天市場で探す", html)
         self.assertIn('class="pr-quiet"', html)                                                     # a page with affiliate links says so
         hub = self.read("data/index.html")
         self.assertIn("/data/birthday-survey/", hub)
         self.assertIn("/data/gift-feelings/", hub)
+        self.assertNotIn("調査会社", hub)
         self.assertIn("/data/birthday-survey/", self.read("sitemap.xml"))
 
-    def test_the_occasion_and_pair_pages_lead_into_the_board_and_show_its_first_numbers(self):
+    def test_the_occasion_and_pair_pages_lead_into_the_board_with_its_trend_in_words(self):
         occ = self.read("occasion/birthday/index.html")
         self.assertIn("みんなはいくらで何を贈る？", occ)
         self.assertIn('href="/data/birthday-survey/"', occ)
-        self.assertEqual(occ.count('<ul class="stat-tiles">'), 1)
-        self.assertIn("17,643円", occ)
+        self.assertNotIn('class="stat-tiles"', occ)
+        self.assertIn("ある調査では、恋人への予算は平均で1万円台", occ)
         pair = next(self.out.glob("gift/birthday-*/index.html")).read_text(encoding="utf-8")
         self.assertIn('class="board-teaser compact"', pair)
-        self.assertEqual(pair.count("<li><b>"), 2)                                                  # two numbers on a pair page, four on the occasion page
+        self.assertNotIn('class="stat-tiles"', pair)
         mothers = self.read("occasion/mothers-day/index.html")
-        self.assertIn('href="/data/mothers-day-budget/"', mothers)                                  # the Mother's Day board is the older budget page, with the extra surveys
+        self.assertIn('href="/data/mothers-day-budget/"', mothers)                                  # the Mother's Day board is the older budget page
         self.assertNotIn("board-teaser", self.read("occasion/index.html"))
+
+    def test_no_built_page_shows_a_figure_of_a_study(self):
+        pages = list(self.out.rglob("*.html"))
+        self.assertGreater(len(pages), 20)
+        bad = []
+        for f in pages:
+            bad += [f"{f.relative_to(self.out)}: {p}" for p in surveyguard.problems(d26.visible_text(f.read_text(encoding="utf-8")))]
+        dock = self.out / "dock" / "data.json"
+        if dock.exists():
+            bad += surveyguard.problems(dock.read_text(encoding="utf-8"))
+        self.assertEqual(bad[:5], [])
 
     def test_a_board_for_no_occasion_has_no_shop_section(self):
         html = self.read("data/gift-feelings/index.html")
         self.assertNotIn("この予算で探す", html)
         self.assertNotIn('<li class="item"', html)
-        self.assertIn("35.4%", html)
+        self.assertNotIn("35.4%", html)
+        self.assertIn("選ぶときの決め方", html)
 
     def test_a_board_of_an_occasion_the_site_does_not_have_is_left_out(self):
         self.assertFalse((self.out / "data/christmas").exists())                                    # (the fixture has no Christmas)

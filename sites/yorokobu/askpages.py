@@ -126,9 +126,8 @@ def dock_data(d: dict, cfg: dict, rec: dict | None, today: date) -> dict | None:
         nxt = [g["date"].isoformat() for y in (today.year, today.year + 1) for g in giftcal.gift_days(y) if g["slug"] == o["slug"]]
         b = boards.get(o["slug"])
         path = f'/data/{b["slug"]}/' if b else ("/data/mothers-day-budget/" if o["slug"] == "mothers-day" and (c.get("surveys") or {}).get("mothers_day_extra") else "")
-        src = b                                                       # (no figures of the Mother's Day studies: owner 2026-11-17)
         occs.append({"slug": o["slug"], "name": o["name"], "range": quartiles(xs), "dates": nxt, "board": path if path in {r[0] for r in dataroom.results(d)} else "",
-                     "facts": [f'{h["label"]}: {h["value"]}' for h in (src or {}).get("headline", [])[:3]]})
+                     "facts": [b["budget"]] if b and b.get("budget") else []})
     groups = {gid: {"label": g["label"], "kind": g["kind"], "range": g["range"], "risk": RISK[gid][0], "risk_note": RISK[gid][1]} for gid, g in (rec or {}).get("groups", {}).items()}
     types = [{"slug": p["slug"], "name": p["name"], "tagline": p["tagline"], "w": TYPE_WEIGHTS.get(p["slug"], {})} for p in c["persona"]["personas"]]
     return {"fresh": d["fetched_label"], "occasions": occs, "groups": groups, "types": types, "today": today.isoformat()}
@@ -280,7 +279,7 @@ def dock_page(d: dict, cfg: dict, preview: bool, data: dict) -> str:
 <div class="dock-report" hidden></div>
 <noscript><p class="notice">この診断はJavaScript を使います。</p></noscript>
 </section>
-<section class="data-notes"><h2>診断のしくみ</h2><p>点数は次の5項目の加重平均です。予算(25%)・時期(20%)・相手についての情報量(20%)・好みの手がかり(20%)・外しにくさ(15%)。予算は当サイトの商品の価格や調査の数字と比べます。「外しにくさ」と性格タイプの好みは編集部の目安で統計ではありません。入力はこの端末の中で計算し、サーバーへは送りません。サイトの改善のために選んだ項目の「回数だけ」を、だれの回答か分からない形で数えています(結果票の下に説明があります)。</p></section>"""
+<section class="data-notes"><h2>診断のしくみ</h2><p>点数は次の5項目の加重平均です。予算(25%)・時期(20%)・相手についての情報量(20%)・好みの手がかり(20%)・外しにくさ(15%)。予算は当サイトの商品の価格と比べます。「外しにくさ」と性格タイプの好みは編集部の目安で統計ではありません。入力はこの端末の中で計算し、サーバーへは送りません。サイトの改善のために選んだ項目の「回数だけ」を、だれの回答か分からない形で数えています(結果票の下に説明があります)。</p></section>"""
     return B.page(cfg, preview, path="/dock/", title=f"贈り物ドック 相手のことを入力しておすすめを診断 | {cfg['site_name']}", description=lead[:110], body=body,
                   amazon_links=bool(cfg.get("amazon_tracking_id")), head_extra=f'{B.FONTS}<script src="/assets/rec.js" defer></script><script src="/assets/dock.js" defer></script>')
 

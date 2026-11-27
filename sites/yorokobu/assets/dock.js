@@ -1,5 +1,5 @@
 /* 贈り物ドック: the person describes whom they want to give to; the report (grade, a line per item with its number and evaluation, three kinds to look for with
-   their reasons, notes) is worked out here in the browser from dock/data.json (made by the build from the site's own products and surveys) and ask/rec.json.
+   their reasons, notes) is worked out here in the browser from dock/data.json (made by the build from the site's own products and the trend boards) and ask/rec.json.
    What is typed is not sent anywhere.  Only, if the box is ticked, the options chosen are counted (api/ask.php op "stat": a counter per option, nothing else). */
 (function () {
   "use strict";
@@ -7,12 +7,12 @@
   var W = { budget: 25, time: 20, info: 20, clarity: 20, risk: 15 };
   var AVOID_ZERO = { scent: ["bath_care", "beauty"], sweet: ["sweets"], alcohol: ["alcohol"] };
   var AVOID_HALF = { allergy: ["sweets", "gourmet"], bulky: ["cozy_home", "kitchen", "outdoor"] };
-  // Where a survey says what is usual for an occasion, the kind gets a point or two (the source is shown next to it).
+  // Where a kind is the usual one for an occasion, it gets a point or two (the reason is shown next to it: a trend in words, no figure or name of a study).
   var OCC_BONUS = {
-    "mothers-day": [{ g: "plants", w: 2, why: "母の日に贈る予定の品では、カーネーションなどの花が44%で最多(エン・ジャパン 2025年、903人)" }],
-    "fathers-day": [{ g: "alcohol", w: 2, why: "父の日に贈る予定の品では、お酒・ドリンクが38%で最多(エン・ジャパン 2025年、903人)" }],
-    "valentine": [{ g: "sweets", w: 3, why: "バレンタインに渡したいものの1位は、男女とも、チョコレート(クロス・マーケティング 2026年、1,100人)" }],
-    "ochugen": [{ g: "sweets", w: 2, why: "お中元に贈った品で最多は、和菓子・洋菓子の44.1%(郵便局のネットショップ 2025年、408人)" }]
+    "mothers-day": [{ g: "plants", w: 2, why: "母の日はカーネーションなどの花を贈る人が多い傾向です" }],
+    "fathers-day": [{ g: "alcohol", w: 2, why: "父の日はお酒や飲みものを贈る人が多い傾向です" }],
+    "valentine": [{ g: "sweets", w: 3, why: "バレンタインはチョコレートを渡したい人が多い傾向です" }],
+    "ochugen": [{ g: "sweets", w: 2, why: "お中元は和菓子や洋菓子を贈る人が多い傾向です" }]
   };
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function yen(n) { return "¥" + Math.round(n).toLocaleString("ja-JP"); }
@@ -35,7 +35,7 @@
     var score = {}, why = {}; function add(g, w, t) { if (!data.groups[g]) return; score[g] = (score[g] || 0) + w; (why[g] = why[g] || []).push(t); }
     (inp.interests || []).forEach(function (g) { add(g, 3, "「興味があるもの」で選ばれています"); });
     (inp.types || []).forEach(function (slug) { data.types.forEach(function (t) { if (t.slug === slug) for (var g in t.w) add(g, t.w[g], "タイプ「" + t.name + "」が好む傾向があります(編集部の目安)"); }); });
-    ((occ && OCC_BONUS[occ.slug]) || []).forEach(function (b) { add(b.g, b.w, "調査: " + b.why); });
+    ((occ && OCC_BONUS[occ.slug]) || []).forEach(function (b) { add(b.g, b.w, b.why); });
     var zero = {}, half = {};
     (inp.avoid || []).forEach(function (a) { (AVOID_ZERO[a] || []).forEach(function (g) { zero[g] = 1; }); (AVOID_HALF[a] || []).forEach(function (g) { half[g] = 1; }); });
     if (inp.age === "u20") zero.alcohol = 1;
@@ -55,7 +55,7 @@
       var r = budget / ref.med; sBudget = r >= 0.8 && r <= 1.6 ? 100 : r < 0.8 ? clamp(Math.round(100 - (0.8 - r) / 0.8 * 100), 30, 100) : clamp(Math.round(100 - (r - 1.6) * 10), 70, 100);
       cBudget = "予算" + yen(budget) + "は、" + ref.label + "(" + ref.n + "点)の価格の中央値" + yen(ref.med) + "の" + (Math.round(r * 100) / 100) + "倍です。真ん中の半分の商品は、" + yen(ref.p25) + "〜" + yen(ref.p75) + "です。";
       if (r < 0.8) cBudget += " 予算より安い商品が多い価格帯です。選べる商品は少なめになります。"; else if (r > 1.6) cBudget += " 予算に余裕があります。少し良いものも選べます。";
-      if (occ && occ.facts.length) cBudget += " 調査では「" + occ.facts[0] + "」です(くわしくはデータ室)。";
+      if (occ && occ.facts.length) cBudget += " " + occ.facts[0] + "くわしくはデータ室で見られます。";
     } else if (budget) { sBudget = null; cBudget = "予算" + yen(budget) + "を比べる商品の数字が足りないため、点数にはしていません。"; }
     else cBudget = "予算が入力されていないため、点数にはしていません。";
     out.rows.push({ key: "budget", name: "予算", value: budget ? yen(budget) : "—", score: sBudget, comment: cBudget });
@@ -144,14 +144,14 @@
     var g = data.groups[t.id], lines = [];
     if ((inp.interests || []).indexOf(t.id) >= 0) lines.push("選んだ「興味があるもの」に入っています。");
     (inp.types || []).forEach(function (slug) { data.types.forEach(function (ty) { if (ty.slug === slug && ty.w[t.id]) lines.push("タイプ「" + ty.name + "」が好む傾向があります(編集部の目安)。"); }); });
-    ((rep.occ && OCC_BONUS[rep.occ.slug]) || []).forEach(function (b) { if (b.g === t.id) lines.push("調査: " + b.why + "。"); });
+    ((rep.occ && OCC_BONUS[rep.occ.slug]) || []).forEach(function (b) { if (b.g === t.id) lines.push(b.why + "。"); });
     if (g.range) lines.push("当サイトの" + g.label + "の商品(" + g.range.n + "点)は価格の中央値が" + yen(g.range.med) + "、真ん中の半分が" + yen(g.range.p25) + "〜" + yen(g.range.p75) + "です。" +
       (rep.budget ? (rep.budget >= g.range.p25 ? "予算はこの範囲に届いています。" : "予算が、この価格帯より低めです。小さな品を選ぶ必要があります。") : ""));
     lines.push("起こりやすい失敗: " + g.risk_note + "(編集部の目安)。");
     return lines;
   }
   function links(rep, inp) {
-    var h = ""; if (rep.occ && rep.occ.board) h += '<a class="btn btn-sub" href="' + esc(rep.occ.board) + '">' + esc(rep.occ.name) + "の調査(データ室)</a>";
+    var h = ""; if (rep.occ && rep.occ.board) h += '<a class="btn btn-sub" href="' + esc(rep.occ.board) + '">' + esc(rep.occ.name) + "の傾向(データ室)</a>";
     if (rep.occ) h += '<a class="btn btn-sub" href="/occasion/' + esc(rep.occ.slug) + '/">' + esc(rep.occ.name) + "のおすすめ</a>";
     return h;
   }
