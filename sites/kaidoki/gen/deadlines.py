@@ -11,7 +11,7 @@ import json
 from datetime import date, datetime
 from pathlib import Path
 
-from .common import TODAY, WD, d
+from .common import NOW_T, TODAY, WD, d
 
 DATA = Path(__file__).with_name("deadlines.json")
 KINDS = {"early": "早割終了", "cancel": "キャンセル・変更期限", "close": "受付終了"}
@@ -59,11 +59,17 @@ def left(r: dict) -> int:
 
 def until(r: dict) -> str:
     n = left(r)
-    return "本日まで" if n == 0 else f"あと{n}日" if n > 0 else "終了"
+    if over(r):
+        return "終了"
+    return "本日まで" if n == 0 else f"あと{n}日"
 
 
 def over(r: dict) -> bool:
-    return left(r) < 0
+    """The deadline has passed: its day is past, or it is today and the build is later than the minute written for it (a row with no hour is over only from the next day)."""
+    n = left(r)
+    if n != 0:
+        return n < 0
+    return bool(NOW_T and not r.get("notime") and NOW_T > r["dt"].strftime("%H:%M"))
 
 
 def coming(rows: list[dict]) -> list[dict]:

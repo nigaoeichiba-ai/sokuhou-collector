@@ -58,6 +58,22 @@ class DeadlineDataTest(unittest.TestCase):
     def test_every_row_is_complete(self):
         self.assertEqual(row_problems(self.rows, date(2026, 11, 24)), [])
 
+    def test_a_deadline_of_today_ends_at_its_hour(self):
+        """2026-11-27: two early discounts that ended at 15:00 stood as 本日まで after it."""
+        from datetime import date
+        from unittest import mock
+        row = {"dt": datetime(2026, 11, 27, 15, 0)}
+        with mock.patch.object(DL, "TODAY", date(2026, 11, 27)):
+            for now, over, words in (("14:59", False, "本日まで"), ("15:00", False, "本日まで"), ("15:01", True, "終了"), ("16:00", True, "終了")):
+                with mock.patch.object(DL, "NOW_T", now):
+                    self.assertEqual((DL.over(row), DL.until(row)), (over, words), now)
+            with mock.patch.object(DL, "NOW_T", "23:00"):
+                self.assertFalse(DL.over(dict(row, notime=True)))          # no hour written: the day decides
+            with mock.patch.object(DL, "NOW_T", None):
+                self.assertFalse(DL.over(row))          # negative: with the hour unknown (the old day-only rule) the row stays
+        js = (ROOT / "sites/kaidoki/redesign/static/scripts/site.js").read_text(encoding="utf-8")
+        self.assertIn(".dl-item[data-deadline]", js)
+
     def test_negative_incomplete_rows_are_caught(self):
         r = dict(self.rows[0])
         self.assertTrue(row_problems([dict(r, kind="x")], date(2026, 11, 24)))
@@ -111,7 +127,7 @@ class DeadlinePageTest(unittest.TestCase):
     def test_every_row_of_a_partner_shop_carries_its_link_under_its_words(self):
         """2026-11-27: the 年賀状スクエア row stood on /deadline/ with no link (the group's link is shown only on /deadline/december/)."""
         h = self.page("/deadline/")
-        item = h.split("<h3>年賀状スクエアの期間限定セール</h3>", 1)[1].split('<div class="dl-item">', 1)[0]
+        item = h.split("<h3>年賀状スクエアの期間限定セール</h3>", 1)[1].split('<div class="dl-item"', 1)[0]
         self.assertIn('class="pr-chip"', item)
         self.assertRegex(item, r'href="https://px\.a8\.net/[^"]+" target="_blank" rel="nofollow sponsored noopener">年賀状スクエアで注文する')
 

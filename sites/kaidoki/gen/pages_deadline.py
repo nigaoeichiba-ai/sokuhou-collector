@@ -33,7 +33,8 @@ def item_html(r: dict) -> str:
     past = DL.over(r)
     head = f"{DL.when(r)}まで({DL.KINDS[r['kind']]})" if not past else f"{DL.when(r)}で終わりました({DL.KINDS[r['kind']]})"
     left = "" if past else f"・{DL.until(r)}"
-    return (f'<div class="dl-item"><h3>{escape(r["title"])}</h3><p><strong>{escape(head)}</strong>{escape(left)}</p><p>{escape(r["what"])}</p>'
+    live = "" if past or r.get("notime") else f' data-deadline="{r["dt"].strftime("%Y-%m-%dT%H:%M")}"'      # site.js turns it over on the visitor's clock
+    return (f'<div class="dl-item"{live}><h3>{escape(r["title"])}</h3><p><strong>{escape(head)}</strong>{escape(left)}</p><p>{escape(r["what"])}</p>'
             f'{"" if past else links_html(r)}<p class="stamp">確認日 {escape(jp(r["checked"]))}</p></div>')
 
 
