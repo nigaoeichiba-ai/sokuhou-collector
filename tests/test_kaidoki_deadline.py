@@ -74,6 +74,20 @@ class DeadlineDataTest(unittest.TestCase):
         js = (ROOT / "sites/kaidoki/redesign/static/scripts/site.js").read_text(encoding="utf-8")
         self.assertIn(".dl-item[data-deadline]", js)
 
+    def test_the_nearest_deadline_sentence_can_move_on_after_the_build(self):
+        """2026-11-28 06:30: 最も近い締切 still named a sale that ended at 23:59 the night before.  A coming row carries data-until, which site.js reads; a past one must not."""
+        from datetime import date
+        from unittest import mock
+        from sites.kaidoki.gen import pages_deadline as PD
+        row = dict(next(r for r in DL.load() if r["id"] == "nenga-square-sale"), aff=[])
+        with mock.patch.object(DL, "TODAY", date(2026, 11, 27)), mock.patch.object(DL, "NOW_T", "07:00"):
+            self.assertIn('data-until="2026-11-27T23:59"', PD.item_html(row))
+        with mock.patch.object(DL, "TODAY", date(2026, 11, 28)), mock.patch.object(DL, "NOW_T", "07:00"):
+            self.assertNotIn("data-until", PD.item_html(row))          # negative: an ended row can not be picked as the nearest
+        js = (ROOT / "sites/kaidoki/redesign/static/scripts/site.js").read_text(encoding="utf-8")
+        for part in ("refreshNearest();", ".dl-item[data-until]", "fetch('/deadline/')"):
+            self.assertIn(part, js)
+
     def test_negative_incomplete_rows_are_caught(self):
         r = dict(self.rows[0])
         self.assertTrue(row_problems([dict(r, kind="x")], date(2026, 11, 24)))
