@@ -56,7 +56,7 @@ class DeadlineDataTest(unittest.TestCase):
     rows = json.loads(DL.DATA.read_text(encoding="utf-8"))["rows"]
 
     def test_every_row_is_complete(self):
-        self.assertEqual(row_problems(self.rows, date(2026, 11, 24)), [])
+        self.assertEqual(row_problems(self.rows, date(2026, 11, 28)), [])
 
     def test_a_deadline_of_today_ends_at_its_hour(self):
         """2026-11-27: two early discounts that ended at 15:00 stood as 本日まで after it."""
@@ -79,7 +79,7 @@ class DeadlineDataTest(unittest.TestCase):
         from datetime import date
         from unittest import mock
         from sites.kaidoki.gen import pages_deadline as PD
-        row = dict(next(r for r in DL.load() if r["id"] == "nenga-square-sale"), aff=[])
+        row = dict(next(r for r in DL.load() if r["id"] == "nenga-square-sale"), aff=[], dt=datetime(2026, 11, 27, 23, 59))          # the date it had that morning
         with mock.patch.object(DL, "TODAY", date(2026, 11, 27)), mock.patch.object(DL, "NOW_T", "07:00"):
             self.assertIn('data-until="2026-11-27T23:59"', PD.item_html(row))
         with mock.patch.object(DL, "TODAY", date(2026, 11, 28)), mock.patch.object(DL, "NOW_T", "07:00"):
