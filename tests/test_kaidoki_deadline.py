@@ -108,6 +108,13 @@ class DeadlinePageTest(unittest.TestCase):
         self.assertGreaterEqual(h.count('rel="nofollow sponsored noopener"'), len(with_aff))
         self.assertGreaterEqual(h.count("pr-chip"), len(with_aff))
 
+    def test_every_row_of_a_partner_shop_carries_its_link_under_its_words(self):
+        """2026-11-27: the 年賀状スクエア row stood on /deadline/ with no link (the group's link is shown only on /deadline/december/)."""
+        h = self.page("/deadline/")
+        item = h.split("<h3>年賀状スクエアの期間限定セール</h3>", 1)[1].split('<div class="dl-item">', 1)[0]
+        self.assertIn('class="pr-chip"', item)
+        self.assertRegex(item, r'href="https://px\.a8\.net/[^"]+" target="_blank" rel="nofollow sponsored noopener">年賀状スクエアで注文する')
+
     def test_a_passed_row_moves_to_the_passed_table_on_a_later_day(self):
         code = ("import os;os.environ['KAIDOKI_TODAY']='2026-12-22';from sites.kaidoki import gen;gen.write();"
                 "import json;d=json.load(open('sites/kaidoki/content/deadline.json',encoding='utf-8'));"

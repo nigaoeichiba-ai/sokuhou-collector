@@ -603,6 +603,7 @@ LOHACO_LINK = {"k": "yahoo", "url": "https://lohaco.yahoo.co.jp/", "label": "Yah
 GENRE_LEAD_LINKS = {      # the shop named in the genre page's lead -> its link (the same form as the rows of its product page)
     "daily": [("LOHACO", LOHACO_LINK)], "food": [("LOHACO", LOHACO_LINK)],
     "fashion": [("DHCファッション", {"k": "vc", "key": "dhc", "url": "https://www.dhc.co.jp/contents/fashion/page_lp_fashion_web_sale.html", "label": "DHCファッションのセールのページを見る"})],
+    "beauty": [("DHC", {"k": "vc", "key": "dhc", "url": "https://www.dhc.co.jp/goods/campaign.jsp", "label": "DHCのキャンペーンのページを見る"})],
 }
 
 
