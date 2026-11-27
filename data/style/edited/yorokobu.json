@@ -2880,6 +2880,493 @@
   "unchanged": 61,
   "units": 89
  },
+ "gift/christmas-teen/index.html": {
+  "accepted": [
+   {
+    "from": "授業中や試験会場で時間を見やすく、制服にも合わせやすい品を無理なく選べます。",
+    "kind": "para",
+    "to": "腕時計は授業中や試験会場で時間を見やすく、制服にも合わせやすい品です。",
+    "why": "抽象語を品名に替える"
+   }
+  ],
+  "date": "2026-11-27",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 商品候補が先に並び、予算・注意点・選び方が後に続くため、判断の基準を持たないまま商品を見る流れです。",
+   "見出し: 「喜ばれやすい理由」「こんな贈り方はどうでしょう」など、節の中身が分かりにくい見出しがあります。",
+   "語: 「無理なく」「すっきり整います」「自然にあります」などの抽象語が、商品の具体的な使い道を弱めています。"
+  ],
+  "failed": "",
+  "hash": "e33ff8747325",
+  "needs_check": [],
+  "page": "gift/christmas-teen/index.html",
+  "rejected": [
+   {
+    "after": "中高生へのクリスマスプレゼント、種類別の人気4点",
+    "problems": [
+     "short-text rules find: ['unsupported_popular_heading_alt']"
+    ],
+    "text": "中高生へのクリスマスプレゼント、種類の違う人気の4点"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品は見つかりませんでした。予算や種類を選び直すか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '種類']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "文具・腕時計・ポーチ・防寒小物",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']"
+    ],
+    "text": "中高生へのクリスマス、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "学校や塾で毎日使える文具です。子どもっぽく見えにくいデザインなら、クリスマスにも贈りやすくなります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['文具', 'デザイン', 'クリスマス']"
+    ],
+    "text": "学校や塾で毎日使えて子どもっぽく見えにくい実用的な冬らしい贈り物です。"
+   },
+   {
+    "after": "ポーチなら、イヤホンやリップ、充電ケーブルを通学バッグの中でまとめられます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['ポーチ']"
+    ],
+    "text": "イヤホンやリップ、充電ケーブルをまとめられ、通学バッグの中がすっきり整います。"
+   },
+   {
+    "after": "マフラーや手袋は部活や塾の帰り道ですぐ使える冬の贈り物です。",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']",
+     "words added that the original does not have (information must not grow): ['マフラー', '手袋', '贈']"
+    ],
+    "text": "部活帰りや塾の帰り道にすぐ使えて冬らしいクリスマス感も自然にあります。"
+   },
+   {
+    "after": "4つの提案の違い",
+    "problems": [
+     "numbers differ: [] -> ['4']"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "after": "Amazonの売れ筋ランキングから、中高生へのクリスマスプレゼントに合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['中高生', 'クリスマスプレゼント']"
+    ],
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページで"
+   },
+   {
+    "after": "大きな品や生ものは受け取れる日時と保管場所を先に確認します",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日時']"
+    ],
+    "text": "相手の予定を縛る大きな品や生ものは受け取りや保管を確認します"
+   },
+   {
+    "after": "派手なデザインは好みが分かれるため、流行だけで決めず、本人に確認してから贈ります",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['本人']"
+    ],
+    "text": "流行を決めつけた派手なデザインの品を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月27日 11:43時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "好みがはっきりしている年代です。候補を二つまで絞り、最後は本人に選んでもらいます。",
+    "problems": [
+     "condition dropped: 「迷った候補」という条件が落ちています。"
+    ],
+    "text": "好みが強い年代なので、迷った候補を二つまで見せて本人が最後に選べる形にする。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   }
+  ],
+  "structure_suggestions": [
+   "「中高生にクリスマスギフトを渡…」と「中高生にクリスマスギフトを渡…」は内容が重なります。「中高生にクリスマスギフトを渡…」が画面に表示される場合は、要約として残すか本文の「中高生にクリスマスギフトを渡…」に一本化してください。",
+   "導入の後は、予算の「クリスマスにみんなはいくらで…」〜「調査の数字をくわしく見る(デ…」、注意点の「気をつけたいこと…」〜「流行を決めつけた派手なデザイ…」、理由と選び方の「喜ばれやすい理由…」〜「好みが強い年代なので、迷った…」、商品候補の「中高生へのクリスマスプレゼン…」〜「この日を忘れない(たいせつな…」と「条件で絞って比べる…」以降の順にすると、判断してから商品を見る流れになります。",
+   "「迷ったときの次の一歩」の「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は、Amazonの商品と検索欄より後の「Amazonで探す…」と「あわせて読みたい…」の間に移すと、ページの結びとして機能します。"
+  ],
+  "unchanged": 70,
+  "units": 86
+ },
+ "gift/christmas-toddler/index.html": {
+  "accepted": [
+   {
+    "from": "あとでスマホから見返すときは、LINEの自分だけのトークか自分宛てのメールに送れます。",
+    "kind": "para",
+    "to": "あとでスマホから見返すなら、LINEの自分だけのトークか自分宛てのメールに送れます。",
+    "why": "案内を短くする"
+   },
+   {
+    "from": "幼児用リュックは、保育園や公園へ行くときにハンカチや小さなおやつを入れられ、自分の持ち物として扱えます。",
+    "kind": "item",
+    "to": "幼児用リュックは、保育園や公園へ行くときにハンカチや小さなおやつを入れ、自分で持ち歩けます。",
+    "why": "使う場面で言い切る"
+   },
+   {
+    "from": "対象年齢、部品の大きさ、電池の有無を確認し、下のきょうだいがいる家庭なら誤飲しにくい形を選ぶ。",
+    "kind": "item",
+    "to": "対象年齢、部品の大きさ、電池の有無を確認します。下のきょうだいがいる家庭には誤飲しにくい形を選びます。",
+    "why": "確認事項を分ける"
+   },
+   {
+    "from": "保育園や公園に小物を入れて持てるので自分の荷物がある喜びもあります。",
+    "kind": "para",
+    "to": "保育園や公園へ行くときに小物を入れて自分で持ち歩けます。",
+    "why": "感想を動作に替える"
+   }
+  ],
+  "date": "2026-11-27",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 「理由3つ・選び方3つ」の型が先に立ち、品物ごとの特徴と確認事項が別々の節に重複しています。",
+   "具体: 導入や商品説明に「反応まで想像」「自然に入り込む」などの抽象的な表現があり、品名や使う場面が後ろに回っています。",
+   "見出し: 「こんな贈り方はどうでしょう」「どんなタイプ？」など、節の中身が分かりにくい問いかけがあります。"
+  ],
+  "failed": "",
+  "hash": "f010dd89545e",
+  "needs_check": [
+   {
+    "question": "「人気の4点」とする根拠となる販売数やランキングがあるか確認してください。",
+    "text": "幼児へのクリスマスプレゼント、種類の違う人気の4点"
+   },
+   {
+    "question": "幼児向けのページにチョコレートを掲載する意図と、対象年齢との整合を確認してください。",
+    "text": "リンツ リンドール 11種類アソート"
+   },
+   {
+    "question": "「幼児への年末年始の手土産」で、幼児を手土産の受取人とする分類が意図どおりか確認してください。",
+    "text": "幼児への年末年始の手土産"
+   }
+  ],
+  "page": "gift/christmas-toddler/index.html",
+  "rejected": [
+   {
+    "after": "幼児へのクリスマスプレゼントは、知育玩具、絵本セット、小さなリュックが候補です。知育玩具は親子で遊び方を広げられます。絵本セットや小さなリュックは読み聞かせやお",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['候補']"
+    ],
+    "text": "幼児のクリスマスプレゼントは、朝起きて見つけた瞬間の反応まで想像して選びたいものです。知育玩具は親子で遊び方を広げられ、"
+   },
+   {
+    "after": "知育玩具・絵本・リュックが喜ばれやすい理由",
+    "problems": [
+     "too much longer (8 -> 21)"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "絵本は文字量とページの丈夫さを確認します。破れにくいボードブックや短い話から候補を選びます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['確認']"
+    ],
+    "text": "絵本は文字量とページの丈夫さを見て、破れにくいボードブックや短い話から候補にする。"
+   },
+   {
+    "after": "リュックは肩ひもの調整幅と軽さを確認します。大きさは着替え一組が入る程度を目安にします。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['目安']"
+    ],
+    "text": "リュックは肩ひもの調整幅と軽さを確認し、着替え一組が入る程度の大きさを選ぶ。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "幼児(1〜5歳)へのクリスマスプレゼント、種類別の候補",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']"
+    ],
+    "text": "幼児(1〜5歳)へのクリスマス、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "寝る前に一冊ずつ読める絵本セットは、冬の夜に親子で過ごす時間をつくります。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['絵本', 'セット']"
+    ],
+    "text": "寝る前に一冊ずつ読めて、冬の夜の親子時間に自然に入り込む温かな贈り物です。"
+   },
+   {
+    "after": "贈る相手の好きなもの、趣味、年齢などを一言で入力してください。近い商品を楽天市場で探します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['相手', '入力']"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "after": "大きな品や生ものは受け取りの日時や保管場所を先に確認します",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日時']"
+    ],
+    "text": "相手の予定を縛る大きな品や生ものは受け取りや保管を確認します"
+   },
+   {
+    "after": "音の出る玩具は音量を保護者に確認してから贈ります",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['保護者', '出']"
+    ],
+    "text": "音が大きすぎて家庭の負担になる玩具を確認なしで贈らないようにします"
+   },
+   {
+    "problems": [
+     "a shop's address or image is the shop's data: never stored"
+    ],
+    "text": "価格・在庫は2026年11月27日 11:43時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (dataroom.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "調査の数字をくわしく見る(データ室)"
+   },
+   {
+    "after": "絵本セットなら、寝る前に一冊ずつ読めます。冬の夜に親子で過ごす時間をつくる贈り物です。",
+    "problems": [
+     "condition dropped: 「枕元で」と「長い夜」の条件が落ちた"
+    ],
+    "text": "絵本セットは寝る前に一冊ずつ読めて、枕元で冬の長い夜の親子時間をつくる贈り物になります。"
+   },
+   {
+    "after": "この条件に合う商品がありません。条件をゆるめるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "added claim: 「見つからなかった」が「商品がない」という断定になった"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "Amazonで選ぶ贈り物をすべて見る"
+   }
+  ],
+  "structure_suggestions": [
+   "「喜ばれやすい理由…」〜「リュックは肩ひもの調整幅と軽…」は「知育玩具」「絵本」「リュック」ごとに、向く理由と選ぶ基準を続けて読める形に統合する。",
+   "「気をつけたいこと…」〜「音が大きすぎて家庭の負担にな…」の注意点は商品一覧より前に移し、予算の情報、気をつけること、選び方、商品候補の順に並べる。",
+   "「Amazonで見つけた贈り物…」〜「Amazonで選ぶ贈り物をす…」は幼児向けの商品として内容を確認できた場合だけ、楽天市場の商品候補と同じ位置にまとめる。"
+  ],
+  "unchanged": 61,
+  "units": 86
+ },
+ "gift/christmas-university-student/index.html": {
+  "accepted": [
+   {
+    "from": "あとでスマホから見返すときは、LINEの自分だけのトークか自分宛てのメールに送れます。",
+    "kind": "para",
+    "to": "あとでスマホで見返すなら、LINEの自分だけのトークか、自分宛てのメールに送れます。",
+    "why": "案内を自然な語順にした"
+   },
+   {
+    "from": "大学生へのクリスマスプレゼント、種類の違う人気の4点",
+    "kind": "heading",
+    "to": "大学生へのクリスマスプレゼント、種類別に選ぶ4点",
+    "why": "根拠のない人気を外した"
+   }
+  ],
+  "date": "2026-11-27",
+  "deleted": [],
+  "diagnosis": [
+   "構成: 選び方と商品紹介に同じ内容が重なり、予算や注意点が商品一覧より後に置かれています。",
+   "見出し: 「人気」「喜ばれやすい」「こんな贈り方」など、根拠や節の中身が分かりにくい語があります。",
+   "リズム: 箇条書きの文末と商品説明の型がそろいすぎているため、用途と選ぶ基準が単調に並んでいます。"
+  ],
+  "failed": "",
+  "hash": "267c6d6427d8",
+  "needs_check": [
+   {
+    "question": "Amazonの売れ筋ランキングから選んだことを確認できる記録はありますか。",
+    "text": "Amazonの売れ筋ランキングからこの場面に合うものを選びました。価格や在庫は変わるため、購入前にAmazonのページでご確認ください。"
+   }
+  ],
+  "page": "gift/christmas-university-student/index.html",
+  "rejected": [
+   {
+    "after": "大学生へのクリスマスプレゼントは、冬の部屋や通学で使える物が選びやすいです。ブランケットや保温タンブラー、手袋、マフラーが候補になります。サイズや色に迷う品はギ",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']",
+     "words added that the original does not have (information must not grow): ['クリスマスプレゼント', '候補', '方法']"
+    ],
+    "text": "大学生へのクリスマスは、冬の部屋と通学で使える物を選ぶと喜ばれます。ブランケットや温かい飲み物用のタンブラーは、試験前の"
+   },
+   {
+    "after": "大学生へのクリスマスプレゼントは冬の部屋や通学で使える物から選びます。ブランケットと保温タンブラーは部屋や図書館で使え、手袋とマフラーは通学向きです。サイズや色",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']",
+     "words added that the original does not have (information must not grow): ['クリスマスプレゼント', '図書館']"
+    ],
+    "text": "大学生へのクリスマスは、冬の部屋と通学で使える物を選ぶと喜ばれます。ブランケットや温かい飲み物用のタンブラーは、試験前の"
+   },
+   {
+    "after": "価格・在庫は2026年11月27日 11:43時点の情報です。掲載内容はよろこぶプレゼントの作成者が管理しています。価格と販売状況は変わることがあります。購入時",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['管理']"
+    ],
+    "text": "価格・在庫は2026年11月27日 11:43時点の情報です。このサイトで掲載されている情報は、よろこぶプレゼントの作成"
+   },
+   {
+    "after": "クリスマスをたいせつな日メモに登録",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['クリスマス']"
+    ],
+    "text": "この日を忘れない(たいせつな日メモに登録)"
+   },
+   {
+    "after": "クリスマスプレゼントの調査データ",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']"
+    ],
+    "text": "クリスマスにみんなはいくらで何を贈る？"
+   },
+   {
+    "after": "ブランケットは洗濯機で洗えるか、自宅の洗濯機に入る大きさかを確かめます。",
+    "problems": [
+     "numbers differ: ['一'] -> []",
+     "words added that the original does not have (information must not grow): ['自宅']"
+    ],
+    "text": "ブランケットは洗濯機で洗えるか、一人暮らしの洗濯機に入る大きさかを確かめる。"
+   },
+   {
+    "after": "手の大きさが分からない場合はフリーサイズの手袋を探します。スマートフォン対応かどうかは商品表示で確かめます。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['場合']"
+    ],
+    "text": "手袋は手の大きさがわからないときは、フリーサイズを探し、スマートフォン対応かを表示で見る。"
+   },
+   {
+    "after": "予算や種類を選ぶと条件に合う商品だけを表示します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['条件']"
+    ],
+    "text": "予算や種類を選ぶと下の商品からぴったりのものだけを表示します。"
+   },
+   {
+    "after": "この条件に合う商品は見つかりませんでした。予算や種類を変えるか、下の入力欄から楽天市場で探してください。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['予算', '種類']"
+    ],
+    "text": "この条件に合う商品は見つかりませんでした。条件をゆるめるか、下の入力欄から楽天市場で探してください。"
+   },
+   {
+    "after": "大学生の冬に贈る、部屋と通学で使える品",
+    "problems": [
+     "names / quoted words lost: ['クリスマス']"
+    ],
+    "text": "大学生へのクリスマス、こんな贈り方はどうでしょう"
+   },
+   {
+    "after": "通学の電車や図書館へ温かい飲み物を持っていけます。冬の間、毎日使える品です。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['間']"
+    ],
+    "text": "通学の電車や図書館で、温かい飲み物を持ち歩けます。冬は毎日使う一つになります。"
+   },
+   {
+    "after": "男女どちらでも使える色を選べば、普段の上着にも合わせやすくなります。",
+    "problems": [
+     "condition removed (1 -> 0)"
+    ],
+    "text": "男女どちらでも使える色なら、普段の上着にも合わせて使えます。"
+   },
+   {
+    "after": "生ものは受け取れる日時と保管場所を先に確認します。",
+    "problems": [
+     "words added that the original does not have (information must not grow): ['日時']"
+    ],
+    "text": "相手の予定を縛る大きな品や生ものは受け取りや保管を確認します"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "喜ばれやすい理由"
+   },
+   {
+    "after": "タンブラーはリュックの横に入る太さで口が広く洗いやすい物を選びます。",
+    "problems": [
+     "added claim: 洗いやすい口径を「口が広い」と具体化している"
+    ],
+    "text": "タンブラーはリュックの横に入る太さで、洗いやすい口径の物を選ぶ。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "この提案はどんなタイプ？"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (tools.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "横は「食べて消える」から「ずっと残る」まで、縦は「定番・無難」から「個性的・意外」まで。番号をおすと提案に移動します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "その人について一言教えてください(好きなもの、趣味、年齢など)。近い商品を楽天市場で探します。"
+   },
+   {
+    "problems": [
+     "this text is printed by a page template (build.py): a page edit is not put in the dictionary (it would change every page of the template) - fix the template, or let a person add it"
+    ],
+    "text": "気をつけたいこと"
+   }
+  ],
+  "structure_suggestions": [
+   "「クリスマスにみんなはいくらで…」〜「調査の数字をくわしく見る(デ…」の調査データを、「大学生へのクリスマスプレゼン…」の商品紹介より前へ移すと、予算を見てから候補を選べます。",
+   "「喜ばれやすい理由…」〜「手袋は手の大きさがわからない…」を選び方の節としてまとめ、「大学生へのクリスマス、こんな…」〜「楽天市場で「マフラー ギフト…」は各商品の用途だけに絞ると重複を減らせます。",
+   "「気をつけたいこと…」〜「一人暮らしの部屋では置き場所…」は商品を選ぶ前に読めるよう、「選び方のポイント…」〜「手袋は手の大きさがわからない…」の直後へ移すのが適切です。",
+   "「迷ったときの次の一歩…」〜「贈る日を登録する 日にちを登…」は検索や注意点のあとへ移し、ページの最後の行動案として置くと流れが整います。"
+  ],
+  "unchanged": 64,
+  "units": 86
+ },
  "gift/coming-of-age-friend-female/index.html": {
   "accepted": [
    {
