@@ -55,7 +55,7 @@ class CoverageTest(unittest.TestCase):
         saved = AFF.STORES["nitori"]
         AFF.STORES["nitori"] = []
         try:
-            self.assertEqual([i["id"] for i in self.items if i["mall"] in LINKED and not AFF.links_for(i)], ["c-nitori-bf"])
+            self.assertEqual([i["id"] for i in self.items if i["mall"] in LINKED and not AFF.links_for(i)], [i["id"] for i in self.items if i["mall"] == "nitori"])
         finally:
             AFF.STORES["nitori"] = saved
 
