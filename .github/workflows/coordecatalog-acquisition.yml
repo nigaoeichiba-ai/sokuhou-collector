@@ -9,7 +9,7 @@ run-name: Catalog acquisition ${{ inputs.request_id || 'scheduled refresh' }}
         required: false
         type: string
   schedule:
-  - cron: 53 * * * *
+  - cron: 0 21 28-31 * *
 permissions:
   contents: read
   actions: read
@@ -186,12 +186,14 @@ jobs:
         def make_registered_plan(root=ROOT):
             root = Path(root)
             from daily_catalog import compose_catalog
-            offers = compose_catalog(root,load_js(root / 'runtime-data.js'))['offers'] + load_js(root / 'appliance-data.js')['offers']
+            offers = compose_catalog(root,load_js(root / 'runtime-data.js'),admit_pending=False)['offers'] + load_js(root / 'appliance-data.js')['offers']
             registry = json.loads((root / 'commerce-registration.json').read_text(encoding='utf-8')).get('offers', {})
             requests = {}
             selected = {}
             seen_codes = {}
             for offer in offers:
+                if offer.get('refresh_scope') == 'coorde_variant_correction':
+                    continue
                 oid = offer.get('offer_id', offer.get('id'))
                 if not isinstance(oid, str) or not OFFER.fullmatch(oid) or oid in selected:
                     raise ValueError('Invalid or duplicate registered offer')
@@ -1452,12 +1454,30 @@ jobs:
 
 
         def main():
+            from monthly_refresh_gate import slot,remote_claim_program,remote_finish_program
+            timing=slot()
+            if not timing['due']:
+                print(json.dumps({'status':'outside_monthly_window','product_requests':0,'publication':False,**timing}));return
             with tempfile.TemporaryDirectory(prefix='catalog-scheduled-refresh-') as directory:
+                admission=None;channel=None
                 try:
                     channel=ScheduledChannel(directory)
+                    program,_=remote_claim_program(NAMESPACE,'registered112')
+                    remote=subprocess.run(channel.base+['python3 -'],input=program,text=True,capture_output=True,timeout=45)
+                    if remote.returncode:raise ValueError('monthly_claim_unconfirmed')
+                    admission=json.loads(remote.stdout)
+                    if not admission.get('admitted'):
+                        print(json.dumps({'status':admission.get('status'),'product_requests':0,'publication':False}));return
                     result=run_schedule(channel,QuietGate(),ExistingProviderAdapter(),directory)
+                    outcome='complete' if result.get('status') in {'complete','already_fresh','fresh','disabled'} else 'partial'
+                    remote=subprocess.run(channel.base+['python3 -'],input=remote_finish_program(NAMESPACE,admission,outcome,result.get('status')),text=True,capture_output=True,timeout=45)
+                    if remote.returncode:raise ValueError('monthly_outcome_unconfirmed')
+                    result.update(calendar_monthly=True,automatic_retry_within_month=False)
                     print(json.dumps(result))
-                except Exception:
+                except Exception as error:
+                    if admission and admission.get('admitted') and channel:
+                        try:subprocess.run(channel.base+['python3 -'],input=remote_finish_program(NAMESPACE,admission,'failed',type(error).__name__),text=True,capture_output=True,timeout=45)
+                        except Exception:pass
                     print('scheduled_refresh_failed_without_website_or_source_changes')
                     raise SystemExit(1) from None
 
@@ -1543,6 +1563,62 @@ jobs:
             merged['started_at']=min(r['started_at'] for r in results)
             merged['finished_at']=max(r['finished_at'] for r in results)
             return merged
+
+        CATALOG_PY
+        cat > "$RUNNER_TEMP/catalog-code/monthly_refresh_gate.py" <<'CATALOG_PY'
+        """Calendar-month admission only; no merchant/API retrieval or clock rewriting."""
+        from pathlib import Path
+        from datetime import datetime,timezone,timedelta
+        import hashlib,json,os,re,uuid
+
+        JST=timezone(timedelta(hours=9));AUTH='owner-monthly-price-stock-20261127'
+        def current():return datetime.now(timezone.utc)
+        def parse_clock(value):
+            normalized=re.sub(r'([+-]\d\d):(\d\d)$',r'\1\2',str(value).replace('Z','+00:00'))
+            return datetime.strptime(normalized,'%Y-%m-%dT%H:%M:%S.%f%z' if '.' in normalized else '%Y-%m-%dT%H:%M:%S%z')
+        def slot(instant=None):
+            instant=instant or current()
+            if instant.tzinfo is None:raise ValueError('Timezone-aware actual clock required')
+            local=instant.astimezone(JST)
+            return {'period':local.strftime('%Y-%m'),'due':local.day==1 and local.hour>=6,'scheduled_jst':local.strftime('%Y-%m-01T06:00:00+09:00'),'observed_at':instant.astimezone(timezone.utc).isoformat()}
+        def claim(directory,job,instant=None):
+            if not re.fullmatch(r'(?:prepared|provider|registered112)',job):raise ValueError('Unknown site monthly job')
+            timing=slot(instant)
+            if not timing['due']:return {'admitted':False,'status':'outside_monthly_window','product_requests':0,**timing}
+            directory=Path(directory)
+            if directory.is_symlink():raise ValueError('Monthly gate must not be a symlink')
+            directory.mkdir(mode=0o700,parents=True,exist_ok=True);path=directory/(job+'-'+timing['period']+'.json')
+            proof={'version':1,'authorization':AUTH,'job':job,'period':timing['period'],'attempted_at':timing['observed_at'],'scheduled_jst':timing['scheduled_jst'],'nonce':uuid.uuid4().hex,'status':'started','automatic_retry_within_month':False}
+            try:fd=os.open(str(path),os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
+            except FileExistsError:
+                if path.is_symlink() or not path.is_file():raise ValueError('Invalid existing monthly claim')
+                return {'admitted':False,'status':'monthly_attempt_already_recorded','product_requests':0,**timing}
+            with os.fdopen(fd,'w',encoding='utf8') as stream:json.dump(proof,stream,ensure_ascii=False,separators=(',',':'))
+            return {'admitted':True,'status':'started','claim_file':str(path),'claim':proof,**timing}
+        def finish(admission,status,reason=None,instant=None):
+            if not admission.get('admitted'):raise ValueError('No monthly admission')
+            if status not in {'complete','partial','failed'}:raise ValueError('Invalid monthly outcome')
+            path=Path(admission['claim_file']);saved=json.loads(path.read_text(encoding='utf8'))
+            if saved.get('nonce')!=admission['claim']['nonce'] or saved.get('status')!='started':raise ValueError('Monthly claim already closed or changed')
+            saved.update(status=status,finished_at=(instant or current()).astimezone(timezone.utc).isoformat())
+            if reason:saved['reason']=str(reason)[:180]
+            if status!='complete':saved['reader_fallback']='Keep original confirmation dates; direct readers to the purchase destination. No automatic retry this month.'
+            temporary=path.with_name('.'+path.name+'.'+uuid.uuid4().hex);temporary.write_text(json.dumps(saved,ensure_ascii=False,indent=2)+'\n',encoding='utf8');os.chmod(str(temporary),0o600);os.replace(str(temporary),str(path));return saved
+
+        def remote_claim_program(namespace,job,instant=None):
+            """Same atomic monthly decision on the site's persistent acquisition host."""
+            if namespace!='coordecatalog-acquisition-private' or job!='registered112':raise ValueError('Only this site registered catalog may use the remote claim')
+            when=slot(instant)
+            if not when['due']:return None,when
+            # This program only creates a monthly attempt marker. It contains no product
+            # facts, keys, website paths, source-site mutations or acquisition commands.
+            source=Path(__file__).read_text(encoding='utf8')
+            program=source+'\nresult=claim(Path.home()/'+repr(namespace)+'/"schedule"/"monthly",'+repr(job)+',parse_clock('+repr(when['observed_at'])+'))\nprint(json.dumps(result))\n'
+            return program,when
+        def remote_finish_program(namespace,admission,status,reason=None):
+            if namespace!='coordecatalog-acquisition-private' or admission.get('claim',{}).get('job')!='registered112':raise ValueError('Wrong remote monthly claim')
+            source=Path(__file__).read_text(encoding='utf8')
+            return source+'\nadmission='+repr(admission)+'\nassert Path(admission["claim_file"]).resolve().parent==(Path.home()/'+repr(namespace)+'/"schedule"/"monthly").resolve()\nprint(json.dumps(finish(admission,'+repr(status)+','+repr(reason)+')))\n'
 
         CATALOG_PY
         export PYTHONPATH="$RUNNER_TEMP/catalog-code:$GITHUB_WORKSPACE"
