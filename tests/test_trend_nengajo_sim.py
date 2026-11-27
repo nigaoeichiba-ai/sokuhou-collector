@@ -86,6 +86,16 @@ class TestNengajoSimCalc(unittest.TestCase):
         late = by_id(compute([mk(30, now="2026-12-01T00:00:00+09:00")])[0])["shimauma"]
         self.assertEqual((late["onSale"], late["min"]), (False, 140 * 30 + 2550 + 330))      # unit 165 -> 15% off = 140
 
+    def test_aisatsu_second_sale_until_the_29th(self):
+        c = [mk(30, now="2026-11-28T09:00:00+09:00"), mk(30, now="2026-11-28T09:00:00+09:00", login=True), mk(30, now="2026-11-30T00:00:00+09:00")]
+        res = compute(c)
+        r = by_id(res[0])["aisatsu"]
+        self.assertEqual((r["print"], r["min"], r["saleRate"], r["saleLabel"]), (4790, 8429, "35%OFF", "11月29日(日)24:00"))
+        self.assertEqual(by_id(res[1])["aisatsu"]["min"], 8099)
+        self.assertEqual(res[0]["cheapest"], "square")                                       # 6,462 < 6,570 < 8,429
+        after = by_id(res[2])["aisatsu"]
+        self.assertEqual((after["onSale"], after["min"]), (False, 11009))
+
     def test_deadline_edges_in_jst(self):
         c = [mk(30, now=t) for t in ("2026-11-17T01:59:00+09:00", "2026-11-17T02:00:00+09:00", "2026-11-18T23:59:30+09:00", "2026-11-19T00:00:00+09:00",
                                       "2026-11-19T12:59:00+09:00", "2026-11-19T13:00:00+09:00", "2026-11-23T23:59:00+09:00", "2026-11-24T00:00:00+09:00",
@@ -94,7 +104,7 @@ class TestNengajoSimCalc(unittest.TestCase):
         T, F = True, False
         self.assertEqual([x["rakpo"]["onSale"] for x in g], [T, F, F, F, F, F, F, F, F, F, F, F])
         self.assertEqual([x["square"]["onSale"] for x in g], [T, T, T, T, T, T, T, T, T, F, F, F])
-        self.assertEqual([x["aisatsu"]["onSale"] for x in g], [T, T, T, T, T, T, T, F, F, F, F, F])
+        self.assertEqual([x["aisatsu"]["onSale"] for x in g], [T, T, T, T, T, T, T, F, T, F, F, F])
         self.assertEqual([x["shimauma"]["onSale"] for x in g], [T] * 11 + [F])
         self.assertEqual([x["square"]["saleRate"] for x in g][6:9], ["46%OFF", "45%OFF", "45%OFF"])   # the 46% sale ends 11/23 23:59, the 45% one starts 11/24 0:00
 
