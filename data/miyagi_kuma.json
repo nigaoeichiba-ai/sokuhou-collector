@@ -1,15 +1,15 @@
 {
- "as_of": "2026-11-25",
+ "as_of": "2026-11-27",
  "credit": "出典:宮城県「令和8年度クマ目撃等情報」を加工して作成",
  "dates_after_as_of": 0,
  "dates_after_as_of_by_month": {},
- "fetched_at": "2026-11-26T06:17:16.316096+09:00",
+ "fetched_at": "2026-11-28T06:17:53.589454+09:00",
  "fy_current": "R08",
  "monthly": {
   "R08": {
    "1": 0,
    "10": 107,
-   "11": 38,
+   "11": 51,
    "12": 0,
    "2": 0,
    "3": 0,
@@ -23,6 +23,78 @@
  },
  "monthly_note": "月別計は公表表の全行で検算し、as_of後の日付も含みます",
  "sightings": [
+  {
+   "city": "蔵王町",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-26T16:10:00+09:00",
+   "place": "円田字地区和大原地内",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市泉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-26T10:00:00+09:00",
+   "place": "紫山1丁目",
+   "species": "クマ"
+  },
+  {
+   "city": "東松島市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-25T16:40:00+09:00",
+   "place": "高松字西風",
+   "species": "クマ"
+  },
+  {
+   "city": "仙台市青葉区",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-25T14:00:00+09:00",
+   "place": "大倉字高畑",
+   "species": "クマ"
+  },
+  {
+   "city": "大衡村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-25T13:50:00+09:00",
+   "place": "大衡字枛木地内",
+   "species": "クマ"
+  },
+  {
+   "city": "大崎市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-25T13:00:00+09:00",
+   "place": "松山下伊場野字姥乳",
+   "species": "クマ"
+  },
+  {
+   "city": "栗原市",
+   "count": null,
+   "kind": "痕跡",
+   "observed_at": "2026-11-25T11:30:00+09:00",
+   "place": "高清水浦南沢　地内",
+   "species": "クマ"
+  },
+  {
+   "city": "気仙沼市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-25T09:00:00+09:00",
+   "place": "本吉町長窪",
+   "species": "クマ"
+  },
+  {
+   "city": "大崎市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-24T16:10:00+09:00",
+   "place": "三本木",
+   "species": "クマ"
+  },
   {
    "city": "富谷市",
    "count": 1,
@@ -40,6 +112,22 @@
    "species": "クマ"
   },
   {
+   "city": "大衡村",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-24T09:40:00+09:00",
+   "place": "松の平３丁目付近",
+   "species": "クマ"
+  },
+  {
+   "city": "大衡村",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-11-24T00:00:00+09:00",
+   "place": "松の平３丁目付近",
+   "species": "クマ"
+  },
+  {
    "city": "富谷市",
    "count": 1,
    "kind": "目撃",
@@ -48,11 +136,27 @@
    "species": "クマ"
   },
   {
+   "city": "大崎市",
+   "count": 1,
+   "kind": "目撃",
+   "observed_at": "2026-11-23T17:55:00+09:00",
+   "place": "岩出山上野目字中川原",
+   "species": "クマ"
+  },
+  {
    "city": "仙台市太白区",
    "count": 1,
    "kind": "目撃",
    "observed_at": "2026-11-23T14:00:00+09:00",
    "place": "茂庭字峰岸",
+   "species": "クマ"
+  },
+  {
+   "city": "蔵王町",
+   "count": null,
+   "kind": "目撃",
+   "observed_at": "2026-11-23T01:00:00+09:00",
+   "place": "遠刈田温泉字遠刈田北山",
    "species": "クマ"
   },
   {
@@ -11585,7 +11689,7 @@
   }
  ],
  "source": "miyagi",
- "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261124.xlsx",
+ "source_file": "https://www.pref.miyagi.jp/documents/64667/koukaiyou_20261127.xlsx",
  "source_page": "https://www.pref.miyagi.jp/soshiki/sizenhogo/r8kumamokugeki.html",
  "update_note": "宮城県が、市町村からの報告を取りまとめて、更新します(ほぼ毎日)"
 }
