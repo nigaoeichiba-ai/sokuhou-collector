@@ -40,8 +40,8 @@ EVENT_GUIDE = {"nengajo-hikiuke": "nengajo", "nengajo-motojitsu": "nengajo", "ne
 EVENT_KIND = {"kanpu-r3-end": "deadline", "onestop-henko": "deadline", "shinkoku-end": "deadline", "nengajo-hanbai-end": "deadline", "nenmatsu-shime": "boundary", "gyosei-saigo-heijitsu": "boundary",
               "gyosei-yasumi": "boundary"}
 EVENT_DESC = {
-    "nengajo-hikiuke": "2027年用の年賀状の引き受けが始まります。日本郵便の発表(2026年8月31日)による日です。",
-    "nengajo-motojitsu": "元日に届けるための差し出し日の目安です。日本郵便は、この日までに出された年賀状を元日にお届けするよう取り組むと発表しています。",
+    "nengajo-hikiuke": "2027年用の年賀状の引き受けが始まります。この日より前に出した分は、通常の郵便として扱われます。",
+    "nengajo-motojitsu": "元日に届けるための差し出し日の目安です。この日までに出しても、元日の到着が保証されるわけではありません。",
     "nengajo-hanbai-end": "年賀はがきの販売の最終日です。販売は2026年11月2日から2027年1月15日までです。",
     "gyosei-saigo-heijitsu": "国の行政機関が、年内に開いている最後の平日です。翌日から1月3日までは、国の行政機関の休日です。",
     "gyosei-yasumi": "国の行政機関の年末年始の休み(12月29日から1月3日)が始まります。市区町村の休みは条例で決まるので、窓口ごとの案内を確かめておきましょう。",

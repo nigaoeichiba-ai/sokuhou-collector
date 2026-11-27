@@ -34,7 +34,7 @@ function escapeICS(v) {return String(v).replace(/\\/g,'\\\\').replace(/\r?\n/g,'
 function foldLine(line) {let out='',count=0;for(const char of line){const size=new TextEncoder().encode(char).length;if(count+size>75){out+='\r\n ';count=1;}out+=char;count+=size;}return out;}
 export function makeICS(items,stamp=new Date()) {
   const lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Kurashi Calendar//Preparation Planner//JA','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
-  for(const item of items){parseISO(item.date);lines.push('BEGIN:VEVENT',`UID:${encodeURIComponent(item.id)}@kurashi-calendar-preview`,`DTSTAMP:${stamp.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}`,`DTSTART;VALUE=DATE:${item.date.replaceAll('-','')}`,`DTEND;VALUE=DATE:${addDays(item.date,1).replaceAll('-','')}`,`SUMMARY:${escapeICS((item.kind==='deadline'?'【期限】':item.kind==='boundary'?'【年内分の区切り】':'【準備の目安】')+item.title)}`,`DESCRIPTION:${escapeICS(item.description+'\n提出期限・受付方法は、提出先の公式案内で確認してください。')}`,'END:VEVENT');}
+  for(const item of items){parseISO(item.date);lines.push('BEGIN:VEVENT',`UID:${encodeURIComponent(item.id)}@kurashi-calendar-preview`,`DTSTAMP:${stamp.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'')}`,`DTSTART;VALUE=DATE:${item.date.replaceAll('-','')}`,`DTEND;VALUE=DATE:${addDays(item.date,1).replaceAll('-','')}`,`SUMMARY:${escapeICS((item.kind==='deadline'?'【期限】':item.kind==='boundary'?'【年内分の区切り】':'【準備の目安】')+item.title)}`,`DESCRIPTION:${escapeICS(item.description+'\n提出期限・受付方法は、提出先の案内で確認してください。')}`,'END:VEVENT');}
   lines.push('END:VCALENDAR');return lines.map(foldLine).join('\r\n')+'\r\n';
 }
 

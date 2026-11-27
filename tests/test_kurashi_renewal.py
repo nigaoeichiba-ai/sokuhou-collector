@@ -237,12 +237,37 @@ class Renewal(unittest.TestCase):
         for rel, html in self.pages.items():
             self.assertEqual(shown_source_problems(html, rel), [], rel)
 
+    def test_no_page_names_an_organisation_as_the_source(self):
+        shown = dict(self.pages)
+        for extra in ("assets/t/app.js", "assets/t/calendar.js"):
+            shown[extra] = (self.out / extra).read_text(encoding="utf-8")
+        data = (self.out / "assets/t/data.js").read_text(encoding="utf-8")
+        shown["assets/t/data.js"] = re.sub(r'"method": ?"[^"]*"', "", data)          # the fact check's method is kept in the data, no script shows it
+        for rel, text in shown.items():
+            self.assertEqual(source_wording(text), [], rel)
+
+    def test_the_source_wording_check_catches_what_it_must(self):
+        for bad in ("国税庁は、次の見直しに注意するよう案内しています。", "日本郵便の発表で確認しています。", "飛散開始の1週間前まで(環境省)", "公的な資料で確認しました。", "提出先の公式案内で確認してください。"):
+            self.assertTrue(source_wording(bad), bad)
+        for good in ("国税庁の確定申告書等作成コーナーで入力して提出できます。", "税務署の案内で確認してください。", "公式の発表をはじめとする複数の情報をもとにしています。", "【公式】BIGLOBE光プラス"):
+            self.assertEqual(source_wording(good), [], good)
+
     def test_the_source_check_catches_what_it_must(self):
         self.assertTrue(shown_source_problems('<p><a href="https://www.nta.go.jp/x.htm" target="_blank">国税庁｜確定申告</a></p>', "x/index.html"))
         self.assertTrue(shown_source_problems('<p class="article-citations">参照:<span>国税庁</span></p>', "x/index.html"))
         self.assertTrue(shown_source_problems("<p>出典: 国税庁</p>", "x/index.html"))
         self.assertTrue(shown_source_problems('<p>出典確認日：2026-11-13</p>', "x/index.html"))
         self.assertEqual(shown_source_problems('<p>確認日：2026-11-13</p><a href="https://px.a8.net/svt/ejp?a8mat=A" rel="nofollow sponsored noopener" target="_blank">年賀状印刷</a>', "x/index.html"), [])
+
+
+# owner D34 (2026-11-27): no sentence names an organisation or a document as where the information came from (window and tool names a reader acts on stay)
+SOURCE_WORDING = re.compile(
+    "(国税庁|総務省|環境省|厚生労働省|法務省|警察庁|デジタル庁|こども家庭庁|日本年金機構|日本郵便|関係府省庁)(は、|が(示|案内|依頼|説明|発表|する|スギ)|の(資料|案内|発表|発信|例|ページ|特集|文書|「))"
+    "|[(（](国税庁|環境省|総務省|厚生労働省)[)）]|公式(案内|情報|の案内|の確認|の提出|の日程|に決まって|サイト)|(国|公的な)(の)?資料|国の機関の|資料で確認|発表で確認|協会けんぽの案内|[市区]の(窓口)?案内では")
+
+
+def source_wording(text: str) -> list[str]:
+    return [m.group(0) for m in SOURCE_WORDING.finditer(text)]
 
 
 AD_HOSTS = ("hb.afl.rakuten.co.jp", "px.a8.net", "www.amazon.co.jp", "af.moshimo.com", "ck.jp.ap.valuecommerce.com", "h.accesstrade.net", "adssettings.google.com", "www.aboutads.info")
