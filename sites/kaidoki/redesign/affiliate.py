@@ -56,6 +56,9 @@ STORES = {
     "mouse": [("rakuten", "https://www.rakuten.co.jp/mousecomputer/")],
     "anker": [("rakuten", "https://www.rakuten.co.jp/anker/")],
     "ksdenki": [("rakuten", "https://www.rakuten.co.jp/ksdenki/")],
+    "lowya": [("rakuten", "https://www.rakuten.co.jp/low-ya/")],
+    "dji": [("rakuten", "https://www.rakuten.co.jp/dji-shop/")],
+    "atcosme": [("rakuten", "https://www.rakuten.co.jp/cosmecomonline/")],
     "zozo": [("yahoo","https://store.shopping.yahoo.co.jp/zozo/")],
     "sharp": [("amazon_s", "シャープ")],
     "google": [("amazon_s", "Google Pixel")],
@@ -122,6 +125,12 @@ NO_LINK = {
     "seven": "2026-11-27にアクセストレードで「セブン」を検索して該当なし(出た8件は別の事業者)。A8の提携一覧に載っていない。バリューコマースは未確認",
     "famima": "2026-11-27にアクセストレードで「ファミリーマート」を検索して該当なし。A8の提携一覧に載っていない。バリューコマースは未確認",
     "dennys": "2026-11-27にアクセストレードで「デニーズ」を検索して該当なし。A8の提携一覧に載っていない。バリューコマースは未確認",
+    "squareenix": "2026-11-27にアクセストレードで社名を検索して該当なし。A8の提携一覧に載っていない。バリューコマースは未確認。公式の楽天市場店は確認できない",
+    "capcom": "2026-11-27にアクセストレードで社名を検索して該当なし。A8の提携一覧に載っていない。バリューコマースは未確認。公式の楽天市場店は確認できない",
+    "sega": "2026-11-27にアクセストレードで社名を検索して該当なし。A8の提携一覧に載っていない。バリューコマースは未確認。公式の楽天市場店は確認できない",
+    "bandainamco": "2026-11-27にアクセストレードで社名を検索して該当なし。A8の提携一覧に載っていない。バリューコマースは未確認。公式の楽天市場店は確認できない",
+    "kayanoya": "2026-11-27にアクセストレードで社名を検索して該当なし。A8の提携一覧に載っていない。バリューコマースは未確認。公式の楽天市場店は確認できない",
+    "balmuda": "2026-11-27にアクセストレードで社名を検索して該当なし。A8の提携一覧に載っていない。バリューコマースは未確認。公式の楽天市場店は確認できない",
     "uniqlo": "3つのASPに案件がない。楽天市場にもYahoo!ショッピングにも出店がない(ストアのページが開かなかった)",
 }
 
@@ -194,7 +203,7 @@ def links_for(it: dict) -> list[dict]:
     return out
 
 
-STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)", "c-jins-bf": "(日程は別に確認)", "c-dospara-bf": "(日程は別に確認)", "c-mouse-bf": "(日程は別に確認)", "c-anker-early": "(日程は別に確認)", "c-ks-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
+STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)", "c-jins-bf": "(日程は別に確認)", "c-dospara-bf": "(日程は別に確認)", "c-mouse-bf": "(日程は別に確認)", "c-anker-early": "(日程は別に確認)", "c-ks-bf": "(日程は別に確認)", "c-lowya-bf": "(日程は別に確認)", "c-atcosme-bd": "(日程は別に確認)", "c-dji-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
 STORE_LABEL = {"yamada": "ヤマダデンキ"}      # the mall stores are the company's (ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店), not the web shop the calendar entry names
 ENT_NAME: dict[str, str] = {}      # filled by schedule.py (id -> name) so the labels name the shop
 

@@ -45,7 +45,7 @@ ENT = {"rakuten": ("楽天市場", "楽", "mall"), "amazon": ("Amazon", "A", "ma
        "omsystem": ("OM SYSTEM", "O", "brand"), "jins": ("JINS", "J", "brand"), "owndays": ("OWNDAYS", "眼", "brand"), "mistore": ("三越伊勢丹オンラインストア", "三", "ec"), "takashimaya": ("高島屋オンラインストア", "高", "ec"), "akachan": ("アカチャンホンポ", "赤", "ec"),
        "mitsuioutlet": ("三井アウトレットパーク", "井", "store"), "lalaport": ("ららぽーと", "ら", "store"), "premiumoutlets": ("プレミアム・アウトレット", "プ", "store"), "muumuu": ("ムームードメイン", "ム", "web"),
        "dospara": ("ドスパラ", "ス", "ec"), "mouse": ("マウスコンピューター", "マ", "brand"), "hp": ("日本HP", "H", "brand"), "anker": ("Anker", "ア", "brand"), "ksdenki": ("ケーズデンキオンラインショップ", "ケ", "ec"),
-       "au": ("au", "a", "ec"), "apita": ("アピタ・ピアゴ", "ア", "store"), "seven": ("セブン-イレブン", "7", "store"), "famima": ("ファミリーマート", "フ", "store"), "dennys": ("デニーズ", "デ", "store"), "abcmart": ("ABC-MART", "A", "brand"), "microsoft": ("Microsoft Store", "M", "brand"), "samsung": ("Samsung", "サ", "brand"), "fmv": ("FMV Store", "F", "brand"), "tfal": ("ティファール", "テ", "brand")}
+       "au": ("au", "a", "ec"), "squareenix": ("スクウェア・エニックス", "ス", "brand"), "capcom": ("カプコン", "カ", "brand"), "sega": ("セガ・アトラス", "セ", "brand"), "bandainamco": ("バンダイナムコエンターテインメント", "バ", "brand"), "lowya": ("LOWYA", "ロ", "brand"), "atcosme": ("@cosme", "コ", "ec"), "dji": ("DJI", "D", "brand"), "kayanoya": ("茅乃舎", "茅", "brand"), "balmuda": ("バルミューダ", "バ", "brand"), "apita": ("アピタ・ピアゴ", "ア", "store"), "seven": ("セブン-イレブン", "7", "store"), "famima": ("ファミリーマート", "フ", "store"), "dennys": ("デニーズ", "デ", "store"), "abcmart": ("ABC-MART", "A", "brand"), "microsoft": ("Microsoft Store", "M", "brand"), "samsung": ("Samsung", "サ", "brand"), "fmv": ("FMV Store", "F", "brand"), "tfal": ("ティファール", "テ", "brand")}
 AFF.ENT_NAME.update({k: v[0] for k, v in ENT.items()})
 MALL_OF = {"楽天": "rakuten", "Amazon": "amazon", "Yahoo!ショッピング": "yahoo"}
 MALL_PAGE = {"rakuten": "/rakuten/", "amazon": "/amazon/sale-calendar/", "yahoo": "/yahoo/"}
@@ -307,6 +307,19 @@ EXTRA_CONFIRMED += [
     C("c-seven-fry", "seven", "セブン-イレブン 揚げ物日替わり半額セール", "2026-11-26", "2026-11-29", _span("2026-11-26", "2026-11-29"), "", src=PRESS2, checked="2026-11-27", note="対象の商品は日ごとに1つです。数に限りがあります。"),
     C("c-famima-fry", "famima", "ファミリーマート ブラック“フライ”デー(クーポンの発券)", "2026-11-17", "2026-11-30", _span("2026-11-17", "2026-11-30"), "", src=PRESS2, checked="2026-11-27", note="レジ横の揚げ物・お惣菜を2個買うと、次の買い物で使える値引きクーポンが出ます。クーポンを使える期間は、12月7日(月)までです。"),
     C("c-dennys-bf", "dennys", "デニーズ ブラックフライデー", "2026-11-02", "2026-12-31", _span("2026-11-02", "2026-12-31"), "", src=PRESS2, checked="2026-11-27", note="企画ごとに期間が違います。"),
+]
+
+# 2026-11-27 evening: nine sales the owner approved (each period re-read on the shop's or the maker's page that evening).
+EXTRA_CONFIRMED += [
+    C("c-sqex-sw", "squareenix", "スクエニ BLACK FRIDAY SALE Part 2(終了日)", "2026-11-30", "2026-11-30", f"{jpd('2026-11-30')}の23時59分まで(開始日は確認していません)", "", src=SRC_PAGE, checked="2026-11-27", note="ニンテンドーのストアに出ているセールです。作品によって、終了日が違う場合があります。"),
+    C("c-capcom-sw", "capcom", "CAPCOM NOVEMBER SALE(終了日)", "2026-11-30", "2026-11-30", f"{jpd('2026-11-30')}の23時59分まで(開始日は確認していません)", "", src=SRC_PAGE, checked="2026-11-27", note="ニンテンドーのストアに出ている、ダウンロード版のセールです。"),
+    C("c-sega-sw", "sega", "セガ・アトラス ブラックフライデーセール Part2(終了日)", "2026-11-30", "2026-11-30", f"{jpd('2026-11-30')}の23時59分まで(開始日は確認していません)", "", src=SRC_PAGE, checked="2026-11-27", note="ニンテンドーのストアに出ている、ダウンロード版のセールです。"),
+    C("c-bne-sw", "bandainamco", "バンダイナムコ ダウンロード版セール(終了日)", "2026-12-13", "2026-12-13", f"{jpd('2026-12-13')}の23時59分まで(開始日は確認していません)", "", src=SRC_PAGE, checked="2026-11-27", note="ニンテンドーのストアに出ているセールです。11月29日(日)に終わる企画も別にあります。"),
+    C("c-lowya-bf", "lowya", "LOWYA ブラックフライデー", "2026-11-20", "2026-12-03", _span("2026-11-20", "2026-12-03", "00:00", "23:59"), "", src=SRC_PAGE, checked="2026-11-27", note="公式の特設ページの期間です。数量に限りがある特価もあります。下のリンクは楽天市場店で、この日程が当てはまるかは確認していません。"),
+    C("c-atcosme-bd", "atcosme", "@cosme BEAUTY DAY 2026", "2026-12-01", "2026-12-03", _span("2026-12-01", "2026-12-03", "12:00", "23:59"), "", src=SRC_OFFICIAL, checked="2026-11-27", note="公式通販の@cosme SHOPPINGの期間です。店舗は、同じ3日間の各店の営業時間内です。下のリンクは楽天市場店で、この日程が当てはまるかは発表にありません。"),
+    C("c-dji-bf", "dji", "DJI ブラックフライデー", "2026-11-27", "2026-12-07", _span("2026-11-27", "2026-12-07", "00:00", "23:59"), "", src=SRC_PAGE, checked="2026-11-27", note="DJIの公式オンラインストアなどのセールです。下のリンクは楽天市場店で、この日程が当てはまるかは確認していません。"),
+    C("c-kayanoya-oseibo", "kayanoya", "茅乃舎 対象商品の送料半額ギフト(終了日)", "2026-12-15", "2026-12-15", f"{jpd('2026-12-15')}の23時59分まで(開始日は確認していません)", "", src=SRC_PAGE, checked="2026-11-27", note="公式通販で、対象の商品の送料が半額になる、お歳暮向けの企画です。"),
+    C("c-balmuda-holiday", "balmuda", "バルミューダ ホリデーキャンペーン(終了日)", "2026-12-25", "2026-12-25", f"{jpd('2026-12-25')}の13時まで(開始日は確認していません)", "", src=SRC_PAGE, checked="2026-11-27", note="贈りもの向けの限定ラッピングが無料になる企画です。対象の製品が決まっています。"),
 ]
 
 EXPECTED = [
