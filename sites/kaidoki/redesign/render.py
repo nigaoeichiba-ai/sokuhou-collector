@@ -592,7 +592,7 @@ def genre_body(ctx: "Ctx", gid: str) -> str:
 
 
 def genre_partners(gid: str) -> str:
-    items = genres.PARTNERS.get(gid)
+    items = [x for x in genres.PARTNERS.get(gid, []) if x[1] not in affiliate.PAUSED]
     if not items:
         return ""
     links = [affiliate._link("a8", affiliate.a8_href(key), label, key) if kind == "a8" else affiliate._link("vc", affiliate.vc_text_href(affiliate.VC_PID[key]), label, key) for kind, key, label in items]

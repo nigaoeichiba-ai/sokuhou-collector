@@ -214,7 +214,8 @@ class RedesignTest(unittest.TestCase):
         from sites.kaidoki.redesign import genres, affiliate
         cats = json.loads((SITE / "redesign" / "categories.json").read_text(encoding="utf-8"))
         self.assertEqual({c["id"] for c in cats}, set(genres.GENRES))
-        for gid, items in genres.PARTNERS.items():
+        for gid, listed in genres.PARTNERS.items():
+            items = [x for x in listed if x[1] not in affiliate.PAUSED]          # an advertiser who asked us to stop
             html = render.genre_partners(gid)
             self.assertEqual(html.count('rel="nofollow sponsored noopener"'), len(items), gid)
             self.assertEqual(html.count('target="_blank"'), len(items), gid)
@@ -223,6 +224,26 @@ class RedesignTest(unittest.TestCase):
             for kind, key, label in items:
                 self.assertIn(label, html)
                 self.assertTrue(key in affiliate.A8_MAT or key in affiliate.VC_PID, key)
+
+    def test_no_page_carries_an_ad_of_a_paused_advertiser(self):
+        """2026-11-27: Daimaru Matsuzakaya asked every programme member to take its ads down."""
+        from sites.kaidoki.redesign import affiliate
+        self.assertIn("daimaru", affiliate.PAUSED)
+        for key in affiliate.PAUSED:
+            code = affiliate.VC_PID.get(key) or affiliate.A8_MAT[key][0]
+            for rel, html in self.live.items():
+                if isinstance(html, str):
+                    self.assertNotIn(code, html, rel)
+
+    def test_negative_a_paused_advertiser_gets_no_link_even_when_asked_for(self):
+        from unittest import mock
+        from sites.kaidoki.redesign import affiliate
+        link = affiliate._link("vc", affiliate.vc_text_href(affiliate.VC_PID["daimaru"]), "大丸松坂屋オンラインストアを見る", "daimaru")
+        self.assertEqual(affiliate.lines([link]), "")
+        self.assertEqual(affiliate.anchor(link), "")
+        with mock.patch.dict(affiliate.PAUSED, clear=True):          # once the line is taken out, the link comes back
+            self.assertIn(affiliate.VC_PID["daimaru"], affiliate.lines([link]))
+            self.assertIn(affiliate.VC_PID["daimaru"], render.genre_partners("fashion"))
 
     def test_negative_a_link_whose_words_are_its_address_is_caught(self):
         self.assertRegex('<a href="https://px.a8.net/x" rel="nofollow">https://example.com/x</a>', self.BARE_URL_TEXT)

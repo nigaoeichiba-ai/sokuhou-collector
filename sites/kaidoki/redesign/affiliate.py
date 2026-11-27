@@ -68,6 +68,9 @@ ASP = {"muumuu": ("a8", "muumuu", ""), "dhc": ("vc", "dhc", "https://www.dhc.co.
 ASP_BY_ID = {"c-xs-init": "xbiz"}                                  # エックスサーバー Business = the XServerビジネス programme
 ASP_NAME = {"his": "HIS", "colorfulbox": "ColorfulBox", "orbis": "オルビス", "happy": "家電レンタルみんなのHappy", "lenovo": "Lenovo公式オンラインストア", "expedia": "エクスペディア", "jalan": "じゃらんnet", "nta": "日本旅行", "dhc": "DHC", "xdomain": "XServerドメイン", "xserver": "エックスサーバー", "xbiz": "XServerビジネス", "alpen": "スポーツデポ・アルペン", "oisix": "Oisix", "muumuu": "ムームードメイン", "mixhost": "mixhost", "lolipop": "ロリポップ！", "sakura": "さくらのレンタルサーバ", "stardomain": "スタードメイン", "onamae": "お名前.com", "nenga": "年賀状スクエア"}
 MALLS = ("rakuten", "amazon", "yahoo")
+# An advertiser who asked us to stop showing its ads: no link, banner or counter of it is written anywhere.  The programme's ids stay where they are;
+# deleting the line here brings the links back once the advertiser says so.
+PAUSED = {"daimaru": "2026-11-27 広告主(VC 2304640)から掲載停止の依頼。サイバー攻撃の影響による緊急メンテナンス、全プログラム対象、11/27 0:00から、再開は未定"}
 
 # Shops with no link, and why (reported to the owner; the test pins that every shop of the calendar is here or has a link).
 NO_LINK = {
@@ -198,6 +201,8 @@ ENT_NAME: dict[str, str] = {}      # filled by schedule.py (id -> name) so the l
 
 def anchor(l: dict, pixels: bool = True) -> str:
     """The link with its programme's 1x1 counter / pixel as given (the copy inside calendar.js's JSON, written into a day's detail by the script, has none: the lists in the page carry them)."""
+    if l["key"] in PAUSED:
+        return ""
     counter = vc_counter(VC_PID[l["key"]]) if l["kind"] == "vc" and pixels else ""
     pixel = a8_pixel(l["key"]) if l["kind"] == "a8" and pixels else ""
     return f'<a href="{escape(l["href"], quote=True)}" target="_blank" rel="{REL}">{escape(l["label"])}{counter}</a>{pixel}'
@@ -205,6 +210,7 @@ def anchor(l: dict, pixels: bool = True) -> str:
 
 def lines(links: list[dict], cls: str = "aff-lines") -> str:
     """Each link on its own line with the PR mark (a mall's link never shares a line with another mall's)."""
+    links = [l for l in links if l["key"] not in PAUSED]
     if not links:
         return ""
     return f'<div class="{cls}">' + "".join(f'<p class="aff-line"><span class="pr-chip">PR</span>{anchor(l)}</p>' for l in links) + "</div>"
