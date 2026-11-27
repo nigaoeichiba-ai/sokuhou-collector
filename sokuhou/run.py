@@ -170,6 +170,11 @@ def check_counts_bear(old, new):
         raise SanityError(f"{new['source']} {new['fy_current']} count dropped {old['total_fy']} -> {new['total_fy']}")
 
 
+def check_fukushima_media(old, new):
+    """The television stories reach back only a few weeks, so the raw answer shrinks by itself: judge it after the earlier confirmed records are added."""
+    check_counts_bear(old, fukushima_media_kuma.accumulate(old, new))
+
+
 def check_fire(old, new):
     if new["unparsed"]:
         raise SanityError(f"{len(new['unparsed'])} messages in an unknown format (page layout changed?)")
@@ -197,7 +202,7 @@ GROUPS: dict[str, list[Source]] = {
         # no explicit licence: counts only (municipality, month, count, latest date), see kumalib.package_counts
         # (Fukushima prefecture is not collected: it refused use on an ad-supported site, 2026-11-12; see sites/kuma/live.py WITHHELD.
         #  Only what Fukushima City's page and Fukushima TV both hold is stored, with its place; the prefecture's data is not read at all)
-        Source("fukushima_media_kuma", fukushima_media_kuma.collect, check_counts_bear, fukushima_media_kuma.accumulate),
+        Source("fukushima_media_kuma", fukushima_media_kuma.collect, check_fukushima_media, fukushima_media_kuma.accumulate),
         Source("niigata_kuma", niigata_kuma.collect, check_pref_bear),
         Source("yamagata_kuma", yamagata_kuma.collect, check_counts_bear, corroborated.carry_over),
         # kumalog-aomori.info answers GitHub's runners with 403 (2026-10-22 on): keep the last file, show a warning, fail after BLOCKED_KEEP_DAYS

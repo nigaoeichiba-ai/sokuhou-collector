@@ -87,6 +87,8 @@ class FindTest(unittest.TestCase):
             prefpdfs.pdf_link(PAGE_HTML, base, href="x.pdf")
         with self.assertRaises(prefpdfs.PdfListError):
             prefpdfs.pdf_link(PAGE_HTML, base, label="令和9年度")
+        with self.assertRaisesRegex(prefpdfs.PdfListError, r"page of \d+ chars, 0 PDF links, title 'Access denied'"):
+            prefpdfs.pdf_link("<html><title>Access denied</title></html>", base, href="x.pdf")
 
 
 class ParseTest(unittest.TestCase):

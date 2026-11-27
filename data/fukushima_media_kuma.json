@@ -1,6 +1,13 @@
 {
- "as_of": "2026-11-14",
+ "as_of": "2026-11-27",
  "corroborated": [
+  {
+   "city": "福島市",
+   "count": null,
+   "kind": "その他",
+   "observed_at": "2026-11-23",
+   "place": "鎌田字新割地内"
+  },
   {
    "city": "福島市",
    "count": null,
@@ -24,23 +31,25 @@
   }
  ],
  "corroborated_on": {
-  "福島市": "2026-11-14"
+  "福島市": "2026-11-27"
  },
  "credit": "複数の公開情報で一致を確認できた目撃を、公開されている情報から、当サイトが集計して作成(福島県・福島市・福島テレビが作成したものではありません)",
- "fetched_at": "2026-11-14T06:18:51.035923+09:00",
+ "fetched_at": "2026-11-27T10:57:37.602236+09:00",
  "fy_current": "R08",
  "mode": "counts",
  "monthly": {
   "R08": {
-   "10": 3
+   "10": 3,
+   "11": 1
   }
  },
  "municipalities": {
   "福島市": {
-   "latest": "2026-10-29",
+   "latest": "2026-11-23",
    "monthly": {
     "R08": {
-     "10": 3
+     "10": 3,
+     "11": 1
     }
    }
   }
@@ -48,7 +57,7 @@
  "source": "fukushima_media",
  "source_file": "https://www.city.fukushima.fukushima.jp/soshiki/6/1025/3/17619.html",
  "source_page": "https://www.city.fukushima.fukushima.jp/soshiki/6/1025/3/17619.html",
- "total_fy": 3,
+ "total_fy": 4,
  "unparsed": 0,
  "update_note": "週1回更新します。最新の記録は、更新時点から遅れます。件数は、複数の公開情報で一致を確認できた目撃だけで、福島県内の目撃の全体の件数ではありません。目撃のほか、痕跡の報告を含みます"
 }

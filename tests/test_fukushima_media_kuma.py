@@ -49,6 +49,33 @@ def collect(log=None):
     return fm.collect(fetch=make_fetch([] if log is None else log), sleep=lambda s: None, now=NOW)
 
 
+class ShrinkingWindowTest(unittest.TestCase):
+    """2026-11-21 to 11-27: kuma-live failed every day with 'count dropped 3 -> 2' because the check ran before the earlier records were added."""
+
+    def _pair(self):
+        old = collect()
+        first = old["corroborated"][0]
+        earlier = [{**first, "observed_at": f"2026-10-{day:02d}", "place": f"earlier {day}"} for day in (1, 2, 3)]
+        return fm.package(old["corroborated"] + earlier, TODAY), collect()
+
+    def test_a_shorter_window_is_accepted_and_the_earlier_records_stay(self):
+        old, new = self._pair()
+        with self.assertRaises(run.SanityError):
+            run.check_counts_bear(old, new)
+        run.check_fukushima_media(old, new)
+        self.assertEqual(fm.accumulate(old, new)["total_fy"], old["total_fy"])
+
+    def test_the_registered_source_uses_that_check(self):
+        source = next(s for s in run.GROUPS["kuma"] if s.name == "fukushima_media_kuma")
+        self.assertIs(source.check, run.check_fukushima_media)
+
+    def test_a_row_in_an_unexpected_shape_is_still_refused(self):
+        old, new = self._pair()
+        new["corroborated"] = [{**new["corroborated"][0], "lat": 37.7}]
+        with self.assertRaises(run.SanityError):
+            run.check_fukushima_media(old, new)
+
+
 class PairTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -116,7 +143,7 @@ class PairTest(unittest.TestCase):
 
     def test_registered_in_the_kuma_group_with_the_counts_check_and_no_licence(self):
         src = {s.name: s for s in run.GROUPS["kuma"]}["fukushima_media_kuma"]
-        self.assertIs(src.check, run.check_counts_bear)
+        self.assertIs(src.check, run.check_fukushima_media)
         meta = live_mod.LIVE_SOURCES["fukushima_media"]
         self.assertEqual(meta["pref"], "福島")
         self.assertNotIn("license", meta)

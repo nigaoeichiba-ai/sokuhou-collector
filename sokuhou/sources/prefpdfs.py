@@ -30,7 +30,10 @@ def pdf_link(html: str, base: str, *, label: str = "", href: str = "") -> str:
             if urlparse(url).netloc != urlparse(base).netloc:
                 raise PdfListError(f"the PDF is not on the page's host: {url}")
             return url
-    raise PdfListError(f"no PDF link with {label!r} / {href!r}")
+    # say what the page was: a runner abroad may be answered with another page than the one a desktop gets
+    title = re.search(r"<title[^>]*>(.*?)</title>", html, re.S | re.I)
+    found = len(re.findall(r'href="[^"]+\.pdf"', html, re.I))
+    raise PdfListError(f"no PDF link with {label!r} / {href!r} (page of {len(html)} chars, {found} PDF links, title {co.clean(title.group(1))[:60] if title else None!r})")
 
 
 def _day(fy: int, month: int, day: int) -> date:
