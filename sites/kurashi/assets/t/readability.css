@@ -69,3 +69,7 @@ dialog{width:min(720px,calc(100% - 32px));padding:28px 32px}#dialog-title{font-s
 
 .guide-read-link{display:flex;align-items:center;justify-content:space-between;gap:15px;font-size:15px;font-weight:700;text-decoration:none;border-top:1px dashed var(--line);padding-top:15px;min-height:48px}
 a.event-guide{text-decoration:none}a.event-guide:hover h3{text-decoration:underline}.preview-banner>a{margin-left:12px}.site-footer nav{flex-wrap:wrap}
+
+/* 2026-11-27: the home heading was kept on one line and ran over the picture on wide screens. It may wrap at its space; other headings break between phrases. */
+@media(min-width:761px){.hero h1{white-space:normal;word-break:keep-all;overflow-wrap:anywhere}}
+h1{word-break:auto-phrase}

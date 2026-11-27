@@ -262,5 +262,23 @@ def shown_source_problems(html: str, rel: str) -> list[str]:
     return bad
 
 
+
+def hero_title_kept_on_one_line(css: str) -> bool:
+    """True when the last desktop rule for the home heading still forbids wrapping (it then runs over the picture on the right)"""
+    values = re.findall(r"\.hero h1\{[^}]*?white-space:\s*([a-z-]+)", css)
+    return bool(values) and values[-1] == "nowrap"
+
+
+class HeroHeading(unittest.TestCase):
+    ORDER = ("styles.css", "illustrated.css", "readability.css", "pages.css", "hierarchy.css")     # the order hooks.py joins them in
+
+    def test_home_heading_may_wrap(self):
+        css = "".join((SITE / "assets" / "t" / n).read_text(encoding="utf-8") for n in self.ORDER)
+        self.assertFalse(hero_title_kept_on_one_line(css))
+
+    def test_the_old_rule_is_detected(self):
+        self.assertTrue(hero_title_kept_on_one_line(".hero h1{font-size:44px;white-space:nowrap;font-weight:700}"))
+
+
 if __name__ == "__main__":
     unittest.main()
