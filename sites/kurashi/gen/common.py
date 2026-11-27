@@ -19,7 +19,7 @@ UNCHANGED = ("/method/", "/kakutei-shinkoku/hitsuyo/", "/kakutei-shinkoku/kanpu/
 REDESIGN_DAY = "2026-11-13"
 SEO_DAY = "2026-11-17"   # the style sheets were joined and the end of every <title> was shortened: every page changed that day (the sitemap lastmod follows the page's own day)
 # the pages whose title, description or lead answer were rewritten after that (the day of the change)
-CHANGED_LATER = {"/nenmatsu-nenshi/": "2026-11-25", "/nenmatsu-chosei/": "2026-11-25", "/moving/tenshutsu/": "2026-11-20", "/nengajo/": "2026-11-25", "/furusato/deadline/": "2026-11-20", "/kakutei-shinkoku/": "2026-11-25", "/kakutei-shinkoku/kanpu/": "2026-11-26", "/month/12/": "2026-11-26", "/shin-seikatsu/": "2026-11-25", "/life/birth/": "2026-11-25"}
+CHANGED_LATER = {"/nenmatsu-nenshi/": "2026-11-25", "/nenmatsu-chosei/": "2026-11-25", "/moving/tenshutsu/": "2026-11-20", "/nengajo/": "2026-11-25", "/furusato/deadline/": "2026-11-27", "/kakutei-shinkoku/": "2026-11-25", "/kakutei-shinkoku/kanpu/": "2026-11-26", "/month/12/": "2026-11-27", "/month/1/": "2026-11-27", "/furusato/one-stop/": "2026-11-27", "/shin-seikatsu/": "2026-11-25", "/life/birth/": "2026-11-25"}
 EDITED = {}          # kept for readers of the old name: a page's day is FIRST_UPDATED if it is in UNCHANGED, else REDESIGN_DAY (page() below)
 SITE_UPDATED = max([SEO_DAY, *CHANGED_LATER.values()])
 WD = "月火水木金土日"
@@ -140,6 +140,7 @@ SOURCES = {
     "egov_kyujitsu": {"org": "e-Gov法令検索", "table": "行政機関の休日に関する法律(第1条)", "url": "https://laws.e-gov.go.jp/law/363AC0000000091", "basis": "現行法令"},
     "egov_ginko": {"org": "e-Gov法令検索", "table": "銀行法施行令(第5条)", "url": "https://laws.e-gov.go.jp/law/357CO0000000040", "basis": "現行法令"},
     "egov_kaigo": {"org": "e-Gov法令検索", "table": "介護保険法(第27条)", "url": "https://laws.e-gov.go.jp/law/409AC0000000123", "basis": "現行法令"},
+    "mhlw_ideco": {"org": "厚生労働省", "table": "2026年12月からのiDeCoの制度改正(Webマガジン)", "url": "https://www.mhlw.go.jp/web_magazine/column/20261020.html", "basis": "2026年10月20日の掲載"},
     "nenkin_kanyu": {"org": "日本年金機構", "table": "国民年金に加入するための手続き", "url": "https://www.nenkin.go.jp/service/kokunen/kanyu/20140710-04.html", "basis": "掲載時点"},
     "nenkin_ikuji": {"org": "日本年金機構", "table": "国民年金保険料の育児免除制度", "url": "https://www.nenkin.go.jp/service/kokunen/menjo/ikujimenjo.html", "basis": "2026年10月1日の更新を確認"},
     "dnc_r9": {"org": "大学入試センター", "table": "令和9年度試験(実施期日)", "url": "https://www.dnc.ac.jp/kyotsu/shiken_jouhou/r9/", "basis": "令和9年度"},

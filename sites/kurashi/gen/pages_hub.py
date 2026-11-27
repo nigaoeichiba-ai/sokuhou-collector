@@ -1,7 +1,7 @@
 """The hubs: the home page, the month list, five month pages, the list of life events (11 to 3 only: the months where the deadlines gather)."""
 from __future__ import annotations
 
-from . import checks
+from . import checks, shop_links
 from .common import CHECKED, TODAY_MD, TODAY_YMD, a, d, days, jp, md, page, para_html, plus, rel, row_link, wd
 
 # ---- the dates that more than one page uses (computed once) ------------------------------------------------------------------------------------------
@@ -11,6 +11,7 @@ NENGA_START = d(2026, 12, 20)
 NENGA_NEW_YEAR = d(2026, 12, 27)
 NENGA_OLD_START, NENGA_OLD_END = d(2026, 12, 15), d(2026, 12, 25)
 YEAR_END = d(2026, 12, 31)
+ONESTOP_PAPER_LATE = d(2027, 1, 12)     # some municipalities accept the paper application until this day (checked 2026-11-27)
 CLOSED_FROM, CLOSED_TO = d(2026, 12, 29), d(2027, 1, 3)
 ONESTOP_CHANGE = d(2027, 1, 10)
 KAKUTEI_START, KAKUTEI_END = d(2027, 2, 16), d(2027, 3, 15)
@@ -132,6 +133,11 @@ def m11() -> dict:
     )
 
 
+def ideco_books() -> str:
+    return ("<p class=\"pr-note\"><strong>【PR】</strong>しくみを本で読むなら、次の検索ページから探せます。</p>"
+            f"<ul><li>{shop_links.rakuten('iDeCo 本')}</li><li>{shop_links.amazon('iDeCo 本')}</li></ul>")
+
+
 def m12() -> dict:
     cols = ["日付", f"{TODAY_MD}から", "内容", "詳しい記事"]
     rows = [
@@ -158,9 +164,13 @@ def m12() -> dict:
                 "ふるさと納税と医療費は、1月1日をまたぐと翌年分になります。同じ寄附や支払いでも、年をまたいだだけで申告する年が変わります。",
                 f"銀行の窓口は、12月31日から1月3日が休日と法令で決まっています。現金の準備やお年玉の新札は、{md(d(2026, 12, 30))}までに済ませます。",
                 f"2021年に払った医療費などの還付申告を出し忘れている人は、{md(REFUND_R3_END)}で5年の期間が終わります。税務署の窓口は{md(CLOSED_FROM)}から休みなので、窓口に出すなら{md(d(2026, 12, 28))}までです。"]},
+            {"h2": "12月からiDeCoの掛金の上限が上がる", "paras": [
+                "iDeCo(個人型確定拠出年金)は、2026年12月から掛金の上限と加入できる年齢が変わります。自営業者などは、国民年金基金などと合わせた上限が月6万8,000円から7万5,000円になります。会社員と公務員は、企業年金などと合わせて月6万2,000円が上限です。企業年金のない会社員の場合は、月2万3,000円からの引き上げです。",
+                "加入できる年齢の上限は、一定の要件を満たせば70歳未満までに広がります。掛金を変えるときの手続きと、新しい金額が引き落とされる月は、加入している金融機関の案内で確かめておきましょう。掛金の額を変えられるのは、12月分から翌年11月分までの間に1回です。"],
+             "html": ideco_books()},
         ],
         [("/month/11/", "11月のやること"), ("/month/1/", "1月のやること"), ("/nengajo/", "年賀状はいつまでに出すか")],
-        ["post_nenga", "egov_kyujitsu", "egov_ginko", "nta_2675", "nta_1120"],
+        ["post_nenga", "egov_kyujitsu", "egov_ginko", "nta_2675", "nta_1120", "mhlw_ideco"],
         secondary=["年末 やること"],
     )
 
@@ -170,6 +180,7 @@ def m1() -> dict:
     rows = [
         [jp(REFUND_START), n_days(REFUND_START), "令和8年分の還付申告を出せる最初の日(期限は5年間)", row_link("還付申告", "/kakutei-shinkoku/kanpu/")],
         [jp(d(2027, 1, 3)), n_days(d(2027, 1, 3)), "年賀郵便の配達日(元日と1月3日)", row_link("年賀状", "/nengajo/")],
+        [jp(ONESTOP_CHANGE), n_days(ONESTOP_CHANGE), "ワンストップ特例の申請書の期限(この日の必着とする自治体の例。寄附先の案内で確かめる)", row_link("ワンストップ特例", "/furusato/one-stop/")],
         [jp(ONESTOP_CHANGE), n_days(ONESTOP_CHANGE), "ワンストップ特例の申請後に住所などが変わったときの変更届の期限", row_link("ワンストップ特例", "/furusato/one-stop/")],
         [jp(NENGA_SALE_END), n_days(NENGA_SALE_END), "年賀はがきの販売の最終日", row_link("年賀状", "/nengajo/")],
         [f"{jp(KYOTSU[0])}・{md(KYOTSU[1])}", n_days(KYOTSU[0]), "大学入学共通テストの本試験(令和9年度)", row_link("大学入試センター", "/month/1/")],
@@ -188,7 +199,7 @@ def m1() -> dict:
                 "給与から引かれた所得税が多すぎるときは、確定申告の期間を待たずに還付申告を出せます。令和8年分は、2027年1月1日から5年間です。",
                 "医療費控除や住宅ローン控除の人が、年が明けてすぐ出す例があります。詳しくは", a("/kakutei-shinkoku/kanpu/", "還付申告のしくみ"), "にまとめました。")},
             {"h2": "年始の窓口", "paras": [
-                f"国の行政機関が開くのは{md(d(2027, 1, 4))}からです。年末年始の6日間が明けるため、窓口が混む日が続きます。ワンストップの変更届の期限{md(ONESTOP_CHANGE)}は、日曜日に当たります。"]},
+                f"国の行政機関が開くのは{md(d(2027, 1, 4))}からです。年末年始の6日間が明けるため、窓口が混む日が続きます。ワンストップの申請書と変更届で目安になる{md(ONESTOP_CHANGE)}は、日曜日に当たります。普通郵便は土曜と日曜に配達されないため、郵送するなら{md(d(2027, 1, 8))}までに届くように出しておきましょう。"]},
             {"h2": "共通テストの日程の読み方", "paras": [
                 f"令和9年度の本試験は{jp(KYOTSU[0])}と{md(KYOTSU[1])}の2日間です。追・再試験は{jp(KYOTSU_RETEST[0])}と{md(KYOTSU_RETEST[1])}です。本試験の1週間後に当たります。",
                 "受験案内は紙の冊子を配布せず、大学入試センターのサイトで読む形です。出願は郵送ではできません。",

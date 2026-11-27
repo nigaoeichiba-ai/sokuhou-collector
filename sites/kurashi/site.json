@@ -1,7 +1,7 @@
 {
  "og_image": "/assets/og.jpg",
  "glyph": "暦",
- "updated": "2026-11-26",
+ "updated": "2026-11-27",
  "home_label": "トップ",
  "nav": [
   [
@@ -227,6 +227,13 @@
    "table": "介護保険法(第27条)",
    "url": "https://laws.e-gov.go.jp/law/409AC0000000123",
    "basis": "現行法令",
+   "fetched": "2026-11-03"
+  },
+  "mhlw_ideco": {
+   "org": "厚生労働省",
+   "table": "2026年12月からのiDeCoの制度改正(Webマガジン)",
+   "url": "https://www.mhlw.go.jp/web_magazine/column/20261020.html",
+   "basis": "2026年10月20日の掲載",
    "fetched": "2026-11-03"
   },
   "nenkin_kanyu": {
