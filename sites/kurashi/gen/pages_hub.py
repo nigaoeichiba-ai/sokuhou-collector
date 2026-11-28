@@ -182,7 +182,7 @@ def m1() -> dict:
         [jp(REFUND_START), n_days(REFUND_START), "令和8年分の還付申告を出せる最初の日(期限は5年間)", row_link("還付申告", "/kakutei-shinkoku/kanpu/")],
         [jp(d(2027, 1, 3)), n_days(d(2027, 1, 3)), "年賀郵便の配達日(元日と1月3日)", row_link("年賀状", "/nengajo/")],
         [jp(ONESTOP_CHANGE), n_days(ONESTOP_CHANGE), "ワンストップ特例の申請書の期限(この日の必着とする自治体の例。寄附先の案内で確かめる)", row_link("ワンストップ特例", "/furusato/one-stop/")],
-        [jp(ONESTOP_CHANGE), n_days(ONESTOP_CHANGE), "ワンストップ特例の申請後に住所などが変わったときの変更届の期限", row_link("ワンストップ特例", "/furusato/one-stop/")],
+        [jp(ONESTOP_CHANGE), n_days(ONESTOP_CHANGE), "ワンストップ特例の申請後に住所などが変わったときの変更届の期限(法律上の日。寄附先の案内も確かめる)", row_link("ワンストップ特例", "/furusato/one-stop/")],
         [jp(NENGA_SALE_END), n_days(NENGA_SALE_END), "年賀はがきの販売の最終日", row_link("年賀状", "/nengajo/")],
         [f"{jp(KYOTSU[0])}・{md(KYOTSU[1])}", n_days(KYOTSU[0]), "大学入学共通テストの本試験(令和9年度)", row_link("共通テストの日程", "/month/1/")],
         [f"{jp(KYOTSU_RETEST[0])}・{md(KYOTSU_RETEST[1])}", n_days(KYOTSU_RETEST[0]), "追・再試験", row_link("共通テストの日程", "/month/1/")],
