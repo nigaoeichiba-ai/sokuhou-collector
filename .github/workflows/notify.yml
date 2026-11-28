@@ -5,9 +5,11 @@ name: notify-bluesky
 # BLUESKY_APP_PASSWORD (an app password).  Each feed is read from the live site, so a post can only go out
 # after the site itself has been updated.  The kuma feed is skipped until the repository variable DEPLOY_KUMA is "true".
 
+# STOPPED (owner 2026-11-28): the Rakuten affiliate guideline forbids posting the URL of a page that carries its affiliate links to a
+# social network outside its approved list, and Bluesky is not on it.  The schedule is removed and a manual run is a dry run only.
+# Do not restore either without the owner's decision.
+
 on:
-  schedule:
-    - cron: "30 0 * * *"   # 09:30 JST
   workflow_dispatch:
     inputs:
       post:
@@ -47,7 +49,7 @@ jobs:
         env:
           BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
           BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
-          POST: ${{ github.event_name == 'schedule' || inputs.post }}
+          POST: "false"   # stopped (owner 2026-11-28); was: scheduled run or the "post" input
           KUMA: ${{ vars.DEPLOY_KUMA }}
         run: |
           flag=""

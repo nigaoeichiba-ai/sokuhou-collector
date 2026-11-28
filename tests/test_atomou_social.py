@@ -67,8 +67,10 @@ class Posts(unittest.TestCase):
         self.assertIn("contents: read", wf)
         for bad in ("git push", "git commit", "contents: write"):
             self.assertNotIn(bad, wf)
-        for k in ("ATOMOU_BSKY_HANDLE", "ATOMOU_BSKY_APP_PASSWORD", "ATOMOU_MASTODON_BASE", "ATOMOU_MASTODON_TOKEN"):
+        for k in ("ATOMOU_MASTODON_BASE", "ATOMOU_MASTODON_TOKEN"):
             self.assertIn("secrets." + k, wf)
+        for k in ("ATOMOU_BSKY_HANDLE", "ATOMOU_BSKY_APP_PASSWORD"):  # stopped by the owner 2026-11-28 (Rakuten guideline)
+            self.assertNotIn("secrets." + k, wf)
 
 
 if __name__ == "__main__":

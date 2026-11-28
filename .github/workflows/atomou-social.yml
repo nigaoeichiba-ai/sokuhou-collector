@@ -40,8 +40,8 @@ jobs:
           python -m pip install --quiet pillow
       - name: Draft and (when connected) post
         env:
-          ATOMOU_BSKY_HANDLE: ${{ secrets.ATOMOU_BSKY_HANDLE }}
-          ATOMOU_BSKY_APP_PASSWORD: ${{ secrets.ATOMOU_BSKY_APP_PASSWORD }}
+          # Bluesky sending is STOPPED (owner 2026-11-28): atomou pages carry Rakuten affiliate links and the Rakuten guideline forbids
+          # posting such a page's URL to Bluesky.  The two Bluesky secrets are deliberately not passed in, so nothing is sent there.
           ATOMOU_MASTODON_BASE: ${{ secrets.ATOMOU_MASTODON_BASE }}
           ATOMOU_MASTODON_TOKEN: ${{ secrets.ATOMOU_MASTODON_TOKEN }}
           SEND: ${{ github.event_name == 'schedule' || github.event.inputs.post == 'true' }}
