@@ -41,6 +41,8 @@ PROGRAMME = {"rakuten": "楽天アフィリエイト", "amazon": "Amazonアソ�
 
 # A shop with no programme of the three ASPs: its stores in the malls (each opened in a browser on 2026-11-12: the store page opens and is the shop's own).  ("amazon_s" = a search page of Amazon.)
 STORES = {
+    "abcmart": [("rakuten", "https://www.rakuten.co.jp/abc-mart/")],   # ABC-MART楽天市場店(2026-11-28 ストアのページが開くことを確認)
+    "newyorker": [("rakuten", "https://www.rakuten.co.jp/newyorker/")],   # NEWYORKERの楽天市場店(2026-11-28 ストアのページが開くことを確認)
     "nitori": [("rakuten", "https://www.rakuten.co.jp/nitori/")],
     "dyson": [("rakuten", "https://www.rakuten.co.jp/dyson/"), ("yahoo", "https://store.shopping.yahoo.co.jp/dyson/"), ("amazon_s", "ダイソン")],
     "panasonic": [("rakuten", "https://www.rakuten.co.jp/panasonic-store/"), ("yahoo", "https://store.shopping.yahoo.co.jp/panasonic-store/"), ("amazon_s", "パナソニック")],
@@ -116,7 +118,6 @@ NO_LINK = {
     "premiumoutlets": "2026-11-26にA8・バリューコマース・アクセストレードで検索(読むだけ)。提携済みはなく、案件は見つからない",
     "hp": "2026-11-26にA8・バリューコマース・アクセストレードで検索(読むだけ)。直販の案件は見つからない。楽天市場の公式店は確認していない",
     "au": "2026-11-26にA8・バリューコマース・アクセストレードで検索(読むだけ)。au Online Shopの案件は見つからない(A8のau PAY系などは別のサービスで未提携)",
-    "abcmart": "2026-11-26にA8・バリューコマース・アクセストレードで検索(読むだけ)。提携済みはなく、案件は見つからない",
     "microsoft": "2026-11-26にA8・バリューコマース・アクセストレードで検索(読むだけ)。Microsoft Storeの案件は見つからない",
     "samsung": "2026-11-26にA8・バリューコマース・アクセストレードで検索(読むだけ)。VCにSamsungオンラインショップのプログラム(審査あり)があるが未提携(申請していない)。A8・ATは見つからない",
     "fmv": "2026-11-26にA8・バリューコマース・アクセストレードで検索(読むだけ)。A8にFMV Storeのプログラムがあるが未提携(申請していない)。VC・ATは見つからない",
@@ -203,8 +204,8 @@ def links_for(it: dict) -> list[dict]:
     return out
 
 
-STORE_ASIDE = {"c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)", "c-jins-bf": "(日程は別に確認)", "c-dospara-bf": "(日程は別に確認)", "c-mouse-bf": "(日程は別に確認)", "c-anker-early": "(日程は別に確認)", "c-ks-bf": "(日程は別に確認)", "c-lowya-bf": "(日程は別に確認)", "c-atcosme-bd": "(日程は別に確認)", "c-dji-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
-STORE_LABEL = {"yamada": "ヤマダデンキ"}      # the mall stores are the company's (ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店), not the web shop the calendar entry names
+STORE_ASIDE = {"c-abcmart-bf": "(日程は別に確認)", "abcmart": "(日程は別に確認)", "newyorker": "(日程は別に確認)", "c-yogibo-bf": "(別の企画)", "c-zoff-bf": "(日程は別に確認)", "c-kojima-bf": "(日程は別に確認)", "c-toysrus-bf": "(日程は別に確認)", "c-jins-bf": "(日程は別に確認)", "c-dospara-bf": "(日程は別に確認)", "c-mouse-bf": "(日程は別に確認)", "c-anker-early": "(日程は別に確認)", "c-ks-bf": "(日程は別に確認)", "c-lowya-bf": "(日程は別に確認)", "c-atcosme-bd": "(日程は別に確認)", "c-dji-bf": "(日程は別に確認)"}      # entries whose dates are not those of the mall store
+STORE_LABEL = {"yamada": "ヤマダデンキ", "abcmart": "ABC-MART", "newyorker": "NEWYORKER"}      # the mall stores are the company's (ヤマダ電機 楽天市場店 / ヤマダデンキ Yahoo!店), not the web shop the calendar entry names
 ENT_NAME: dict[str, str] = {}      # filled by schedule.py (id -> name) so the labels name the shop
 
 
