@@ -6581,11 +6581,17 @@
       "short": "福島県高校入試",
       "field": "高校入試",
       "edition": "2027年度",
-      "checkedAt": "2026-11-16",
+      "checkedAt": "2026-11-28",
       "sourceUrl": "https://www.pref.fukushima.lg.jp/site/edu/r9koukounyushi.html",
       "sourceTitle": "令和9年度 福島県立高等学校入学者選抜",
       "sourceStatus": "verified",
       "application": [
+        {
+          "start": "2027-01-25",
+          "label": "前期・連携型選抜 志願者の申請開始",
+          "sourceId": "catalog-koko-fukushima",
+          "time": "09:00"
+        },
         {
           "start": "2027-02-01",
           "label": "前期・連携型選抜 出願受付開始",
@@ -12757,15 +12763,26 @@
       "checkedAt": "2026-11-16"
     },
     {
-      "id": "koko-fukushima-1",
-      "date": "2027-02-05",
+      "id": "koko-fukushima-8",
+      "date": "2027-02-04",
       "type": "deadline",
-      "label": "前期・連携型選抜 出願 締切",
-      "note": "2月1日〜5日。WEB出願システムで、締切は正午です。",
+      "label": "前期・連携型選抜 志願者のWeb出願申請 締切",
+      "note": "申請は1月25日の9時から。中学校長の承認は同じ日の16時までです。",
       "time": "12:00",
       "exam": "koko-fukushima",
       "sourceId": "catalog-koko-fukushima",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-28"
+    },
+    {
+      "id": "koko-fukushima-1",
+      "date": "2027-02-05",
+      "type": "deadline",
+      "label": "前期・連携型選抜 出願の受付締切（高校）",
+      "note": "2月1日から。高校が出願を受け付ける期限です。志願者本人の申請は2月4日の正午までです。",
+      "time": "12:00",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-28"
     },
     {
       "id": "koko-fukushima-2",
@@ -12775,7 +12792,7 @@
       "note": "5教科。面接等は3月3日〜5日です。",
       "exam": "koko-fukushima",
       "sourceId": "catalog-koko-fukushima",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-28"
     },
     {
       "id": "koko-fukushima-3",
@@ -12784,7 +12801,7 @@
       "label": "前期・連携型選抜 追検査",
       "exam": "koko-fukushima",
       "sourceId": "catalog-koko-fukushima",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-28"
     },
     {
       "id": "koko-fukushima-4",
@@ -12795,18 +12812,29 @@
       "time": "13:00",
       "exam": "koko-fukushima",
       "sourceId": "catalog-koko-fukushima",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-28"
+    },
+    {
+      "id": "koko-fukushima-9",
+      "date": "2027-03-17",
+      "type": "deadline",
+      "label": "後期選抜 志願者のWeb出願申請 締切",
+      "note": "申請は3月16日の9時から。中学校長の承認は同じ日の15時までです。",
+      "time": "14:00",
+      "exam": "koko-fukushima",
+      "sourceId": "catalog-koko-fukushima",
+      "checkedAt": "2026-11-28"
     },
     {
       "id": "koko-fukushima-5",
       "date": "2027-03-17",
       "type": "deadline",
-      "label": "後期選抜 出願 締切",
-      "note": "3月16日〜17日。締切は16時です。",
+      "label": "後期選抜 出願の受付締切（高校）",
+      "note": "3月16日から。高校が出願を受け付ける期限です。志願者本人の申請は3月17日の14時までです。",
       "time": "16:00",
       "exam": "koko-fukushima",
       "sourceId": "catalog-koko-fukushima",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-28"
     },
     {
       "id": "koko-fukushima-6",
@@ -12816,7 +12844,7 @@
       "note": "学力検査はなく、調査書・面接・小論文または作文で選抜します。",
       "exam": "koko-fukushima",
       "sourceId": "catalog-koko-fukushima",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-28"
     },
     {
       "id": "koko-fukushima-7",
@@ -12827,7 +12855,7 @@
       "time": "13:00",
       "exam": "koko-fukushima",
       "sourceId": "catalog-koko-fukushima",
-      "checkedAt": "2026-11-16"
+      "checkedAt": "2026-11-28"
     },
     {
       "id": "koko-shiga-1",

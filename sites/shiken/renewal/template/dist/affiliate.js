@@ -56,6 +56,8 @@ export const GROUPS={
  daigaku:{name:'国公立大学の入試',word:'国公立大学 過去問'},
  careercon:{name:'キャリアコンサルタント',word:'キャリアコンサルタント 試験 テキスト'},
  denken:{name:'電験三種',word:'電験三種 参考書'},
+ // supplies for the day of the common test (2026-11-28)
+ kyotsugoods:{name:'共通テスト',word:'マークシート 鉛筆 HB 試験用',also:'アナログ 腕時計 試験用',goods:'当日の鉛筆と時計を探すなら',note:'鉛筆はH・F・HBで、和歌や格言の印刷がないものを選びます。時計は、時刻表示だけのものを選びましょう。'},
  // supplies for sending an application by post (the page about postmark rules)
  postmark:{name:'出願の郵送',word:'角形2号 封筒',goods:'角形2号の封筒を探すなら',note:'封筒の大きさや書き方は、募集要項の指定に合わせてください。'},
  // the pages that compare many exams (fees, flow, busiest months, deadlines, result days): the general course lists of the partners
@@ -81,5 +83,5 @@ export function affiliateSection(group,idPrefix='pr'){
  const it=g.ito?ITO[g.ito]:null;
  const itoHtml=it?`<p>講座を比べたい方は、${it.text}も選べます。法律資格と公務員試験を中心にしたスクールです。内容や料金は、申し込む前に運営会社のページで確かめておきましょう。</p><p><a href="https://px.a8.net/svt/ejp?a8mat=${A8_ITO}${it.code}" ${REL}>${it.label}</a><img border="0" width="1" height="1" src="https://${it.px}.a8.net/0.gif?a8mat=${A8_ITO}${it.code}" alt=""></p>`:'';
  const agaroot=ag?`<p>講座を比べたい方は、${ag.text}もあります。動画の講義とオリジナルのテキストで進める通信講座で、質問できるサービスも使えます。${ag.news?ag.news:''}内容や料金は、申し込む前に運営会社のページで確かめておきましょう。</p><p><a href="https://px.a8.net/svt/ejp?a8mat=${A8_AGAROOT}${ag.code}" ${REL}>${ag.label}</a><img border="0" width="1" height="1" src="https://${ag.px}.a8.net/0.gif?a8mat=${A8_AGAROOT}${ag.code}" alt=""></p>`:'';
- return `<section class="ed-pr" aria-labelledby="${idPrefix}-title"><div class="ed-section-title"><div><span class="ed-kicker">PR・広告</span><h2 id="${idPrefix}-title">【PR】${g.goods?g.goods:esc(g.name)+'の'+(g.course||ag||it?'勉強を始めるなら':'参考書・問題集を探すなら')}</h2></div></div><p class="small-note">この項目には、広告（PR）が含まれます。リンク先の販売ページで購入されると、当サイトに紹介料が入ることがあります。</p>${course}${agaroot}${itoHtml}${g.course||ag||it?'<h3>参考書・問題集を探すなら</h3>':''}${g.note?`<p>${g.note}</p>`:''}<p>楽天市場では、<a href="${rakutenUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p><p>Amazonでも、<a href="${amazonUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p></section>`;
+ return `<section class="ed-pr" aria-labelledby="${idPrefix}-title"><div class="ed-section-title"><div><span class="ed-kicker">PR・広告</span><h2 id="${idPrefix}-title">【PR】${g.goods?g.goods:esc(g.name)+'の'+(g.course||ag||it?'勉強を始めるなら':'参考書・問題集を探すなら')}</h2></div></div><p class="small-note">この項目には、広告（PR）が含まれます。リンク先の販売ページで購入されると、当サイトに紹介料が入ることがあります。</p>${course}${agaroot}${itoHtml}${g.course||ag||it?'<h3>参考書・問題集を探すなら</h3>':''}${g.note?`<p>${g.note}</p>`:''}<p>楽天市場では、<a href="${rakutenUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p><p>Amazonでも、<a href="${amazonUrl(g.word)}" ${REL}>「${esc(g.word)}」を探す</a>ことができます。</p>${g.also?`<p>楽天市場では、<a href="${rakutenUrl(g.also)}" ${REL}>「${esc(g.also)}」を探す</a>こともできます。</p><p>Amazonでも、<a href="${amazonUrl(g.also)}" ${REL}>「${esc(g.also)}」を探す</a>こともできます。</p>`:''}</section>`;
 }

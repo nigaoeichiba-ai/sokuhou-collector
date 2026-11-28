@@ -373,7 +373,8 @@ class Renewal(unittest.TestCase):
                 BUILD.make_site(out, day)
                 return (out / "exams" / "toeic" / "index.html").read_text(encoding="utf-8")
         head = lambda h: (re.search(r"<title>(.*?)</title>", h, re.S).group(1), re.search(r'<meta name="description" content="(.*?)"', h).group(1))
-        h = toeic("2026-11-27")
+        # the build refuses data checked after the day it is made for: use the newest check day while it is still before the 1/10 successor closes
+        h = toeic(max("2026-11-27", min(BASE_DAY, "2026-12-09")))
         title, d = head(h)
         self.assertIn("2027年1月24日", title)
         self.assertNotIn("2027年1月10日", title + d)

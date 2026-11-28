@@ -69,9 +69,12 @@ export const config={
  'touroku-hanbaisha-nittei':{parent:'/yomimono/',art:'decided',related:['ids:touroku-tokyo-2027,touroku-tokyo-2026'],pr:'touroku'},
  'kyushu-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-fukuoka,koko-saga,koko-nagasaki,koko-kumamoto,koko-oita,koko-miyazaki,koko-kagoshima,koko-okinawa'],pr:'koko',prAfter:'今日から決めておくこと'},
  'chiba-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-chiba'],live:{scope:'ids:koko-chiba',types:['deadline','exam','result'],limit:12,heading:'千葉県のこれからの日程'},pr:'koko',prAfter:'いまから2月までの準備'},
+ 'kyotsu-mochimono-2027':{parent:'/nyushi/',art:'prepared',related:['ids:kyotsu,kyotsu-tsuishi-2027'],live:{scope:'ids:kyotsu',types:['deadline','exam','result'],limit:6,heading:'共通テストのこれからの日程'},pr:'kyotsugoods',prAfter:'受験票を印刷する日までにそろえる'},
+ 'tohoku-koko-nyushi-2027':{parent:'/nyushi/',art:'family',related:['ids:koko-hokkaido,koko-aomori,koko-iwate,koko-miyagi,koko-akita,koko-yamagata,koko-fukushima'],pr:'koko',prAfter:'今日から決めておくこと'},
+ 'kaigo-jukenhyo-2027':{parent:'/yomimono/',art:'prepared',related:['ids:kaigo'],live:{scope:'ids:kaigo',types:['exam','result'],limit:6,heading:'第39回のこれからの日程'},pr:'kaigo',prAfter:'試験日までの準備'},
  'kanken-goukaku-happyo-2026':{parent:'/yomimono/',art:'decided',related:['ids:kanken-2027-02-14,kanken-2027-06-20'],live:{scope:'fam:kanken',types:['deadline','exam'],limit:6,heading:'漢検のこれからの日程'},pr:'kanken',prAfter:'申込までに決めること'},
  'takken-toroku':{parent:'/yomimono/',art:'decided',related:['ids:takken'],pr:'takken',prAfter:'落ちていたときは'},
- 'kangoshi-ganshu':{parent:'/yomimono/',art:'decided',related:['ids:nurse'],live:{scope:'ids:nurse',types:['deadline','exam','result'],limit:6,heading:'第116回の日程'},pr:'nurse'},
+ 'kangoshi-ganshu':{parent:'/yomimono/',art:'decided',related:['ids:nurse'],live:{scope:'ids:nurse',types:['deadline','exam','result'],limit:6,heading:'第116回の日程'},pr:'nurse',prAfter:'試験日までの準備'},
  'komuin':{parent:'/schedule/',art:'decided',related:['fam:komuin'],live:{scope:'fam:komuin',types:['deadline','exam','result'],limit:10},pr:'komuin'},
  'method':{parent:'/yomimono/',art:'decided',related:[FEATURED]},
  'minkan':{parent:'/schedule/',art:'decided',related:['fam:toeic','fam:kanken','ids:itpassport-cbt,fe-cbt'],live:{scope:['ids:toeic,toeic-20261206,toeic-20261219,toeic-20270124,toeic-20270214,toeic-20270306,toeic-20270314','fam:kanken'],types:['deadline','exam'],limit:16},pr:'toeic'},
@@ -132,7 +135,7 @@ export function legacyMain({slug,data,registry,today,prefix,legacy}){
  const parentTitle=PARENT_TITLE[c.parent];
  const crumbs=[['トップ','/']];if(parentTitle)crumbs.push([parentTitle,c.parent]);
  const bc=crumbs.map(([t,h])=>`<a href="${h}">${esc(t)}</a>`).join('<span aria-hidden="true">›</span>')+`<span aria-hidden="true">›</span><span aria-current="page">${esc(data.h1)}</span>`;
- const tok=h=>h.replace(/\{\{LEFT:(\d{4}-\d{2}-\d{2})\}\}/g,(m,d)=>{const n=Math.round((Date.parse(d+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000);return n>0?`締切まで、残り${n}日`:n===0?'締切は、きょうです':'締切は、過ぎています';}).replace(/\{\{TODAY\}\}/g,jpDate(today));
+ const tok=h=>h.replace(/\{\{LEFT:(\d{4}-\d{2}-\d{2})\}\}/g,(m,d)=>{const n=Math.round((Date.parse(d+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000);return n>0?`締切まで、残り${n}日`:n===0?'締切は、きょうです':'締切は、過ぎています';}).replace(/\{\{TODAY\}\}/g,jpDate(today)).replace(/\{\{EXAM:(\d{4}-\d{2}-\d{2})\}\}/g,(m,d)=>{const n=Math.round((Date.parse(d+'T00:00:00Z')-Date.parse(today+'T00:00:00Z'))/86400000);return n>0?`試験の日まで残り${n}日です`:n===0?'今日が試験の日です':'今回の試験の日は過ぎています';});
  const pr=c.pr?affiliateSection(c.pr,'pr-'+slug):'';
  const at=c.prAfter?data.sections.findIndex(s=>(s.h2||'').startsWith(c.prAfter)):-1;
  if(c.prAfter&&at<0)throw new Error(`${slug}: no section starts with "${c.prAfter}" (prAfter)`);
