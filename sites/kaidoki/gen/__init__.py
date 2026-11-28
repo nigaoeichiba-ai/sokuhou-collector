@@ -33,7 +33,7 @@ def all_pages() -> list[dict]:
         add = ex.get(p["path"], [])
         if add:
             secs = p["sections"]
-            p["sections"] = secs[:-1] + add + secs[-1:] if secs[-1]["h2"].startswith("最終確認") else secs + add
+            p["sections"] = secs[:-1] + add + secs[-1:] if secs[-1]["h2"].startswith("申し込む前の") else secs + add
     return out
 
 
@@ -87,7 +87,7 @@ def write() -> int:
     site.update({
         "nav": [["日程カレンダー", "/calendar/", "/calendar/"], ["楽天", "/rakuten/", "/rakuten/"], ["Amazon", "/amazon/sale-calendar/", "/amazon/"],
                 ["買い時", "/buytime/", "/buytime/"], ["計算ツール", "/calc/", "/calc/"]],
-        "footer_html": "最終的な日程は、各社の最新の案内でご確認ください。日程は変更されることがあります。",
+        "footer_html": "日程や条件は、あとから変わる場合があります。",
         "purpose": "大型セールの日程と、家電などの買い時を、主催者とメーカーの発表で確かめられた範囲だけ載せること。買う日を決める人が、日付と条件を見落とさないための道具です。",
         "update_text": "",
         "disclaimer": [

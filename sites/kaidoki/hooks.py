@@ -237,7 +237,7 @@ def first_view(now: datetime) -> str:
 
 
 # --- affiliate links (owner 2026-11-11: all three malls, natural places only) ----------------------------------------------------------
-# One link per page, inside the page that explains that mall's sale, right after its "最終確認は公式で" section (the point where the reader goes to the official page).
+# One link per page, inside the page that explains that mall's sale, right after its "申し込む前の最終確認" section (the point where the reader goes to the official page).
 # Never on the top page, never in a table; a Rakuten page carries Rakuten only.  The forms are the ones in docs/AFFILIATE_RULES.md: Rakuten hgc redirect (sokuhou/mallstore.affiliate_href,
 # no m=), Amazon: the official URL with tag only, Yahoo!: the ValueCommerce referral of sites/yorokobu (the programme's own tag with its 1x1 counter).  The ids are the ones that
 # already stand in the public config of sites/yorokobu; nothing from a mall's catalogue is shown.
@@ -282,7 +282,7 @@ AFF_LINKS_MULTI = {
 MALL_NAME = {_R: "楽天市場", _A: "Amazon", _Y: "Yahoo!ショッピング"}
 PROGRAMME = {_R: "楽天アフィリエイト", _A: "Amazonアソシエイト", _Y: "バリューコマース"}
 AFF_REL = "nofollow sponsored noopener"
-OFFICIAL_END = re.compile(r'(<h2>最終確認は公式で</h2>\n(?:<p>.*?</p>\n)+)')
+OFFICIAL_END = re.compile(r'(<h2>申し込む前の最終確認</h2>\n(?:<p>.*?</p>\n)+)')
 
 
 def affiliate_url(mall: str, target: str, cfg: dict) -> str:
@@ -327,13 +327,13 @@ def add_affiliate_links(pages: dict, cfg: dict) -> dict:
         html = pages.get(rel)
         assert html, f"kaidoki hooks: no page {rel}"
         html, n = OFFICIAL_END.subn(lambda m: m.group(1) + affiliate_multi_block(items, cfg), html, count=1)
-        assert n == 1, f"kaidoki hooks: {rel} has no 最終確認は公式で section"
+        assert n == 1, f"kaidoki hooks: {rel} has no 申し込む前の最終確認 section"
         pages[rel] = html
     for rel, (mall, target, label) in AFF_LINKS.items():
         html = pages.get(rel)
         assert html, f"kaidoki hooks: no page {rel}"
         html, n = OFFICIAL_END.subn(lambda m: m.group(1) + affiliate_block(mall, target, label, cfg), html, count=1)
-        assert n == 1, f"kaidoki hooks: {rel} has no 最終確認は公式で section"
+        assert n == 1, f"kaidoki hooks: {rel} has no 申し込む前の最終確認 section"
         pages[rel] = html
     return pages
 

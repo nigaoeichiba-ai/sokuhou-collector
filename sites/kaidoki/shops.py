@@ -188,7 +188,7 @@ def version() -> str:
     return hashlib.sha1((HERE / "yahoo_shops.js").read_bytes()).hexdigest()[:8]
 
 
-FINAL = re.compile(r"(?:<section[^>]*>)?<h2>最終確認は公式で</h2>")      # 新しいデザインでは、見出しごとに <section> に包まれる(その前に差し込む)
+FINAL = re.compile(r"(?:<section[^>]*>)?<h2>申し込む前の最終確認</h2>")      # 新しいデザインでは、見出しごとに <section> に包まれる(その前に差し込む)
 
 
 def add_shops(pages: dict) -> dict:
@@ -196,7 +196,7 @@ def add_shops(pages: dict) -> dict:
     html = pages.get("yahoo/index.html")
     assert html, "kaidoki shops: no /yahoo/ page"
     html, n = FINAL.subn(lambda m: section_html(version()) + m.group(0), html, count=1)
-    assert n == 1, "kaidoki shops: the /yahoo/ page has no 最終確認は公式で section"
+    assert n == 1, "kaidoki shops: the /yahoo/ page has no 申し込む前の最終確認 section"
     pages["yahoo/index.html"] = html
     pages["api/yahoo-shops.php"] = php()
     pages["assets/yahoo-shops.js"] = js()

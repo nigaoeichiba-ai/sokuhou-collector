@@ -3,7 +3,8 @@ from __future__ import annotations
 
 from .common import CHECKED
 
-CLOSING = "最終的な日程は、各社の最新の案内でご確認ください。"
+CLOSING_H2 = "申し込む前の最終確認"          # hooks.py and shops.py find the section by this heading
+CLOSING = "日程は変わることがあります。申し込みや購入の前に、主催者の最新の案内を見ておきましょう。"
 
 
 def R(path: str, text: str) -> dict:
@@ -33,7 +34,7 @@ def S(h2: str, *paras: str, table: dict | None = None, html: str = "") -> dict:
 def page(path, kind, parent, kw, title, h1, desc, answer, sections, related, *, intent=1, secondary=(), basis="", closing=True, noindex=False) -> dict:
     secs = list(sections)
     if closing:
-        secs.append(S("最終確認は公式で", CLOSING + "日程は変更されることがあります。"))
+        secs.append(S(CLOSING_H2, CLOSING))
     p = {"path": path, "kind": kind, "parent": parent, "primary_kw": kw, "secondary_kw": list(secondary), "intent": intent, "title": title, "h1": h1,
          "description": desc, "answer": answer, "updated": CHECKED, "sections": secs, "related": related, "sources": ["official"]}
     if basis:
