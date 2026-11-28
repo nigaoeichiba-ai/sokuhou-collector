@@ -1,5 +1,5 @@
 """The sales this site shows: start and end read on the organiser's own announcement (read = 'text': the page opened; 'summary': the official page seen in a search result).
-Only what the organiser has published.  What it has not (Rakuten Super SALE 2026-12, Rakuten Hatsuuri 2027) stays out and the pages say 未発表.
+Only what the organiser has published.  What it has not (Rakuten Hatsuuri 2027) stays out and the pages say 未発表.
 Hours are as the organiser writes them; '25:59' is written as the next day 1:59."""
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ def E(id, mall, name, s, st, e, et, read="text", note="", group="", checked=""):
 EVENTS = [
     # --- 楽天: スーパーSALE(楽天の特設ページは回が終わると公開終了する。原文を開けたのは2026年6月分だけ。ほかの回は報道のみで、載せない)
     E("rsup-2026-06", "楽天", "楽天スーパーSALE 2026年6月", "2026-06-04", "20:00", "2026-06-11", "01:59", "text", "楽天モバイル契約者の先行セールは6月3日20時から", group="rsup"),
+    E("rsup-2026-12", "楽天", "楽天スーパーSALE 2026年12月", "2026-12-04", "20:00", "2026-12-11", "01:59", "text", "エントリーは11月28日(土)10時から受け付けています。楽天モバイルの対象プランを使っている人向けの先行セールは、12月3日(木)20時から12月4日(金)19時59分までです", group="rsup", checked="2026-11-28"),
     # --- 楽天: お買い物マラソン
     E("rmar-2026-03", "楽天", "お買い物マラソン 2026年3月", "2026-03-20", "20:00", "2026-03-26", "01:59", group="rmar"),
     E("rmar-2026-10a", "楽天", "お買い物マラソン 2026年10月(第1弾・ジャンル祭と同時)", "2026-10-04", "20:00", "2026-10-09", "01:59", group="rmar"),
@@ -66,7 +67,6 @@ YAHOO_DEC = [
 
 # Not announced on the organiser's own pages on CHECKED (the pages say 未発表; this list is what --stale asks to look at again).
 UNANNOUNCED = [
-    ("楽天スーパーSALE 2026年12月", "楽天", "2026年の日程は確認できていません"),
     ("Rakuten初売り 2027", "楽天", "日程は確認できていません"),
     ("Amazon 初売り 2027", "Amazon", "日程は確認できていません"),
     ("プライムデー 2027", "Amazon", "日程は確認できていません"),

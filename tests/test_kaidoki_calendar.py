@@ -256,7 +256,7 @@ class HomeTest(unittest.TestCase):
         mall = [i for i in sl if S.ENT[i["mall"]][2] == "mall"]
         self.assertGreaterEqual(len(mall), 4)
         kinds = {S.hero_kind(i) for i in mall}
-        self.assertTrue({"confirmed", "expected"} <= kinds <= {"confirmed", "announced", "expected"})      # the kinds in use, each told apart (an announced-only sale exists only between a notice and its dates: none on 2026-11-19 after Amazon's dates came out)
+        self.assertTrue({"confirmed"} <= kinds <= {"confirmed", "announced", "expected"})      # the kinds in use, each told apart (an announced-only sale exists only between a notice and its dates: none on 2026-11-19 after Amazon's dates came out)
         self.assertEqual([S.ENT[i["mall"]][2] for i in sl], sorted([S.ENT[i["mall"]][2] for i in sl], key=lambda x: x != "mall"))      # the malls first
         names = " ".join(i["title"] for i in sl)
         for w in ("Yahoo!ショッピング ブラックフライデー 2026", "ブラックフライデー 2026 先行セール", "ブラックフライデー 2026 本セール", "楽天ブラックフライデー 2026", "楽天スーパーSALE 2026年12月", "Googleストア"):
