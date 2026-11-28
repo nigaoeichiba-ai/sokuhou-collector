@@ -24,7 +24,7 @@ HERE = Path(__file__).resolve().parent
 DATA = HERE / "content" / "shogatsu.json"
 IMG = HERE / "assets" / "shogatsu"
 PATH = "/shogatsu/"
-ALLOWED_HOSTS = seasonal.SOURCE_HOSTS + ("www8.cao.go.jp", "trends.google.com", "www.nta.go.jp")      # the Cabinet Office (holidays), Google Trends (the site's own measurement of searches, read in a browser) and the National Tax Agency (gift tax)
+ALLOWED_HOSTS = seasonal.SOURCE_HOSTS + ("www8.cao.go.jp", "trends.google.com", "www.nta.go.jp", "www.mhlw.go.jp")      # the Cabinet Office (holidays), Google Trends (the site's own measurement of searches, read in a browser), the National Tax Agency (gift tax) and the health ministry (honey for babies)
 WEEKDAY = "月火水木金土日"
 DIGIT = re.compile(r"[0-9０-９]")
 YEAR = re.compile(r"20\d\d年")
@@ -132,6 +132,8 @@ def problems(data: dict, img_dir: Path = IMG) -> list[str]:
         seen.add(slug)
         if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", a.get("date", "")):
             out.append(f"article {slug}: date")
+        if "updated" in a and not (re.fullmatch(r"\d{4}-\d{2}-\d{2}", a["updated"]) and a["updated"] >= a.get("date", "")):
+            out.append(f"article {slug}: updated must be a date on or after the publication date")
         if not a.get("query"):
             out.append(f"article {slug}: query (the search words of the buttons)")
         blocks(f"article {slug}", a)
@@ -232,7 +234,7 @@ def _cards(data: dict, skip: str | None = None) -> str:
 def _ld(cfg: dict, a: dict, path: str, data: dict) -> str:
     base = cfg["site_url"].rstrip("/")
     return json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": a["title"], "datePublished": a.get("date", data["checked"]),
-                       "dateModified": data["checked"], "inLanguage": "ja", "image": f'{base}/assets/shogatsu/{a["image"]["file"]}-og.webp',
+                       "dateModified": a.get("updated", data["checked"]), "inLanguage": "ja", "image": f'{base}/assets/shogatsu/{a["image"]["file"]}-og.webp',
                        "mainEntityOfPage": base + path, "author": {"@type": "Organization", "name": cfg["site_name"]},
                        "publisher": {"@type": "Organization", "name": cfg["site_name"]}}, ensure_ascii=False)
 
@@ -241,7 +243,11 @@ def _meta(data: dict, a: dict | None = None) -> str:
     if not a:
         return ""
     py, pm, pd = a["date"].split("-")
-    return f'<p class="shg-meta">{int(py)}年{int(pm)}月{int(pd)}日 公開</p>'
+    out = f"{int(py)}年{int(pm)}月{int(pd)}日 公開"
+    if a.get("updated"):
+        uy, um, ud = a["updated"].split("-")
+        out += f" / {int(uy)}年{int(um)}月{int(ud)}日 更新"
+    return f'<p class="shg-meta">{out}</p>'
 
 
 def article_page(d: dict, cfg: dict, preview: bool, a: dict, data: dict, known: set[str] | None) -> str:

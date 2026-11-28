@@ -164,7 +164,9 @@ class PagesTest(unittest.TestCase):
             self.assertIn("Article", kinds, p)
             art = next(json.loads(b) for b in blocks if json.loads(b).get("@type") == "Article")
             self.assertRegex(art["image"], r"^https://yorokobu-present\.com/assets/shogatsu/shogatsu-[a-z-]+-og\.webp$")
-            self.assertEqual(art["dateModified"], "2026-10-17")
+            slug = p.split("/")[1]
+            updated = {a["slug"]: a.get("updated") for a in DATA["articles"]}.get(slug)
+            self.assertEqual(art["dateModified"], updated or "2026-10-17", p)
             self.assertIn('property="og:image"', self.read(p))
 
     def test_the_calendar_shows_the_weekdays_the_program_worked_out(self):
@@ -205,11 +207,55 @@ class PagesTest(unittest.TestCase):
             for w in ("最安", "必ず", "実際に使ってみ", "試してみ"):
                 self.assertNotIn(w, text, (p, w))
 
+    def test_the_built_htaccess_redirects_www_after_the_https_rule(self):
+        ht = self.read(".htaccess")
+        self.assertLess(ht.index("RewriteCond %{HTTPS} !on"), ht.index("^www"))
+        self.assertIn("https://yorokobu-present.com%{REQUEST_URI}", ht)
+
     def test_the_buttons_are_search_links_with_the_affiliate_marks(self):
         for p in self.paths():
             html = self.read(p)
             self.assertRegex(html, r'<span class="btn"><a href="https://hb\.afl\.rakuten\.co\.jp/[^"]+" target="_blank" rel="nofollow sponsored noopener">楽天市場で', p)
             self.assertIn("ck.jp.ap.valuecommerce.com", html, p)
+
+
+class UpdateTest(unittest.TestCase):
+    """2026-11-28: the date table of the mourning page, the baby section of the otoshidama page, and the redirect of the www address."""
+
+    def arts(self):
+        return {a["slug"]: a for a in DATA["articles"]}
+
+    def test_the_date_table_gives_the_greeting_for_each_day_and_agrees_with_the_winter_greeting_page(self):
+        t = next(s for s in self.arts()["mochu-kanchu"]["sections"] if s["h"] == "渡す日で決まる表書きの早見表")
+        shown = {r[0]: r[2] for r in shogatsu._weekdays(t["table"], DATA["year"])["rows"]}
+        self.assertEqual(shown["1月8日(金)"], "「寒中御見舞」")
+        self.assertEqual(shown["1月16日(土)"], "「寒中御見舞」")
+        self.assertEqual(shown["2月4日ごろから"], "「余寒御見舞」")
+        first_days = [r[0] for s in self.arts()["kanchu-mimai"]["sections"] if s.get("calendar") for r in s["table"]["rows"]]
+        for day in ("1月8日", "1月16日"):
+            self.assertIn(day, first_days)
+
+    def test_the_honey_warning_for_babies_names_the_age_and_rests_on_the_ministry_page(self):
+        s = next(s for s in self.arts()["otoshidama-kawari"]["sections"] if s["h"].startswith("赤ちゃん"))
+        self.assertTrue(any("1歳未満" in x and "はちみつ" in x and "贈らないで" in x for x in s["list"]))
+        self.assertIn("www.mhlw.go.jp", DATA["sources"][s["src"][0]]["url"])
+
+    def test_an_update_date_before_the_publication_date_is_found(self):
+        def f(d):
+            d["articles"][0]["updated"] = "2026-01-01"
+        self.assertTrue(any("updated must be" in p for p in mutated(f)))
+
+    def test_the_page_shows_the_update_date(self):
+        self.assertIn("2026年11月28日 更新", shogatsu._meta(DATA, self.arts()["mochu-kanchu"]))
+        untouched = {k: v for k, v in self.arts()["itsumade"].items() if k != "updated"}
+        self.assertNotIn("更新", shogatsu._meta(DATA, untouched))
+
+    def test_the_www_address_is_sent_to_the_canonical_one_and_never_to_itself(self):
+        out = build.host_redirect({"site_url": "https://yorokobu-present.com/"})
+        self.assertIn(r"RewriteCond %{HTTP_HOST} ^www\.yorokobu-present\.com$ [NC]", out)
+        self.assertIn("RewriteRule ^ https://yorokobu-present.com%{REQUEST_URI} [R=301,L]", out)
+        self.assertEqual(out.count("\n"), 2)
+        self.assertEqual(build.host_redirect({"site_url": "https://www.yorokobu-present.com"}), "")       # would loop
 
 
 class OtoshidamaTest(unittest.TestCase):

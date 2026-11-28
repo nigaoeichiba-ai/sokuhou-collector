@@ -2143,6 +2143,16 @@ def guide_redirects(cfg: dict, moves: dict, pages: dict) -> str:
     return out
 
 
+def host_redirect(cfg: dict) -> str:
+    """www.<domain> answers with a permanent redirect to the address the canonical links name (found 2026-11-28: www served every page with 200). Nothing for a site whose address begins with www."""
+    host = cfg["site_url"].split("//", 1)[-1].strip("/")
+    if host.startswith("www."):
+        return ""
+    pattern = host.replace(".", r"\.")
+    return (f"RewriteCond %{{HTTP_HOST}} ^www\\.{pattern}$ [NC]\n"
+            f"RewriteRule ^ https://{host}%{{REQUEST_URI}} [R=301,L]\n")
+
+
 def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool = False, today: date | None = None, ranking: dict | None = None, compare_data: dict | None = None, yahoo_data: dict | None = None) -> list[str]:
     missing = missing_config(cfg)
     if release and missing:
@@ -2308,6 +2318,7 @@ def render_site(c: dict, items: dict | None, cfg: dict, out: Path, release: bool
     pages["favorites/index.html"] = minepage.favorites_page(d, cfg, preview)    # one browser's own page: noindex, not in the sitemap
     pages["history/index.html"] = minepage.history_page(d, cfg, preview, today)  # the same kind: gifts the visitor wrote down (this browser only)
     pages.update(standard_files(listed, cfg, preview, d["fetched_date"]))
+    pages[".htaccess"] += host_redirect(cfg)
     pages[".htaccess"] += guide_redirects(cfg, c.get("guide_moves") or {}, pages)
     pages.update(asset_pages(HERE / "assets"))
     write_pages(pages, out)
