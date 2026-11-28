@@ -274,6 +274,7 @@ def page(cfg, preview, **kw):
     kw["body"] = widgeted
     if "pr-quiet" in kw.get("body", "") or has_bar or has_widget:
         more = tuple(n for n, mark in (("バリューコマース(Yahoo!ショッピング)", "ck.jp.ap.valuecommerce.com/"), ("A8.net", "px.a8.net/")) if mark in kw["body"])
+        kw["body"] = re.sub(r'<aside class="pr-foot">.*?</aside>', "", kw["body"], flags=re.S)     # never two notices (2026-11-28: /travel/ showed two, one naming only Rakuten)
         kw["body"] += pr_foot(cfg, amazon_links or "amazon.co.jp/" in kw["body"], had_rakuten or has_widget or amazon_links, more)
     kw["body"] = kw.get("body", "") + icons.sprite(kw.get("body", "")) + breadcrumb_ld(cfg, kw.get("body", ""))   # the pictures the page uses (only those), the breadcrumb data
     site = {**SITE, "nav": ([("今日のおすすめ", "/picks/", "/picks/")] if PICKS_ON else []) + SITE["nav"] + ([("いま売れている", "/ranking/", "/ranking/")] if RANKING_ON else [])
@@ -2030,8 +2031,8 @@ def travel_page(d: dict, cfg: dict, preview: bool) -> str:
     lead = "宿に泊まる、旅に出る。そんな時間を贈る方法と、渡す前に決めておきたいことをまとめています。"
     rk = f'<a href="{esc(rakuten_link(cfg, TRAVEL_URL))}" target="_blank" rel="nofollow sponsored noopener">楽天トラベル</a>'
     ways = [
-        ("宿の宿泊券・ギフト券", "行く日を相手が決められるので、日程が読めない相手に向きます。有効期限と使える宿の範囲を、渡す前に確かめます。"),
-        ("日程と宿を決めて予約して渡す", "手間が少なく、「連れて行く」贈り方になります。キャンセルの条件と、相手の予定が空いているかを先に確かめます。"),
+        ("宿の宿泊券・ギフト券", "行く日を相手が決められるので、日程が読めない相手に向きます。渡す前に、有効期限と使える宿の範囲を調べておきます。"),
+        ("日程と宿を決めて予約して渡す", "手間が少なく、「連れて行く」贈り方になります。予約の前にキャンセルの条件を読み、相手の予定も聞いておきます。"),
         ("旅行用品を贈って、旅を後押しする", "宿の予約まで踏みこまず、旅のお供を贈ります。相手の好みが分からないときの、無難な選び方です。"),
     ]
     way_rows = "".join(f"<tr><th>{esc(a)}</th><td>{esc(b)}</td></tr>" for a, b in ways)

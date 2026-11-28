@@ -208,7 +208,7 @@ def points_section(d: dict, cfg: dict) -> str:
     cards = "".join(B.item_card(cfg, i) for i in items[:12])
     return (f'<section class="block"><div class="sec-head"><span class="eyebrow">Point up</span><h2>いまポイント倍率が付いている贈り物</h2>'
             f'<p class="sec-lead">当サイトで取り上げた商品のうち、楽天市場が倍率と終了の日時を表示しているものです({esc(d["fetched_label"])}時点)。'
-            f'倍率の対象になる条件やポイントの上限は商品ページで確かめてください。エントリーが必要な場合があります。</p></div>'
+            f'倍率の対象になる条件やポイントの上限は、商品ページに書かれています。エントリーが必要な場合があります。</p></div>'
             f'<ul class="items">{cards}</ul>{B.freshness(d)}</section>')
 
 
@@ -241,7 +241,7 @@ def sale_page(d: dict, cfg: dict, preview: bool, events: list[dict], href: dict[
 {points_section(d, cfg)}
 <section class="block"><div class="sec-head"><h2>プレゼントをセールで買うときの順番</h2></div>{steps}
 <ul class="plain sale-links">{pick_link}<li><a href="/memo/">贈る日を登録して忘れないようにする(たいせつな日メモ)</a></li></ul></section>
-<section class="block"><p class="notice">日程は各店が発表した内容です。変更になることがあるため、購入の前に各店の公式ページで確かめてください。当サイトは各店の公式ページへのリンクを紹介し、購入されると報酬が支払われることがあります。</p></section>"""
+<section class="block"><p class="notice">日程は各店が発表した内容です。変更になることがあるため、購入の前に各店の公式ページで最新の日程をご覧ください。当サイトは各店の公式ページへのリンクを紹介し、購入されると報酬が支払われることがあります。</p></section>"""
     return B.page(cfg, preview, path="/sale/", title=f"セールの日程と贈り物を買うタイミング | {cfg['site_name']}", description="楽天市場のお買い物マラソン、Amazonのプライム感謝祭など、お得に買える日とプレゼントを選ぶ順番をまとめました。", body=body, amazon_links=any(e["store"] == "amazon" for e in open_), sale=False)
 
 
