@@ -232,6 +232,7 @@ class UpdateTest(unittest.TestCase):
         self.assertTrue(shown["1月8日(金)"].startswith("「寒中御見舞」"))
         self.assertTrue(shown["1月16日(土)"].startswith("「寒中御見舞」"))
         self.assertTrue(shown["立春以降"].startswith("「余寒御見舞」"))
+        self.assertEqual([c for r in t["table"]["rows"] for c in r if len(c) > 8], [])      # longer cells wrapped inside a word on a 360-px phone
         first_days = [r[0] for s in self.arts()["kanchu-mimai"]["sections"] if s.get("calendar") for r in s["table"]["rows"]]
         for day in ("1月8日", "1月16日"):
             self.assertIn(day, first_days)
