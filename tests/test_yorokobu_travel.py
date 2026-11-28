@@ -47,6 +47,7 @@ class TravelTest(unittest.TestCase):
             self.assertEqual(text, "楽天トラベル")           # a word, never the URL
         self.assertIn("pr-note", t)
         self.assertNotIn("amazon.co.jp", t)                 # no other mall's link next to a Rakuten link
+        self.assertNotIn("Amazonアソシエイト", t)            # and then the notice does not name it (2026-11-28: it did, with no Amazon link on the page)
 
     def test_internal_links_all_point_at_built_pages(self):
         t = self.read("travel/index.html")

@@ -247,7 +247,8 @@ class PagesTest(unittest.TestCase):
             html = (out / "sale" / "index.html").read_text(encoding="utf-8")
             self.assertIn("開催予定", html)
             out2 = Path(t) / "s2"
-            build.render_site(content.load(FIX), items, CFG, out2, release=True, today=date(2026, 11, 2))   # all of them are over: the page stays and says so
+            after = max(date.fromisoformat(e["end"][:10]) for e in sales.load()) + timedelta(days=1)   # computed: a newly announced sale must not break this
+            build.render_site(content.load(FIX), items, CFG, out2, release=True, today=after)            # all of them are over: the page stays and says so
             html2 = (out2 / "sale" / "index.html").read_text(encoding="utf-8")
             self.assertIn("いま発表されているセールはありません", html2)
             self.assertNotIn("sale-bar", (out2 / "index.html").read_text(encoding="utf-8"))

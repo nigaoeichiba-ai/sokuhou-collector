@@ -2058,9 +2058,10 @@ def travel_page(d: dict, cfg: dict, preview: bool) -> str:
                f'<h3>最後に添える一言</h3><ul class="msg-list">{close}</ul>{more}')
     msg_sec = (f'<section class="g-sec"><h2>宿泊を贈るときの一言メッセージ例</h2>'
                f'<p>気に入った文の「コピー」を押すと、そのまま貼りつけられます。相手との関係に合わせて、言葉を少し変えて使ってください。</p>{tm}</section>') if tm else ""
+    amazon_here = bool(SALE_EVENTS and SALE_NOW) and "amazon.co.jp/" in sales.bar(SALE_EVENTS, SALE_NOW, SALE_HREF)     # the notice matches the links of the page
     body = f"""{head_band("sky", "", "旅行・宿泊を贈る", lead, single=True)}
 <div class="crumbs-wrap">{crumbs([("トップ", "/"), ("旅行・宿泊を贈る", None)])}</div>
-{pr_lead(cfg)}
+{pr_lead(cfg if amazon_here else {**cfg, "amazon_tracking_id": ""})}
 <article class="guide">
 <section class="g-sec"><h2>結論: 日程を相手が決められる形にする</h2>
 <p>旅行や宿泊のプレゼントは、品物と違って、受け取った人の予定が合わないと使えません。迷ったら、行く日を相手が選べる宿泊券か、キャンセルしやすい予約にします。宿の探し方は、{rk}のように、地域や日付で絞れるサービスが使いやすいです。</p></section>
