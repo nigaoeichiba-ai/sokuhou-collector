@@ -11,7 +11,7 @@ MAT = "4BGVY7+9LBL1M+1IEW+I52SY"
 LEAD = ("表の8,429円は、挨拶状ドットコムの35％OFF（11月29日（日）24:00まで）を入れた金額です。この割引で頼むなら、"
         "期限の前に注文の画面で枚数と総額を確かめておきましょう。")
 LINK = ('<p><a href="https://px.a8.net/svt/ejp?a8mat=%s" rel="nofollow sponsored noopener" target="_blank">'
-        '挨拶状ドットコムで年賀状印刷を見る</a>（PR）<img border="0" width="1" height="1" '
+        '挨拶状ドットコム 年賀状</a>（PR）<img border="0" width="1" height="1" '
         'src="https://www14.a8.net/0.gif?a8mat=%s" alt=""></p>' % (MAT, MAT))
 DESCRIPTION = ("年賀状印刷の早割は、締切が11月29日と30日12:59の2段階。割引中の3社を、はがき代と宛名印刷、送料まで入れた"
                "30枚の総額でそろえ、締切の表と並べて比べられます。")
