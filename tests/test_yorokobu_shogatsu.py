@@ -227,10 +227,11 @@ class UpdateTest(unittest.TestCase):
 
     def test_the_date_table_gives_the_greeting_for_each_day_and_agrees_with_the_winter_greeting_page(self):
         t = next(s for s in self.arts()["mochu-kanchu"]["sections"] if s["h"] == "渡す日で決まる表書きの早見表")
-        shown = {r[0]: r[2] for r in shogatsu._weekdays(t["table"], DATA["year"])["rows"]}
-        self.assertEqual(shown["1月8日(金)"], "「寒中御見舞」")
-        self.assertEqual(shown["1月16日(土)"], "「寒中御見舞」")
-        self.assertEqual(shown["2月4日ごろから"], "「余寒御見舞」")
+        shown = {r[0]: r[1] for r in shogatsu._weekdays(t["table"], DATA["year"])["rows"]}
+        self.assertEqual(len(t["table"]["head"]), 2)     # three columns broke the greeting in the middle of the word on a phone
+        self.assertTrue(shown["1月8日(金)"].startswith("「寒中御見舞」"))
+        self.assertTrue(shown["1月16日(土)"].startswith("「寒中御見舞」"))
+        self.assertTrue(shown["立春以降"].startswith("「余寒御見舞」"))
         first_days = [r[0] for s in self.arts()["kanchu-mimai"]["sections"] if s.get("calendar") for r in s["table"]["rows"]]
         for day in ("1月8日", "1月16日"):
             self.assertIn(day, first_days)
