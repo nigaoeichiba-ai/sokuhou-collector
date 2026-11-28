@@ -67,9 +67,9 @@ YAHOO_DEC = [
 
 # Not announced on the organiser's own pages on CHECKED (the pages say 未発表; this list is what --stale asks to look at again).
 UNANNOUNCED = [
-    ("Rakuten初売り 2027", "楽天", "日程は確認できていません"),
-    ("Amazon 初売り 2027", "Amazon", "日程は確認できていません"),
-    ("プライムデー 2027", "Amazon", "日程は確認できていません"),
+    ("Rakuten初売り 2027", "楽天", "日程は未発表です"),
+    ("Amazon 初売り 2027", "Amazon", "日程は未発表です"),
+    ("プライムデー 2027", "Amazon", "日程は未発表です"),
 ]
 
 # Maker announcements read on the maker's own page (air conditioners, refrigerators): (maker, what, announced, on sale)
