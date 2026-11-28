@@ -145,7 +145,8 @@ def m12() -> dict:
         [jp(NENGA_NEW_YEAR), n_days(NENGA_NEW_YEAR), "元日に届けるための差し出し日の目安", row_link("年賀状", "/nengajo/")],
         [jp(d(2026, 12, 28)), n_days(d(2026, 12, 28)), "国の行政機関の最後の平日(窓口で手続きするならこの日まで)", row_link("年末年始の休み", "/nenmatsu-nenshi/")],
         [f"{jp(CLOSED_FROM)}〜{md(CLOSED_TO)}", n_days(CLOSED_FROM), "国の行政機関は休み。銀行は12月31日〜1月3日が休日", row_link("年末年始の休み", "/nenmatsu-nenshi/")],
-        [jp(YEAR_END), n_days(YEAR_END), "ふるさと納税・医療費の年内の締め", row_link("ふるさと納税", "/furusato/deadline/")],
+        [jp(YEAR_END), n_days(YEAR_END), "ふるさと納税の寄附の年内の締め", row_link("ふるさと納税", "/furusato/deadline/")],
+        [jp(YEAR_END), n_days(YEAR_END), "医療費控除に入れる支払いの年内の締め(支払った日で年が決まる)", row_link("医療費控除", "/iryouhi-koujo/")],
         [jp(REFUND_R3_END), n_days(REFUND_R3_END), "令和3年分(2021年分)の還付申告を出せる最後の日", row_link("還付申告", "/kakutei-shinkoku/kanpu/")],
     ]
     return _month(
